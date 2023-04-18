@@ -1,0 +1,41 @@
+#!/usr/bin/env escript
+
+usage() ->
+    io:format("Usage: to-json /path/to/file~n", []),
+    io:format("       to-json https://url.to.file~n", []).
+
+main(["help"]) ->
+    usage();
+main(["http" ++ _ = URL]) ->
+    {ok, _} = application:ensure_all_started(inets),
+    {ok, _} = application:ensure_all_started(crypto),
+    {ok, _} = application:ensure_all_started(ssl),
+    case httpc:request(get, {URL, []}, [{ssl, [{verify, verify_none}]}], [{body_format, binary}]) of
+        {ok, {{_Version, 200, _ReasonPhrase}, _Headers, Body}} ->
+            case hocon:binary(Body, #{format => map}) of
+                {ok, Map} ->
+                    pp_json(Map);
+                {error, Reason} ->
+                    logerr("Failed to parse ~s~nreason:~p~n", [Body, Reason])
+            end;
+        Ohter ->
+            logerr("Filed to fetch from ~s~nresult=~p~n", [URL, Ohter])
+    end;
+main([File]) ->
+    case hocon:load(File) of
+        {ok, Map} ->
+            pp_json(Map);
+        {error, Reason} ->
+            logerr("Failed to read ~p~nreason:~p~n", [File, Reason]),
+            init:stop(1)
+    end;
+main(_Args) ->
+    usage(),
+    init:stop(1).
+
+pp_json(Map) ->
+    IoData = jsone:encode(Map, [{indent, 2}, {space, 1}, native_utf8, native_forward_slash]),
+    io:format("~s", [IoData]).
+
+logerr(Fmt, Args) ->
+    io:format(standard_error, Fmt, Args).
