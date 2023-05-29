@@ -1,4 +1,4 @@
-# a4ff35418 2023-04-08 | refactor: split i18n files
+
 emqx_authn_api {
 
 authentication_get.desc:
@@ -186,10 +186,10 @@ from.desc:
 from.label:
 """源字段"""
 
-hmac-based.desc:
+jwt_hmac.desc:
 """用于认证的 JWT 使用 HMAC 算法签发时的配置。"""
 
-jwks.desc:
+jwt_jwks.desc:
 """用于认证的 JWTs 需要从 JWKS 端点获取时的配置。"""
 
 keyfile.desc:
@@ -198,7 +198,7 @@ keyfile.desc:
 keyfile.label:
 """私钥文件"""
 
-public-key.desc:
+jwt_public_key.desc:
 """用于认证的 JWT 使用 RSA 或 ECDSA 算法签发时的配置。"""
 
 public_key.desc:
@@ -263,7 +263,7 @@ verify_claims.label:
 
 emqx_authn_mnesia {
 
-authentication.desc:
+builtin_db.desc:
 """使用内置数据库作为认证数据源的认证器的配置项。"""
 
 user_id_type.desc:
@@ -315,14 +315,14 @@ salt_field.label:
 sharded-cluster.desc:
 """使用 MongoDB (Sharded Cluster) 作为认证数据源的认证器的配置项。"""
 
-standalone.desc:
+single.desc:
 """使用 MongoDB (Standalone) 作为认证数据源的认证器的配置项。"""
 
 }
 
 emqx_authn_mysql {
 
-authentication.desc:
+mysql.desc:
 """使用 MySQL 作为认证数据源的认证器的配置项。"""
 
 query.desc:
@@ -341,7 +341,7 @@ query_timeout.label:
 
 emqx_authn_pgsql {
 
-authentication.desc:
+postgresql.desc:
 """使用 PostgreSQL 作为认证数据源的认证器的配置项。"""
 
 query.desc:
@@ -366,7 +366,7 @@ cmd.label:
 sentinel.desc:
 """使用 Redis (Sentinel) 作为认证数据源的认证器的配置项。"""
 
-standalone.desc:
+single.desc:
 """使用 Redis (Standalone) 作为认证数据源的认证器的配置项。"""
 
 }
@@ -884,11 +884,11 @@ node_error.desc:
 node_error.label:
 """节点产生的错误"""
 
-mnesia.desc:
+builtin_db.desc:
 """使用内部数据库授权（mnesia）。"""
 
-mnesia.label:
-"""mnesia"""
+builtin_db.label:
+"""Buitin Database"""
 
 enable.desc:
 """设为 <code>true</code> 或 <code>false</code> 以启用或禁用此访问控制数据源"""
@@ -1113,7 +1113,7 @@ topic.label:
 emqx_bridge_api {
 
 desc_api1.desc:
-"""列出所有 Birdge"""
+"""列出所有 Bridge"""
 
 desc_api1.label:
 """列出所有 Bridge"""
@@ -1211,6 +1211,691 @@ desc_param_path_operation_on_node.label:
 
 }
 
+emqx_bridge_clickhouse {
+
+batch_value_separator.desc:
+"""默认为逗号 ','，适用于 VALUE 格式。您也可以使用其他分隔符， 请参考 [INSERT INTO 语句](https://clickhouse.com/docs/en/sql-reference/statements/insert-into)。"""
+
+batch_value_separator.label:
+"""分隔符"""
+
+config_enable.desc:
+"""启用/禁用桥接"""
+
+config_enable.label:
+"""启用/禁用桥接"""
+
+desc_config.desc:
+"""Clickhouse 桥接配置"""
+
+desc_config.label:
+"""Clickhouse 桥接配置"""
+
+desc_name.desc:
+"""桥接名字"""
+
+desc_name.label:
+"""桥接名字"""
+
+desc_type.desc:
+"""Bridge 类型"""
+
+desc_type.label:
+"""桥接类型"""
+
+local_topic.desc:
+"""发送到 'local_topic' 的消息都会转发到 Clickhouse。 </br>
+注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
+
+local_topic.label:
+"""本地 Topic"""
+
+sql_template.desc:
+"""可以使用 ${field} 占位符来引用消息与客户端上下文中的变量，请确保对应字段存在且数据格式符合预期。此处不支持 [SQL 预处理](https://docs.emqx.com/zh/enterprise/v5.0/data-integration/data-bridges.html#sql-预处理)。"""
+
+sql_template.label:
+"""SQL 模板"""
+
+}
+
+emqx_bridge_clickhouse_connector {
+
+base_url.desc:
+"""你想连接到的Clickhouse服务器的HTTP URL（例如http://myhostname:8123）。"""
+
+base_url.label:
+"""服务器 URL"""
+
+connect_timeout.desc:
+"""连接HTTP服务器的超时时间。"""
+
+connect_timeout.label:
+"""连接超时"""
+
+}
+
+emqx_bridge_dynamo {
+
+config_enable.desc:
+"""启用/禁用桥接"""
+
+config_enable.label:
+"""启用/禁用桥接"""
+
+desc_config.desc:
+"""DynamoDB 桥接配置"""
+
+desc_config.label:
+"""DynamoDB 桥接配置"""
+
+desc_name.desc:
+"""桥接名字"""
+
+desc_name.label:
+"""桥接名字"""
+
+desc_type.desc:
+"""Bridge 类型"""
+
+desc_type.label:
+"""桥接类型"""
+
+local_topic.desc:
+"""发送到 'local_topic' 的消息都会转发到 DynamoDB。 </br>
+注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
+
+local_topic.label:
+"""本地 Topic"""
+
+template.desc:
+"""模板, 默认为空，为空时将会将整个消息存入数据库"""
+
+template.label:
+"""模板"""
+
+}
+
+emqx_bridge_dynamo_connector {
+
+aws_access_key_id.desc:
+"""DynamoDB 的访问 ID。"""
+
+aws_access_key_id.label:
+"""连接访问 ID"""
+
+aws_secret_access_key.desc:
+"""DynamoDB 的访问密钥。"""
+
+aws_secret_access_key.label:
+"""连接访问密钥"""
+
+table.desc:
+"""DynamoDB 的表。"""
+
+table.label:
+"""表"""
+
+url.desc:
+"""DynamoDB 的地址。"""
+
+url.label:
+"""DynamoDB 地址"""
+
+}
+
+emqx_bridge_gcp_pubsub {
+
+connect_timeout.desc:
+"""连接 HTTP 服务器的超时时间。"""
+
+connect_timeout.label:
+"""连接超时"""
+
+desc_config.desc:
+"""GCP PubSub 桥接配置"""
+
+desc_config.label:
+"""GCP PubSub 桥接配置"""
+
+desc_name.desc:
+"""桥接名字，可读描述"""
+
+desc_name.label:
+"""桥接名字"""
+
+desc_type.desc:
+"""桥接类型"""
+
+desc_type.label:
+"""桥接类型"""
+
+local_topic.desc:
+"""发送到 'local_topic' 的消息都会转发到 GCP PubSub。 </br>
+注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 GCP PubSub。"""
+
+local_topic.label:
+"""本地 Topic"""
+
+max_retries.desc:
+"""请求出错时的最大重试次数。"""
+
+max_retries.label:
+"""最大重试次数"""
+
+payload_template.desc:
+"""用于格式化外发信息的模板。 如果未定义，将以JSON格式发送所有可用的上下文。"""
+
+payload_template.label:
+"""HTTP 请求消息体模板"""
+
+pipelining.desc:
+"""正整数，设置最大可发送的异步 HTTP 请求数量。当设置为 1 时，表示每次发送完成 HTTP 请求后都需要等待服务器返回，再继续发送下一个请求。"""
+
+pipelining.label:
+"""HTTP 流水线"""
+
+pool_size.desc:
+"""连接池大小。"""
+
+pool_size.label:
+"""连接池大小"""
+
+pubsub_topic.desc:
+"""要发布消息的GCP PubSub主题。"""
+
+pubsub_topic.label:
+"""GCP PubSub 主题"""
+
+request_timeout.desc:
+"""废弃的。在缓冲区设置中配置请求超时。"""
+
+request_timeout.label:
+"""HTTP 请求超时"""
+
+service_account_json.desc:
+"""包含将与 PubSub 一起使用的 GCP 服务账户凭证的 JSON。
+当创建GCP服务账户时（如https://developers.google.com/identity/protocols/oauth2/service-account#creatinganaccount），可以选择下载 JSON 形式的凭证，然后在该配置项中使用。"""
+
+service_account_json.label:
+"""GCP 服务账户凭证"""
+
+}
+
+emqx_bridge_influxdb {
+
+config_enable.desc:
+"""启用/禁用桥接。"""
+
+config_enable.label:
+"""启用/禁用桥接"""
+
+desc_config.desc:
+"""InfluxDB 桥接配置。"""
+
+desc_config.label:
+"""InfluxDB 桥接配置"""
+
+desc_name.desc:
+"""桥接名称。"""
+
+desc_name.label:
+"""桥接名称"""
+
+desc_type.desc:
+"""桥接类型。"""
+
+desc_type.label:
+"""桥接类型"""
+
+local_topic.desc:
+"""发送到 'local_topic' 的消息都会转发到 InfluxDB。 </br>
+注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 InfluxDB。"""
+
+local_topic.label:
+"""本地 Topic"""
+
+write_syntax.desc:
+"""使用 InfluxDB API Line Protocol 写入 InfluxDB 的数据，支持占位符</br>
+参考 [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) 及
+[InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) </br>
+TLDR: </br>
+```
+<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]
+```
+注意，整形数值占位符后需要添加一个字符 `i` 类型标识。例如 `${payload.int_value}i`"""
+
+write_syntax.label:
+"""写语句"""
+
+}
+
+emqx_bridge_influxdb_connector {
+
+bucket.desc:
+"""InfluxDB bucket 名称。"""
+
+bucket.label:
+"""Bucket"""
+
+database.desc:
+"""InfluxDB 数据库。"""
+
+database.label:
+"""数据库"""
+
+influxdb_api_v1.desc:
+"""InfluxDB HTTP API 协议。支持 Influxdb v1.8 以及之前的版本。"""
+
+influxdb_api_v1.label:
+"""HTTP API 协议"""
+
+influxdb_api_v2.desc:
+"""InfluxDB HTTP API V2 协议。支持 Influxdb v2.0 以及之后的版本。"""
+
+influxdb_api_v2.label:
+"""HTTP API V2 协议"""
+
+org.desc:
+"""InfluxDB 组织名称。"""
+
+org.label:
+"""组织"""
+
+password.desc:
+"""InfluxDB 密码。"""
+
+password.label:
+"""密码"""
+
+precision.desc:
+"""InfluxDB 时间精度。"""
+
+precision.label:
+"""时间精度"""
+
+protocol.desc:
+"""InfluxDB 协议。HTTP API 或 HTTP API V2。"""
+
+protocol.label:
+"""协议"""
+
+server.desc:
+"""将要连接的 IPv4 或 IPv6 地址，或者主机名。</br>
+主机名具有以下形式：`Host[:Port]`。</br>
+如果未指定 `[:Port]`，则使用 InfluxDB 默认端口 8086。"""
+
+server.label:
+"""服务器地址"""
+
+token.desc:
+"""InfluxDB token。"""
+
+token.label:
+"""Token"""
+
+username.desc:
+"""InfluxDB 用户名。"""
+
+username.label:
+"""用户名"""
+
+}
+
+emqx_bridge_kafka {
+
+connect_timeout.desc:
+"""建立 TCP 连接时的最大等待时长（若启用认证，这个等待时长也包含完成认证所需时间）。"""
+
+connect_timeout.label:
+"""连接超时"""
+
+producer_opts.desc:
+"""本地 MQTT 数据源和 Kafka 桥接的配置。"""
+
+producer_opts.label:
+"""MQTT 到 Kafka"""
+
+min_metadata_refresh_interval.desc:
+"""刷新 Kafka broker 和 Kafka 主题元数据段最短时间间隔。设置太小可能会增加 Kafka 压力。"""
+
+min_metadata_refresh_interval.label:
+"""元数据刷新最小间隔"""
+
+kafka_producer.desc:
+"""Kafka Producer 配置。"""
+
+kafka_producer.label:
+"""Kafka Producer"""
+
+producer_buffer.desc:
+"""配置消息缓存的相关参数。
+
+当 EMQX 需要发送的消息超过 Kafka 处理能力，或者当 Kafka 临时下线时，EMQX 内部会将消息缓存起来。"""
+
+producer_buffer.label:
+"""消息缓存"""
+
+socket_send_buffer.desc:
+"""TCP socket 的发送缓存调优。默认值是针对高吞吐量的一个推荐值。"""
+
+socket_send_buffer.label:
+"""Socket 发送缓存大小"""
+
+desc_name.desc:
+"""桥接名字，可读描述"""
+
+desc_name.label:
+"""桥接名字"""
+
+consumer_offset_commit_interval_seconds.desc:
+"""指定 Kafka 消费组偏移量提交的时间间隔。"""
+
+consumer_offset_commit_interval_seconds.label:
+"""偏移提交间隔"""
+
+consumer_max_batch_bytes.desc:
+"""设置每次从 Kafka 拉取数据的字节数。如该配置小于 Kafka 消息的大小，可能会影响消费性能。"""
+
+consumer_max_batch_bytes.label:
+"""拉取字节数"""
+
+socket_receive_buffer.desc:
+"""TCP socket 的收包缓存调优。默认值是针对高吞吐量的一个推荐值。"""
+
+socket_receive_buffer.label:
+"""Socket 收包缓存大小"""
+
+consumer_topic_mapping.desc:
+"""指定 Kafka 主题和 MQTT 主题之间的映射关系。 应至少包含一项。"""
+
+consumer_topic_mapping.label:
+"""主题映射关系"""
+
+producer_kafka_opts.desc:
+"""Kafka 生产者参数。"""
+
+producer_kafka_opts.label:
+"""生产者参数"""
+
+kafka_topic.desc:
+"""Kafka 主题名称"""
+
+kafka_topic.label:
+"""Kafka 主题名称"""
+
+consumer_kafka_topic.desc:
+"""指定从哪个 Kafka 主题消费消息。"""
+
+consumer_kafka_topic.label:
+"""Kafka 主题"""
+
+auth_username_password.desc:
+"""基于用户名密码的认证。"""
+
+auth_username_password.label:
+"""用户名密码认证"""
+
+auth_sasl_password.desc:
+"""SASL 认证的密码。"""
+
+auth_sasl_password.label:
+"""密码"""
+
+kafka_message_timestamp.desc:
+"""生成 Kafka 消息时间戳的模版。该时间必需是一个整型数值（可以是字符串格式）例如 <code>1661326462115</code> 或 <code>'1661326462115'</code>。当所需的输入字段不存在，或不是一个整型时，则会使用当前系统时间。"""
+
+kafka_message_timestamp.label:
+"""消息的时间戳"""
+
+buffer_mode.desc:
+"""消息缓存模式。
+<code>memory</code>: 所有的消息都缓存在内存里。如果 EMQX 服务重启，缓存的消息会丢失。
+<code>disk</code>: 缓存到磁盘上。EMQX 重启后会继续发送重启前未发送完成的消息。
+<code>hybrid</code>: 先将消息缓存在内存中，当内存中的消息堆积超过一定限制（配置项 <code>segment_bytes</code> 描述了该限制）后，后续的消息会缓存到磁盘上。与 <code>memory</code> 模式一样，如果 EMQX 服务重启，缓存的消息会丢失。"""
+
+buffer_mode.label:
+"""缓存模式"""
+
+consumer_mqtt_qos.desc:
+"""转发 MQTT 消息时使用的 QoS。"""
+
+consumer_mqtt_qos.label:
+"""QoS"""
+
+consumer_key_encoding_mode.desc:
+"""通过 MQTT 转发之前，如何处理 Kafka 消息的 Key。<code>none</code> 使用 Kafka 消息中的 Key 原始值，不进行编码。  注意：在这种情况下，Key 必须是一个有效的 UTF-8 字符串。
+<code>base64</code> 对收到的密钥或值使用 base-64 编码。"""
+
+consumer_key_encoding_mode.label:
+"""Key 编码模式"""
+
+auth_gssapi_kerberos.desc:
+"""使用 GSSAPI/Kerberos 认证。"""
+
+auth_gssapi_kerberos.label:
+"""GSSAPI/Kerberos"""
+
+consumer_mqtt_opts.desc:
+"""本地 MQTT 消息转发。"""
+
+consumer_mqtt_opts.label:
+"""MQTT 转发"""
+
+auth_kerberos_principal.desc:
+"""SASL GSSAPI 认证方法的 Kerberos principal，例如 <code>client_name@MY.KERBEROS.REALM.MYDOMAIN.COM</code>注意：这里使用的 realm 需要配置在 EMQX 服务器的 /etc/krb5.conf 中"""
+
+auth_kerberos_principal.label:
+"""Kerberos Principal"""
+
+socket_opts.desc:
+"""更多 Socket 参数设置。"""
+
+socket_opts.label:
+"""Socket 参数"""
+
+consumer_mqtt_topic.desc:
+"""设置 Kafka 消息向哪个本地 MQTT 主题转发消息。"""
+
+consumer_mqtt_topic.label:
+"""MQTT主题"""
+
+consumer_offset_reset_policy.desc:
+"""如不存在偏移量历史记录或历史记录失效，消费者应使用哪个偏移量开始消费。"""
+
+consumer_offset_reset_policy.label:
+"""偏移重置策略"""
+
+partition_count_refresh_interval.desc:
+"""配置 Kafka 刷新分区数量的时间间隔。
+EMQX 发现 Kafka 分区数量增加后，会开始按 <code>partition_strategy<code> 配置，把消息发送到新的分区中。"""
+
+partition_count_refresh_interval.label:
+"""分区数量刷新间隔"""
+
+max_batch_bytes.desc:
+"""最大消息批量字节数。大多数 Kafka 环境的默认最低值是 1 MB，EMQX 的默认值比 1 MB 更小是因为需要补偿 Kafka 消息编码所需要的额外字节（尤其是当每条消息都很小的情况下）。当单个消息的大小超过该限制时，它仍然会被发送，（相当于该批量中只有单个消息）。"""
+
+max_batch_bytes.label:
+"""最大批量字节数"""
+
+required_acks.desc:
+"""设置 Kafka leader 在返回给 EMQX 确认之前需要等待多少个 follower 的确认。
+
+<code>all_isr</code>: 需要所有的在线复制者都确认。
+<code>leader_only</code>: 仅需要分区 leader 确认。
+<code>none</code>: 无需 Kafka 回复任何确认。"""
+
+required_acks.label:
+"""Kafka 确认数量"""
+
+metadata_request_timeout.desc:
+"""刷新元数据时最大等待时长。"""
+
+metadata_request_timeout.label:
+"""元数据请求超时"""
+
+desc_type.desc:
+"""桥接类型"""
+
+desc_type.label:
+"""桥接类型"""
+
+socket_nodelay.desc:
+"""设置‘true’让系统内核立即发送。否则当需要发送的内容很少时，可能会有一定延迟（默认 40 毫秒）。"""
+
+socket_nodelay.label:
+"""是否关闭延迟发送"""
+
+authentication.desc:
+"""认证参数。"""
+
+authentication.label:
+"""认证"""
+
+buffer_memory_overload_protection.desc:
+"""缓存模式是 <code>memory</code> 或 <code>hybrid</code> 时适用。当系统处于高内存压力时，从队列中丢弃旧的消息以减缓内存增长。内存压力值由配置项 <code>sysmon.os.sysmem_high_watermark</code> 决定。注意，该配置仅在 Linux 系统中有效。"""
+
+buffer_memory_overload_protection.label:
+"""内存过载保护"""
+
+auth_sasl_mechanism.desc:
+"""SASL 认证方法名称。"""
+
+auth_sasl_mechanism.label:
+"""认证方法"""
+
+config_enable.desc:
+"""启用（true）或停用该（false）Kafka 数据桥接。"""
+
+config_enable.label:
+"""启用或停用"""
+
+consumer_mqtt_payload.desc:
+"""用于转换收到的 Kafka 消息的模板。 默认情况下，它将使用 JSON 格式来序列化来自 Kafka 的所有字段。 这些字段包括：<code>headers</code>：一个包含字符串键值对的 JSON 对象。
+<code>key</code>：Kafka 消息的键（使用选择的编码方式编码）。
+<code>offset</code>：消息的偏移量。
+<code>topic</code>：Kafka 主题。
+<code>ts</code>: 消息的时间戳。
+<code>ts_type</code>：消息的时间戳类型，值可能是： <code>create</code>， <code>append</code> 或 <code>undefined</code>。
+<code>value</code>: Kafka 消息值（使用选择的编码方式编码）。"""
+
+consumer_mqtt_payload.label:
+"""MQTT Payload Template"""
+
+consumer_opts.desc:
+"""本地 MQTT 转发 和 Kafka 消费者配置。"""
+
+consumer_opts.label:
+"""MQTT 到 Kafka"""
+
+kafka_consumer.desc:
+"""Kafka 消费者配置。"""
+
+kafka_consumer.label:
+"""Kafka 消费者"""
+
+desc_config.desc:
+"""Kafka 桥接配置"""
+
+desc_config.label:
+"""Kafka 桥接配置"""
+
+consumer_value_encoding_mode.desc:
+"""通过 MQTT 转发之前，如何处理 Kafka 消息的 Value。<code>none</code> 使用 Kafka 消息中的 Value 原始值，不进行编码。  注意：在这种情况下，Value 必须是一个有效的 UTF-8 字符串。
+<code>base64</code> 对收到的 Value 使用 base-64 编码。"""
+
+consumer_value_encoding_mode.label:
+"""Value 编码模式"""
+
+buffer_per_partition_limit.desc:
+"""为每个 Kafka 分区设置的最大缓存字节数。当超过这个上限之后，老的消息会被丢弃，为新的消息腾出空间。"""
+
+buffer_per_partition_limit.label:
+"""Kafka 分区缓存上限"""
+
+bootstrap_hosts.desc:
+"""用逗号分隔的 <code>host[:port]</code> 主机列表。默认端口号为 9092。"""
+
+bootstrap_hosts.label:
+"""主机列表"""
+
+consumer_max_rejoin_attempts.desc:
+"""消费组成员允许重新加入小组的最大次数。如超过该配置次数后仍未能成功加入消费组，则会在等待一段时间后重试。"""
+
+consumer_max_rejoin_attempts.label:
+"""最大的重新加入尝试"""
+
+kafka_message_key.desc:
+"""生成 Kafka 消息 Key 的模版。如果模版生成后为空值，则会使用 Kafka 的 <code>NULL</code> ，而非空字符串。"""
+
+kafka_message_key.label:
+"""消息的 Key"""
+
+kafka_message.desc:
+"""用于生成 Kafka 消息的模版。"""
+
+kafka_message.label:
+"""Kafka 消息模版"""
+
+mqtt_topic.desc:
+"""MQTT 主题数据源由桥接指定，或留空由规则动作指定。"""
+
+mqtt_topic.label:
+"""源 MQTT 主题"""
+
+kafka_message_value.desc:
+"""生成 Kafka 消息 Value 的模版。如果模版生成后为空值，则会使用 Kafka 的 <code>NULL</code>，而非空字符串。"""
+
+kafka_message_value.label:
+"""消息的 Value"""
+
+partition_strategy.desc:
+"""设置消息发布时应该如何选择 Kafka 分区。
+
+<code>random</code>: 为每个消息随机选择一个分区。
+<code>key_dispatch</code>: Hash Kafka message key to a partition number"""
+
+partition_strategy.label:
+"""分区选择策略"""
+
+buffer_segment_bytes.desc:
+"""当缓存模式是 <code>disk</code> 或 <code>hybrid</code> 时适用。该配置用于指定缓存到磁盘上的文件的大小。"""
+
+buffer_segment_bytes.label:
+"""缓存文件大小"""
+
+consumer_kafka_opts.desc:
+"""Kafka消费者配置。"""
+
+consumer_kafka_opts.label:
+"""Kafka 消费者"""
+
+max_inflight.desc:
+"""设置 Kafka 生产者（每个分区一个）在收到 Kafka 的确认前最多发送多少个请求（批量）。调大这个值通常可以增加吞吐量，但是，当该值设置大于 1 时存在消息乱序的风险。"""
+
+max_inflight.label:
+"""飞行窗口"""
+
+auth_sasl_username.desc:
+"""SASL 认证的用户名。"""
+
+auth_sasl_username.label:
+"""用户名"""
+
+auth_kerberos_keytab_file.desc:
+"""SASL GSSAPI 认证方法的 Kerberos keytab 文件。注意：该文件需要上传到 EMQX 服务器中，且运行 EMQX 服务的系统账户需要有读取权限。"""
+
+auth_kerberos_keytab_file.label:
+"""Kerberos keytab 文件"""
+
+compression.desc:
+"""压缩方法。"""
+
+compression.label:
+"""压缩"""
+
+}
+
 emqx_bridge_mqtt_schema {
 
 config.desc:
@@ -1230,6 +1915,429 @@ desc_type.desc:
 
 desc_type.label:
 """Bridge 类型"""
+
+}
+
+emqx_bridge_opents {
+
+    config_enable.desc:
+        """启用/禁用桥接"""
+
+    config_enable.label:
+        "启用/禁用桥接"
+
+    desc_config.desc:
+        """OpenTSDB 桥接配置"""
+
+    desc_config.label:
+        "OpenTSDB 桥接配置"
+
+    desc_type.desc:
+        """Bridge 类型"""
+
+    desc_type.label:
+        "桥接类型"
+
+    desc_name.desc:
+        """桥接名字"""
+
+    desc_name.label:
+        "桥接名字"
+}
+
+emqx_bridge_opents_connector {
+
+    server.desc:
+        """服务器的地址。"""
+
+    server.label:
+        "服务器地址"
+
+    summary.desc:
+        """是否返回摘要信息。"""
+
+    summary.label:
+        "摘要信息"
+
+    details.desc:
+        """是否返回详细信息。"""
+
+    details.label:
+        "详细信息"
+}
+
+emqx_bridge_oracle {
+
+  local_topic {
+    desc = "发送到 'local_topic' 的消息都会转发到 Oracle Database。 </br>"
+           "注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"
+    label = "本地 Topic"
+  }
+
+  sql_template {
+    desc = "SQL模板。模板字符串可以包含消息元数据和有效载荷字段的占位符。占位符"
+           "的插入不需要任何检查和特殊格式化，因此必须确保插入的数值格式化和转义正确。模板字符串可以包含占位符"
+           "模板字符串可以包含消息元数据和有效载荷字段的占位符。这些占位符被插入"
+           "所以必须确保插入的值的格式正确。因此，确保插入的值格式化和转义正确是非常重要的。模板字符串可以包含占位符"
+           "模板字符串可以包含消息元数据和有效载荷字段的占位符。这些占位符被插入"
+           "所以必须确保插入的值的格式正确。确保插入的值被正确地格式化和转义。"
+    label = "SQL 模板"
+  }
+
+  server {
+    desc = "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>"
+           "主机名具有以下形式：`Host[:Port]`。<br/>"
+           "如果未指定 `[:Port]`，则使用 Oracle Database 默认端口 1521。"
+    label = "服务器地址"
+  }
+
+  sid {
+    desc = "Oracle Database Sid 名称"
+    label = "Oracle Database Sid"
+  }
+
+  service_name {
+    desc = "Oracle Database 服务名称。"
+    label = "Oracle Database 服务名称"
+  }
+
+  config_enable {
+    desc = "启用/禁用桥接"
+    label = "启用/禁用桥接"
+  }
+
+  desc_config {
+    desc = "Oracle Database 桥接配置"
+    label = "Oracle Database 桥接配置"
+  }
+
+  desc_type {
+    desc = "Bridge 类型"
+    label = "桥接类型"
+  }
+
+  desc_name {
+    desc = "桥接名字"
+    label = "桥接名字"
+  }
+
+}
+
+emqx_bridge_pgsql {
+
+config_enable.desc:
+"""启用/禁用桥接"""
+
+config_enable.label:
+"""启用/禁用桥接"""
+
+desc_config.desc:
+"""PostgreSQL 桥接配置"""
+
+desc_config.label:
+"""PostgreSQL 桥接配置"""
+
+desc_name.desc:
+"""桥接名字"""
+
+desc_name.label:
+"""桥接名字"""
+
+desc_type.desc:
+"""Bridge 类型"""
+
+desc_type.label:
+"""桥接类型"""
+
+local_topic.desc:
+"""发送到 'local_topic' 的消息都会转发到 PostgreSQL。 </br>
+注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
+
+local_topic.label:
+"""本地 Topic"""
+
+sql_template.desc:
+"""SQL 模板"""
+
+sql_template.label:
+"""SQL 模板"""
+
+}
+
+emqx_bridge_pulsar {
+
+  pulsar_producer_struct {
+    desc = "Pulsar 桥接配置"
+    label = "Pulsar 桥接配置"
+  }
+
+  desc_type {
+    desc = "桥接类型"
+    label = "桥接类型"
+  }
+
+  desc_name {
+    desc = "桥接名字，可读描述"
+    label = "桥接名字"
+  }
+
+  config_enable {
+    desc = "启用（true）或停用（false）该 Pulsar 数据桥接。"
+    label = "启用或停用"
+  }
+
+  connect_timeout {
+    desc = "建立 TCP 连接时的最大等待时长（若启用认证，这个等待时长也包含完成认证所需时间）。"
+    label = "连接超时时间"
+  }
+
+  servers {
+    desc = "以逗号分隔的 <code>scheme://host[:port]</code> 格式的 Pulsar URL 列表，"
+           "支持的 scheme 有 <code>pulsar://</code> （默认）"
+           "和<code>pulsar+ssl://</code>。默认的端口是6650。"
+    label = "服务员"
+  }
+
+  authentication {
+    desc = "认证参数。"
+    label = "认证"
+  }
+
+  producer_batch_size {
+    desc = "在一个Pulsar消息中批处理的单个请求的最大数量。"
+    label = "批量大小"
+  }
+
+  producer_compression {
+    desc = "压缩方法。"
+    label = "压缩"
+  }
+
+  producer_send_buffer {
+    desc = "TCP socket 的发送缓存调优。默认值是针对高吞吐量的一个推荐值。"
+    label = "Socket 发送缓存大小"
+  }
+
+  producer_sync_timeout {
+    desc = "同步发布时，从Pulsar接收发送回执的最长等待时间。"
+    label = "同步发布超时"
+  }
+
+  auth_basic_username {
+    desc = "基本认证用户名。"
+    label = "用户名"
+  }
+
+  auth_basic_password {
+    desc = "基本认证密码。"
+    label = "密码"
+  }
+
+  auth_token_jwt {
+    desc = "JWT认证令牌。"
+    label = "JWT"
+  }
+
+  producer_max_batch_bytes {
+    desc = "最大消息批量字节数。"
+           "大多数 Pulsar 环境的默认最低值是 5 MB，EMQX 的默认值比 5 MB 更小是因为需要"
+           "补偿 Pulsar 消息编码所需要的额外字节（尤其是当每条消息都很小的情况下）。"
+           "当单个消息的大小超过该限制时，它仍然会被发送，（相当于该批量中只有单个消息）。"
+    label = "最大批量字节数"
+  }
+
+  producer_retention_period {
+    desc = "当没有连接到Pulsar代理时，信息将被缓冲的时间。 较长的时间意味着将使用更多的内存/磁盘"
+    label = "保留期"
+  }
+
+  producer_local_topic {
+    desc = "MQTT 主题数据源由桥接指定，或留空由规则动作指定。"
+    label = "源 MQTT 主题"
+  }
+
+  producer_pulsar_topic {
+    desc = "Pulsar 主题名称"
+    label = "Pulsar 主题名称"
+  }
+
+  producer_strategy {
+    desc = "设置消息发布时应该如何选择 Pulsar 分区。\n\n"
+           "<code>random</code>: 为每个消息随机选择一个分区。\n"
+           "<code>roundrobin</code>: 依次为每条信息挑选可用的生产商。\n"
+           "<code>key_dispatch</code>: 将一批信息中的第一条信息的Pulsar信息密钥哈希到一个分区编号。"
+    label = "分区选择策略"
+  }
+
+  producer_buffer {
+    desc = "配置消息缓存的相关参数。\n\n"
+           "当 EMQX 需要发送的消息超过 Pulsar 处理能力，或者当 Pulsar 临时下线时，EMQX 内部会将消息缓存起来。"
+    label = "消息缓存"
+  }
+
+  buffer_mode {
+    desc = "消息缓存模式。\n"
+           "<code>memory</code>: 所有的消息都缓存在内存里。如果 EMQX 服务重启，缓存的消息会丢失。\n"
+           "<code>disk</code>: 缓存到磁盘上。EMQX 重启后会继续发送重启前未发送完成的消息。\n"
+           "<code>hybrid</code>: 先将消息缓存在内存中，当内存中的消息堆积超过一定限制"
+           "（配置项 <code>segment_bytes</code> 描述了该限制）后，后续的消息会缓存到磁盘上。"
+           "与 <code>memory</code> 模式一样，如果 EMQX 服务重启，缓存的消息会丢失。"
+    label = "缓存模式"
+  }
+
+  buffer_per_partition_limit {
+    desc = "为每个 Pulsar 分区设置的最大缓存字节数。当超过这个上限之后，老的消息会被丢弃，"
+           "为新的消息腾出空间。"
+    label = "Pulsar 分区缓存上限"
+  }
+
+  buffer_segment_bytes {
+    desc = "当缓存模式是 <code>disk</code> 或 <code>hybrid</code> 时适用。"
+           "该配置用于指定缓存到磁盘上的文件的大小。"
+    label = "缓存文件大小"
+  }
+
+  buffer_memory_overload_protection {
+    desc = "缓存模式是 <code>memory</code> 或 <code>hybrid</code> 时适用。"
+           "当系统处于高内存压力时，从队列中丢弃旧的消息以减缓内存增长。"
+           "内存压力值由配置项 <code>sysmon.os.sysmem_high_watermark</code> 决定。"
+           "注意，该配置仅在 Linux 系统中有效。"
+    label = "内存过载保护"
+  }
+
+  producer_message_opts {
+    desc = "用于生成 Pulsar 消息的模版。"
+    label = "Pulsar 消息模版"
+  }
+
+  producer_key_template {
+    desc = "生成 Pulsar 消息 Key 的模版。"
+    label = "消息的 Key"
+  }
+
+  producer_value_template {
+    desc = "生成 Pulsar 消息 Value 的模版。"
+    label = "消息的 Value"
+  }
+
+  auth_basic {
+    desc = "基本认证的参数。"
+    label = "基本认证参数"
+  }
+
+  auth_token {
+    desc = "令牌认证的参数。"
+    label = "Token auth params"
+  }
+
+  producer_buffer {
+    desc = "配置消息缓存的相关参数。\n\n"
+           "当 EMQX 需要发送的消息超过 Pulsar 处理能力，或者当 Pulsar 临时下线时，EMQX 内部会将消息缓存起来。"
+    label = "消息缓存"
+  }
+
+  producer_pulsar_message {
+    desc = "用于生成 Pulsar 消息的模版。"
+    label = "Pulsar 消息模版"
+  }
+
+}
+
+emqx_bridge_rocketmq {
+
+config_enable.desc:
+"""启用/禁用桥接"""
+
+config_enable.label:
+"""启用/禁用桥接"""
+
+desc_config.desc:
+"""RocketMQ 桥接配置"""
+
+desc_config.label:
+"""RocketMQ 桥接配置"""
+
+desc_name.desc:
+"""桥接名字"""
+
+desc_name.label:
+"""桥接名字"""
+
+desc_type.desc:
+"""Bridge 类型"""
+
+desc_type.label:
+"""桥接类型"""
+
+local_topic.desc:
+"""发送到 'local_topic' 的消息都会转发到 RocketMQ。 </br>
+注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
+
+local_topic.label:
+"""本地 Topic"""
+
+template.desc:
+"""模板, 默认为空，为空时将会将整个消息转发给 RocketMQ。 <br>
+            模板可以是任意带有占位符的合法字符串, 例如:<br>
+            - ${id}, ${username}, ${clientid}, ${timestamp}<br>
+            - {"id" : ${id}, "username" : ${username}}"""
+
+template.label:
+"""模板"""
+
+}
+
+emqx_bridge_rocket_connector {
+
+access_key.desc:
+"""RocketMQ 服务器的 `accessKey`。"""
+
+access_key.label:
+"""AccessKey"""
+
+refresh_interval.desc:
+"""RocketMQ 主题路由更新间隔。"""
+
+refresh_interval.label:
+"""主题路由更新间隔"""
+
+secret_key.desc:
+"""RocketMQ 服务器的 `secretKey`。"""
+
+secret_key.label:
+"""SecretKey"""
+
+security_token.desc:
+"""RocketMQ 服务器安全令牌"""
+
+security_token.label:
+"""安全令牌"""
+
+send_buffer.desc:
+"""RocketMQ 驱动的套字节发送消息的缓冲区大小"""
+
+send_buffer.label:
+"""发送消息的缓冲区大小"""
+
+servers.desc:
+"""将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>
+主机名具有以下形式：`Host[:Port]`。<br/>
+如果未指定 `[:Port]`，则使用 RocketMQ 默认端口 9876。"""
+
+servers.label:
+"""服务器地址"""
+
+sync_timeout.desc:
+"""RocketMQ 驱动同步调用的超时时间。"""
+
+sync_timeout.label:
+"""同步调用超时时间"""
+
+topic.desc:
+"""RocketMQ 主题"""
+
+topic.label:
+"""RocketMQ 主题"""
 
 }
 
@@ -1389,6 +2497,118 @@ metric_sent_success.desc:
 
 metric_sent_success.label:
 """发送成功"""
+
+}
+
+emqx_bridge_sqlserver {
+
+config_enable.desc:
+"""启用/禁用桥接"""
+
+config_enable.label:
+"""启用/禁用桥接"""
+
+desc_config.desc:
+"""Microsoft SQL Server 桥接配置"""
+
+desc_config.label:
+"""Microsoft SQL Server 桥接配置"""
+
+desc_name.desc:
+"""桥接名字"""
+
+desc_name.label:
+"""桥接名字"""
+
+desc_type.desc:
+"""Bridge 类型"""
+
+desc_type.label:
+"""桥接类型"""
+
+driver.desc:
+"""SQL Server Driver 名称"""
+
+driver.label:
+"""SQL Server Driver 名称"""
+
+local_topic.desc:
+"""发送到 'local_topic' 的消息都会转发到 Microsoft SQL Server。 </br>
+注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
+
+local_topic.label:
+"""本地 Topic"""
+
+sql_template.desc:
+"""SQL 模板"""
+
+sql_template.label:
+"""SQL 模板"""
+
+}
+
+emqx_bridge_sqlserver_connector {
+
+server.desc:
+"""将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>
+主机名具有以下形式：`Host[:Port]`。<br/>
+如果未指定 `[:Port]`，则使用 SQL Server 默认端口 1433。"""
+
+server.label:
+"""服务器地址"""
+
+}
+
+emqx_bridge_tdengine {
+
+config_enable.desc:
+"""启用/禁用桥接"""
+
+config_enable.label:
+"""启用/禁用桥接"""
+
+desc_config.desc:
+"""TDengine 桥接配置"""
+
+desc_config.label:
+"""TDengine 桥接配置"""
+
+desc_name.desc:
+"""桥接名字"""
+
+desc_name.label:
+"""桥接名字"""
+
+desc_type.desc:
+"""Bridge 类型"""
+
+desc_type.label:
+"""桥接类型"""
+
+local_topic.desc:
+"""发送到 'local_topic' 的消息都会转发到 TDengine。 </br>
+注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
+
+local_topic.label:
+"""本地 Topic"""
+
+sql_template.desc:
+"""SQL 模板"""
+
+sql_template.label:
+"""SQL 模板"""
+
+}
+
+emqx_bridge_tdengine_connector {
+
+server.desc:
+"""将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>
+主机名具有以下形式：`Host[:Port]`。<br/>
+如果未指定 `[:Port]`，则使用 TDengine 默认端口 6041。"""
+
+server.label:
+"""服务器地址"""
 
 }
 
@@ -1638,7 +2858,8 @@ common_handler_max_depth.label:
 """最大深度"""
 
 desc_log.desc:
-"""EMQX 日志记录支持日志事件的多个接收器。 每个接收器由一个_log handler_表示，可以独立配置。"""
+"""EMQX 支持同时多个日志输出，一个控制台输出，和多个文件输出。
+默认情况下，EMQX 运行在容器中，或者在 'console' 或 'foreground' 模式下运行时，会输出到 控制台，否则输出到文件。"""
 
 desc_log.label:
 """日志"""
@@ -1680,10 +2901,10 @@ rpc_port_discovery.label:
 """RPC 端口发现策略"""
 
 log_overload_kill_restart_after.desc:
-"""如果处理进程终止，它会在以指定的时间后后自动重新启动。 `infinity` 不自动重启。"""
+"""处理进程停止后，会在该延迟时间后自动重新启动。除非该值设置为 <code>infinity</code>，这会阻止任何后续的重启。"""
 
 log_overload_kill_restart_after.label:
-"""处理进程重启机制"""
+"""处理进程重启延迟"""
 
 log_file_handler_max_size.desc:
 """此参数控制日志文件轮换。 `infinity` 意味着日志文件将无限增长，否则日志文件将在达到 `max_size`（以字节为单位）时进行轮换。
@@ -2369,14 +3590,6 @@ id.label:
 }
 
 emqx_connector_http {
-
-base_url.desc:
-"""base URL 只包含host和port。<br/>
-发送HTTP请求时，真实的URL是由base URL 和 path parameter连接而成。<br/>
-示例：`http://localhost:9901/`"""
-
-base_url.label:
-"""Base Url"""
 
 body.desc:
 """HTTP请求报文主体。"""
@@ -3247,172 +4460,6 @@ local_topic.label:
 
 }
 
-emqx_ee_bridge_clickhouse {
-
-batch_value_separator.desc:
-"""默认为逗号 ','，适用于 VALUE 格式。您也可以使用其他分隔符， 请参考 [INSERT INTO 语句](https://clickhouse.com/docs/en/sql-reference/statements/insert-into)。"""
-
-batch_value_separator.label:
-"""分隔符"""
-
-config_enable.desc:
-"""启用/禁用桥接"""
-
-config_enable.label:
-"""启用/禁用桥接"""
-
-desc_config.desc:
-"""Clickhouse 桥接配置"""
-
-desc_config.label:
-"""Clickhouse 桥接配置"""
-
-desc_name.desc:
-"""桥接名字"""
-
-desc_name.label:
-"""桥接名字"""
-
-desc_type.desc:
-"""Bridge 类型"""
-
-desc_type.label:
-"""桥接类型"""
-
-local_topic.desc:
-"""发送到 'local_topic' 的消息都会转发到 Clickhouse。 </br>
-注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
-
-local_topic.label:
-"""本地 Topic"""
-
-sql_template.desc:
-"""可以使用 ${field} 占位符来引用消息与客户端上下文中的变量，请确保对应字段存在且数据格式符合预期。此处不支持 [SQL 预处理](https://docs.emqx.com/zh/enterprise/v5.0/data-integration/data-bridges.html#sql-预处理)。"""
-
-sql_template.label:
-"""SQL 模板"""
-
-}
-
-emqx_ee_bridge_dynamo {
-
-config_enable.desc:
-"""启用/禁用桥接"""
-
-config_enable.label:
-"""启用/禁用桥接"""
-
-desc_config.desc:
-"""DynamoDB 桥接配置"""
-
-desc_config.label:
-"""DynamoDB 桥接配置"""
-
-desc_name.desc:
-"""桥接名字"""
-
-desc_name.label:
-"""桥接名字"""
-
-desc_type.desc:
-"""Bridge 类型"""
-
-desc_type.label:
-"""桥接类型"""
-
-local_topic.desc:
-"""发送到 'local_topic' 的消息都会转发到 DynamoDB。 </br>
-注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
-
-local_topic.label:
-"""本地 Topic"""
-
-template.desc:
-"""模板, 默认为空，为空时将会将整个消息存入数据库"""
-
-template.label:
-"""模板"""
-
-}
-
-emqx_ee_bridge_gcp_pubsub {
-
-connect_timeout.desc:
-"""连接 HTTP 服务器的超时时间。"""
-
-connect_timeout.label:
-"""连接超时"""
-
-desc_config.desc:
-"""GCP PubSub 桥接配置"""
-
-desc_config.label:
-"""GCP PubSub 桥接配置"""
-
-desc_name.desc:
-"""桥接名字，可读描述"""
-
-desc_name.label:
-"""桥接名字"""
-
-desc_type.desc:
-"""桥接类型"""
-
-desc_type.label:
-"""桥接类型"""
-
-local_topic.desc:
-"""发送到 'local_topic' 的消息都会转发到 GCP PubSub。 </br>
-注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 GCP PubSub。"""
-
-local_topic.label:
-"""本地 Topic"""
-
-max_retries.desc:
-"""请求出错时的最大重试次数。"""
-
-max_retries.label:
-"""最大重试次数"""
-
-payload_template.desc:
-"""用于格式化外发信息的模板。 如果未定义，将以JSON格式发送所有可用的上下文。"""
-
-payload_template.label:
-"""HTTP 请求消息体模板"""
-
-pipelining.desc:
-"""正整数，设置最大可发送的异步 HTTP 请求数量。当设置为 1 时，表示每次发送完成 HTTP 请求后都需要等待服务器返回，再继续发送下一个请求。"""
-
-pipelining.label:
-"""HTTP 流水线"""
-
-pool_size.desc:
-"""连接池大小。"""
-
-pool_size.label:
-"""连接池大小"""
-
-pubsub_topic.desc:
-"""要发布消息的GCP PubSub主题。"""
-
-pubsub_topic.label:
-"""GCP PubSub 主题"""
-
-request_timeout.desc:
-"""废弃的。在缓冲区设置中配置请求超时。"""
-
-request_timeout.label:
-"""HTTP 请求超时"""
-
-service_account_json.desc:
-"""包含将与 PubSub 一起使用的 GCP 服务账户凭证的 JSON。
-当创建GCP服务账户时（如https://developers.google.com/identity/protocols/oauth2/service-account#creatinganaccount），可以选择下载 JSON 形式的凭证，然后在该配置项中使用。"""
-
-service_account_json.label:
-"""GCP 服务账户凭证"""
-
-}
-
 emqx_ee_bridge_hstreamdb {
 
 config_direction.desc:
@@ -3463,409 +4510,6 @@ payload.desc:
 
 payload.label:
 """消息内容"""
-
-}
-
-emqx_ee_bridge_influxdb {
-
-config_enable.desc:
-"""启用/禁用桥接。"""
-
-config_enable.label:
-"""启用/禁用桥接"""
-
-desc_config.desc:
-"""InfluxDB 桥接配置。"""
-
-desc_config.label:
-"""InfluxDB 桥接配置"""
-
-desc_name.desc:
-"""桥接名称。"""
-
-desc_name.label:
-"""桥接名称"""
-
-desc_type.desc:
-"""桥接类型。"""
-
-desc_type.label:
-"""桥接类型"""
-
-local_topic.desc:
-"""发送到 'local_topic' 的消息都会转发到 InfluxDB。 </br>
-注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 InfluxDB。"""
-
-local_topic.label:
-"""本地 Topic"""
-
-write_syntax.desc:
-"""使用 InfluxDB API Line Protocol 写入 InfluxDB 的数据，支持占位符</br>
-参考 [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) 及
-[InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) </br>
-TLDR: </br>
-```
-<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]
-```
-注意，整形数值占位符后需要添加一个字符 `i` 类型标识。例如 `${payload.int_value}i`"""
-
-write_syntax.label:
-"""写语句"""
-
-}
-
-emqx_ee_bridge_kafka {
-
-connect_timeout.desc:
-"""建立 TCP 连接时的最大等待时长（若启用认证，这个等待时长也包含完成认证所需时间）。"""
-
-connect_timeout.label:
-"""连接超时"""
-
-producer_opts.desc:
-"""本地 MQTT 数据源和 Kafka 桥接的配置。"""
-
-producer_opts.label:
-"""MQTT 到 Kafka"""
-
-min_metadata_refresh_interval.desc:
-"""刷新 Kafka broker 和 Kafka 主题元数据段最短时间间隔。设置太小可能会增加 Kafka 压力。"""
-
-min_metadata_refresh_interval.label:
-"""元数据刷新最小间隔"""
-
-kafka_producer.desc:
-"""Kafka Producer 配置。"""
-
-kafka_producer.label:
-"""Kafka Producer"""
-
-producer_buffer.desc:
-"""配置消息缓存的相关参数。
-
-当 EMQX 需要发送的消息超过 Kafka 处理能力，或者当 Kafka 临时下线时，EMQX 内部会将消息缓存起来。"""
-
-producer_buffer.label:
-"""消息缓存"""
-
-socket_send_buffer.desc:
-"""TCP socket 的发送缓存调优。默认值是针对高吞吐量的一个推荐值。"""
-
-socket_send_buffer.label:
-"""Socket 发送缓存大小"""
-
-desc_name.desc:
-"""桥接名字，可读描述"""
-
-desc_name.label:
-"""桥接名字"""
-
-consumer_offset_commit_interval_seconds.desc:
-"""指定 Kafka 消费组偏移量提交的时间间隔。"""
-
-consumer_offset_commit_interval_seconds.label:
-"""偏移提交间隔"""
-
-consumer_max_batch_bytes.desc:
-"""设置每次从 Kafka 拉取数据的字节数。如该配置小于 Kafka 消息的大小，可能会影响消费性能。"""
-
-consumer_max_batch_bytes.label:
-"""拉取字节数"""
-
-socket_receive_buffer.desc:
-"""TCP socket 的收包缓存调优。默认值是针对高吞吐量的一个推荐值。"""
-
-socket_receive_buffer.label:
-"""Socket 收包缓存大小"""
-
-consumer_topic_mapping.desc:
-"""指定 Kafka 主题和 MQTT 主题之间的映射关系。 应至少包含一项。"""
-
-consumer_topic_mapping.label:
-"""主题映射关系"""
-
-producer_kafka_opts.desc:
-"""Kafka 生产者参数。"""
-
-producer_kafka_opts.label:
-"""生产者参数"""
-
-kafka_topic.desc:
-"""Kafka 主题名称"""
-
-kafka_topic.label:
-"""Kafka 主题名称"""
-
-consumer_kafka_topic.desc:
-"""指定从哪个 Kafka 主题消费消息。"""
-
-consumer_kafka_topic.label:
-"""Kafka 主题"""
-
-auth_username_password.desc:
-"""基于用户名密码的认证。"""
-
-auth_username_password.label:
-"""用户名密码认证"""
-
-auth_sasl_password.desc:
-"""SASL 认证的密码。"""
-
-auth_sasl_password.label:
-"""密码"""
-
-kafka_message_timestamp.desc:
-"""生成 Kafka 消息时间戳的模版。该时间必需是一个整型数值（可以是字符串格式）例如 <code>1661326462115</code> 或 <code>'1661326462115'</code>。当所需的输入字段不存在，或不是一个整型时，则会使用当前系统时间。"""
-
-kafka_message_timestamp.label:
-"""消息的时间戳"""
-
-buffer_mode.desc:
-"""消息缓存模式。
-<code>memory</code>: 所有的消息都缓存在内存里。如果 EMQX 服务重启，缓存的消息会丢失。
-<code>disk</code>: 缓存到磁盘上。EMQX 重启后会继续发送重启前未发送完成的消息。
-<code>hybrid</code>: 先将消息缓存在内存中，当内存中的消息堆积超过一定限制（配置项 <code>segment_bytes</code> 描述了该限制）后，后续的消息会缓存到磁盘上。与 <code>memory</code> 模式一样，如果 EMQX 服务重启，缓存的消息会丢失。"""
-
-buffer_mode.label:
-"""缓存模式"""
-
-consumer_mqtt_qos.desc:
-"""转发 MQTT 消息时使用的 QoS。"""
-
-consumer_mqtt_qos.label:
-"""QoS"""
-
-consumer_key_encoding_mode.desc:
-"""通过 MQTT 转发之前，如何处理 Kafka 消息的 Key。<code>none</code> 使用 Kafka 消息中的 Key 原始值，不进行编码。  注意：在这种情况下，Key 必须是一个有效的 UTF-8 字符串。
-<code>base64</code> 对收到的密钥或值使用 base-64 编码。"""
-
-consumer_key_encoding_mode.label:
-"""Key 编码模式"""
-
-auth_gssapi_kerberos.desc:
-"""使用 GSSAPI/Kerberos 认证。"""
-
-auth_gssapi_kerberos.label:
-"""GSSAPI/Kerberos"""
-
-consumer_mqtt_opts.desc:
-"""本地 MQTT 消息转发。"""
-
-consumer_mqtt_opts.label:
-"""MQTT 转发"""
-
-auth_kerberos_principal.desc:
-"""SASL GSSAPI 认证方法的 Kerberos principal，例如 <code>client_name@MY.KERBEROS.REALM.MYDOMAIN.COM</code>注意：这里使用的 realm 需要配置在 EMQX 服务器的 /etc/krb5.conf 中"""
-
-auth_kerberos_principal.label:
-"""Kerberos Principal"""
-
-socket_opts.desc:
-"""更多 Socket 参数设置。"""
-
-socket_opts.label:
-"""Socket 参数"""
-
-consumer_mqtt_topic.desc:
-"""设置 Kafka 消息向哪个本地 MQTT 主题转发消息。"""
-
-consumer_mqtt_topic.label:
-"""MQTT主题"""
-
-consumer_offset_reset_policy.desc:
-"""如不存在偏移量历史记录或历史记录失效，消费者应使用哪个偏移量开始消费。"""
-
-consumer_offset_reset_policy.label:
-"""偏移重置策略"""
-
-partition_count_refresh_interval.desc:
-"""配置 Kafka 刷新分区数量的时间间隔。
-EMQX 发现 Kafka 分区数量增加后，会开始按 <code>partition_strategy<code> 配置，把消息发送到新的分区中。"""
-
-partition_count_refresh_interval.label:
-"""分区数量刷新间隔"""
-
-max_batch_bytes.desc:
-"""最大消息批量字节数。大多数 Kafka 环境的默认最低值是 1 MB，EMQX 的默认值比 1 MB 更小是因为需要补偿 Kafka 消息编码所需要的额外字节（尤其是当每条消息都很小的情况下）。当单个消息的大小超过该限制时，它仍然会被发送，（相当于该批量中只有单个消息）。"""
-
-max_batch_bytes.label:
-"""最大批量字节数"""
-
-required_acks.desc:
-"""设置 Kafka leader 在返回给 EMQX 确认之前需要等待多少个 follower 的确认。
-
-<code>all_isr</code>: 需要所有的在线复制者都确认。
-<code>leader_only</code>: 仅需要分区 leader 确认。
-<code>none</code>: 无需 Kafka 回复任何确认。"""
-
-required_acks.label:
-"""Kafka 确认数量"""
-
-metadata_request_timeout.desc:
-"""刷新元数据时最大等待时长。"""
-
-metadata_request_timeout.label:
-"""元数据请求超时"""
-
-desc_type.desc:
-"""桥接类型"""
-
-desc_type.label:
-"""桥接类型"""
-
-socket_nodelay.desc:
-"""设置‘true’让系统内核立即发送。否则当需要发送的内容很少时，可能会有一定延迟（默认 40 毫秒）。"""
-
-socket_nodelay.label:
-"""是否关闭延迟发送"""
-
-authentication.desc:
-"""认证参数。"""
-
-authentication.label:
-"""认证"""
-
-buffer_memory_overload_protection.desc:
-"""缓存模式是 <code>memory</code> 或 <code>hybrid</code> 时适用。当系统处于高内存压力时，从队列中丢弃旧的消息以减缓内存增长。内存压力值由配置项 <code>sysmon.os.sysmem_high_watermark</code> 决定。注意，该配置仅在 Linux 系统中有效。"""
-
-buffer_memory_overload_protection.label:
-"""内存过载保护"""
-
-auth_sasl_mechanism.desc:
-"""SASL 认证方法名称。"""
-
-auth_sasl_mechanism.label:
-"""认证方法"""
-
-config_enable.desc:
-"""启用（true）或停用该（false）Kafka 数据桥接。"""
-
-config_enable.label:
-"""启用或停用"""
-
-consumer_mqtt_payload.desc:
-"""用于转换收到的 Kafka 消息的模板。 默认情况下，它将使用 JSON 格式来序列化来自 Kafka 的所有字段。 这些字段包括：<code>headers</code>：一个包含字符串键值对的 JSON 对象。
-<code>key</code>：Kafka 消息的键（使用选择的编码方式编码）。
-<code>offset</code>：消息的偏移量。
-<code>topic</code>：Kafka 主题。
-<code>ts</code>: 消息的时间戳。
-<code>ts_type</code>：消息的时间戳类型，值可能是： <code>create</code>， <code>append</code> 或 <code>undefined</code>。
-<code>value</code>: Kafka 消息值（使用选择的编码方式编码）。"""
-
-consumer_mqtt_payload.label:
-"""MQTT Payload Template"""
-
-consumer_opts.desc:
-"""本地 MQTT 转发 和 Kafka 消费者配置。"""
-
-consumer_opts.label:
-"""MQTT 到 Kafka"""
-
-kafka_consumer.desc:
-"""Kafka 消费者配置。"""
-
-kafka_consumer.label:
-"""Kafka 消费者"""
-
-desc_config.desc:
-"""Kafka 桥接配置"""
-
-desc_config.label:
-"""Kafka 桥接配置"""
-
-consumer_value_encoding_mode.desc:
-"""通过 MQTT 转发之前，如何处理 Kafka 消息的 Value。<code>none</code> 使用 Kafka 消息中的 Value 原始值，不进行编码。  注意：在这种情况下，Value 必须是一个有效的 UTF-8 字符串。
-<code>base64</code> 对收到的 Value 使用 base-64 编码。"""
-
-consumer_value_encoding_mode.label:
-"""Value 编码模式"""
-
-buffer_per_partition_limit.desc:
-"""为每个 Kafka 分区设置的最大缓存字节数。当超过这个上限之后，老的消息会被丢弃，为新的消息腾出空间。"""
-
-buffer_per_partition_limit.label:
-"""Kafka 分区缓存上限"""
-
-bootstrap_hosts.desc:
-"""用逗号分隔的 <code>host[:port]</code> 主机列表。默认端口号为 9092。"""
-
-bootstrap_hosts.label:
-"""主机列表"""
-
-consumer_max_rejoin_attempts.desc:
-"""消费组成员允许重新加入小组的最大次数。如超过该配置次数后仍未能成功加入消费组，则会在等待一段时间后重试。"""
-
-consumer_max_rejoin_attempts.label:
-"""最大的重新加入尝试"""
-
-kafka_message_key.desc:
-"""生成 Kafka 消息 Key 的模版。如果模版生成后为空值，则会使用 Kafka 的 <code>NULL</code> ，而非空字符串。"""
-
-kafka_message_key.label:
-"""消息的 Key"""
-
-kafka_message.desc:
-"""用于生成 Kafka 消息的模版。"""
-
-kafka_message.label:
-"""Kafka 消息模版"""
-
-mqtt_topic.desc:
-"""指定 MQTT 主题作为桥接的数据源。 若该桥接用于规则的动作，则必须将该配置项删除。"""
-
-mqtt_topic.label:
-"""源 MQTT 主题"""
-
-kafka_message_value.desc:
-"""生成 Kafka 消息 Value 的模版。如果模版生成后为空值，则会使用 Kafka 的 <code>NULL</code>，而非空字符串。"""
-
-kafka_message_value.label:
-"""消息的 Value"""
-
-partition_strategy.desc:
-"""设置消息发布时应该如何选择 Kafka 分区。
-
-<code>random</code>: 为每个消息随机选择一个分区。
-<code>key_dispatch</code>: Hash Kafka message key to a partition number"""
-
-partition_strategy.label:
-"""分区选择策略"""
-
-buffer_segment_bytes.desc:
-"""当缓存模式是 <code>disk</code> 或 <code>hybrid</code> 时适用。该配置用于指定缓存到磁盘上的文件的大小。"""
-
-buffer_segment_bytes.label:
-"""缓存文件大小"""
-
-consumer_kafka_opts.desc:
-"""Kafka消费者配置。"""
-
-consumer_kafka_opts.label:
-"""Kafka 消费者"""
-
-max_inflight.desc:
-"""设置 Kafka 生产者（每个分区一个）在收到 Kafka 的确认前最多发送多少个请求（批量）。调大这个值通常可以增加吞吐量，但是，当该值设置大于 1 时存在消息乱序的风险。"""
-
-max_inflight.label:
-"""飞行窗口"""
-
-auth_sasl_username.desc:
-"""SASL 认证的用户名。"""
-
-auth_sasl_username.label:
-"""用户名"""
-
-auth_kerberos_keytab_file.desc:
-"""SASL GSSAPI 认证方法的 Kerberos keytab 文件。注意：该文件需要上传到 EMQX 服务器中，且运行 EMQX 服务的系统账户需要有读取权限。"""
-
-auth_kerberos_keytab_file.label:
-"""Kerberos keytab 文件"""
-
-compression.desc:
-"""压缩方法。"""
-
-compression.label:
-"""压缩"""
 
 }
 
@@ -3968,47 +4612,6 @@ sql_template.label:
 
 }
 
-emqx_ee_bridge_pgsql {
-
-config_enable.desc:
-"""启用/禁用桥接"""
-
-config_enable.label:
-"""启用/禁用桥接"""
-
-desc_config.desc:
-"""PostgreSQL 桥接配置"""
-
-desc_config.label:
-"""PostgreSQL 桥接配置"""
-
-desc_name.desc:
-"""桥接名字"""
-
-desc_name.label:
-"""桥接名字"""
-
-desc_type.desc:
-"""Bridge 类型"""
-
-desc_type.label:
-"""桥接类型"""
-
-local_topic.desc:
-"""发送到 'local_topic' 的消息都会转发到 PostgreSQL。 </br>
-注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
-
-local_topic.label:
-"""本地 Topic"""
-
-sql_template.desc:
-"""SQL 模板"""
-
-sql_template.label:
-"""SQL 模板"""
-
-}
-
 emqx_ee_bridge_redis {
 
 command_template.desc:
@@ -4051,88 +4654,6 @@ local_topic.label:
 
 }
 
-emqx_ee_bridge_rocketmq {
-
-config_enable.desc:
-"""启用/禁用桥接"""
-
-config_enable.label:
-"""启用/禁用桥接"""
-
-desc_config.desc:
-"""RocketMQ 桥接配置"""
-
-desc_config.label:
-"""RocketMQ 桥接配置"""
-
-desc_name.desc:
-"""桥接名字"""
-
-desc_name.label:
-"""桥接名字"""
-
-desc_type.desc:
-"""Bridge 类型"""
-
-desc_type.label:
-"""桥接类型"""
-
-local_topic.desc:
-"""发送到 'local_topic' 的消息都会转发到 RocketMQ。 </br>
-注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
-
-local_topic.label:
-"""本地 Topic"""
-
-template.desc:
-"""模板, 默认为空，为空时将会将整个消息转发给 RocketMQ"""
-
-template.label:
-"""模板"""
-
-}
-
-emqx_ee_bridge_tdengine {
-
-config_enable.desc:
-"""启用/禁用桥接"""
-
-config_enable.label:
-"""启用/禁用桥接"""
-
-desc_config.desc:
-"""TDengine 桥接配置"""
-
-desc_config.label:
-"""TDengine 桥接配置"""
-
-desc_name.desc:
-"""桥接名字"""
-
-desc_name.label:
-"""桥接名字"""
-
-desc_type.desc:
-"""Bridge 类型"""
-
-desc_type.label:
-"""桥接类型"""
-
-local_topic.desc:
-"""发送到 'local_topic' 的消息都会转发到 TDengine。 </br>
-注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
-
-local_topic.label:
-"""本地 Topic"""
-
-sql_template.desc:
-"""SQL 模板"""
-
-sql_template.label:
-"""SQL 模板"""
-
-}
-
 emqx_ee_connector_cassa {
 
 keyspace.desc:
@@ -4148,32 +4669,6 @@ servers.desc:
 
 servers.label:
 """Servers"""
-
-}
-
-emqx_ee_connector_clickhouse {
-
-base_url.desc:
-"""你想连接到的Clickhouse服务器的HTTP URL（例如http://myhostname:8123）。"""
-
-base_url.label:
-"""服务器 URL"""
-
-connect_timeout.desc:
-"""连接HTTP服务器的超时时间。"""
-
-connect_timeout.label:
-"""连接超时"""
-
-}
-
-emqx_ee_connector_dynamo {
-
-url.desc:
-"""DynamoDB 的地址。"""
-
-url.label:
-"""DynamoDB 地址"""
 
 }
 
@@ -4223,123 +4718,105 @@ url.label:
 
 }
 
-emqx_ee_connector_influxdb {
+emqx_ee_schema_registry_http_api {
 
-bucket.desc:
-"""InfluxDB bucket 名称。"""
+desc_param_path_schema_name.desc:
+"""模式名称"""
 
-bucket.label:
-"""Bucket"""
+desc_param_path_schema_name.label:
+"""模式名称"""
 
-database.desc:
-"""InfluxDB 数据库。"""
+desc_schema_registry_api_delete.desc:
+"""删除一个模式"""
 
-database.label:
-"""数据库"""
+desc_schema_registry_api_delete.label:
+"""删除模式"""
 
-influxdb_api_v1.desc:
-"""InfluxDB HTTP API 协议。支持 Influxdb v1.8 以及之前的版本。"""
+desc_schema_registry_api_get.desc:
+"""通过名称获取模式"""
 
-influxdb_api_v1.label:
-"""HTTP API 协议"""
+desc_schema_registry_api_get.label:
+"""获取模式"""
 
-influxdb_api_v2.desc:
-"""InfluxDB HTTP API V2 协议。支持 Influxdb v2.0 以及之后的版本。"""
+desc_schema_registry_api_list.desc:
+"""列出所有注册的模式"""
 
-influxdb_api_v2.label:
-"""HTTP API V2 协议"""
+desc_schema_registry_api_list.label:
+"""列表模式"""
 
-org.desc:
-"""InfluxDB 组织名称。"""
+desc_schema_registry_api_post.desc:
+"""注册一个新的模式"""
 
-org.label:
-"""组织"""
+desc_schema_registry_api_post.label:
+"""注册模式"""
 
-password.desc:
-"""InfluxDB 密码。"""
+desc_schema_registry_api_put.desc:
+"""更新一个现有的模式"""
 
-password.label:
-"""密码"""
-
-precision.desc:
-"""InfluxDB 时间精度。"""
-
-precision.label:
-"""时间精度"""
-
-protocol.desc:
-"""InfluxDB 协议。HTTP API 或 HTTP API V2。"""
-
-protocol.label:
-"""协议"""
-
-server.desc:
-"""将要连接的 IPv4 或 IPv6 地址，或者主机名。</br>
-主机名具有以下形式：`Host[:Port]`。</br>
-如果未指定 `[:Port]`，则使用 InfluxDB 默认端口 8086。"""
-
-server.label:
-"""服务器地址"""
-
-token.desc:
-"""InfluxDB token。"""
-
-token.label:
-"""Token"""
-
-username.desc:
-"""InfluxDB 用户名。"""
-
-username.label:
-"""用户名"""
+desc_schema_registry_api_put.label:
+"""更新模式"""
 
 }
 
-emqx_ee_connector_rocketmq {
+emqx_ee_schema_registry_schema {
 
-refresh_interval.desc:
-"""RocketMQ 主题路由更新间隔。"""
+avro_type.desc:
+"""[阿帕奇-阿夫罗](https://avro.apache.org/) 序列化格式。"""
 
-refresh_interval.label:
-"""主题路由更新间隔"""
+avro_type.label:
+"""阿帕奇-阿夫罗"""
 
-security_token.desc:
-"""RocketMQ 服务器安全令牌"""
+protobuf_type.desc:
+"""[协议缓冲器](https://protobuf.dev/) 序列化格式。"""
 
-security_token.label:
-"""安全令牌"""
+protobuf_type.label:
+"""协议缓冲器"""
 
-send_buffer.desc:
-"""RocketMQ 驱动的套字节发送消息的缓冲区大小"""
+schema_description.desc:
+"""对该模式的描述。"""
 
-send_buffer.label:
-"""发送消息的缓冲区大小"""
+schema_description.label:
+"""模式描述"""
 
-server.desc:
-"""将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>
-主机名具有以下形式：`Host[:Port]`。<br/>
-如果未指定 `[:Port]`，则使用 RocketMQ 默认端口 9876。"""
+schema_name.desc:
+"""模式的一个名称，将作为其标识符。"""
 
-server.label:
-"""服务器地址"""
+schema_name.label:
+"""模式名称"""
 
-topic.desc:
-"""RocketMQ 主题"""
+schema_registry_root.desc:
+"""模式注册表的配置。"""
 
-topic.label:
-"""RocketMQ 主题"""
+schema_registry_root.label:
+"""模式注册表"""
+
+schema_registry_schemas.desc:
+"""注册的模式。"""
+
+schema_registry_schemas.label:
+"""注册的模式"""
+
+schema_source.desc:
+"""模式的源文本。"""
+
+schema_source.label:
+"""模式来源"""
+
+schema_type.desc:
+"""模式类型。"""
+
+schema_type.label:
+"""模式类型"""
 
 }
 
-emqx_ee_connector_tdengine {
+emqx_eviction_agent_api {
 
-server.desc:
-"""将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>
-主机名具有以下形式：`Host[:Port]`。<br/>
-如果未指定 `[:Port]`，则使用 TDengine 默认端口 6041。"""
+node_eviction_status_get.desc:
+"""获取节点驱逐状态"""
 
-server.label:
-"""服务器地址"""
+node_eviction_status_get.label:
+"""节点驱逐状态"""
 
 }
 
@@ -5064,30 +5541,18 @@ burst.desc:
 burst.label:
 """突发速率"""
 
-bytes_in.desc:
+bytes.desc:
 """流入字节率控制器。
 这个是用来控制当前节点上的数据流入的字节率，每条消息将会消耗和其二进制大小等量的令牌，当达到最大速率后，会话将会被限速甚至被强制挂起一小段时间"""
 
-bytes_in.label:
+bytes.label:
 """流入字节率"""
-
-capacity.desc:
-"""该令牌桶的容量"""
-
-capacity.label:
-"""容量"""
 
 client.desc:
 """对桶的每个使用者的速率控制设置"""
 
 client.label:
 """每个使用者的限制"""
-
-client_bucket_capacity.desc:
-"""每个使用者的令牌容量上限"""
-
-client_bucket_capacity.label:
-"""容量"""
 
 connection.desc:
 """连接速率控制器。
@@ -5129,19 +5594,19 @@ max_retry_time.desc:
 max_retry_time.label:
 """最大重试时间"""
 
-message_in.desc:
-"""流入速率控制器。
-这个用来控制当前节点上的消息流入速率，当达到最大速率后，会话将会被限速甚至被强制挂起一小段时间"""
-
-message_in.label:
-"""消息流入速率"""
-
 message_routing.desc:
 """消息派发速率控制器。
 这个用来控制当前节点内的消息派发速率，当达到最大速率后，新的推送将会被拒绝"""
 
 message_routing.label:
 """消息派发"""
+
+messages.desc:
+"""流入速率控制器。
+这个用来控制当前节点上的消息流入速率，当达到最大速率后，会话将会被限速甚至被强制挂起一小段时间"""
+
+messages.label:
+"""消息流入速率"""
 
 rate.desc:
 """桶的令牌生成速率"""
@@ -5434,23 +5899,35 @@ topic_name.desc:
 emqx_mgmt_api_status {
 
 get_status_api.desc:
-"""作为节点的健康检查。 返回一个纯文本的响应，描述节点的状态。
+"""节点的健康检查。 返回节点状态的描述信息。
 
 如果 EMQX 应用程序已经启动并运行，返回状态代码 200，否则返回 503。
 
 这个API是在v5.0.10中引入的。
-GET `/status`端点（没有`/api/...`前缀）也是这个端点的一个别名，工作方式相同。 这个别名从v5.0.0开始就有了。"""
+GET `/status`端点（没有`/api/...`前缀）也是这个端点的一个别名，工作方式相同。 这个别名从v5.0.0开始就有了。
+自 v5.0.25 和 e5.0.4 开始，可以通过指定 'format' 参数来得到 JSON 格式的信息。"""
 
 get_status_api.label:
 """服务健康检查"""
 
 get_status_response200.desc:
-"""Node emqx@127.0.0.1 is started
+"""如果 'format' 参数为 'json'，则返回如下JSON：<br/>
+{
+  "rel_vsn": "v5.0.23",
+  "node_name": "emqx@127.0.0.1",
+  "broker_status": "started",
+  "app_status": "running"
+}
+<br/>
+否则返回2行自由格式的文本，第一行描述节点的状态，第二行描述 EMQX 应用运行状态。例如：<br/>
+Node emqx@127.0.0.1 is started
 emqx is running"""
 
 get_status_response503.desc:
-"""Node emqx@127.0.0.1 is stopped
-emqx is not_running"""
+"""如果 EMQX 应用暂时没有启动，或正在重启，则可能返回 'emqx is not_running'"""
+
+get_status_api_format.desc:
+"""指定返回的内容格式。使用 'text'（默认）则返回自由格式的字符串； 'json' 则返回 JSON 格式。"""
 
 }
 
@@ -5528,6 +6005,294 @@ mqttsn_predefined_topic.desc:
 
 mqttsn_subs_resume.desc:
 """在会话被重用后，网关是否主动向客户端注册对已订阅主题名称"""
+
+}
+
+emqx_node_rebalance_api {
+
+load_rebalance_status.desc:
+"""获取当前节点的重平衡状态"""
+
+load_rebalance_status.label:
+"""获取重平衡状态"""
+
+load_rebalance_global_status.desc:
+"""获取集群中所有重平衡/疏散任务的状态"""
+
+load_rebalance_global_status.label:
+"""获取全局重平衡状态"""
+
+load_rebalance_availability_check.desc:
+"""检查节点是否正在被执行重平衡或疏散"""
+
+load_rebalance_availability_check.label:
+"""可用性检查"""
+
+load_rebalance_start.desc:
+"""启动重平衡任务"""
+
+load_rebalance_start.label:
+"""启动重平衡"""
+
+load_rebalance_stop.desc:
+"""停止重平衡任务"""
+
+load_rebalance_stop.label:
+"""停止重平衡"""
+
+load_rebalance_evacuation_start.desc:
+"""启动疏散任务"""
+
+load_rebalance_evacuation_start.label:
+"""启动疏散"""
+
+load_rebalance_evacuation_stop.desc:
+"""停止疏散任务"""
+
+load_rebalance_evacuation_stop.label:
+"""停止疏散"""
+
+param_node.desc:
+"""节点名称"""
+
+param_node.label:
+"""节点名称"""
+
+wait_health_check.desc:
+"""启动重平衡任务前等待的时间，单位为秒"""
+
+wait_health_check.label:
+"""等待健康检查"""
+
+conn_evict_rate.desc:
+"""每秒迁出连接数"""
+
+conn_evict_rate.label:
+"""迁出速率"""
+
+sess_evict_rate.desc:
+"""每秒迁出会话数"""
+
+sess_evict_rate.label:
+"""会话迁出速率"""
+
+abs_conn_threshold.desc:
+"""当前节点上的连接数与迁入节点上的平均连接数的差值（绝对值）上限，低于该差值时停止迁移连接。"""
+
+abs_conn_threshold.label:
+"""连接数差值"""
+
+rel_conn_threshold.desc:
+"""当前节点上的连接数与迁入节点上的平均连接数的比值上限，低于该比值时停止迁移连接。"""
+
+rel_conn_threshold.label:
+"""连接数比值"""
+
+abs_sess_threshold.desc:
+"""当前节点上的会话数与迁入节点上的平均会话数之间的差值（绝对值）上限，低于该差值时停止迁移会话。"""
+
+abs_sess_threshold.label:
+"""会话数差值"""
+
+rel_sess_threshold.desc:
+"""当前节点上的会话数与迁入节点上的平均会话数的比值上限，低于该比值时停止迁移会话。"""
+
+rel_sess_threshold.label:
+"""会话数比值"""
+
+wait_takeover.desc:
+"""开始会话疏散任务之前的等待时间，以秒为单位"""
+
+wait_takeover.label:
+"""等待接管"""
+
+redirect_to.desc:
+"""将客户端重定向到的服务器参考（MQTTv5 服务器重定向）"""
+
+redirect_to.label:
+"""重定向至"""
+
+migrate_to.desc:
+"""接受会话迁入的节点"""
+
+migrate_to.label:
+"""迁入节点"""
+
+rebalance_nodes.desc:
+"""参与重平衡的节点"""
+
+rebalance_nodes.label:
+"""重新平衡节点"""
+
+local_status_enabled.desc:
+"""节点是否正在执行重平衡疏散任务"""
+
+local_status_enabled.label:
+"""运行状态"""
+
+local_status_process.desc:
+"""正在节点上执行的任务：'evacuation' 或 'rebalance'"""
+
+local_status_process.label:
+"""节点任务"""
+
+local_status_state.desc:
+"""正在节点上执行的任务的状态"""
+
+local_status_state.label:
+"""重新平衡/疏散当前状态"""
+
+local_status_coordinator_node.desc:
+"""协调分配重平衡任务的节点"""
+
+local_status_coordinator_node.label:
+"""协调节点"""
+
+local_status_connection_eviction_rate.desc:
+"""每秒迁出的连接数"""
+
+local_status_connection_eviction_rate.label:
+"""连接迁出速率"""
+
+local_status_session_eviction_rate.desc:
+"""每秒迁出的会话数"""
+
+local_status_session_eviction_rate.label:
+"""会话迁出速率"""
+
+local_status_connection_goal.desc:
+"""节点在重新平衡/疏散任务完成后预期拥有的连接数"""
+
+local_status_connection_goal.label:
+"""连接数目标"""
+
+local_status_session_goal.desc:
+"""疏散任务完成后节点预期的会话数"""
+
+local_status_session_goal.label:
+"""会话数目标"""
+
+local_status_disconnected_session_goal.desc:
+"""重新平衡任务完成后节点预期的无连接的会话数"""
+
+local_status_disconnected_session_goal.label:
+"""预期无连接会话数"""
+
+local_status_session_recipients.desc:
+"""会话被迁入的节点列表"""
+
+local_status_session_recipients.label:
+"""会话迁入节点"""
+
+local_status_recipients.desc:
+"""在重新平衡期间接受连接/会话迁入的节点列表"""
+
+local_status_recipients.label:
+"""接受迁入节点"""
+
+local_status_stats.desc:
+"""疏散/重平衡的统计"""
+
+local_status_stats.label:
+"""统计数据"""
+
+status_stats_initial_connected.desc:
+"""疏散/重新平衡任务开始之前节点上的连接数"""
+
+status_stats_initial_connected.label:
+"""初始连接"""
+
+status_stats_current_connected.desc:
+"""节点上的当前连接数"""
+
+status_stats_current_connected.label:
+"""当前连接"""
+
+status_stats_initial_sessions.desc:
+"""疏散/重新平衡任务开始之前节点上的会话数"""
+
+status_stats_initial_sessions.label:
+"""初始会话"""
+
+status_stats_current_sessions.desc:
+"""节点上的当前会话数"""
+
+status_stats_current_sessions.label:
+"""当前会话"""
+
+status_stats_current_disconnected_sessions.desc:
+"""节点上当前无连接的会话数"""
+
+status_stats_current_disconnected_sessions.label:
+"""当前无连接会话"""
+
+coordinator_status_donors.desc:
+"""正在迁出连接/会话的节点列表"""
+
+coordinator_status_donors.label:
+"""迁出节点"""
+
+coordinator_status_donor_conn_avg.desc:
+"""每个迁出节点的平均连接数"""
+
+coordinator_status_donor_conn_avg.label:
+"""迁出节点连接平均值"""
+
+coordinator_status_donor_sess_avg.desc:
+"""每个迁出节点的平均会话数"""
+
+coordinator_status_donor_sess_avg.label:
+"""迁出节点会话平均数"""
+
+coordinator_status_node.desc:
+"""协调分配疏散/重平衡任务的节点"""
+
+coordinator_status_node.label:
+"""协调节点"""
+
+evacuation_status_node.desc:
+"""正在迁出的节点"""
+
+evacuation_status_node.label:
+"""疏散节点"""
+
+global_status_evacuations.desc:
+"""正在迁出的节点列表"""
+
+global_status_evacuations.label:
+"""疏散"""
+
+global_status_rebalances.desc:
+"""协调重平衡的节点列表"""
+
+global_status_rebalances.label:
+"""重平衡"""
+
+empty_response.desc:
+"""响应为空"""
+
+empty_response.label:
+"""空响应"""
+}
+
+emqx_oracle {
+
+  server {
+    desc = "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>"
+           "主机名具有以下形式：`Host[:Port]`。<br/>"
+           "如果未指定 `[:Port]`，则使用 Oracle Database 默认端口 1521。"
+    label = "服务器地址"
+  }
+
+  sid {
+    desc = "Oracle Database Sid 名称"
+    label = "Oracle Database Sid"
+  }
+
+  service_name {
+    desc = "Oracle Database 服务名称。"
+    label = "Oracle Database 服务名称"
+  }
 
 }
 
@@ -5675,6 +6440,19 @@ batch_time.desc:
 batch_time.label:
 """批量等待最大间隔"""
 
+buffer_mode.desc:
+"""队列操作模式。
+<code>memory_only</code>: 所有的消息都缓存在内存里。<code>volatile_offload</code>: 先将消息缓存在内存中，当内存中的消息堆积超过一定限制（配置项 <code>buffer_seg_bytes</code> 指定该限制）后， 消息会开始缓存到磁盘上。"""
+
+buffer_mode.label:
+"""缓存模式"""
+
+buffer_seg_bytes.desc:
+"""当缓存模式是 <code>volatile_offload</code> 时适用。该配置用于指定缓存到磁盘上的文件的大小。"""
+
+buffer_seg_bytes.label:
+"""缓存文件大小"""
+
 creation_opts.desc:
 """资源启动相关的选项。"""
 
@@ -5705,10 +6483,10 @@ inflight_window.desc:
 inflight_window.label:
 """请求飞行队列窗口"""
 
-max_queue_bytes.desc:
+max_buffer_bytes.desc:
 """每个缓存 worker 允许使用的最大字节数。"""
 
-max_queue_bytes.label:
+max_buffer_bytes.label:
 """缓存队列最大长度"""
 
 query_mode.desc:
@@ -6007,6 +6785,12 @@ rs_event.desc:
 rs_event.label:
 """事件主题"""
 
+root_rule_engine.desc:
+"""规则引擎配置。该 API 可用于查看和修改规则引擎相关的一些设置。但不可用于规则，如需查看或修改规则，请调用 '/rules' API 进行操作。"""
+
+root_rule_engine.label:
+"""规则引擎配置"""
+
 event_sockname.desc:
 """本地监听的 IP 地址和端口"""
 
@@ -6263,6 +7047,12 @@ api1.desc:
 api1.label:
 """列出所有规则"""
 
+api10.desc:
+"""更新规则引擎配置。"""
+
+api10.label:
+"""更新配置"""
+
 api1_enable.desc:
 """根据规则是否开启条件过滤"""
 
@@ -6280,6 +7070,12 @@ api1_like_id.desc:
 
 api1_match_from.desc:
 """根据规则来源 Topic 过滤, 使用 MQTT Topic 匹配"""
+
+api1_resp.desc:
+"""规则列表"""
+
+api1_resp.label:
+"""列出所有规则"""
 
 api2.desc:
 """通过指定 ID 创建规则"""
@@ -6315,7 +7111,7 @@ api6.desc:
 """通过 ID 删除集群里所有节点上的规则"""
 
 api6.label:
-"""删除集群规则"""
+"""基于给定 ID 新建一条规则"""
 
 api7.desc:
 """重置规则计数"""
@@ -6329,11 +7125,11 @@ api8.desc:
 api8.label:
 """测试规则"""
 
-desc9.desc:
-"""列出所有规则"""
+api9.desc:
+"""获取规则引擎配置。"""
 
-desc9.label:
-"""列出所有规则"""
+api9.label:
+"""获取配置"""
 
 }
 
@@ -6732,9 +7528,6 @@ fields_tcp_opts_backlog.desc:
 fields_tcp_opts_backlog.label:
 """TCP 连接队列长度"""
 
-broker_route_batch_clean.desc:
-"""是否开启批量清除路由。"""
-
 fields_mqtt_quic_listener_initial_window_packets.desc:
 """一个连接的初始拥堵窗口的大小（以包为单位）。默认值：10"""
 
@@ -6848,11 +7641,11 @@ fields_mqtt_quic_listener_retry_memory_limit.desc:
 fields_mqtt_quic_listener_retry_memory_limit.label:
 """重试内存限制"""
 
-force_shutdown_max_message_queue_len.desc:
-"""消息队列的最大长度。"""
+force_shutdown_max_mailbox_size.desc:
+"""每个在线客户端在 EMQX 服务器中都是独立的一个进程。该配置可以设为单个进程的邮箱消息队列设置最大长度，当超过该上限时，客户端会被强制下线。"""
 
-force_shutdown_max_message_queue_len.label:
-"""进程邮箱消息队列的最大长度"""
+force_shutdown_max_mailbox_size.label:
+"""进程邮箱消息数上限"""
 
 sys_heartbeat_interval.desc:
 """发送心跳系统消息的间隔时间，它包括：
@@ -7370,10 +8163,10 @@ sysmon_vm_long_schedule.desc:
 sysmon_vm_long_schedule.label:
 """启用长调度监控"""
 
-mqtt_keepalive_backoff.desc:
+mqtt_keepalive_multiplier.desc:
 """EMQX 判定客户端保活超时使用的阈值系数。计算公式为：Keep Alive * Backoff * 2"""
 
-mqtt_keepalive_backoff.label:
+mqtt_keepalive_multiplier.label:
 """保活超时阈值系数"""
 
 force_gc_bytes.desc:
@@ -7837,9 +8630,10 @@ persistent_session_store_message_gc_interval.label:
 """消息清理间隔"""
 
 broker_shared_dispatch_ack_enabled.desc:
-"""该配置项已废弃，会在 5.1 中移除。
+"""该配置项已废弃。
 启用/禁用 QoS 1 和 QoS 2 消息的共享派发确认。
-开启后，允许将消息从未及时回复 ACK 的订阅者 （例如，客户端离线） 重新派发给另外一个订阅者。"""
+该配置最初设计用于避免将消息派发给客户端离线状态下的会话中去。
+但新版本中，已做增强：在一个会话结束时，会话中的消息会重新派发到组内的其他会话中 -- 使这个老配置失去存在的意义。"""
 
 base_listener_enable_authn.desc:
 """配置 <code>true</code> （默认值）启用客户端进行身份认证，通过检查认配置的认认证器链来决定是否允许接入。
@@ -8046,47 +8840,6 @@ top_k_num.desc:
 
 }
 
-emqx_statsd_api {
-
-get_statsd_config_api.desc:
-"""列出 StatsD 指标采集和推送服务的的配置。"""
-
-update_statsd_config_api.desc:
-"""更新 StatsD 指标采集和推送服务的配置。"""
-
-}
-
-emqx_statsd_schema {
-
-enable.desc:
-"""启用或禁用 StatsD 指标采集和推送服务。"""
-
-flush_interval.desc:
-"""指标的推送间隔。"""
-
-get_statsd_config_api.desc:
-"""列出 StatsD 指标采集和推送服务的的配置。"""
-
-sample_interval.desc:
-"""指标的采样间隔。"""
-
-server.desc:
-"""StatsD 服务器地址。"""
-
-statsd.desc:
-"""StatsD 指标采集与推送配置。"""
-
-statsd.label:
-"""StatsD"""
-
-tags.desc:
-"""指标的标签。"""
-
-update_statsd_config_api.desc:
-"""更新 StatsD 指标采集和推送服务的配置。"""
-
-}
-
 emqx_stomp_schema {
 
 stom_frame_max_body_length.desc:
@@ -8156,6 +8909,15 @@ update_telemetry_status_api.desc:
 uuid.desc:
 """获取 UUID"""
 
+}
+
+emqx_telemetry_schema {
+telemetry_root_doc.desc:
+"""配置 EMQX 节点向EMQ 的遥测服务器发送要测数据。
+详情请参考 https://www.emqx.io/docs/zh/v5.0/telemetry/telemetry.html。"""
+
+enable.desc:
+"""设置为 `false` 可以关闭数据发送。"""
 }
 
 emqx_topic_metrics_api {

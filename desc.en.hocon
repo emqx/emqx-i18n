@@ -1,43 +1,69 @@
-# a4ff35418 2023-04-08 | refactor: split i18n files
+
 emqx_authn_api {
 
 authentication_get.desc:
 """List authenticators for global authentication."""
+authentication_get.label:
+"""List authenticators"""
 
 authentication_id_delete.desc:
 """Delete authenticator from global authentication chain."""
+authentication_id_delete.label:
+"""Delete authenticator"""
 
 authentication_id_get.desc:
 """Get authenticator from global authentication chain."""
+authentication_id_get.label:
+"""Get authenticator"""
 
 authentication_id_position_put.desc:
 """Move authenticator in global authentication chain."""
+authentication_id_position_put.label:
+"""Move authenticator"""
 
 authentication_id_put.desc:
 """Update authenticator from global authentication chain."""
+authentication_id_put.label:
+"""Update authenticator"""
 
 authentication_id_status_get.desc:
 """Get authenticator status from global authentication chain."""
+authentication_id_status_get.label:
+"""Get authenticator status"""
 
 authentication_id_users_get.desc:
 """List users in authenticator in global authentication chain."""
+authentication_id_users_get.label:
+"""List users in authenticator"""
 
 authentication_id_users_post.desc:
 """Create users for authenticator in global authentication chain."""
+authentication_id_users_post.label:
+"""Create users for authenticator"""
 
 authentication_id_users_user_id_delete.desc:
 """Delete user in authenticator in global authentication chain."""
+authentication_id_users_user_id_delete.label:
+"""Delete user in authenticator"""
 
 authentication_id_users_user_id_get.desc:
 """Get user from authenticator in global authentication chain."""
+authentication_id_users_user_id_get.label:
+"""Get user from authenticator"""
 
 authentication_id_users_user_id_put.desc:
 """Update user in authenticator in global authentication chain."""
+authentication_id_users_user_id_put.label:
+"""Update user in authenticator"""
 
 authentication_post.desc:
 """Create authenticator for global authentication."""
+authentication_post.label:
+"""Create authenticator"""
 
 is_superuser.desc:
+"""Is superuser"""
+is_superuser.label:
 """Is superuser"""
 
 like_user_id.desc:
@@ -48,51 +74,83 @@ like_user_id.label:
 
 listeners_listener_id_authentication_get.desc:
 """List authenticators for listener authentication."""
+listeners_listener_id_authentication_get.label:
+"""List authenticators for listener"""
 
 listeners_listener_id_authentication_id_delete.desc:
 """Delete authenticator from listener authentication chain."""
+listeners_listener_id_authentication_id_delete.label:
+"""Delete authenticator from listener"""
 
 listeners_listener_id_authentication_id_get.desc:
 """Get authenticator from listener authentication chain."""
+listeners_listener_id_authentication_id_get.label:
+"""Get authenticator from listener"""
 
 listeners_listener_id_authentication_id_position_put.desc:
 """Move authenticator in listener authentication chain."""
+listeners_listener_id_authentication_id_position_put.label:
+"""Move authenticator in listener"""
 
 listeners_listener_id_authentication_id_put.desc:
 """Update authenticator from listener authentication chain."""
+listeners_listener_id_authentication_id_put.label:
+"""Update authenticator from listener"""
 
 listeners_listener_id_authentication_id_status_get.desc:
 """Get authenticator status from listener authentication chain."""
+listeners_listener_id_authentication_id_status_get.label:
+"""Get authenticator status from listener"""
 
 listeners_listener_id_authentication_id_users_get.desc:
 """List users in authenticator in listener authentication chain."""
+listeners_listener_id_authentication_id_users_get.label:
+"""List users in authenticator in listener"""
 
 listeners_listener_id_authentication_id_users_post.desc:
 """Create users for authenticator in listener authentication chain."""
+listeners_listener_id_authentication_id_users_post.label:
+"""Create users for authenticator in listener"""
 
 listeners_listener_id_authentication_id_users_user_id_delete.desc:
 """Delete user in authenticator in listener authentication chain."""
+listeners_listener_id_authentication_id_users_user_id_delete.label:
+"""Delete user in authenticator in listener"""
 
 listeners_listener_id_authentication_id_users_user_id_get.desc:
 """Get user from authenticator in listener authentication chain."""
+listeners_listener_id_authentication_id_users_user_id_get.label:
+"""Get user from authenticator in listener"""
 
 listeners_listener_id_authentication_id_users_user_id_put.desc:
 """Update user in authenticator in listener authentication chain."""
+listeners_listener_id_authentication_id_users_user_id_put.label:
+"""Update user in authenticator in listener"""
 
 listeners_listener_id_authentication_post.desc:
 """Create authenticator for listener authentication."""
+listeners_listener_id_authentication_post.label:
+"""Create authenticator for listener"""
 
 param_auth_id.desc:
 """Authenticator ID."""
+param_auth_id.label:
+"""Authenticator ID"""
 
 param_listener_id.desc:
 """Listener ID."""
+param_listener_id.label:
+"""Listener ID"""
 
 param_position.desc:
 """Position of authenticator in chain. Possible values are 'front', 'rear', 'before:{other_authenticator}', 'after:{other_authenticator}'."""
+param_position.label:
+"""Position of authenticator"""
 
 param_user_id.desc:
 """User ID."""
+param_user_id.label:
+"""User ID"""
 
 }
 
@@ -186,10 +244,10 @@ from.desc:
 from.label:
 """From Field"""
 
-hmac-based.desc:
+jwt_hmac.desc:
 """Configuration when the JWT for authentication is issued using the HMAC algorithm."""
 
-jwks.desc:
+jwt_jwks.desc:
 """Configuration when JWTs used for authentication need to be fetched from the JWKS endpoint."""
 
 keyfile.desc:
@@ -198,7 +256,7 @@ keyfile.desc:
 keyfile.label:
 """Key File"""
 
-public-key.desc:
+jwt_public_key.desc:
 """Configuration when the JWT for authentication is issued using RSA or ECDSA algorithm."""
 
 public_key.desc:
@@ -263,7 +321,7 @@ verify_claims.label:
 
 emqx_authn_mnesia {
 
-authentication.desc:
+builtin_db.desc:
 """Configuration of authenticator using built-in database as data source."""
 
 user_id_type.desc:
@@ -315,14 +373,14 @@ salt_field.label:
 sharded-cluster.desc:
 """Configuration of authenticator using MongoDB (Sharded Cluster) as authentication data source."""
 
-standalone.desc:
+single.desc:
 """Configuration of authenticator using MongoDB (Standalone) as authentication data source."""
 
 }
 
 emqx_authn_mysql {
 
-authentication.desc:
+mysql.desc:
 """Configuration of authenticator using MySQL as authentication data source."""
 
 query.desc:
@@ -341,7 +399,7 @@ query_timeout.label:
 
 emqx_authn_pgsql {
 
-authentication.desc:
+postgresql.desc:
 """Configuration of authenticator using PostgreSQL as authentication data source."""
 
 query.desc:
@@ -366,7 +424,7 @@ cmd.label:
 sentinel.desc:
 """Configuration of authenticator using Redis (Sentinel) as authentication data source."""
 
-standalone.desc:
+single.desc:
 """Configuration of authenticator using Redis (Standalone) as authentication data source."""
 
 }
@@ -511,9 +569,13 @@ emqx_authn_user_import_api {
 
 authentication_id_import_users_post.desc:
 """Import users into authenticator in global authentication chain."""
+authentication_id_import_users_post.label:
+"""Global import users into authenticator"""
 
 listeners_listener_id_authentication_id_import_users_post.desc:
 """Import users into authenticator in listener authentication chain."""
+listeners_listener_id_authentication_id_import_users_post.label:
+"""Import users into authenticator in listener"""
 
 }
 
@@ -521,6 +583,8 @@ emqx_authz_api_cache {
 
 authorization_cache_delete.desc:
 """Clean all authorization cache in the cluster."""
+authorization_cache_delete.label:
+"""Clean authorization cache in cluster"""
 
 }
 
@@ -528,13 +592,11 @@ emqx_authz_api_mnesia {
 
 action.desc:
 """Authorized action (pub/sub/all)"""
-
 action.label:
 """action"""
 
 clientid.desc:
 """ClientID"""
-
 clientid.label:
 """clientid"""
 
@@ -552,63 +614,88 @@ fuzzy_username.label:
 
 permission.desc:
 """Permission"""
-
 permission.label:
 """permission"""
 
 rules_all_delete.desc:
 """Delete rules for 'all'"""
+rules_all_delete.label:
+"""Delete rules for 'all'"""
 
 rules_all_get.desc:
 """Show the list of rules for 'all'"""
+rules_all_get.label:
+"""Show rules for 'all'"""
 
 rules_all_post.desc:
 """Create/Update the list of rules for 'all'."""
+rules_all_post.label:
+"""Update rules for 'all'"""
 
 rules_delete.desc:
 """Delete all rules for all 'users', 'clients' and 'all'"""
+rules_delete.label:
+"""Delete all rules"""
 
 topic.desc:
 """Rule on specific topic"""
-
 topic.label:
 """topic"""
 
 user_clientid_delete.desc:
 """Delete rule for 'clientid'"""
+user_clientid_delete.label:
+"""Delete rule for 'clientid'"""
 
 user_clientid_get.desc:
+"""Get rule for 'clientid'"""
+user_clientid_get.label:
 """Get rule for 'clientid'"""
 
 user_clientid_put.desc:
 """Set rule for 'clientid'"""
+user_clientid_put.label:
+"""Set rule for 'clientid'"""
 
 user_username_delete.desc:
+"""Delete rule for 'username'"""
+user_username_delete.label:
 """Delete rule for 'username'"""
 
 user_username_get.desc:
 """Get rule for 'username'"""
+user_username_get.label:
+"""Get rule for 'username'"""
 
 user_username_put.desc:
+"""Set rule for 'username'"""
+user_username_put.label:
 """Set rule for 'username'"""
 
 username.desc:
 """Username"""
-
 username.label:
 """username"""
 
 users_clientid_get.desc:
 """Show the list of rules for clients"""
+users_clientid_get.label:
+"""Show rules for clients"""
 
 users_clientid_post.desc:
 """Add new rule for 'clientid'"""
+users_clientid_post.label:
+"""Add rule for 'clientid'"""
 
 users_username_get.desc:
 """Show the list of rules for users"""
+users_username_get.label:
+"""Show rules for users"""
 
 users_username_post.desc:
 """Add new rule for 'username'"""
+users_username_post.label:
+"""Add rule for 'username'"""
 
 }
 
@@ -717,46 +804,56 @@ emqx_authz_api_sources {
 
 authorization_sources_get.desc:
 """List all authorization sources"""
+authorization_sources_get.label:
+"""List all authorization sources"""
 
 authorization_sources_post.desc:
+"""Add a new source"""
+authorization_sources_post.label:
 """Add a new source"""
 
 authorization_sources_type_delete.desc:
 """Delete source"""
+authorization_sources_type_delete.label:
+"""Delete source"""
 
 authorization_sources_type_get.desc:
+"""Get a authorization source"""
+authorization_sources_type_get.label:
 """Get a authorization source"""
 
 authorization_sources_type_move_post.desc:
 """Change the exection order of sources"""
+authorization_sources_type_move_post.label:
+"""Change order of sources"""
 
 authorization_sources_type_put.desc:
+"""Update source"""
+authorization_sources_type_put.label:
 """Update source"""
 
 authorization_sources_type_status_get.desc:
 """Get a authorization source"""
+authorization_sources_type_status_get.label:
+"""Get a authorization source"""
 
 source.desc:
 """Authorization source"""
-
 source.label:
 """source"""
 
 source_config.desc:
 """Source config"""
-
 source_config.label:
 """source_config"""
 
 source_type.desc:
 """Authorization type"""
-
 source_type.label:
 """source_type"""
 
 sources.desc:
 """Authorization sources"""
-
 sources.label:
 """sources"""
 
@@ -884,11 +981,11 @@ node_error.desc:
 node_error.label:
 """Error in Node"""
 
-mnesia.desc:
+builtin_db.desc:
 """Authorization using a built-in database (mnesia)."""
 
-mnesia.label:
-"""mnesia"""
+builtin_db.label:
+"""Builtin Database"""
 
 enable.desc:
 """Set to <code>true</code> or <code>false</code> to disable this ACL provider"""
@@ -1054,11 +1151,17 @@ emqx_auto_subscribe_api {
 
 list_auto_subscribe_api.desc:
 """Get auto subscribe topic list"""
+list_auto_subscribe_api.label:
+"""Get auto subscribe topics"""
 
 update_auto_subscribe_api.desc:
 """Update auto subscribe topic list"""
+update_auto_subscribe_api.label:
+"""Update auto subscribe topics"""
 
 update_auto_subscribe_api_response409.desc:
+"""Auto Subscribe topics max limit"""
+update_auto_subscribe_api_response409.label:
 """Auto Subscribe topics max limit"""
 
 }
@@ -1213,6 +1316,850 @@ desc_param_path_operation_on_node.label:
 
 }
 
+emqx_bridge_cassandra {
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+cql_template.desc:
+"""CQL Template"""
+
+cql_template.label:
+"""CQL Template"""
+
+desc_config.desc:
+"""Configuration for a Cassandra bridge."""
+
+desc_config.label:
+"""Cassandra Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to Cassandra. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+}
+
+emqx_bridge_cassandra_connector {
+
+keyspace.desc:
+"""Keyspace name to connect to."""
+
+keyspace.label:
+"""Keyspace"""
+
+servers.desc:
+"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
+A host entry has the following form: `Host[:Port][,Host2:Port]`.<br/>
+The Cassandra default port 9042 is used if `[:Port]` is not specified."""
+
+servers.label:
+"""Servers"""
+
+}
+
+emqx_bridge_clickhouse {
+
+batch_value_separator.desc:
+"""The default value ',' works for the VALUES format. You can also use other separator if other format is specified. See [INSERT INTO Statement](https://clickhouse.com/docs/en/sql-reference/statements/insert-into)."""
+
+batch_value_separator.label:
+"""Batch Value Separator"""
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for a Clickhouse bridge."""
+
+desc_config.label:
+"""Clickhouse Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to Clickhouse. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+sql_template.desc:
+"""The template string can contain ${field} placeholders for message metadata and payload field. Make sure that the inserted values are formatted and escaped correctly. [Prepared Statement](https://docs.emqx.com/en/enterprise/v5.0/data-integration/data-bridges.html#Prepared-Statement) is not supported."""
+
+sql_template.label:
+"""SQL Template"""
+
+}
+
+emqx_bridge_clickhouse_connector {
+
+base_url.desc:
+"""The HTTP URL to the Clickhouse server that you want to connect to (for example http://myhostname:8123)"""
+
+base_url.label:
+"""Server URL"""
+
+connect_timeout.desc:
+"""The timeout when connecting to the Clickhouse server."""
+
+connect_timeout.label:
+"""Clickhouse Timeout"""
+
+}
+
+emqx_bridge_dynamo {
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for a DynamoDB bridge."""
+
+desc_config.label:
+"""DynamoDB Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to DynamoDB. All MQTT `PUBLISH` messages with the topic
+matching the `local_topic` will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also `local_topic` is
+configured, then both the data got from the rule and the MQTT messages that match `local_topic`
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+template.desc:
+"""Template, the default value is empty. When this value is empty the whole message will be stored in the database"""
+
+template.label:
+"""Template"""
+
+}
+
+emqx_bridge_dynamo_connector {
+
+aws_access_key_id.desc:
+"""Access Key ID for connecting to DynamoDB."""
+
+aws_access_key_id.label:
+"""AWS Access Key ID"""
+
+aws_secret_access_key.desc:
+"""AWS Secret Access Key for connecting to DynamoDB."""
+
+aws_secret_access_key.label:
+"""AWS Secret Access Key"""
+
+table.desc:
+"""DynamoDB Table."""
+
+table.label:
+"""Table """
+
+url.desc:
+"""The url of DynamoDB endpoint."""
+
+url.label:
+"""DynamoDB Endpoint"""
+
+}
+
+emqx_bridge_gcp_pubsub {
+
+connect_timeout.desc:
+"""The timeout when connecting to the HTTP server."""
+
+connect_timeout.label:
+"""Connect Timeout"""
+
+desc_config.desc:
+"""Configuration for a GCP PubSub bridge."""
+
+desc_config.label:
+"""GCP PubSub Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name, used as a human-readable description of the bridge."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to GCP PubSub. All MQTT 'PUBLISH' messages with the topic
+matching `local_topic` will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+max_retries.desc:
+"""Max retry times if an error occurs when sending a request."""
+
+max_retries.label:
+"""Max Retries"""
+
+payload_template.desc:
+"""The template for formatting the outgoing messages.  If undefined, will send all the available context in JSON format."""
+
+payload_template.label:
+"""Payload template"""
+
+pipelining.desc:
+"""A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request."""
+
+pipelining.label:
+"""HTTP Pipelineing"""
+
+pool_size.desc:
+"""The pool size."""
+
+pool_size.label:
+"""Pool Size"""
+
+pubsub_topic.desc:
+"""The GCP PubSub topic to publish messages to."""
+
+pubsub_topic.label:
+"""GCP PubSub Topic"""
+
+request_timeout.desc:
+"""Deprecated: Configure the request timeout in the buffer settings."""
+
+request_timeout.label:
+"""Request Timeout"""
+
+service_account_json.desc:
+"""JSON containing the GCP Service Account credentials to be used with PubSub.
+When a GCP Service Account is created (as described in https://developers.google.com/identity/protocols/oauth2/service-account#creatinganaccount), you have the option of downloading the credentials in JSON form.  That's the file needed."""
+
+service_account_json.label:
+"""GCP Service Account Credentials"""
+
+}
+
+emqx_bridge_influxdb {
+
+config_enable.desc:
+"""Enable or disable this bridge."""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for an InfluxDB bridge."""
+
+desc_config.label:
+"""InfluxDB Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type."""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to the InfluxDB. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+write_syntax.desc:
+"""Conf of InfluxDB line protocol to write data points. It is a text-based format that provides the measurement, tag set, field set, and timestamp of a data point, and placeholder supported.
+See also [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) and
+[InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) </br>
+TLDR:</br>
+```
+<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]
+```
+Please note that a placeholder for an integer value must be annotated with a suffix `i`. For example `${payload.int_value}i`."""
+
+write_syntax.label:
+"""Write Syntax"""
+
+}
+
+emqx_bridge_influxdb_connector {
+
+bucket.desc:
+"""InfluxDB bucket name."""
+
+bucket.label:
+"""Bucket"""
+
+database.desc:
+"""InfluxDB database."""
+
+database.label:
+"""Database"""
+
+influxdb_api_v1.desc:
+"""InfluxDB's protocol. Support InfluxDB v1.8 and before."""
+
+influxdb_api_v1.label:
+"""HTTP API Protocol"""
+
+influxdb_api_v2.desc:
+"""InfluxDB's protocol. Support InfluxDB v2.0 and after."""
+
+influxdb_api_v2.label:
+"""HTTP API V2 Protocol"""
+
+org.desc:
+"""Organization name of InfluxDB."""
+
+org.label:
+"""Organization"""
+
+password.desc:
+"""InfluxDB password."""
+
+password.label:
+"""Password"""
+
+precision.desc:
+"""InfluxDB time precision."""
+
+precision.label:
+"""Time Precision"""
+
+protocol.desc:
+"""InfluxDB's protocol. HTTP API or HTTP API V2."""
+
+protocol.label:
+"""Protocol"""
+
+server.desc:
+"""The IPv4 or IPv6 address or the hostname to connect to.</br>
+A host entry has the following form: `Host[:Port]`.</br>
+The InfluxDB default port 8086 is used if `[:Port]` is not specified."""
+
+server.label:
+"""Server Host"""
+
+token.desc:
+"""InfluxDB token."""
+
+token.label:
+"""Token"""
+
+username.desc:
+"""InfluxDB username."""
+
+username.label:
+"""Username"""
+
+}
+
+emqx_bridge_iotdb {
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+config_authentication.desc:
+"""Authentication configuration"""
+
+config_authentication.label:
+"""Authentication"""
+
+auth_basic.desc:
+"""Parameters for basic authentication."""
+
+auth_basic.label:
+"""Basic auth params"""
+
+config_auth_basic_username.desc:
+"""The username as configured at the IoTDB REST interface"""
+
+config_auth_basic_username.label:
+  """HTTP Basic Auth Username"""
+
+config_auth_basic_password.desc:
+"""The password as configured at the IoTDB REST interface"""
+
+config_auth_basic_password.label:
+"""HTTP Basic Auth Password"""
+
+config_base_url.desc:
+"""The base URL of the external IoTDB service's REST interface."""
+config_base_url.label:
+"""IoTDB REST Service Base URL"""
+
+config_is_aligned.desc:
+"""Whether to align the timeseries"""
+
+config_is_aligned.label:
+"""Align Timeseries"""
+
+config_device_id.desc:
+"""A fixed device name this data should be inserted for. If empty it must either be set in the rule action, the message itself, or it will be extracted from the topic."""
+config_device_id.label:
+"""Device ID"""
+
+config_iotdb_version.desc:
+"""The version of the IoTDB system to connect to."""
+config_iotdb_version.label:
+"""IoTDB Version"""
+
+config_max_retries.desc:
+"""HTTP request max retry times if failed."""
+
+config_max_retries.label:
+"""HTTP Request Max Retries"""
+
+config_request_timeout.desc:
+"""HTTP request timeout."""
+
+config_request_timeout.label:
+"""HTTP Request Timeout"""
+
+desc_config.desc:
+"""Configuration for Apache IoTDB bridge."""
+
+desc_config.label:
+"""IoTDB Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name, used as a human-readable description of the bridge."""
+
+desc_name.label:
+"""Bridge Name"""
+}
+
+emqx_bridge_kafka {
+
+connect_timeout.desc:
+"""Maximum wait time for TCP connection establishment (including authentication time if enabled)."""
+
+connect_timeout.label:
+"""Connect Timeout"""
+
+producer_opts.desc:
+"""Local MQTT data source and Kafka bridge configs."""
+
+producer_opts.label:
+"""MQTT to Kafka"""
+
+min_metadata_refresh_interval.desc:
+"""Minimum time interval the client has to wait before refreshing Kafka broker and topic metadata. Setting too small value may add extra load on Kafka."""
+
+min_metadata_refresh_interval.label:
+"""Min Metadata Refresh Interval"""
+
+kafka_producer.desc:
+"""Kafka Producer configuration."""
+
+kafka_producer.label:
+"""Kafka Producer"""
+
+producer_buffer.desc:
+"""Configure producer message buffer.
+
+Tell Kafka producer how to buffer messages when EMQX has more messages to send than Kafka can keep up, or when Kafka is down."""
+
+producer_buffer.label:
+"""Message Buffer"""
+
+socket_send_buffer.desc:
+"""Fine tune the socket send buffer. The default value is tuned for high throughput."""
+
+socket_send_buffer.label:
+"""Socket Send Buffer Size"""
+
+desc_name.desc:
+"""Bridge name, used as a human-readable description of the bridge."""
+
+desc_name.label:
+"""Bridge Name"""
+
+consumer_offset_commit_interval_seconds.desc:
+"""Defines the time interval between two offset commit requests sent for each consumer group."""
+
+consumer_offset_commit_interval_seconds.label:
+"""Offset Commit Interval"""
+
+consumer_max_batch_bytes.desc:
+"""Set how many bytes to pull from Kafka in each fetch request. Please note that if the configured value is smaller than the message size in Kafka, it may negatively impact the fetch performance."""
+
+consumer_max_batch_bytes.label:
+"""Fetch Bytes"""
+
+socket_receive_buffer.desc:
+"""Fine tune the socket receive buffer. The default value is tuned for high throughput."""
+
+socket_receive_buffer.label:
+"""Socket Receive Buffer Size"""
+
+consumer_topic_mapping.desc:
+"""Defines the mapping between Kafka topics and MQTT topics. Must contain at least one item."""
+
+consumer_topic_mapping.label:
+"""Topic Mapping"""
+
+producer_kafka_opts.desc:
+"""Kafka producer configs."""
+
+producer_kafka_opts.label:
+"""Kafka Producer"""
+
+kafka_topic.desc:
+"""Kafka topic name"""
+
+kafka_topic.label:
+"""Kafka Topic Name"""
+
+consumer_kafka_topic.desc:
+"""Kafka topic to consume from."""
+
+consumer_kafka_topic.label:
+"""Kafka Topic"""
+
+auth_username_password.desc:
+"""Username/password based authentication."""
+
+auth_username_password.label:
+"""Username/password Auth"""
+
+auth_sasl_password.desc:
+"""SASL authentication password."""
+
+auth_sasl_password.label:
+"""Password"""
+
+kafka_message_timestamp.desc:
+"""Which timestamp to use. The timestamp is expected to be a millisecond precision Unix epoch which can be in string format, e.g. <code>1661326462115</code> or <code>'1661326462115'</code>. When the desired data field for this template is not found, or if the found data is not a valid integer, the current system timestamp will be used."""
+
+kafka_message_timestamp.label:
+"""Message Timestamp"""
+
+buffer_mode.desc:
+"""Message buffer mode.
+
+<code>memory</code>: Buffer all messages in memory. The messages will be lost in case of EMQX node restart
+<code>disk</code>: Buffer all messages on disk. The messages on disk are able to survive EMQX node restart.
+<code>hybrid</code>: Buffer message in memory first, when up to certain limit (see <code>segment_bytes</code> config for more information), then start offloading messages to disk, Like <code>memory</code> mode, the messages will be lost in case of EMQX node restart."""
+
+buffer_mode.label:
+"""Buffer Mode"""
+
+consumer_mqtt_qos.desc:
+"""MQTT QoS used to publish messages consumed from Kafka."""
+
+consumer_mqtt_qos.label:
+"""QoS"""
+
+consumer_key_encoding_mode.desc:
+"""Defines how the key from the Kafka message is encoded before being forwarded via MQTT.
+<code>none</code> Uses the key from the Kafka message unchanged.  Note: in this case, the key must be a valid UTF-8 string.
+<code>base64</code> Uses base-64 encoding on the received key."""
+
+consumer_key_encoding_mode.label:
+"""Key Encoding Mode"""
+
+auth_gssapi_kerberos.desc:
+"""Use GSSAPI/Kerberos authentication."""
+
+auth_gssapi_kerberos.label:
+"""GSSAPI/Kerberos"""
+
+consumer_mqtt_opts.desc:
+"""Local MQTT message publish."""
+
+consumer_mqtt_opts.label:
+"""MQTT publish"""
+
+auth_kerberos_principal.desc:
+"""SASL GSSAPI authentication Kerberos principal. For example <code>client_name@MY.KERBEROS.REALM.MYDOMAIN.COM</code>, NOTE: The realm in use has to be configured in /etc/krb5.conf in EMQX nodes."""
+
+auth_kerberos_principal.label:
+"""Kerberos Principal"""
+
+socket_opts.desc:
+"""Extra socket options."""
+
+socket_opts.label:
+"""Socket Options"""
+
+consumer_mqtt_topic.desc:
+"""Local topic to which consumed Kafka messages should be published to."""
+
+consumer_mqtt_topic.label:
+"""MQTT Topic"""
+
+consumer_offset_reset_policy.desc:
+"""Defines from which offset a consumer should start fetching when there is no commit history or when the commit history becomes invalid."""
+
+consumer_offset_reset_policy.label:
+"""Offset Reset Policy"""
+
+partition_count_refresh_interval.desc:
+"""The time interval for Kafka producer to discover increased number of partitions.
+After the number of partitions is increased in Kafka, EMQX will start taking the 
+discovered partitions into account when dispatching messages per <code>partition_strategy</code>."""
+
+partition_count_refresh_interval.label:
+"""Partition Count Refresh Interval"""
+
+max_batch_bytes.desc:
+"""Maximum bytes to collect in a Kafka message batch. Most of the Kafka brokers default to a limit of 1 MB batch size. EMQX's default value is less than 1 MB in order to compensate Kafka message encoding overheads (especially when each individual message is very small). When a single message is over the limit, it is still sent (as a single element batch)."""
+
+max_batch_bytes.label:
+"""Max Batch Bytes"""
+
+required_acks.desc:
+"""Required acknowledgements for Kafka partition leader to wait for its followers before it sends back the acknowledgement to EMQX Kafka producer
+
+<code>all_isr</code>: Require all in-sync replicas to acknowledge.
+<code>leader_only</code>: Require only the partition-leader's acknowledgement.
+<code>none</code>: No need for Kafka to acknowledge at all."""
+
+required_acks.label:
+"""Required Acks"""
+
+metadata_request_timeout.desc:
+"""Maximum wait time when fetching metadata from Kafka."""
+
+metadata_request_timeout.label:
+"""Metadata Request Timeout"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+socket_nodelay.desc:
+"""When set to 'true', TCP buffer is sent as soon as possible. Otherwise, the OS kernel may buffer small TCP packets for a while (40 ms by default)."""
+
+socket_nodelay.label:
+"""No Delay"""
+
+authentication.desc:
+"""Authentication configs."""
+
+authentication.label:
+"""Authentication"""
+
+buffer_memory_overload_protection.desc:
+"""Applicable when buffer mode is set to <code>memory</code>
+EMQX will drop old buffered messages under high memory pressure. The high memory threshold is defined in config <code>sysmon.os.sysmem_high_watermark</code>. NOTE: This config only works on Linux."""
+
+buffer_memory_overload_protection.label:
+"""Memory Overload Protection"""
+
+auth_sasl_mechanism.desc:
+"""SASL authentication mechanism."""
+
+auth_sasl_mechanism.label:
+"""Mechanism"""
+
+config_enable.desc:
+"""Enable (true) or disable (false) this Kafka bridge."""
+
+config_enable.label:
+"""Enable or Disable"""
+
+consumer_mqtt_payload.desc:
+"""The template for transforming the incoming Kafka message.  By default, it will use JSON format to serialize inputs from the Kafka message.  Such fields are:
+<code>headers</code>: an object containing string key-value pairs.
+<code>key</code>: Kafka message key (uses the chosen key encoding).
+<code>offset</code>: offset for the message.
+<code>topic</code>: Kafka topic.
+<code>ts</code>: message timestamp.
+<code>ts_type</code>: message timestamp type, which is one of <code>create</code>, <code>append</code> or <code>undefined</code>.
+<code>value</code>: Kafka message value (uses the chosen value encoding)."""
+
+consumer_mqtt_payload.label:
+"""MQTT Payload Template"""
+
+consumer_opts.desc:
+"""Local MQTT publish and Kafka consumer configs."""
+
+consumer_opts.label:
+"""MQTT to Kafka"""
+
+kafka_consumer.desc:
+"""Kafka Consumer configuration."""
+
+kafka_consumer.label:
+"""Kafka Consumer"""
+
+desc_config.desc:
+"""Configuration for a Kafka bridge."""
+
+desc_config.label:
+"""Kafka Bridge Configuration"""
+
+consumer_value_encoding_mode.desc:
+"""Defines how the value from the Kafka message is encoded before being forwarded via MQTT.
+<code>none</code> Uses the value from the Kafka message unchanged.  Note: in this case, the value must be a valid UTF-8 string.
+<code>base64</code> Uses base-64 encoding on the received value."""
+
+consumer_value_encoding_mode.label:
+"""Value Encoding Mode"""
+
+buffer_per_partition_limit.desc:
+"""Number of bytes allowed to buffer for each Kafka partition. When this limit is exceeded, old messages will be dropped in a trade for credits for new messages to be buffered."""
+
+buffer_per_partition_limit.label:
+"""Per-partition Buffer Limit"""
+
+bootstrap_hosts.desc:
+"""A comma separated list of Kafka <code>host[:port]</code> endpoints to bootstrap the client. Default port number is 9092."""
+
+bootstrap_hosts.label:
+"""Bootstrap Hosts"""
+
+consumer_max_rejoin_attempts.desc:
+"""Maximum number of times allowed for a member to re-join the group. If the consumer group can not reach balance after this configured number of attempts, the consumer group member will restart after a delay."""
+
+consumer_max_rejoin_attempts.label:
+"""Max Rejoin Attempts"""
+
+kafka_message_key.desc:
+"""Template to render Kafka message key. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Kafka's <code>NULL</code> (but not empty string) is used."""
+
+kafka_message_key.label:
+"""Message Key"""
+
+kafka_message.desc:
+"""Template to render a Kafka message."""
+
+kafka_message.label:
+"""Kafka Message Template"""
+
+mqtt_topic.desc:
+"""MQTT topic or topic filter as data source (bridge input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Kafka."""
+
+mqtt_topic.label:
+"""Source MQTT Topic"""
+
+kafka_message_value.desc:
+"""Template to render Kafka message value. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Kafka's <code>NULL</code> (but not empty string) is used."""
+
+kafka_message_value.label:
+"""Message Value"""
+
+partition_strategy.desc:
+"""Partition strategy is to tell the producer how to dispatch messages to Kafka partitions.
+
+<code>random</code>: Randomly pick a partition for each message
+<code>key_dispatch</code>: Hash Kafka message key to a partition number"""
+
+partition_strategy.label:
+"""Partition Strategy"""
+
+buffer_segment_bytes.desc:
+"""Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.
+This value is to specify the size of each on-disk buffer file."""
+
+buffer_segment_bytes.label:
+"""Segment File Bytes"""
+
+consumer_kafka_opts.desc:
+"""Kafka consumer configs."""
+
+consumer_kafka_opts.label:
+"""Kafka Consumer"""
+
+max_inflight.desc:
+"""Maximum number of batches allowed for Kafka producer (per-partition) to send before receiving acknowledgement from Kafka. Greater value typically means better throughput. However, there can be a risk of message reordering when this value is greater than 1."""
+
+max_inflight.label:
+"""Max Inflight"""
+
+auth_sasl_username.desc:
+"""SASL authentication username."""
+
+auth_sasl_username.label:
+"""Username"""
+
+auth_kerberos_keytab_file.desc:
+"""SASL GSSAPI authentication Kerberos keytab file path. NOTE: This file has to be placed in EMQX nodes, and the EMQX service runner user requires read permission."""
+
+auth_kerberos_keytab_file.label:
+"""Kerberos keytab file"""
+
+compression.desc:
+"""Compression method."""
+
+compression.label:
+"""Compression"""
+
+}
+
 emqx_bridge_mqtt_schema {
 
 config.desc:
@@ -1232,6 +2179,572 @@ desc_type.desc:
 
 desc_type.label:
 """Bridge Type"""
+
+}
+
+emqx_bridge_opents {
+
+    config_enable.desc:
+        """Enable or disable this bridge"""
+
+    config_enable.label:
+        "Enable Or Disable Bridge"
+
+    desc_config.desc:
+        """Configuration for an OpenTSDB bridge."""
+
+    desc_config.label:
+        "OpenTSDB Bridge Configuration"
+
+    desc_type.desc:
+        """The Bridge Type"""
+
+    desc_type.label:
+        "Bridge Type"
+
+    desc_name.desc:
+        """Bridge name."""
+
+    desc_name.label:
+        "Bridge Name"
+}
+
+emqx_bridge_opents_connector {
+
+    server.desc:
+        """The URL of OpenTSDB endpoint."""
+
+    server.label:
+        "URL"
+
+    summary.desc:
+        """Whether to return summary information."""
+
+    summary.label:
+        "Summary"
+
+    details.desc:
+        """Whether to return detailed information."""
+
+    details.label:
+        "Details"
+}
+
+emqx_bridge_oracle {
+
+  local_topic {
+    desc = "The MQTT topic filter to be forwarded to Oracle Database. All MQTT 'PUBLISH' messages with the topic"
+           " matching the local_topic will be forwarded.</br>"
+           "NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is"
+           " configured, then both the data got from the rule and the MQTT messages that match local_topic"
+           " will be forwarded."
+    label = "Local Topic"
+  }
+
+  sql_template {
+    desc = "SQL Template. The template string can contain placeholders"
+           " for message metadata and payload field. The placeholders are inserted"
+           " without any checking and special formatting, so it is important to"
+           " ensure that the inserted values are formatted and escaped correctly."
+    label = "SQL Template"
+  }
+
+  server {
+    desc = "The IPv4 or IPv6 address or the hostname to connect to.<br/>"
+           "A host entry has the following form: `Host[:Port]`.<br/>"
+           "The Oracle Database default port 1521 is used if `[:Port]` is not specified."
+    label = "Server Host"
+  }
+
+  sid {
+    desc = "Sid for Oracle Database"
+    label = "Oracle Database Sid."
+  }
+
+  service_name {
+    desc = "Service Name for Oracle Database."
+    label = "Oracle Database Service Name"
+  }
+
+  config_enable {
+    desc = "Enable or disable this bridge"
+    label = "Enable Or Disable Bridge"
+  }
+
+  desc_config {
+    desc = "Configuration for an Oracle Database bridge."
+    label = "Oracle Database Bridge Configuration"
+  }
+
+  desc_type {
+    desc = "The Bridge Type"
+    label = "Bridge Type"
+  }
+
+  desc_name {
+    desc = "Bridge name."
+    label = "Bridge Name"
+  }
+
+}
+
+emqx_bridge_pgsql {
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for a PostgreSQL bridge."""
+
+desc_config.label:
+"""PostgreSQL Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to PostgreSQL. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+sql_template.desc:
+"""SQL Template"""
+
+sql_template.label:
+"""SQL Template"""
+
+}
+
+emqx_bridge_pulsar {
+  auth_basic {
+    desc = "Parameters for basic authentication."
+    label = "Basic auth params"
+  }
+
+  auth_basic_password {
+    desc = "Basic authentication password."
+    label = "Password"
+  }
+
+  auth_basic_username {
+    desc = "Basic authentication username."
+    label = "Username"
+  }
+
+  auth_token {
+    desc = "Parameters for token authentication."
+    label = "Token auth params"
+  }
+
+  auth_token_jwt {
+    desc = "JWT authentication token."
+    label = "JWT"
+  }
+
+  authentication {
+    desc = "Authentication configs."
+    label = "Authentication"
+  }
+
+  buffer_memory_overload_protection {
+    desc = "Applicable when buffer mode is set to <code>memory</code>\n"
+           "EMQX will drop old buffered messages under high memory pressure."
+           " The high memory threshold is defined in config <code>sysmon.os.sysmem_high_watermark</code>."
+           " NOTE: This config only works on Linux."
+    label = "Memory Overload Protection"
+  }
+
+  buffer_mode {
+    desc = "Message buffer mode.\n"
+           "<code>memory</code>: Buffer all messages in memory. The messages will be lost"
+           " in case of EMQX node restart\n<code>disk</code>: Buffer all messages on disk."
+           " The messages on disk are able to survive EMQX node restart.\n"
+           "<code>hybrid</code>: Buffer message in memory first, when up to certain limit"
+           " (see <code>segment_bytes</code> config for more information), then start offloading"
+           " messages to disk, Like <code>memory</code> mode, the messages will be lost in"
+           " case of EMQX node restart."
+    label = "Buffer Mode"
+  }
+
+  buffer_per_partition_limit {
+    desc = "Number of bytes allowed to buffer for each Pulsar partition."
+           " When this limit is exceeded, old messages will be dropped in a trade for credits"
+           " for new messages to be buffered."
+    label = "Per-partition Buffer Limit"
+  }
+
+  buffer_segment_bytes {
+    desc = "Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.\n"
+           "This value is to specify the size of each on-disk buffer file."
+    label = "Segment File Bytes"
+  }
+
+  config_enable {
+    desc = "Enable (true) or disable (false) this Pulsar bridge."
+    label = "Enable or Disable"
+  }
+
+  connect_timeout {
+    desc = "Maximum wait time for TCP connection establishment (including authentication time if enabled)."
+    label = "Connect Timeout"
+  }
+
+  desc_name {
+    desc = "Bridge name, used as a human-readable description of the bridge."
+    label = "Bridge Name"
+  }
+
+  desc_type {
+    desc = "The Bridge Type"
+    label = "Bridge Type"
+  }
+
+  producer_batch_size {
+    desc = "Maximum number of individual requests to batch in a Pulsar message."
+    label = "Batch size"
+  }
+
+  producer_buffer {
+    desc = "Configure producer message buffer.\n\n"
+           "Tell Pulsar producer how to buffer messages when EMQX has more messages to"
+           " send than Pulsar can keep up, or when Pulsar is down."
+    label = "Message Buffer"
+  }
+
+  producer_compression {
+    desc = "Compression method."
+    label = "Compression"
+  }
+
+  producer_key_template {
+    desc = "Template to render Pulsar message key."
+    label = "Message Key"
+  }
+
+  producer_local_topic {
+    desc = "MQTT topic or topic filter as data source (bridge input)."
+           " If rule action is used as data source, this config should be left empty,"
+           " otherwise messages will be duplicated in Pulsar."
+    label = "Source MQTT Topic"
+  }
+
+  producer_max_batch_bytes {
+    desc = "Maximum bytes to collect in a Pulsar message batch. Most of the Pulsar brokers"
+           " default to a limit of 5 MB batch size. EMQX's default value is less than 5 MB in"
+           " order to compensate Pulsar message encoding overheads (especially when each individual"
+           " message is very small). When a single message is over the limit, it is still"
+           " sent (as a single element batch)."
+    label = "Max Batch Bytes"
+  }
+
+  producer_message_opts {
+    desc = "Template to render a Pulsar message."
+    label = "Pulsar Message Template"
+  }
+
+  producer_pulsar_message {
+    desc = "Template to render a Pulsar message."
+    label = "Pulsar Message Template"
+  }
+
+  producer_pulsar_topic {
+    desc = "Pulsar topic name"
+    label = "Pulsar topic name"
+  }
+
+  producer_retention_period {
+    desc = "The amount of time messages will be buffered while there is no connection to"
+           " the Pulsar broker.  Longer times mean that more memory/disk will be used"
+    label = "Retention Period"
+  }
+
+  producer_send_buffer {
+    desc = "Fine tune the socket send buffer. The default value is tuned for high throughput."
+    label = "Socket Send Buffer Size"
+  }
+
+  producer_strategy {
+    desc = "Partition strategy is to tell the producer how to dispatch messages to Pulsar partitions.\n"
+           "\n"
+           "<code>random</code>: Randomly pick a partition for each message.\n"
+           "<code>roundrobin</code>: Pick each available producer in turn for each message.\n"
+           "<code>key_dispatch</code>: Hash Pulsar message key of the first message in a batch"
+           " to a partition number."
+    label = "Partition Strategy"
+  }
+
+  producer_sync_timeout {
+    desc = "Maximum wait time for receiving a receipt from Pulsar when publishing synchronously."
+    label = "Sync publish timeout"
+  }
+
+  producer_value_template {
+    desc = "Template to render Pulsar message value."
+    label = "Message Value"
+  }
+
+  pulsar_producer_struct {
+    desc = "Configuration for a Pulsar bridge."
+    label = "Pulsar Bridge Configuration"
+  }
+
+  servers {
+    desc = "A comma separated list of Pulsar URLs in the form <code>scheme://host[:port]</code>"
+           " for the client to connect to. The supported schemes are <code>pulsar://</code> (default)"
+           " and <code>pulsar+ssl://</code>. The default port is 6650."
+    label = "Servers"
+  }
+}
+
+emqx_bridge_rabbitmq {
+
+    local_topic.desc:
+    """The MQTT topic filter to be forwarded to RabbitMQ. All MQTT 'PUBLISH' messages with the topic matching the local_topic will be forwarded.
+    NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is configured, then both the data got from the rule and the MQTT messages that match local_topic will be forwarded."""
+
+    local_topic.label:
+    """Local Topic"""
+
+    config_enable.desc:
+    """Enable or disable this bridge"""
+
+    config_enable.label:
+    """Enable or Disable Bridge"""
+
+    desc_config.desc:
+    """Configuration for a RabbitMQ bridge."""
+
+    desc_config.label:
+    """RabbitMQ Bridge Configuration"""
+
+    desc_type.desc:
+    """The Bridge Type"""
+
+    desc_type.label:
+    """Bridge Type"""
+
+    desc_name.desc:
+    """Bridge name."""
+
+    desc_name.label:
+    """Bridge Name"""
+
+}
+
+
+emqx_bridge_rabbitmq_connector {
+
+server.desc:
+"""The RabbitMQ server address that you want to connect to (for example, localhost)."""
+
+server.label:
+"""Server"""
+
+port.desc:
+"""The port number on which the RabbitMQ server is listening (default is 5672)."""
+
+port.label:
+"""Port"""
+
+username.desc:
+"""The username used to authenticate with the RabbitMQ server."""
+
+username.label:
+"""Username"""
+
+password.desc:
+"""The password used to authenticate with the RabbitMQ server."""
+
+password.label:
+"""Password"""
+
+pool_size.desc:
+"""The size of the connection pool."""
+
+pool_size.label:
+"""Pool Size"""
+
+timeout.desc:
+"""The timeout for waiting on the connection to be established."""
+
+timeout.label:
+"""Connection Timeout"""
+
+virtual_host.desc:
+"""The virtual host to use when connecting to the RabbitMQ server."""
+
+virtual_host.label:
+"""Virtual Host"""
+
+heartbeat.desc:
+"""The interval for sending heartbeat messages to the RabbitMQ server."""
+
+heartbeat.label:
+"""Heartbeat"""
+
+auto_reconnect.desc:
+"""The interval for attempting to reconnect to the RabbitMQ server if the connection is lost."""
+
+auto_reconnect.label:
+"""Auto Reconnect"""
+
+exchange.desc:
+"""The name of the RabbitMQ exchange where the messages will be sent."""
+
+exchange.label:
+"""Exchange"""
+
+exchange_type.desc:
+"""The type of the RabbitMQ exchange (direct, fanout, or topic)."""
+
+exchange_type.label:
+"""Exchange Type"""
+
+routing_key.desc:
+"""The routing key used to route messages to the correct queue in the RabbitMQ exchange."""
+
+routing_key.label:
+"""Routing Key"""
+
+delivery_mode.desc:
+"""The delivery mode for messages published to RabbitMQ. Delivery mode non_persistent (1) is suitable for messages that don't require persistence across RabbitMQ restarts, whereas delivery mode persistent (2) is designed for messages that must survive RabbitMQ restarts."""
+
+delivery_mode.label:
+"""Message Delivery Mode"""
+
+payload_template.desc:
+"""The template for formatting the payload of the message before sending it to RabbitMQ. Template placeholders, such as ${field1.sub_field}, will be substituted with the respective field's value. When left empty, the entire input message will be used as the payload, formatted as a JSON text. This behavior is equivalent to specifying ${.} as the payload template."""
+
+payload_template.label:
+"""Payload Template"""
+
+publish_confirmation_timeout.desc:
+"""The timeout for waiting for RabbitMQ to confirm message publication when using publisher confirms."""
+
+publish_confirmation_timeout.label:
+"""Publish Confirmation Timeout"""
+
+wait_for_publish_confirmations.desc:
+"""A boolean value that indicates whether to wait for RabbitMQ to confirm message publication when using publisher confirms."""
+
+wait_for_publish_confirmations.label:
+"""Wait for Publish Confirmations"""
+
+}
+
+emqx_bridge_rocketmq {
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for a RocketMQ bridge."""
+
+desc_config.label:
+"""RocketMQ Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to RocketMQ. All MQTT `PUBLISH` messages with the topic
+matching the `local_topic` will be forwarded.</br>
+NOTE: if the bridge is used as a rule action, `local_topic` should be left empty otherwise the messages will be duplicated."""
+
+local_topic.label:
+"""Local Topic"""
+
+template.desc:
+"""Template, the default value is empty. When this value is empty the whole message will be stored in the RocketMQ.<br>
+            The template can be any valid string with placeholders, example:<br>
+            - ${id}, ${username}, ${clientid}, ${timestamp}<br>
+            - {"id" : ${id}, "username" : ${username}}"""
+
+template.label:
+"""Template"""
+
+}
+
+emqx_bridge_rocketmq_connector {
+
+access_key.desc:
+"""RocketMQ server `accessKey`."""
+
+access_key.label:
+"""AccessKey"""
+
+refresh_interval.desc:
+"""RocketMQ Topic Route Refresh Interval."""
+
+refresh_interval.label:
+"""Topic Route Refresh Interval"""
+
+secret_key.desc:
+"""RocketMQ server `secretKey`."""
+
+secret_key.label:
+"""SecretKey"""
+
+security_token.desc:
+"""RocketMQ Server Security Token"""
+
+security_token.label:
+"""Security Token"""
+
+send_buffer.desc:
+"""The socket send buffer size of the RocketMQ driver client."""
+
+send_buffer.label:
+"""Send Buffer Size"""
+
+servers.desc:
+"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
+A host entry has the following form: `Host[:Port]`.<br/>
+The RocketMQ default port 9876 is used if `[:Port]` is not specified."""
+
+servers.label:
+"""Server Host"""
+
+sync_timeout.desc:
+"""Timeout of RocketMQ driver synchronous call."""
+
+sync_timeout.label:
+"""Sync Timeout"""
+
+topic.desc:
+"""RocketMQ Topic"""
+
+topic.label:
+"""RocketMQ Topic"""
 
 }
 
@@ -1391,6 +2904,124 @@ metric_sent_success.desc:
 
 metric_sent_success.label:
 """Sent Success"""
+
+}
+
+emqx_bridge_sqlserver {
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for a Microsoft SQL Server bridge."""
+
+desc_config.label:
+"""Microsoft SQL Server Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+driver.desc:
+"""SQL Server Driver Name"""
+
+driver.label:
+"""SQL Server Driver Name"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to Microsoft SQL Server. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+sql_template.desc:
+"""SQL Template"""
+
+sql_template.label:
+"""SQL Template"""
+
+}
+
+emqx_bridge_sqlserver_connector {
+
+server.desc:
+"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
+A host entry has the following form: `Host[:Port]`.<br/>
+The SQL Server default port 1433 is used if `[:Port]` is not specified."""
+
+server.label:
+"""Server Host"""
+
+}
+
+emqx_bridge_tdengine {
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for a TDengine bridge."""
+
+desc_config.label:
+"""TDengine Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to TDengine. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+sql_template.desc:
+"""SQL Template"""
+
+sql_template.label:
+"""SQL Template"""
+
+}
+
+emqx_bridge_tdengine_connector {
+
+server.desc:
+"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
+A host entry has the following form: `Host[:Port]`.<br/>
+The TDengine default port 6041 is used if `[:Port]` is not specified."""
+
+server.label:
+"""Server Host"""
 
 }
 
@@ -1640,8 +3271,10 @@ common_handler_max_depth.label:
 """Max Depth"""
 
 desc_log.desc:
-"""EMQX logging supports multiple sinks for the log events.
-Each sink is represented by a _log handler_, which can be configured independently."""
+"""EMQX supports multiple log handlers, one console handler and multiple file handlers.
+EMQX by default logs to console when running in docker or in console/foreground mode,
+otherwise it logs to file $EMQX_LOG_DIR/emqx.log.
+For advanced configuration, you can find more parameters in this section."""
 
 desc_log.label:
 """Log"""
@@ -2392,15 +4025,6 @@ id.label:
 
 emqx_connector_http {
 
-base_url.desc:
-"""The base URL is the URL includes only the scheme, host and port.<br/>
-When send an HTTP request, the real URL to be used is the concatenation of the base URL and the
-path parameter<br/>
-For example: `http://localhost:9901/`"""
-
-base_url.label:
-"""Base Url"""
-
 body.desc:
 """HTTP request body."""
 
@@ -2542,10 +4166,10 @@ local_threshold.label:
 """Local Threshold"""
 
 max_overflow.desc:
-"""Max Overflow."""
+"""The maximum number of additional workers that can be created when all workers in the pool are busy. This helps to manage temporary spikes in workload by allowing more concurrent connections to the MongoDB server."""
 
 max_overflow.label:
-"""Max Overflow"""
+"""Max Overflow Workers"""
 
 min_heartbeat_period.desc:
 """Controls the minimum amount of time to wait between heartbeats."""
@@ -2935,7 +4559,7 @@ database_desc.label:
 """Database Name"""
 
 password.desc:
-"""EMQX's password in the external database."""
+"""The password associated with the bridge, used for authentication with the external database."""
 
 password.label:
 """Password"""
@@ -2959,7 +4583,7 @@ ssl.label:
 """Enable SSL"""
 
 username.desc:
-"""EMQX's username in the external database."""
+"""The username associated with the bridge in the external database used for authentication or identification purposes."""
 
 username.label:
 """Username"""
@@ -2970,14 +4594,22 @@ emqx_dashboard_api {
 
 change_pwd_api.desc:
 """Change dashboard user password"""
+change_pwd_api.label:
+"""Change dashboard user password"""
 
 create_user_api.desc:
+"""Create dashboard user"""
+create_user_api.label:
 """Create dashboard user"""
 
 create_user_api_success.desc:
 """Create dashboard user success"""
+create_user_api_success.label:
+"""Create dashboard user success"""
 
 delete_user_api.desc:
+"""Delete dashboard user"""
+delete_user_api.label:
 """Delete dashboard user"""
 
 license.desc:
@@ -2985,8 +4617,12 @@ license.desc:
 
 list_users_api.desc:
 """Dashboard list users"""
+list_users_api.label:
+"""Dashboard list users"""
 
 login_api.desc:
+"""Get Dashboard Auth Token."""
+login_api.label:
 """Get Dashboard Auth Token."""
 
 login_failed401.desc:
@@ -2999,6 +4635,8 @@ login_success.desc:
 """Dashboard Auth Success"""
 
 logout_api.desc:
+"""Dashboard user logout"""
+logout_api.label:
 """Dashboard user logout"""
 
 new_pwd.desc:
@@ -3015,6 +4653,8 @@ token.desc:
 
 update_user_api.desc:
 """Update dashboard user description"""
+update_user_api.label:
+"""Update dashboard user description"""
 
 update_user_api200.desc:
 """Update dashboard user success"""
@@ -3030,6 +4670,44 @@ users_api404.desc:
 
 version.desc:
 """EMQX Version"""
+
+}
+
+emqx_dashboard_error_code_api {
+
+error_codes.desc:
+"""API Error Codes"""
+error_codes.label:
+"""API Error Codes"""
+
+error_codes_u.desc:
+"""API Error Codes"""
+error_codes_u.label:
+"""API Error Codes"""
+
+}
+
+emqx_dashboard_monitor_api {
+
+list_monitor.desc:
+"""List monitor data."""
+list_monitor.label:
+"""List monitor data."""
+
+list_monitor_node.desc:
+"""List the monitor data on the node."""
+list_monitor_node.label:
+"""List the monitor data on the node."""
+
+current_status.desc:
+"""Current status. Gauge and rate."""
+current_status.label:
+"""Current status. Gauge and rate."""
+
+current_status_node.desc:
+"""Node current status. Gauge and rate."""
+current_status_node.label:
+"""Node current status. Gauge and rate."""
 
 }
 
@@ -3177,291 +4855,118 @@ emqx_delayed_api {
 
 bad_msgid_format.desc:
 """Bad Message ID format"""
+bad_msgid_format.label:
+"""Bad Message ID format"""
 
 count.desc:
+"""Count of delayed messages"""
+count.label:
 """Count of delayed messages"""
 
 delayed_interval.desc:
 """Delayed interval(second)"""
+delayed_interval.label:
+"""Delayed interval"""
 
 delayed_remaining.desc:
 """Delayed remaining(second)"""
+delayed_remaining.label:
+"""Delayed remaining"""
 
 delete_api.desc:
+"""Delete delayed message"""
+delete_api.label:
 """Delete delayed message"""
 
 expected_at.desc:
 """Expect publish time, in RFC 3339 format"""
+expected_at.label:
+"""Expect publish time"""
 
 from_clientid.desc:
+"""From ClientID"""
+from_clientid.label:
 """From ClientID"""
 
 from_username.desc:
 """From Username"""
+from_username.label:
+"""From Username"""
 
 get_message_api.desc:
+"""View delayed message"""
+get_message_api.label:
 """View delayed message"""
 
 illegality_limit.desc:
 """Max limit illegality"""
+illegality_limit.label:
+"""Max limit illegality"""
 
 list_api.desc:
+"""List delayed messages"""
+list_api.label:
 """List delayed messages"""
 
 msgid.desc:
 """Delayed Message ID"""
+msgid.label:
+"""Delayed Message ID"""
 
 msgid_not_found.desc:
+"""Message ID not found"""
+msgid_not_found.label:
 """Message ID not found"""
 
 node.desc:
 """The node where message from"""
+node.label:
+"""Node where message from"""
 
 payload.desc:
 """Payload, base64 encoded. Payload will be set to 'PAYLOAD_TO_LARGE' if its length is larger than 2048 bytes"""
+payload.label:
+"""Payload"""
 
 publish_at.desc:
 """Clinet publish message time, in RFC 3339 format"""
+publish_at.label:
+"""Client publish message time"""
 
 qos.desc:
+"""QoS"""
+qos.label:
 """QoS"""
 
 topic.desc:
 """Topic"""
+topic.label:
+"""Topic"""
 
 update_api.desc:
 """Enable or disable delayed, set max delayed messages"""
+update_api.label:
+"""Enable or disable delayed"""
 
 update_success.desc:
+"""Enable or disable delayed successfully"""
+update_success.label:
 """Enable or disable delayed successfully"""
 
 view_limit.desc:
 """Page limit"""
+view_limit.label:
+"""Page limit"""
 
 view_page.desc:
+"""View page"""
+view_page.label:
 """View page"""
 
 view_status_api.desc:
 """Get delayed status"""
-
-}
-
-emqx_ee_bridge_cassa {
-
-config_enable.desc:
-"""Enable or disable this bridge"""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-cql_template.desc:
-"""CQL Template"""
-
-cql_template.label:
-"""CQL Template"""
-
-desc_config.desc:
-"""Configuration for a Cassandra bridge."""
-
-desc_config.label:
-"""Cassandra Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to Cassandra. All MQTT 'PUBLISH' messages with the topic
-matching the local_topic will be forwarded.</br>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
-configured, then both the data got from the rule and the MQTT messages that match local_topic
-will be forwarded."""
-
-local_topic.label:
-"""Local Topic"""
-
-}
-
-emqx_ee_bridge_clickhouse {
-
-batch_value_separator.desc:
-"""The default value ',' works for the VALUES format. You can also use other separator if other format is specified. See [INSERT INTO Statement](https://clickhouse.com/docs/en/sql-reference/statements/insert-into)."""
-
-batch_value_separator.label:
-"""Batch Value Separator"""
-
-config_enable.desc:
-"""Enable or disable this bridge"""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-desc_config.desc:
-"""Configuration for a Clickhouse bridge."""
-
-desc_config.label:
-"""Clickhouse Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to Clickhouse. All MQTT 'PUBLISH' messages with the topic
-matching the local_topic will be forwarded.</br>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
-configured, then both the data got from the rule and the MQTT messages that match local_topic
-will be forwarded."""
-
-local_topic.label:
-"""Local Topic"""
-
-sql_template.desc:
-"""The template string can contain ${field} placeholders for message metadata and payload field. Make sure that the inserted values are formatted and escaped correctly. [Prepared Statement](https://docs.emqx.com/en/enterprise/v5.0/data-integration/data-bridges.html#Prepared-Statement) is not supported."""
-
-sql_template.label:
-"""SQL Template"""
-
-}
-
-emqx_ee_bridge_dynamo {
-
-config_enable.desc:
-"""Enable or disable this bridge"""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-desc_config.desc:
-"""Configuration for an DynamoDB bridge."""
-
-desc_config.label:
-"""DynamoDB Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to DynamoDB. All MQTT `PUBLISH` messages with the topic
-matching the `local_topic` will be forwarded.</br>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also `local_topic` is
-configured, then both the data got from the rule and the MQTT messages that match `local_topic`
-will be forwarded."""
-
-local_topic.label:
-"""Local Topic"""
-
-template.desc:
-"""Template, the default value is empty. When this value is empty the whole message will be stored in the database"""
-
-template.label:
-"""Template"""
-
-}
-
-emqx_ee_bridge_gcp_pubsub {
-
-connect_timeout.desc:
-"""The timeout when connecting to the HTTP server."""
-
-connect_timeout.label:
-"""Connect Timeout"""
-
-desc_config.desc:
-"""Configuration for a GCP PubSub bridge."""
-
-desc_config.label:
-"""GCP PubSub Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name, used as a human-readable description of the bridge."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to GCP PubSub. All MQTT 'PUBLISH' messages with the topic
-matching `local_topic` will be forwarded.</br>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
-configured, then both the data got from the rule and the MQTT messages that match local_topic
-will be forwarded."""
-
-local_topic.label:
-"""Local Topic"""
-
-max_retries.desc:
-"""Max retry times if an error occurs when sending a request."""
-
-max_retries.label:
-"""Max Retries"""
-
-payload_template.desc:
-"""The template for formatting the outgoing messages.  If undefined, will send all the available context in JSON format."""
-
-payload_template.label:
-"""Payload template"""
-
-pipelining.desc:
-"""A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request."""
-
-pipelining.label:
-"""HTTP Pipelineing"""
-
-pool_size.desc:
-"""The pool size."""
-
-pool_size.label:
-"""Pool Size"""
-
-pubsub_topic.desc:
-"""The GCP PubSub topic to publish messages to."""
-
-pubsub_topic.label:
-"""GCP PubSub Topic"""
-
-request_timeout.desc:
-"""Deprecated: Configure the request timeout in the buffer settings."""
-
-request_timeout.label:
-"""Request Timeout"""
-
-service_account_json.desc:
-"""JSON containing the GCP Service Account credentials to be used with PubSub.
-When a GCP Service Account is created (as described in https://developers.google.com/identity/protocols/oauth2/service-account#creatinganaccount), you have the option of downloading the credentials in JSON form.  That's the file needed."""
-
-service_account_json.label:
-"""GCP Service Account Credentials"""
+view_status_api.label:
+"""Get delayed status"""
 
 }
 
@@ -3518,419 +5023,6 @@ payload.desc:
 
 payload.label:
 """Payload"""
-
-}
-
-emqx_ee_bridge_influxdb {
-
-config_enable.desc:
-"""Enable or disable this bridge."""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-desc_config.desc:
-"""Configuration for an InfluxDB bridge."""
-
-desc_config.label:
-"""InfluxDB Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type."""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to the InfluxDB. All MQTT 'PUBLISH' messages with the topic
-matching the local_topic will be forwarded.</br>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
-configured, then both the data got from the rule and the MQTT messages that match local_topic
-will be forwarded."""
-
-local_topic.label:
-"""Local Topic"""
-
-write_syntax.desc:
-"""Conf of InfluxDB line protocol to write data points. It is a text-based format that provides the measurement, tag set, field set, and timestamp of a data point, and placeholder supported.
-See also [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) and
-[InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) </br>
-TLDR:</br>
-```
-<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]
-```
-Please note that a placeholder for an integer value must be annotated with a suffix `i`. For example `${payload.int_value}i`."""
-
-write_syntax.label:
-"""Write Syntax"""
-
-}
-
-emqx_ee_bridge_kafka {
-
-connect_timeout.desc:
-"""Maximum wait time for TCP connection establishment (including authentication time if enabled)."""
-
-connect_timeout.label:
-"""Connect Timeout"""
-
-producer_opts.desc:
-"""Local MQTT data source and Kafka bridge configs."""
-
-producer_opts.label:
-"""MQTT to Kafka"""
-
-min_metadata_refresh_interval.desc:
-"""Minimum time interval the client has to wait before refreshing Kafka broker and topic metadata. Setting too small value may add extra load on Kafka."""
-
-min_metadata_refresh_interval.label:
-"""Min Metadata Refresh Interval"""
-
-kafka_producer.desc:
-"""Kafka Producer configuration."""
-
-kafka_producer.label:
-"""Kafka Producer"""
-
-producer_buffer.desc:
-"""Configure producer message buffer.
-
-Tell Kafka producer how to buffer messages when EMQX has more messages to send than Kafka can keep up, or when Kafka is down."""
-
-producer_buffer.label:
-"""Message Buffer"""
-
-socket_send_buffer.desc:
-"""Fine tune the socket send buffer. The default value is tuned for high throughput."""
-
-socket_send_buffer.label:
-"""Socket Send Buffer Size"""
-
-desc_name.desc:
-"""Bridge name, used as a human-readable description of the bridge."""
-
-desc_name.label:
-"""Bridge Name"""
-
-consumer_offset_commit_interval_seconds.desc:
-"""Defines the time interval between two offset commit requests sent for each consumer group."""
-
-consumer_offset_commit_interval_seconds.label:
-"""Offset Commit Interval"""
-
-consumer_max_batch_bytes.desc:
-"""Set how many bytes to pull from Kafka in each fetch request. Please note that if the configured value is smaller than the message size in Kafka, it may negatively impact the fetch performance."""
-
-consumer_max_batch_bytes.label:
-"""Fetch Bytes"""
-
-socket_receive_buffer.desc:
-"""Fine tune the socket receive buffer. The default value is tuned for high throughput."""
-
-socket_receive_buffer.label:
-"""Socket Receive Buffer Size"""
-
-consumer_topic_mapping.desc:
-"""Defines the mapping between Kafka topics and MQTT topics. Must contain at least one item."""
-
-consumer_topic_mapping.label:
-"""Topic Mapping"""
-
-producer_kafka_opts.desc:
-"""Kafka producer configs."""
-
-producer_kafka_opts.label:
-"""Kafka Producer"""
-
-kafka_topic.desc:
-"""Kafka topic name"""
-
-kafka_topic.label:
-"""Kafka Topic Name"""
-
-consumer_kafka_topic.desc:
-"""Kafka topic to consume from."""
-
-consumer_kafka_topic.label:
-"""Kafka Topic"""
-
-auth_username_password.desc:
-"""Username/password based authentication."""
-
-auth_username_password.label:
-"""Username/password Auth"""
-
-auth_sasl_password.desc:
-"""SASL authentication password."""
-
-auth_sasl_password.label:
-"""Password"""
-
-kafka_message_timestamp.desc:
-"""Which timestamp to use. The timestamp is expected to be a millisecond precision Unix epoch which can be in string format, e.g. <code>1661326462115</code> or <code>'1661326462115'</code>. When the desired data field for this template is not found, or if the found data is not a valid integer, the current system timestamp will be used."""
-
-kafka_message_timestamp.label:
-"""Message Timestamp"""
-
-buffer_mode.desc:
-"""Message buffer mode.
-
-<code>memory</code>: Buffer all messages in memory. The messages will be lost in case of EMQX node restart
-<code>disk</code>: Buffer all messages on disk. The messages on disk are able to survive EMQX node restart.
-<code>hybrid</code>: Buffer message in memory first, when up to certain limit (see <code>segment_bytes</code> config for more information), then start offloading messages to disk, Like <code>memory</code> mode, the messages will be lost in case of EMQX node restart."""
-
-buffer_mode.label:
-"""Buffer Mode"""
-
-consumer_mqtt_qos.desc:
-"""MQTT QoS used to publish messages consumed from Kafka."""
-
-consumer_mqtt_qos.label:
-"""QoS"""
-
-consumer_key_encoding_mode.desc:
-"""Defines how the key from the Kafka message is encoded before being forwarded via MQTT.
-<code>none</code> Uses the key from the Kafka message unchanged.  Note: in this case, the key must be a valid UTF-8 string.
-<code>base64</code> Uses base-64 encoding on the received key."""
-
-consumer_key_encoding_mode.label:
-"""Key Encoding Mode"""
-
-auth_gssapi_kerberos.desc:
-"""Use GSSAPI/Kerberos authentication."""
-
-auth_gssapi_kerberos.label:
-"""GSSAPI/Kerberos"""
-
-consumer_mqtt_opts.desc:
-"""Local MQTT message publish."""
-
-consumer_mqtt_opts.label:
-"""MQTT publish"""
-
-auth_kerberos_principal.desc:
-"""SASL GSSAPI authentication Kerberos principal. For example <code>client_name@MY.KERBEROS.REALM.MYDOMAIN.COM</code>, NOTE: The realm in use has to be configured in /etc/krb5.conf in EMQX nodes."""
-
-auth_kerberos_principal.label:
-"""Kerberos Principal"""
-
-socket_opts.desc:
-"""Extra socket options."""
-
-socket_opts.label:
-"""Socket Options"""
-
-consumer_mqtt_topic.desc:
-"""Local topic to which consumed Kafka messages should be published to."""
-
-consumer_mqtt_topic.label:
-"""MQTT Topic"""
-
-consumer_offset_reset_policy.desc:
-"""Defines from which offset a consumer should start fetching when there is no commit history or when the commit history becomes invalid."""
-
-consumer_offset_reset_policy.label:
-"""Offset Reset Policy"""
-
-partition_count_refresh_interval.desc:
-"""The time interval for Kafka producer to discover increased number of partitions.
-After the number of partitions is increased in Kafka, EMQX will start taking the 
-discovered partitions into account when dispatching messages per <code>partition_strategy</code>."""
-
-partition_count_refresh_interval.label:
-"""Partition Count Refresh Interval"""
-
-max_batch_bytes.desc:
-"""Maximum bytes to collect in a Kafka message batch. Most of the Kafka brokers default to a limit of 1 MB batch size. EMQX's default value is less than 1 MB in order to compensate Kafka message encoding overheads (especially when each individual message is very small). When a single message is over the limit, it is still sent (as a single element batch)."""
-
-max_batch_bytes.label:
-"""Max Batch Bytes"""
-
-required_acks.desc:
-"""Required acknowledgements for Kafka partition leader to wait for its followers before it sends back the acknowledgement to EMQX Kafka producer
-
-<code>all_isr</code>: Require all in-sync replicas to acknowledge.
-<code>leader_only</code>: Require only the partition-leader's acknowledgement.
-<code>none</code>: No need for Kafka to acknowledge at all."""
-
-required_acks.label:
-"""Required Acks"""
-
-metadata_request_timeout.desc:
-"""Maximum wait time when fetching metadata from Kafka."""
-
-metadata_request_timeout.label:
-"""Metadata Request Timeout"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-socket_nodelay.desc:
-"""When set to 'true', TCP buffer is sent as soon as possible. Otherwise, the OS kernel may buffer small TCP packets for a while (40 ms by default)."""
-
-socket_nodelay.label:
-"""No Delay"""
-
-authentication.desc:
-"""Authentication configs."""
-
-authentication.label:
-"""Authentication"""
-
-buffer_memory_overload_protection.desc:
-"""Applicable when buffer mode is set to <code>memory</code>
-EMQX will drop old buffered messages under high memory pressure. The high memory threshold is defined in config <code>sysmon.os.sysmem_high_watermark</code>. NOTE: This config only works on Linux."""
-
-buffer_memory_overload_protection.label:
-"""Memory Overload Protection"""
-
-auth_sasl_mechanism.desc:
-"""SASL authentication mechanism."""
-
-auth_sasl_mechanism.label:
-"""Mechanism"""
-
-config_enable.desc:
-"""Enable (true) or disable (false) this Kafka bridge."""
-
-config_enable.label:
-"""Enable or Disable"""
-
-consumer_mqtt_payload.desc:
-"""The template for transforming the incoming Kafka message.  By default, it will use JSON format to serialize inputs from the Kafka message.  Such fields are:
-<code>headers</code>: an object containing string key-value pairs.
-<code>key</code>: Kafka message key (uses the chosen key encoding).
-<code>offset</code>: offset for the message.
-<code>topic</code>: Kafka topic.
-<code>ts</code>: message timestamp.
-<code>ts_type</code>: message timestamp type, which is one of <code>create</code>, <code>append</code> or <code>undefined</code>.
-<code>value</code>: Kafka message value (uses the chosen value encoding)."""
-
-consumer_mqtt_payload.label:
-"""MQTT Payload Template"""
-
-consumer_opts.desc:
-"""Local MQTT publish and Kafka consumer configs."""
-
-consumer_opts.label:
-"""MQTT to Kafka"""
-
-kafka_consumer.desc:
-"""Kafka Consumer configuration."""
-
-kafka_consumer.label:
-"""Kafka Consumer"""
-
-desc_config.desc:
-"""Configuration for a Kafka bridge."""
-
-desc_config.label:
-"""Kafka Bridge Configuration"""
-
-consumer_value_encoding_mode.desc:
-"""Defines how the value from the Kafka message is encoded before being forwarded via MQTT.
-<code>none</code> Uses the value from the Kafka message unchanged.  Note: in this case, the value must be a valid UTF-8 string.
-<code>base64</code> Uses base-64 encoding on the received value."""
-
-consumer_value_encoding_mode.label:
-"""Value Encoding Mode"""
-
-buffer_per_partition_limit.desc:
-"""Number of bytes allowed to buffer for each Kafka partition. When this limit is exceeded, old messages will be dropped in a trade for credits for new messages to be buffered."""
-
-buffer_per_partition_limit.label:
-"""Per-partition Buffer Limit"""
-
-bootstrap_hosts.desc:
-"""A comma separated list of Kafka <code>host[:port]</code> endpoints to bootstrap the client. Default port number is 9092."""
-
-bootstrap_hosts.label:
-"""Bootstrap Hosts"""
-
-consumer_max_rejoin_attempts.desc:
-"""Maximum number of times allowed for a member to re-join the group. If the consumer group can not reach balance after this configured number of attempts, the consumer group member will restart after a delay."""
-
-consumer_max_rejoin_attempts.label:
-"""Max Rejoin Attempts"""
-
-kafka_message_key.desc:
-"""Template to render Kafka message key. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Kafka's <code>NULL</code> (but not empty string) is used."""
-
-kafka_message_key.label:
-"""Message Key"""
-
-kafka_message.desc:
-"""Template to render a Kafka message."""
-
-kafka_message.label:
-"""Kafka Message Template"""
-
-mqtt_topic.desc:
-"""MQTT topic or topic as data source (bridge input).  Should not configure this if the bridge is used as a rule action."""
-
-mqtt_topic.label:
-"""Source MQTT Topic"""
-
-kafka_message_value.desc:
-"""Template to render Kafka message value. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Kafka's <code>NULL</code> (but not empty string) is used."""
-
-kafka_message_value.label:
-"""Message Value"""
-
-partition_strategy.desc:
-"""Partition strategy is to tell the producer how to dispatch messages to Kafka partitions.
-
-<code>random</code>: Randomly pick a partition for each message
-<code>key_dispatch</code>: Hash Kafka message key to a partition number"""
-
-partition_strategy.label:
-"""Partition Strategy"""
-
-buffer_segment_bytes.desc:
-"""Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.
-This value is to specify the size of each on-disk buffer file."""
-
-buffer_segment_bytes.label:
-"""Segment File Bytes"""
-
-consumer_kafka_opts.desc:
-"""Kafka consumer configs."""
-
-consumer_kafka_opts.label:
-"""Kafka Consumer"""
-
-max_inflight.desc:
-"""Maximum number of batches allowed for Kafka producer (per-partition) to send before receiving acknowledgement from Kafka. Greater value typically means better throughput. However, there can be a risk of message reordering when this value is greater than 1."""
-
-max_inflight.label:
-"""Max Inflight"""
-
-auth_sasl_username.desc:
-"""SASL authentication username."""
-
-auth_sasl_username.label:
-"""Username"""
-
-auth_kerberos_keytab_file.desc:
-"""SASL GSSAPI authentication Kerberos keytab file path. NOTE: This file has to be placed in EMQX nodes, and the EMQX service runner user requires read permission."""
-
-auth_kerberos_keytab_file.label:
-"""Kerberos keytab file"""
-
-compression.desc:
-"""Compression method."""
-
-compression.label:
-"""Compression"""
 
 }
 
@@ -4036,50 +5128,6 @@ sql_template.label:
 
 }
 
-emqx_ee_bridge_pgsql {
-
-config_enable.desc:
-"""Enable or disable this bridge"""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-desc_config.desc:
-"""Configuration for an PostgreSQL bridge."""
-
-desc_config.label:
-"""PostgreSQL Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to PostgreSQL. All MQTT 'PUBLISH' messages with the topic
-matching the local_topic will be forwarded.</br>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
-configured, then both the data got from the rule and the MQTT messages that match local_topic
-will be forwarded."""
-
-local_topic.label:
-"""Local Topic"""
-
-sql_template.desc:
-"""SQL Template"""
-
-sql_template.label:
-"""SQL Template"""
-
-}
-
 emqx_ee_bridge_redis {
 
 command_template.desc:
@@ -4123,136 +5171,6 @@ will be forwarded."""
 
 local_topic.label:
 """Local Topic"""
-
-}
-
-emqx_ee_bridge_rocketmq {
-
-config_enable.desc:
-"""Enable or disable this bridge"""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-desc_config.desc:
-"""Configuration for a RocketMQ bridge."""
-
-desc_config.label:
-"""RocketMQ Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to RocketMQ. All MQTT `PUBLISH` messages with the topic
-matching the `local_topic` will be forwarded.</br>
-NOTE: if the bridge is used as a rule action, `local_topic` should be left empty otherwise the messages will be duplicated."""
-
-local_topic.label:
-"""Local Topic"""
-
-template.desc:
-"""Template, the default value is empty. When this value is empty the whole message will be stored in the RocketMQ"""
-
-template.label:
-"""Template"""
-
-}
-
-emqx_ee_bridge_tdengine {
-
-config_enable.desc:
-"""Enable or disable this bridge"""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-desc_config.desc:
-"""Configuration for an TDengine bridge."""
-
-desc_config.label:
-"""TDengine Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to TDengine. All MQTT 'PUBLISH' messages with the topic
-matching the local_topic will be forwarded.</br>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
-configured, then both the data got from the rule and the MQTT messages that match local_topic
-will be forwarded."""
-
-local_topic.label:
-"""Local Topic"""
-
-sql_template.desc:
-"""SQL Template"""
-
-sql_template.label:
-"""SQL Template"""
-
-}
-
-emqx_ee_connector_cassa {
-
-keyspace.desc:
-"""Keyspace name to connect to."""
-
-keyspace.label:
-"""Keyspace"""
-
-servers.desc:
-"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
-A host entry has the following form: `Host[:Port][,Host2:Port]`.<br/>
-The Cassandra default port 9042 is used if `[:Port]` is not specified."""
-
-servers.label:
-"""Servers"""
-
-}
-
-emqx_ee_connector_clickhouse {
-
-base_url.desc:
-"""The HTTP URL to the Clickhouse server that you want to connect to (for example http://myhostname:8123)"""
-
-base_url.label:
-"""Server URL"""
-
-connect_timeout.desc:
-"""The timeout when connecting to the Clickhouse server."""
-
-connect_timeout.label:
-"""Clickhouse Timeout"""
-
-}
-
-emqx_ee_connector_dynamo {
-
-url.desc:
-"""The url of DynamoDB endpoint."""
-
-url.label:
-"""DynamoDB Endpoint"""
 
 }
 
@@ -4302,123 +5220,105 @@ url.label:
 
 }
 
-emqx_ee_connector_influxdb {
+emqx_ee_schema_registry_http_api {
 
-bucket.desc:
-"""InfluxDB bucket name."""
+desc_param_path_schema_name.desc:
+"""The schema name"""
 
-bucket.label:
-"""Bucket"""
+desc_param_path_schema_name.label:
+"""Schema name"""
 
-database.desc:
-"""InfluxDB database."""
+desc_schema_registry_api_delete.desc:
+"""Delete a schema"""
 
-database.label:
-"""Database"""
+desc_schema_registry_api_delete.label:
+"""Delete schema"""
 
-influxdb_api_v1.desc:
-"""InfluxDB's protocol. Support InfluxDB v1.8 and before."""
+desc_schema_registry_api_get.desc:
+"""Get a schema by its name"""
 
-influxdb_api_v1.label:
-"""HTTP API Protocol"""
+desc_schema_registry_api_get.label:
+"""Get schema"""
 
-influxdb_api_v2.desc:
-"""InfluxDB's protocol. Support InfluxDB v2.0 and after."""
+desc_schema_registry_api_list.desc:
+"""List all registered schemas"""
 
-influxdb_api_v2.label:
-"""HTTP API V2 Protocol"""
+desc_schema_registry_api_list.label:
+"""List schemas"""
 
-org.desc:
-"""Organization name of InfluxDB."""
+desc_schema_registry_api_post.desc:
+"""Register a new schema"""
 
-org.label:
-"""Organization"""
+desc_schema_registry_api_post.label:
+"""Register schema"""
 
-password.desc:
-"""InfluxDB password."""
+desc_schema_registry_api_put.desc:
+"""Update an existing schema"""
 
-password.label:
-"""Password"""
-
-precision.desc:
-"""InfluxDB time precision."""
-
-precision.label:
-"""Time Precision"""
-
-protocol.desc:
-"""InfluxDB's protocol. HTTP API or HTTP API V2."""
-
-protocol.label:
-"""Protocol"""
-
-server.desc:
-"""The IPv4 or IPv6 address or the hostname to connect to.</br>
-A host entry has the following form: `Host[:Port]`.</br>
-The InfluxDB default port 8086 is used if `[:Port]` is not specified."""
-
-server.label:
-"""Server Host"""
-
-token.desc:
-"""InfluxDB token."""
-
-token.label:
-"""Token"""
-
-username.desc:
-"""InfluxDB username."""
-
-username.label:
-"""Username"""
+desc_schema_registry_api_put.label:
+"""Update schema"""
 
 }
 
-emqx_ee_connector_rocketmq {
+emqx_ee_schema_registry_schema {
 
-refresh_interval.desc:
-"""RocketMQ Topic Route Refresh Interval."""
+avro_type.desc:
+"""[Apache Avro](https://avro.apache.org/) serialization format."""
 
-refresh_interval.label:
-"""Topic Route Refresh Interval"""
+avro_type.label:
+"""Apache Avro"""
 
-security_token.desc:
-"""RocketMQ Server Security Token"""
+protobuf_type.desc:
+"""[Protocol Buffers](https://protobuf.dev/) serialization format."""
 
-security_token.label:
-"""Security Token"""
+protobuf_type.label:
+"""Protocol Buffers"""
 
-send_buffer.desc:
-"""The socket send buffer size of the RocketMQ driver client."""
+schema_description.desc:
+"""A description for this schema."""
 
-send_buffer.label:
-"""Send Buffer Size"""
+schema_description.label:
+"""Schema description"""
 
-server.desc:
-"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
-A host entry has the following form: `Host[:Port]`.<br/>
-The RocketMQ default port 9876 is used if `[:Port]` is not specified."""
+schema_name.desc:
+"""A name for the schema that will serve as its identifier."""
 
-server.label:
-"""Server Host"""
+schema_name.label:
+"""Schema name"""
 
-topic.desc:
-"""RocketMQ Topic"""
+schema_registry_root.desc:
+"""Schema registry configurations."""
 
-topic.label:
-"""RocketMQ Topic"""
+schema_registry_root.label:
+"""Schema registry"""
+
+schema_registry_schemas.desc:
+"""Registered schemas."""
+
+schema_registry_schemas.label:
+"""Registered schemas"""
+
+schema_source.desc:
+"""Source text for the schema."""
+
+schema_source.label:
+"""Schema source"""
+
+schema_type.desc:
+"""Schema type."""
+
+schema_type.label:
+"""Schema type"""
 
 }
 
-emqx_ee_connector_tdengine {
+emqx_eviction_agent_api {
 
-server.desc:
-"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
-A host entry has the following form: `Host[:Port]`.<br/>
-The TDengine default port 6041 is used if `[:Port]` is not specified."""
+node_eviction_status_get.desc:
+"""Get the node eviction status"""
 
-server.label:
-"""Server Host"""
+node_eviction_status_get.label:
+"""Node Eviction Status"""
 
 }
 
@@ -4426,70 +5326,109 @@ emqx_exhook_api {
 
 add_server.desc:
 """Add a server"""
+add_server.label:
+"""Add a server"""
 
 delete_server.desc:
+"""Delete the server"""
+delete_server.label:
 """Delete the server"""
 
 get_detail.desc:
 """Get the detail information of Exhook server"""
+get_detail.label:
+"""Get server details"""
 
 get_hooks.desc:
 """Get the hooks information of server"""
+get_hooks.label:
+"""Get server hooks information"""
 
 hook_metrics.desc:
 """Metrics information of this hook in the current node"""
+hook_metrics.label:
+"""Hook metrics"""
 
 hook_name.desc:
 """The hook's name"""
+hook_name.label:
+"""Hook name"""
 
 hook_params.desc:
 """The parameters used when the hook is registered"""
+hook_params.label:
+"""Hook parameters"""
 
 list_all_servers.desc:
 """List all servers"""
+list_all_servers.label:
+"""List servers"""
 
 metric_failed.desc:
 """The number of times the hook execution failed"""
+metric_failed.label:
+"""Failed executions count"""
 
 metric_max_rate.desc:
 """Maximum call rate of hooks"""
+metric_max_rate.label:
+"""Max hook call rate"""
 
 metric_rate.desc:
 """The call rate of hooks"""
+metric_rate.label:
+"""Hook call rate"""
 
 metric_succeed.desc:
 """The number of times the hooks execution successful"""
+metric_succeed.label:
+"""Successful executions count"""
 
 metrics.desc:
+"""Metrics information"""
+metrics.label:
 """Metrics information"""
 
 move_api.desc:
 """Move the server.
 NOTE: The position should be "front | rear | before:{name} | after:{name}"""
-
 move_api.label:
 """Change order of execution for registered Exhook server"""
 
 move_position.desc:
 """The target position to be moved"""
+move_position.label:
+"""Target position"""
 
 node.desc:
+"""Node name"""
+node.label:
 """Node name"""
 
 node_hook_metrics.desc:
 """Metrics information of this hook in all nodes"""
+node_hook_metrics.label:
+"""Node-wise hook metrics"""
 
 node_metrics.desc:
 """Metrics information of this server in all nodes"""
+node_metrics.label:
+"""Node-wise server metrics"""
 
 node_status.desc:
 """status of this server in all nodes"""
+node_status.label:
+"""Node-wise server status"""
 
 server_metrics.desc:
 """Metrics information of this server in the current node"""
+server_metrics.label:
+"""Server metrics"""
 
 server_name.desc:
 """The Exhook server name"""
+server_name.label:
+"""Server name"""
 
 status.desc:
 """The status of Exhook server.<br/>
@@ -4498,8 +5437,12 @@ connecting: connection failed, reconnecting<br/>
 disconnected: failed to connect and didn't reconnect<br/>
 disabled: this server is disabled<br/>
 error: failed to view the status of this server"""
+status.label:
+"""Server status"""
 
 update_server.desc:
+"""Update the server"""
+update_server.label:
 """Update the server"""
 
 }
@@ -4572,6 +5515,86 @@ exproto_handler.desc:
 
 exproto_server.desc:
 """Configurations for starting the <code>ConnectionAdapter</code> service"""
+
+}
+
+emqx_ft_api {
+
+file_list.desc:
+"""List all uploaded files."""
+
+file_list_transfer.desc:
+"""List a file uploaded during specified transfer, identified by client id and file id."""
+
+}
+
+emqx_ft_storage_exporter_fs_api {
+
+file_get.desc:
+"""Get a file by its id."""
+
+}
+
+emqx_ft_schema {
+
+enable.desc:
+"""Enable the File Transfer feature.<br/>
+Enabling File Transfer implies reserving special MQTT topics in order to serve the protocol.<br/>
+This toggle also affects the availability of the File Transfer REST API and
+storage-dependent background activities (e.g. garbage collection)."""
+
+init_timeout.desc:
+"""Timeout for initializing the file transfer.<br/>
+After reaching the timeout, `init` message will be acked with an error"""
+
+assemble_timeout.desc:
+"""Timeout for assembling and exporting file segments into a final file.<br/>
+After reaching the timeout, `fin` message will be acked with an error"""
+
+store_segment_timeout.desc:
+"""Timeout for storing a file segment.<br/>
+After reaching the timeout, message with the segment will be acked with an error"""
+
+storage_backend.desc:
+"""Storage settings for file transfer."""
+
+local_storage.desc:
+"""Local file system backend to store uploaded fragments and temporary data."""
+
+local_storage_segments.desc:
+"""Settings for local segments storage, which include uploaded transfer fragments and temporary data."""
+
+local_storage_segments_root.desc:
+"""File system path to keep uploaded fragments and temporary data."""
+
+local_storage_exporter_backend.desc:
+"""Exporter for the local file system storage backend.<br/>
+Exporter defines where and how fully transferred and assembled files are stored."""
+
+local_storage_exporter.desc:
+"""Exporter to the local file system."""
+
+s3_exporter.desc:
+"""Exporter to the S3 API compatible object storage."""
+
+local_storage_exporter_root.desc:
+"""Directory where the uploaded files are kept."""
+
+local_storage_segments_gc.desc:
+"""Garbage collection settings for the intermediate and temporary files in the local file system."""
+
+storage_gc_interval.desc:
+"""Interval of periodic garbage collection."""
+
+storage_gc_max_segments_ttl.desc:
+"""Maximum TTL of a segment kept in the local file system.<br/>
+This is a hard limit: no segment will outlive this TTL, even if some file transfer specifies a
+TTL more than that."""
+
+storage_gc_min_segments_ttl.desc:
+"""Minimum TTL of a segment kept in the local file system.<br/>
+This is a hard limit: no segment will be garbage collected before reaching this TTL,
+even if some file transfer specifies a TTL less than that."""
 
 }
 
@@ -5139,6 +6162,27 @@ license_root.label:
 
 emqx_limiter_schema {
 
+max_conn_rate.desc:
+"""Maximum connection rate.<br/>
+This is used to limit the connection rate for this node,
+once the limit is reached, new connections will be deferred or refused"""
+max_conn_rate.label:
+"""Maximum Connection Rate"""
+
+messages_rate.desc:
+"""Messages publish rate.<br/>
+This is used to limit the inbound message numbers for this node,
+once the limit is reached, the restricted client will slow down and even be hung for a while."""
+messages_rate.label:
+"""Messages Publish Rate"""
+
+bytes_rate.desc:
+"""Data publish rate.<br/>
+This is used to limit the inbound bytes rate for this node,
+once the limit is reached, the restricted client will slow down and even be hung for a while."""
+bytes_rate.label:
+"""Data Publish Rate"""
+
 bucket_cfg.desc:
 """Bucket Configs"""
 
@@ -5152,31 +6196,19 @@ burst.desc:
 burst.label:
 """Burst"""
 
-bytes_in.desc:
-"""The bytes_in limiter.
+bytes.desc:
+"""The `bytes` limiter.
 This is used to limit the inbound bytes rate for this EMQX node.
 Once the limit is reached, the restricted client will be slow down even be hung for a while."""
 
-bytes_in.label:
-"""Bytes In"""
-
-capacity.desc:
-"""The capacity of this token bucket."""
-
-capacity.label:
-"""Capacity"""
+bytes.label:
+"""Bytes"""
 
 client.desc:
 """The rate limit for each user of the bucket"""
 
 client.label:
 """Per Client"""
-
-client_bucket_capacity.desc:
-"""The capacity of per user."""
-
-client_bucket_capacity.label:
-"""Capacity"""
 
 connection.desc:
 """The connection limiter.
@@ -5220,14 +6252,6 @@ max_retry_time.desc:
 max_retry_time.label:
 """Max Retry Time"""
 
-message_in.desc:
-"""The message in limiter.
-This is used to limit the inbound message numbers for this EMQX node
-Once the limit is reached, the restricted client will be slow down even be hung for a while."""
-
-message_in.label:
-"""Message In"""
-
 message_routing.desc:
 """The message routing limiter.
 This is used to limit the forwarding rate for this EMQX node.
@@ -5235,6 +6259,14 @@ Once the limit is reached, new publish will be refused"""
 
 message_routing.label:
 """Message Routing"""
+
+messages.desc:
+"""The `messages` limiter.
+This is used to limit the inbound message numbers for this EMQX node
+Once the limit is reached, the restricted client will be slow down even be hung for a while."""
+
+messages.label:
+"""Messages"""
 
 rate.desc:
 """Rate for this bucket."""
@@ -5339,6 +6371,8 @@ deactivate_at.desc:
 
 delete_alarms_api.desc:
 """Remove all historical alarms."""
+delete_alarms_api.label:
+"""Remove all historical alarms."""
 
 delete_alarms_api_response204.desc:
 """Historical alarms have been cleared successfully."""
@@ -5357,6 +6391,8 @@ The default is false."""
 
 list_alarms_api.desc:
 """List currently activated alarms or historical alarms, determined by query parameters."""
+list_alarms_api.label:
+"""List alarms"""
 
 message.desc:
 """Alarm message, which describes the alarm content in a human-readable format."""
@@ -5366,6 +6402,40 @@ name.desc:
 
 node.desc:
 """The name of the node that triggered this alarm."""
+
+}
+
+emqx_mgmt_api_api_keys {
+
+api_key_list.desc:
+"""Return api_key list"""
+api_key_list.label:
+"""Return api_key list"""
+
+create_new_api_key.desc:
+"""Create new api_key"""
+create_new_api_key.label:
+"""Create new api_key"""
+
+get_api_key.desc:
+"""Return the specific api_key"""
+get_api_key.label:
+"""Return the specific api_key"""
+
+update_api_key.desc:
+"""Update the specific api_key"""
+update_api_key.label:
+"""Update the specific api_key"""
+
+delete_api_key.desc:
+"""Delete the specific api_key"""
+delete_api_key.label:
+"""Delete the specific api_key"""
+
+format.desc:
+"""Unique and format by [a-zA-Z0-9-_]"""
+format.label:
+"""Unique and format by [a-zA-Z0-9-_]"""
 
 }
 
@@ -5391,18 +6461,24 @@ by.label:
 
 create_banned_api.desc:
 """Add a client ID, username or IP address to the blacklist."""
+create_banned_api.label:
+"""Ban client ID, username or IP address"""
 
 create_banned_api_response400.desc:
 """Bad request, possibly due to wrong parameters or the existence of a banned object."""
 
 delete_banned_api.desc:
 """Remove a client ID, username or IP address from the blacklist."""
+delete_banned_api.label:
+"""Unban a client ID, username or IP address"""
 
 delete_banned_api_response404.desc:
 """The banned object was not found in the blacklist."""
 
 list_banned_api.desc:
 """List all currently banned client IDs, usernames and IP addresses."""
+list_banned_api.label:
+"""List all banned client IDs"""
 
 reason.desc:
 """Ban reason, record the reason why the current object was banned."""
@@ -5424,6 +6500,125 @@ who.label:
 
 }
 
+emqx_mgmt_api_clients {
+
+list_clients.desc:
+"""List clients"""
+list_clients.label:
+"""List clients"""
+
+clients_info_from_id.desc:
+"""Get clients info by client ID"""
+clients_info_from_id.label:
+"""Get clients info by client ID"""
+
+kick_client_id.desc:
+"""Kick out client by client ID"""
+kick_client_id.label:
+"""Kick out client by client ID"""
+
+get_authz_cache.desc:
+"""Get client authz cache in the cluster."""
+get_authz_cache.label:
+"""Get client authz cache in the cluster."""
+
+clean_authz_cache.desc:
+"""Clean client authz cache in the cluster."""
+clean_authz_cache.label:
+"""Clean client authz cache in the cluster."""
+
+get_client_subs.desc:
+"""Get client subscriptions"""
+get_client_subs.label:
+"""Get client subscriptions"""
+
+subscribe.desc:
+"""Subscribe"""
+subscribe.label:
+"""Subscribe"""
+
+subscribe_g.desc:
+"""Subscribe bulk"""
+subscribe_g.label:
+"""Subscribe bulk"""
+
+unsubscribe.desc:
+"""Unsubscribe"""
+unsubscribe.label:
+"""Unsubscribe"""
+
+unsubscribe_g.desc:
+"""Unsubscribe bulk"""
+unsubscribe_g.label:
+"""Unsubscribe bulk"""
+
+set_keepalive_seconds.desc:
+"""Set the online client keepalive by seconds"""
+set_keepalive_seconds.label:
+"""Set the online client keepalive by seconds"""
+
+}
+
+emqx_mgmt_api_cluster {
+
+get_cluster_info.desc:
+"""Get cluster info"""
+get_cluster_info.label:
+"""Get cluster info"""
+
+invite_node.desc:
+"""Invite node to cluster"""
+invite_node.label:
+"""Invite node to cluster"""
+
+force_remove_node.desc:
+"""Force leave node from cluster"""
+force_remove_node.label:
+"""Force leave node from cluster"""
+
+}
+
+emqx_mgmt_api_configs {
+
+get_conf_node.desc:
+"""Get all the configurations of the specified node, including hot and non-hot updatable items."""
+get_conf_node.label:
+"""Get all the configurations for node."""
+
+node_name.desc:
+"""Node's name: If you do not fill in the fields, this node will be used by default."""
+node_name.label:
+"""Node's name."""
+
+rest_conf_query.desc:
+"""Reset the config entry specified by the query string parameter `conf_path`.<br/>
+- For a config entry that has default value, this resets it to the default value;
+- For a config entry that has no default value, an error 400 will be returned"""
+rest_conf_query.label:
+"""Reset the config entry with query"""
+
+get_global_zone_configs.desc:
+"""Get the global zone configs"""
+get_global_zone_configs.label:
+"""Get the global zone configs"""
+
+update_global_zone_configs.desc:
+"""Update global zone configs"""
+update_global_zone_configs.label:
+"""Update global zone configs"""
+
+get_node_level_limiter_configs.desc:
+"""Get the node-level limiter configs"""
+get_node_level_limiter_configs.label:
+"""Get the node-level limiter configs"""
+
+update_node_level_limiter_configs.desc:
+"""Update the node-level limiter configs"""
+update_node_level_limiter_configs.label:
+"""Update the node-level limiter configs"""
+
+}
+
 emqx_mgmt_api_key_schema {
 
 api_key.desc:
@@ -5442,6 +6637,99 @@ bootstrap_file.desc:
 
 bootstrap_file.label:
 """Initialize api_key file."""
+
+}
+
+emqx_mgmt_api_listeners {
+
+list_node_live_statuses.desc:
+"""List all running node's listeners live status. group by listener type"""
+list_node_live_statuses.label:
+"""List all running node's listeners live status. group by listener type"""
+
+list_listeners.desc:
+"""List all running node's listeners for the specified type."""
+list_listeners.label:
+"""List all running node's listeners for the specified type."""
+
+listener_type.desc:
+"""Listener type"""
+listener_type.label:
+"""Listener type"""
+
+create_on_all_nodes.desc:
+"""Create the specified listener on all nodes."""
+create_on_all_nodes.label:
+"""Create the specified listener on all nodes."""
+
+list_by_id.desc:
+"""List all running node's listeners for the specified id."""
+list_by_id.label:
+"""List all running node's listeners for the specified id."""
+
+update_lisener.desc:
+"""Update the specified listener on all nodes."""
+update_lisener.label:
+"""Update the specified listener on all nodes."""
+
+create_on_all_nodes_2.desc:
+"""Create the specified listener on all nodes."""
+create_on_all_nodes_2.label:
+"""Create the specified listener on all nodes."""
+
+delete_on_all_nodes.desc:
+"""Delete the specified listener on all nodes."""
+delete_on_all_nodes.label:
+"""Delete the specified listener on all nodes."""
+
+start_on_all_nodes.desc:
+"""Start the listener on all nodes."""
+start_on_all_nodes.label:
+"""Start the listener on all nodes."""
+
+stop_on_all_nodes.desc:
+"""Stop the listener on all nodes."""
+stop_on_all_nodes.label:
+"""Stop the listener on all nodes."""
+
+restart_on_all_nodes.desc:
+"""Restart listeners on all nodes."""
+restart_on_all_nodes.label:
+"""Restart listeners on all nodes."""
+
+
+}
+
+emqx_mgmt_api_metrics {
+
+emqx_metrics.desc:
+"""EMQX metrics"""
+emqx_metrics.label:
+"""EMQX metrics"""
+
+}
+
+emqx_mgmt_api_nodes {
+
+list_nodes.desc:
+"""List EMQX nodes"""
+list_nodes.label:
+"""List EMQX nodes"""
+
+get_node_info.desc:
+"""Get node info"""
+get_node_info.label:
+"""Get node info"""
+
+get_node_metrics.desc:
+"""Get node metrics"""
+get_node_metrics.label:
+"""Get node metrics"""
+
+get_node_stats.desc:
+"""Get node stats"""
+get_node_stats.label:
+"""Get node stats"""
 
 }
 
@@ -5528,25 +6816,195 @@ topic_name.desc:
 
 }
 
+emqx_mgmt_api_stats {
+
+emqx_stats.desc:
+"""EMQX stats"""
+emqx_stats.label:
+"""EMQX stats"""
+
+}
+
 emqx_mgmt_api_status {
 
 get_status_api.desc:
-"""Serves as a health check for the node.  Returns a plain text response describing the status of the node.  This endpoint requires no authentication.
+"""Serves as a health check for the node.
+Returns response to describe the status of the node and the application.
+
+This endpoint requires no authentication.
 
 Returns status code 200 if the EMQX application is up and running, 503 otherwise.
 This API was introduced in v5.0.10.
-The GET `/status` endpoint (without the `/api/...` prefix) is also an alias to this endpoint and works in the same way.  This alias has been available since v5.0.0."""
+The GET `/status` endpoint (without the `/api/...` prefix) is also an alias to this endpoint and works in the same way.
+This alias has been available since v5.0.0.
+
+Starting from v5.0.25 or e5.0.4, you can also use 'format' parameter to get JSON format information."""
 
 get_status_api.label:
 """Service health check"""
 
 get_status_response200.desc:
-"""Node emqx@127.0.0.1 is started
+"""If 'format' parameter is 'json', then it returns a JSON like below:<br/>
+{
+  "rel_vsn": "v5.0.23",
+  "node_name": "emqx@127.0.0.1",
+  "broker_status": "started",
+  "app_status": "running"
+}
+<br/>
+Otherwise it returns free text strings as below:<br/>
+Node emqx@127.0.0.1 is started
 emqx is running"""
 
 get_status_response503.desc:
-"""Node emqx@127.0.0.1 is stopped
-emqx is not_running"""
+"""When EMQX application is temporary not running or being restarted, it may return 'emqx is not_running'.
+If the 'format' parameter is provided 'json', then the 'app_status' field in the JSON object will be 'not_running'."""
+
+get_status_api_format.desc:
+"""Specify the response format, 'text' (default) to return the HTTP body in free text,
+or 'json' to return the HTTP body with a JSON object."""
+
+}
+
+emqx_mgmt_api_subscriptions {
+
+list_subs.desc:
+"""List subscriptions"""
+list_subs.label:
+"""List subscriptions"""
+
+}
+
+emqx_mgmt_api_topics {
+
+topic_list.desc:
+"""Topics list"""
+topic_list.label:
+"""Topics list"""
+
+topic_info_by_name.desc:
+"""Lookup topic info by name"""
+topic_info_by_name.label:
+"""Lookup topic info by name"""
+
+}
+
+emqx_mgmt_api_trace {
+
+list_all.desc:
+"""List all trace"""
+list_all.label:
+"""List all trace"""
+
+create_new.desc:
+"""Create new trace"""
+create_new.label:
+"""Create new trace"""
+
+clear_all.desc:
+"""Clear all traces"""
+clear_all.label:
+"""Clear all traces"""
+
+delete_trace.desc:
+"""Delete specified trace"""
+delete_trace.label:
+"""Delete specified trace"""
+
+stop_trace.desc:
+"""Stop trace by name"""
+stop_trace.label:
+"""Stop trace by name"""
+
+download_log_by_name.desc:
+"""Download trace log by name"""
+download_log_by_name.label:
+"""Download trace log by name"""
+
+trace_zip_file.desc:
+"""A trace zip file"""
+trace_zip_file.label:
+"""A trace zip file"""
+
+get_trace_file_metadata.desc:
+"""get trace log file's metadata, such as size, last update time"""
+get_trace_file_metadata.label:
+"""get trace log file's metadata"""
+
+view_trace_log.desc:
+"""view trace log"""
+view_trace_log.label:
+"""view trace log"""
+
+file_size.desc:
+"""file size"""
+file_size.label:
+"""file size"""
+
+modification_date.desc:
+"""the modification and last access times of a file"""
+modification_date.label:
+"""last access time"""
+
+format.desc:
+"""Unique and format by [a-zA-Z0-9-_]"""
+format.label:
+"""Unique and format by [a-zA-Z0-9-_]"""
+
+filter_type.desc:
+"""Filter type"""
+filter_type.label:
+"""Filter type"""
+
+support_wildcard.desc:
+"""support mqtt wildcard topic."""
+support_wildcard.label:
+"""support mqtt wildcard topic"""
+
+mqtt_clientid.desc:
+"""mqtt clientid."""
+mqtt_clientid.label:
+"""mqtt clientid"""
+
+client_ip_addess.desc:
+"""client ip address"""
+client_ip_addess.label:
+"""client ip address"""
+
+trace_status.desc:
+"""trace status"""
+trace_status.label:
+"""trace status"""
+
+time_format.desc:
+"""rfc3339 timestamp or epoch second"""
+time_format.label:
+"""rfc3339 timestamp or epoch second"""
+
+time_format_g.desc:
+"""rfc3339 timestamp or epoch second"""
+time_format_g.label:
+"""rfc3339 timestamp or epoch second"""
+
+trace_log_size.desc:
+"""trace log size"""
+trace_log_size.label:
+"""trace log size"""
+
+node_name.desc:
+"""Node name"""
+node_name.label:
+"""Node name"""
+
+max_response_bytes.desc:
+"""Maximum number of bytes to send in response"""
+max_response_bytes.label:
+"""Maximum response bytes"""
+
+current_trace_offset.desc:
+"""Offset from the current trace position."""
+current_trace_offset.label:
+"""Offset from the current trace position."""
 
 }
 
@@ -5632,6 +7090,295 @@ mqttsn_subs_resume.desc:
 
 }
 
+emqx_node_rebalance_api {
+
+load_rebalance_status.desc:
+"""Get rebalance status of the current node"""
+
+load_rebalance_status.label:
+"""Get rebalance status"""
+
+load_rebalance_global_status.desc:
+"""Get status of all rebalance/evacuation processes across the cluster"""
+
+load_rebalance_global_status.label:
+"""Get global rebalance status"""
+
+load_rebalance_availability_check.desc:
+"""Check if the node is being evacuated or rebalanced"""
+
+load_rebalance_availability_check.label:
+"""Availability check"""
+
+load_rebalance_start.desc:
+"""Start rebalance process"""
+
+load_rebalance_start.label:
+"""Start rebalance"""
+
+load_rebalance_stop.desc:
+"""Stop rebalance process"""
+
+load_rebalance_stop.label:
+"""Stop rebalance"""
+
+load_rebalance_evacuation_start.desc:
+"""Start evacuation process"""
+
+load_rebalance_evacuation_start.label:
+"""Start evacuation"""
+
+load_rebalance_evacuation_stop.desc:
+"""Stop evacuation process"""
+
+load_rebalance_evacuation_stop.label:
+"""Stop evacuation"""
+
+param_node.desc:
+"""Node name"""
+
+param_node.label:
+"""Node name"""
+
+wait_health_check.desc:
+"""Time to wait before starting the rebalance process, in seconds"""
+
+wait_health_check.label:
+"""Wait health check"""
+
+conn_evict_rate.desc:
+"""The rate of evicting connections, in connections per second"""
+
+conn_evict_rate.label:
+"""Connection eviction rate"""
+
+sess_evict_rate.desc:
+"""The rate of evicting sessions, in sessions per second"""
+
+sess_evict_rate.label:
+"""Session eviction rate"""
+
+abs_conn_threshold.desc:
+"""Maximum desired difference between the number of connections on the node and the average number of connections on the recipient nodes. Difference lower than this is the goal of the rebalance process."""
+
+abs_conn_threshold.label:
+"""Absolute connection threshold"""
+
+rel_conn_threshold.desc:
+"""Maximum desired fraction between the number of connections on the node and the average number of connections on the recipient nodes. Fraction lower than this is the goal of the rebalance process."""
+
+rel_conn_threshold.label:
+"""Relative connection threshold"""
+
+abs_sess_threshold.desc:
+"""Maximum desired difference between the number of sessions on the node and the average number of sessions on the recipient nodes. Difference lower than this is the goal of the evacuation process."""
+
+abs_sess_threshold.label:
+"""Absolute session threshold"""
+
+rel_sess_threshold.desc:
+"""Maximum desired fraction between the number of sessions on the node and the average number of sessions on the recipient nodes. Fraction lower than this is the goal of the evacuation process"""
+
+rel_sess_threshold.label:
+"""Relative session threshold"""
+
+wait_takeover.desc:
+"""Time to wait before starting session evacuation process, in seconds"""
+
+wait_takeover.label:
+"""Wait takeover"""
+
+redirect_to.desc:
+"""Server reference to redirect clients to (MQTTv5 Server redirection)"""
+
+redirect_to.label:
+"""Redirect to"""
+
+migrate_to.desc:
+"""Nodes to migrate sessions to"""
+
+migrate_to.label:
+"""Migrate to"""
+
+rebalance_nodes.desc:
+"""Nodes to participate in rebalance"""
+
+rebalance_nodes.label:
+"""Rebalance nodes"""
+
+local_status_enabled.desc:
+"""Whether the node is being evacuated"""
+
+local_status_enabled.label:
+"""Local evacuation status"""
+
+local_status_process.desc:
+"""The type of the task that is being performed on the node: 'evacuation' or 'rebalance'"""
+
+local_status_process.label:
+"""Task Type"""
+
+local_status_state.desc:
+"""The state of the process that is being performed on the node"""
+
+local_status_state.label:
+"""Rebalance/evacuation current state"""
+
+local_status_coordinator_node.desc:
+"""The node that is coordinating rebalance process"""
+
+local_status_coordinator_node.label:
+"""Coordinator node"""
+
+local_status_connection_eviction_rate.desc:
+"""The rate of evicting connections, in connections per second"""
+
+local_status_connection_eviction_rate.label:
+"""Connection eviction rate"""
+
+local_status_session_eviction_rate.desc:
+"""The rate of evicting sessions, in sessions per second"""
+
+local_status_session_eviction_rate.label:
+"""Session eviction rate"""
+
+local_status_connection_goal.desc:
+"""The number of connections that the node should have after the rebalance/evacuation process"""
+
+local_status_connection_goal.label:
+"""Connection goal"""
+
+local_status_session_goal.desc:
+"""The number of sessions that the node should have after the evacuation process"""
+
+local_status_session_goal.label:
+"""Session goal"""
+
+local_status_disconnected_session_goal.desc:
+"""The number of disconnected sessions that the node should have after the rebalance process"""
+
+local_status_disconnected_session_goal.label:
+"""Disconnected session goal"""
+
+local_status_session_recipients.desc:
+"""List of nodes to which sessions are being evacuated"""
+
+local_status_session_recipients.label:
+"""Session recipients"""
+
+local_status_recipients.desc:
+"""List of nodes to which connections/sessions are being evacuated during rebalance"""
+
+local_status_recipients.label:
+"""Recipients"""
+
+local_status_stats.desc:
+"""Statistics of the evacuation/rebalance process"""
+
+local_status_stats.label:
+"""Statistics"""
+
+status_stats_initial_connected.desc:
+"""The number of connections on the node before the evacuation/rebalance process"""
+
+status_stats_initial_connected.label:
+"""Initial connected"""
+
+status_stats_current_connected.desc:
+"""Current number of connections on the node"""
+
+status_stats_current_connected.label:
+"""Current connections"""
+
+status_stats_initial_sessions.desc:
+"""The number of sessions on the node before the evacuation/rebalance process"""
+
+status_stats_initial_sessions.label:
+"""Initial sessions"""
+
+status_stats_current_sessions.desc:
+"""Current number of sessions on the node"""
+
+status_stats_current_sessions.label:
+"""Current sessions"""
+
+status_stats_current_disconnected_sessions.desc:
+"""Current number of disconnected sessions on the node"""
+
+status_stats_current_disconnected_sessions.label:
+"""Current disconnected sessions"""
+
+coordinator_status_donors.desc:
+"""List of nodes from which connections/sessions are being evacuated"""
+
+coordinator_status_donors.label:
+"""Donors"""
+
+coordinator_status_donor_conn_avg.desc:
+"""Average number of connections per donor node"""
+
+coordinator_status_donor_conn_avg.label:
+"""Donor connections average"""
+
+coordinator_status_donor_sess_avg.desc:
+"""Average number of sessions per donor node"""
+
+coordinator_status_donor_sess_avg.label:
+"""Donor sessions average"""
+
+coordinator_status_node.desc:
+"""The node that is coordinating the evacuation/rebalance process"""
+
+coordinator_status_node.label:
+"""Coordinator node"""
+
+evacuation_status_node.desc:
+"""The node that is being evacuated"""
+
+evacuation_status_node.label:
+"""Evacuated node"""
+
+global_status_evacuations.desc:
+"""List of nodes that are being evacuated"""
+
+global_status_evacuations.label:
+"""Evacuations"""
+
+global_status_rebalances.desc:
+"""List of nodes that coordinate a rebalance"""
+
+global_status_rebalances.label:
+"""Rebalances"""
+
+empty_response.desc:
+"""The response is empty"""
+
+empty_response.label:
+"""Empty response"""
+
+}
+
+emqx_oracle {
+
+  server {
+    desc = "The IPv4 or IPv6 address or the hostname to connect to.<br/>"
+           "A host entry has the following form: `Host[:Port]`.<br/>"
+           "The Oracle Database default port 1521 is used if `[:Port]` is not specified."
+    label = "Server Host"
+  }
+
+  sid {
+    desc = "Sid for Oracle Database."
+    label = "Oracle Database Sid"
+  }
+
+  service_name {
+    desc = "Service Name for Oracle Database."
+    label = "Oracle Database Service Name"
+  }
+
+}
+
 emqx_plugins_schema {
 
 check_interval.desc:
@@ -5685,6 +7432,25 @@ The plugins are started in the defined order"""
 
 states.label:
 """States"""
+
+}
+
+emqx_prometheus_api {
+
+get_prom_conf_info.desc:
+"""Get Prometheus config info"""
+get_prom_conf_info.label:
+"""Get Prometheus config info"""
+
+update_prom_conf_info.desc:
+"""Update Prometheus config"""
+update_prom_conf_info.label:
+"""Update Prometheus config"""
+
+get_prom_data.desc:
+"""Get Prometheus Data"""
+get_prom_data.label:
+"""Get Prometheus Data"""
 
 }
 
@@ -5785,6 +7551,20 @@ batch_time.desc:
 batch_time.label:
 """Max batch wait time"""
 
+buffer_mode.desc:
+"""Buffer operation mode.
+<code>memory_only</mode>: Buffer all messages in memory.<code>volatile_offload</code>: Buffer message in memory first, when up to certain limit (see <code>buffer_seg_bytes</code> config for more information), then start offloading messages to disk"""
+
+buffer_mode.label:
+"""Buffer Mode"""
+
+buffer_seg_bytes.desc:
+"""Applicable when buffer mode is set to <code>volatile_offload</code>.
+This value is to specify the size of each on-disk buffer file."""
+
+buffer_seg_bytes.label:
+"""Segment File Bytes"""
+
 creation_opts.desc:
 """Creation options."""
 
@@ -5817,10 +7597,10 @@ inflight_window.desc:
 inflight_window.label:
 """Inflight window"""
 
-max_queue_bytes.desc:
+max_buffer_bytes.desc:
 """Maximum number of bytes to buffer for each buffer worker."""
 
-max_queue_bytes.label:
+max_buffer_bytes.label:
 """Max buffer queue size"""
 
 query_mode.desc:
@@ -5878,6 +7658,8 @@ config_not_found.desc:
 
 delete_matching_api.desc:
 """Delete matching messages."""
+delete_matching_api.label:
+"""Delete matching messages"""
 
 from_clientid.desc:
 """The clientid of publisher."""
@@ -5887,12 +7669,18 @@ from_username.desc:
 
 get_config_api.desc:
 """View config"""
+get_config_api.label:
+"""View config"""
 
 list_retained_api.desc:
+"""List retained messages."""
+list_retained_api.label:
 """List retained messages."""
 
 lookup_api.desc:
 """Lookup a message by a topic without wildcards."""
+lookup_api.label:
+"""Lookup a message"""
 
 message_detail.desc:
 """Details of the message."""
@@ -5929,6 +7717,8 @@ update_config_success.desc:
 
 update_retainer_api.desc:
 """Update retainer config."""
+update_retainer_api.label:
+"""Update retainer config"""
 
 }
 
@@ -5986,12 +7776,18 @@ emqx_rewrite_api {
 
 list_topic_rewrite_api.desc:
 """List all rewrite rules"""
+list_topic_rewrite_api.label:
+"""List all rewrite rules"""
 
 update_topic_rewrite_api.desc:
+"""Update all rewrite rules"""
+update_topic_rewrite_api.label:
 """Update all rewrite rules"""
 
 update_topic_rewrite_api_response413.desc:
 """Rules count exceed max limit"""
+update_topic_rewrite_api_response413.label:
+"""Rules count exceed limit"""
 
 }
 
@@ -6010,16 +7806,16 @@ event_payload.label:
 """Message Payload"""
 
 metrics_actions_failed_out_of_service.desc:
-"""How much times the rule failed to call actions due to the action is out of service. For example, a bridge is disabled or stopped."""
+"""How many times the rule has failed to call actions due to the action is out of service. For example, a bridge is disabled or stopped."""
 
 metrics_actions_failed_out_of_service.label:
 """Fail Action"""
 
 metrics_actions_failed_unknown.desc:
-"""How much times the rule failed to call actions due to to an unknown error."""
+"""The number of action failures that have occurred due to unanticipated reasons. For more information on these errors, please refer to the EMQX log file."""
 
 metrics_actions_failed_unknown.label:
-"""Fail Action"""
+"""Unknown Failures"""
 
 event_server.desc:
 """The IP address (or hostname) and port of the MQTT broker, in IP:Port format"""
@@ -6028,7 +7824,7 @@ event_server.label:
 """Server IP And Port"""
 
 metrics_actions_total.desc:
-"""How much times the actions are called by the rule. This value may several times of 'matched', depending on the number of the actions of the rule."""
+"""How many times the actions are called by the rule. This value may several times of 'matched', depending on the number of the actions of the rule."""
 
 metrics_actions_total.label:
 """Action Total"""
@@ -6052,7 +7848,7 @@ event_peername.label:
 """IP Address And Port"""
 
 metrics_sql_passed.desc:
-"""How much times the SQL is passed"""
+"""How many times the SQL is passed"""
 
 metrics_sql_passed.label:
 """SQL Passed"""
@@ -6088,7 +7884,7 @@ event_connected_at.label:
 """Connected Time"""
 
 metrics_sql_failed_exception.desc:
-"""How much times the SQL is failed due to exceptions. This may because of a crash when calling a SQL function, or trying to do arithmetic operation on undefined variables"""
+"""How many times the SQL is failed due to exceptions. This may because of a crash when calling a SQL function, or trying to do arithmetic operation on undefined variables"""
 
 metrics_sql_failed_exception.label:
 """SQL Exception"""
@@ -6122,6 +7918,12 @@ rs_event.desc:
 
 rs_event.label:
 """Event Topics"""
+
+root_rule_engine.desc:
+"""Rule engine configurations. This API can be used to change EMQX rule engine settings. But not for the rules. To list, create, or update rules, call the '/rules' API instead."""
+
+root_rule_engine.label:
+"""Rule engine configuration"""
 
 event_sockname.desc:
 """The IP Address and Port of the Local Listener"""
@@ -6172,7 +7974,7 @@ event_expiry_interval.label:
 """Expiry Interval"""
 
 metrics_sql_matched.desc:
-"""How much times the FROM clause of the SQL is matched."""
+"""How many times the FROM clause of the SQL is matched."""
 
 metrics_sql_matched.label:
 """Matched"""
@@ -6184,13 +7986,13 @@ event_clientid.label:
 """Client ID"""
 
 metrics_actions_success.desc:
-"""How much times the rule success to call the actions."""
+"""How many times the rule successided to call the actions."""
 
 metrics_actions_success.label:
 """Success Action"""
 
 metrics_actions_failed.desc:
-"""How much times the rule failed to call the actions."""
+"""How many times the rule failed to call the actions."""
 
 metrics_actions_failed.label:
 """Failed Action"""
@@ -6232,13 +8034,13 @@ event_authz_source.label:
 """Auth Source"""
 
 metrics_sql_failed_unknown.desc:
-"""How much times the SQL is failed due to an unknown error."""
+"""How many times the SQL is failed due to an unknown error."""
 
 metrics_sql_failed_unknown.label:
 """SQL Unknown Error"""
 
 metrics_sql_failed.desc:
-"""How much times the SQL is failed"""
+"""How many times the SQL statement has failed"""
 
 metrics_sql_failed.label:
 """SQL Failed"""
@@ -6379,6 +8181,12 @@ api1.desc:
 api1.label:
 """List All Rules"""
 
+api10.desc:
+"""Update rule engine configuration."""
+
+api10.label:
+"""Update configuration"""
+
 api1_enable.desc:
 """Filter enable/disable rules"""
 
@@ -6396,6 +8204,12 @@ api1_like_id.desc:
 
 api1_match_from.desc:
 """Filter rules by from(topic), Mqtt topic matching"""
+
+api1_resp.desc:
+"""List of rules"""
+
+api1_resp.label:
+"""List Rules"""
 
 api2.desc:
 """Create a new rule using given Id"""
@@ -6445,11 +8259,11 @@ api8.desc:
 api8.label:
 """Test Rule"""
 
-desc9.desc:
-"""List of rules"""
+api9.desc:
+"""Get rule engine configuration."""
 
-desc9.label:
-"""List Rules"""
+api9.label:
+"""Get configuration"""
 
 }
 
@@ -6654,6 +8468,45 @@ To write your own function, checkout the function <code>console</code> and
 
 user_provided_function_function.label:
 """User Provided Function"""
+
+}
+
+emqx_s3_schema {
+
+access_key_id.desc:
+"""The access key ID of the S3 bucket."""
+
+secret_access_key.desc:
+"""The secret access key of the S3 bucket."""
+
+bucket.desc:
+"""The name of the S3 bucket."""
+
+host.desc:
+"""The host of the S3 endpoint."""
+
+port.desc:
+"""The port of the S3 endpoint."""
+
+url_expire_time.desc:
+"""The time in seconds for which the signed URLs to the S3 objects are valid."""
+
+min_part_size.desc:
+"""The minimum part size for multipart uploads.<br/>
+Uploaded data will be accumulated in memory until this size is reached."""
+
+max_part_size.desc:
+"""The maximum part size for multipart uploads.<br/>
+S3 uploader won't try to upload parts larger than this size."""
+
+acl.desc:
+"""The ACL to use for the uploaded objects."""
+
+transport_options.desc:
+"""Options for the HTTP transport layer used by the S3 client."""
+
+ipv6_probe.desc:
+"""Whether to probe for IPv6 support."""
 
 }
 
@@ -6872,9 +8725,6 @@ pending connections can grow to."""
 fields_tcp_opts_backlog.label:
 """TCP backlog length"""
 
-broker_route_batch_clean.desc:
-"""Enable batch clean for deleted routes."""
-
 fields_mqtt_quic_listener_initial_window_packets.desc:
 """The size (in packets) of the initial congestion window for a connection. Default: 10"""
 
@@ -6996,11 +8846,11 @@ fields_mqtt_quic_listener_retry_memory_limit.desc:
 fields_mqtt_quic_listener_retry_memory_limit.label:
 """Retry memory limit"""
 
-force_shutdown_max_message_queue_len.desc:
-"""Maximum message queue length."""
+force_shutdown_max_mailbox_size.desc:
+"""In EMQX, each online client corresponds to an individual Erlang process. The configuration value establishes a mailbox size limit for these processes. If the mailbox size surpasses this limit, the client will be automatically terminated."""
 
-force_shutdown_max_message_queue_len.label:
-"""Maximum mailbox queue length of process."""
+force_shutdown_max_mailbox_size.label:
+"""Maximum mailbox size."""
 
 sys_heartbeat_interval.desc:
 """Time interval for publishing following heartbeat messages:
@@ -7458,7 +9308,7 @@ fields_tcp_opts_high_watermark.desc:
 by the VM socket implementation reaches this limit."""
 
 fields_tcp_opts_high_watermark.label:
-"""TCP 高水位线"""
+"""TCP high watermark"""
 
 fields_mqtt_quic_listener_stateless_operation_expiration_ms.desc:
 """The time limit between operations for the same endpoint, in milliseconds. Default: 100"""
@@ -7544,11 +9394,12 @@ and an MQTT message is published to the system topic <code>$SYS/sysmon/long_sche
 sysmon_vm_long_schedule.label:
 """Enable Long Schedule monitoring."""
 
-mqtt_keepalive_backoff.desc:
-"""The coefficient EMQX uses to confirm whether the keep alive duration of the client expires. Formula: Keep Alive * Backoff * 2"""
+mqtt_keepalive_multiplier.desc:
+"""Keep-Alive Timeout = Keep-Alive interval × Keep-Alive Multiplier.
+The default value 1.5 is following the MQTT 5.0 specification. This multiplier is adjustable, providing system administrators flexibility for tailoring to their specific needs. For instance, if a client's 10-second Keep-Alive interval PINGREQ gets delayed by an extra 10 seconds, changing the multiplier to 2 lets EMQX tolerate this delay."""
 
-mqtt_keepalive_backoff.label:
-"""Keep Alive Backoff"""
+mqtt_keepalive_multiplier.label:
+"""Keep Alive Multiplier"""
 
 force_gc_bytes.desc:
 """GC the process after specified number of bytes have passed through."""
@@ -7691,6 +9542,27 @@ base_listener_limiter.desc:
 
 base_listener_limiter.label:
 """Type of the rate limit."""
+
+max_conn_rate.desc:
+"""Maximum connection rate.<br/>
+This is used to limit the connection rate for this listener,
+once the limit is reached, new connections will be deferred or refused"""
+max_conn_rate.label:
+"""Maximum Connection Rate"""
+
+messages_rate.desc:
+"""Messages publish rate.<br/>
+This is used to limit the inbound message numbers for each client connected to this listener,
+once the limit is reached, the restricted client will slow down and even be hung for a while."""
+messages_rate.label:
+"""Messages Publish Rate"""
+
+bytes_rate.desc:
+"""Data publish rate.<br/>
+This is used to limit the inbound bytes rate for each client connected to this listener,
+once the limit is reached, the restricted client will slow down and even be hung for a while."""
+bytes_rate.label:
+"""Data Publish Rate"""
 
 persistent_session_store_backend.desc:
 """Database management system used to store information about persistent sessions and messages.
@@ -7959,6 +9831,11 @@ you drop support for the insecure renegotiation, prone to MitM attacks."""
 common_ssl_opts_schema_secure_renegotiate.label:
 """SSL renegotiate"""
 
+common_ssl_opts_schema_log_level.desc:
+"""Log level for SSL communication. Default is 'notice'. Set to 'debug' to inspect TLS handshake messages."""
+common_ssl_opts_schema_log_level.label:
+"""SSL log level"""
+
 sysmon_vm_busy_port.desc:
 """When a port (e.g. TCP socket) is overloaded, there will be a <code>busy_port</code> warning log,
 and an MQTT message is published to the system topic <code>$SYS/sysmon/busy_port</code>."""
@@ -8032,9 +9909,9 @@ persistent_session_store_message_gc_interval.label:
 """Message GC interval"""
 
 broker_shared_dispatch_ack_enabled.desc:
-"""Deprecated, will be removed in 5.1.
-Enable/disable shared dispatch acknowledgement for QoS 1 and QoS 2 messages.
-This should allow messages to be dispatched to a different subscriber in the group in case the picked (based on `shared_subscription_strategy`) subscriber is offline."""
+"""Deprecated.
+This was designed to avoid dispatching messages to a shared-subscription session which has the client disconnected.
+However it's no longer useful because the shared-subscrption messages in a expired session will be redispatched to other sessions in the group."""
 
 base_listener_enable_authn.desc:
 """Set <code>true</code> (default) to enable client authentication on this listener, the authentication
@@ -8202,14 +10079,20 @@ emqx_slow_subs_api {
 
 clear_records_api.desc:
 """Clear current data and re count slow topic"""
+clear_records_api.label:
+"""Clear current data and re count slow topic"""
 
 clientid.desc:
 """Message clientid"""
 
 get_records_api.desc:
 """View slow topics statistics record data"""
+get_records_api.label:
+"""View slow topics statistics record data"""
 
 get_setting_api.desc:
+"""View slow subs settings"""
+get_setting_api.label:
 """View slow subs settings"""
 
 last_update_time.desc:
@@ -8225,6 +10108,8 @@ topic.desc:
 """Message topic"""
 
 update_setting_api.desc:
+"""Update slow subs settings"""
+update_setting_api.label:
 """Update slow subs settings"""
 
 }
@@ -8245,47 +10130,6 @@ threshold.desc:
 
 top_k_num.desc:
 """The maximum number of records in the slow subscription statistics record table"""
-
-}
-
-emqx_statsd_api {
-
-get_statsd_config_api.desc:
-"""List the configuration of StatsD metrics collection and push service."""
-
-update_statsd_config_api.desc:
-"""Update the configuration of StatsD metrics collection and push service."""
-
-}
-
-emqx_statsd_schema {
-
-enable.desc:
-"""Enable or disable StatsD metrics collection and push service."""
-
-flush_interval.desc:
-"""The push interval for metrics."""
-
-get_statsd_config_api.desc:
-"""List the configuration of StatsD metrics collection and push service."""
-
-sample_interval.desc:
-"""The sampling interval for metrics."""
-
-server.desc:
-"""StatsD server address."""
-
-statsd.desc:
-"""StatsD metrics collection and push configuration."""
-
-statsd.label:
-"""StatsD"""
-
-tags.desc:
-"""The tags for metrics."""
-
-update_statsd_config_api.desc:
-"""Update the configuration of StatsD metrics collection and push service."""
 
 }
 
@@ -8322,8 +10166,12 @@ enable.desc:
 
 get_telemetry_data_api.desc:
 """Get telemetry data"""
+get_telemetry_data_api.label:
+"""Get telemetry data"""
 
 get_telemetry_status_api.desc:
+"""Get telemetry status"""
+get_telemetry_status_api.label:
 """Get telemetry status"""
 
 license.desc:
@@ -8355,114 +10203,193 @@ up_time.desc:
 
 update_telemetry_status_api.desc:
 """Enable or disable telemetry"""
+update_telemetry_status_api.label:
+"""Enable or disable telemetry"""
 
 uuid.desc:
 """Get UUID"""
 
 }
 
+emqx_telemetry_schema {
+telemetry_root_doc.desc:
+"""Configure telemetry data report from this EMQX node to EMQ's telemetry data collection server.
+See https://www.emqx.io/docs/en/v5.0/telemetry/telemetry.html for more details."""
+
+enable.desc:
+"""Set to `false` disable telemetry data report"""
+}
+
 emqx_topic_metrics_api {
 
 message_qos1_in_rate.desc:
 """QoS1 in messages rate"""
+message_qos1_in_rate.label:
+"""QoS1 in messages rate"""
 
 message_out_count.desc:
+"""Out messages count"""
+message_out_count.label:
 """Out messages count"""
 
 message_qos2_out_rate.desc:
 """QoS2 out messages rate"""
+message_qos2_out_rate.label:
+"""QoS2 out messages rate"""
 
 message_qos0_in_rate.desc:
+"""QoS0 in messages rate"""
+message_qos0_in_rate.label:
 """QoS0 in messages rate"""
 
 get_topic_metrics_api.desc:
 """List topic metrics"""
+get_topic_metrics_api.label:
+"""List topic metrics"""
 
 reset_time.desc:
 """Reset time. In rfc3339. Nullable if never reset"""
+reset_time.label:
+"""Reset time"""
 
 topic_metrics_api_response400.desc:
 """Bad request. Already exists or bad topic name"""
+topic_metrics_api_response400.label:
+"""Bad request"""
 
 reset_topic_desc.desc:
 """Topic Name. If this parameter is not present,all created topic metrics will be reset."""
+reset_topic_desc.label:
+"""Topic Name"""
 
 topic_metrics_api_response409.desc:
 """Conflict. Topic metrics exceeded max limit 512"""
+topic_metrics_api_response409.label:
+"""Conflict"""
 
 post_topic_metrics_api.desc:
+"""Create topic metrics"""
+post_topic_metrics_api.label:
 """Create topic metrics"""
 
 message_dropped_rate.desc:
 """Dropped messages rate"""
+message_dropped_rate.label:
+"""Dropped messages rate"""
 
 message_qos2_in_rate.desc:
+"""QoS2 in messages rate"""
+message_qos2_in_rate.label:
 """QoS2 in messages rate"""
 
 message_in_rate.desc:
 """In messages rate"""
+message_in_rate.label:
+"""In messages rate"""
 
 message_qos0_out_rate.desc:
+"""QoS0 out messages rate"""
+message_qos0_out_rate.label:
 """QoS0 out messages rate"""
 
 message_qos2_in_count.desc:
 """QoS2 in messages count"""
+message_qos2_in_count.label:
+"""QoS2 in messages count"""
 
 message_dropped_count.desc:
+"""Dropped messages count"""
+message_dropped_count.label:
 """Dropped messages count"""
 
 topic_metrics_api_response404.desc:
 """Not Found. Topic metrics not found"""
+topic_metrics_api_response404.label:
+"""Not Found"""
 
 topic_in_path.desc:
 """Topic string. Notice: Topic string in url path must be encoded"""
+topic_in_path.label:
+"""Topic string"""
 
 action.desc:
 """Action. Only support reset"""
+action.label:
+"""Action"""
 
 message_qos0_in_count.desc:
+"""QoS0 in messages count"""
+message_qos0_in_count.label:
 """QoS0 in messages count"""
 
 message_qos1_out_rate.desc:
 """QoS1 out messages rate"""
+message_qos1_out_rate.label:
+"""QoS1 out messages rate"""
 
 topic.desc:
+"""Topic"""
+topic.label:
 """Topic"""
 
 reset_topic_metrics_api.desc:
 """Reset telemetry status"""
+reset_topic_metrics_api.label:
+"""Reset telemetry status"""
 
 create_time.desc:
+"""Create time"""
+create_time.label:
 """Create time"""
 
 metrics.desc:
 """Metrics"""
+metrics.label:
+"""Metrics"""
 
 message_qos1_out_count.desc:
+"""QoS1 out messages count"""
+message_qos1_out_count.label:
 """QoS1 out messages count"""
 
 gat_topic_metrics_data_api.desc:
 """Get topic metrics"""
+gat_topic_metrics_data_api.label:
+"""Get topic metrics"""
 
 message_qos1_in_count.desc:
+"""QoS1 in messages count"""
+message_qos1_in_count.label:
 """QoS1 in messages count"""
 
 delete_topic_metrics_data_api.desc:
 """Delete topic metrics"""
+delete_topic_metrics_data_api.label:
+"""Delete topic metrics"""
 
 message_qos0_out_count.desc:
+"""QoS0 out messages count"""
+message_qos0_out_count.label:
 """QoS0 out messages count"""
 
 topic_in_body.desc:
 """Raw topic string"""
+topic_in_body.label:
+"""Raw topic string"""
 
 message_in_count.desc:
+"""In messages count"""
+message_in_count.label:
 """In messages count"""
 
 message_qos2_out_count.desc:
 """QoS2 out messages count"""
+message_qos2_out_count.label:
+"""QoS2 out messages count"""
 
 message_out_rate.desc:
+"""Out messages rate"""
+message_out_rate.label:
 """Out messages rate"""
 
 }
