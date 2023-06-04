@@ -12,7 +12,7 @@ authentication_id_delete.label:
 """删除认证"""
 
 authentication_id_get.desc:
-"""获取全局认证链上的指定认证器。"""
+"""获取全局认证链上的指定认证器。"""emqx_dashboard_error_code_apiemqx_dashboard_error_code_api
 authentication_id_get.label:
 """获取认证器"""
 
@@ -701,7 +701,7 @@ users_username_get.label:
 users_username_post.desc:
 """为指定的用户在内置数据库中添加授权规则。"""
 users_username_post.label:
-""为指定的用户添加授权规则"""
+"""为指定的用户添加授权规则"""
 
 }
 
@@ -1716,79 +1716,80 @@ username.label:
 emqx_bridge_iotdb {
 
 config_enable.desc:
-"""Enable or disable this bridge"""
+"""启用或禁用该桥接"""
 
 config_enable.label:
-"""Enable Or Disable Bridge"""
+"""启用或禁用"""
 
 config_authentication.desc:
-"""Authentication configuration"""
+"""认证信息"""
 
 config_authentication.label:
-"""Authentication"""
+"""认证信息"""
 
 auth_basic.desc:
-"""Parameters for basic authentication."""
+"""基本认证（basic auth）的参数。"""
 
 auth_basic.label:
-"""Basic auth params"""
+"""基本认证(basic auth)"""
 
 config_auth_basic_username.desc:
-"""The username as configured at the IoTDB REST interface"""
+"""Basic auth 用户名。类似 IoTDB REST 接口中的用户名。"""
 
 config_auth_basic_username.label:
-  """HTTP Basic Auth Username"""
+"""Basic auth 用户名"""
 
 config_auth_basic_password.desc:
-"""The password as configured at the IoTDB REST interface"""
+"""Basic auth 密码。类似 IoTDB REST 接口中的密码。"""
 
 config_auth_basic_password.label:
-"""HTTP Basic Auth Password"""
+"""Basic auth 密码"""
 
 config_base_url.desc:
-"""The base URL of the external IoTDB service's REST interface."""
+"""IoTDB REST 服务的 URL。"""
 config_base_url.label:
-"""IoTDB REST Service Base URL"""
+"""REST 服务 URL"""
 
 config_is_aligned.desc:
-"""Whether to align the timeseries"""
+"""是否对齐时间序列。"""
 
 config_is_aligned.label:
-"""Align Timeseries"""
+"""对齐时间序列"""
 
 config_device_id.desc:
-"""A fixed device name this data should be inserted for. If empty it must either be set in the rule action, the message itself, or it will be extracted from the topic."""
+"""IoTDB 的设备ID（DeviceID）。可以使用一个占位符。如果留空则 MQTT 消息体中必须有一个 `device_id` 字段，
+或者 EMQX 规则引擎的 SQL 必须输出一个 `device_id` 字段。"""
 config_device_id.label:
 """Device ID"""
 
 config_iotdb_version.desc:
-"""The version of the IoTDB system to connect to."""
+"""IoTDB 版本。"""
 config_iotdb_version.label:
-"""IoTDB Version"""
+"""IoTDB 版本"""
 
 config_max_retries.desc:
-"""HTTP request max retry times if failed."""
+"""HTTP 请求的最大重试次数。"""
 
 config_max_retries.label:
-"""HTTP Request Max Retries"""
+"""最大重试次数"""
 
 config_request_timeout.desc:
-"""HTTP request timeout."""
+"""HTTP 请求超时时间。"""
 
 config_request_timeout.label:
-"""HTTP Request Timeout"""
+"""请求超时"""
 
 desc_config.desc:
-"""Configuration for Apache IoTDB bridge."""
+"""IoTDB Bridge 配置"""
 
 desc_config.label:
-"""IoTDB Bridge Configuration"""
+"""IoTDB 配置"""
 
 desc_name.desc:
-"""Bridge name, used as a human-readable description of the bridge."""
+"""IoTDB Bridge 名称。"""
 
 desc_name.label:
-"""Bridge Name"""
+"""桥接名称"""
 }
 emqx_bridge_kafka {
 
@@ -2495,138 +2496,138 @@ emqx_bridge_pulsar {
 emqx_bridge_rabbitmq {
 
     local_topic.desc:
-    """The MQTT topic filter to be forwarded to RabbitMQ. All MQTT 'PUBLISH' messages with the topic matching the local_topic will be forwarded.
-    NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is configured, then both the data got from the rule and the MQTT messages that match local_topic will be forwarded."""
+    """转发到 RabbitMQ 的消息 MQTT 主题或主题过滤器。对所有的 'PUBLISH' 消息，如果匹配到该配置的主题或主题过滤器时，
+注意：如果此桥接被用作规则的动作，同时又配置了 'local_topic'，那么这两份消息都会被转发到 RabbitMQ，这可能会导致消息重复。"""
 
     local_topic.label:
-    """Local Topic"""
+    """MQTT 主题"""
 
     config_enable.desc:
-    """Enable or disable this bridge"""
+    """启用或禁用桥接"""
 
     config_enable.label:
-    """Enable or Disable Bridge"""
+    """启用或禁用桥接"""
 
     desc_config.desc:
-    """Configuration for a RabbitMQ bridge."""
+    """RabbitMQ 桥接配置"""
 
     desc_config.label:
-    """RabbitMQ Bridge Configuration"""
+    """RabbitMQ 桥接配置"""
 
     desc_type.desc:
-    """The Bridge Type"""
+    """桥接类型"""
 
     desc_type.label:
-    """Bridge Type"""
+    """桥接类型"""
 
     desc_name.desc:
-    """Bridge name."""
+    """桥接名称"""
 
     desc_name.label:
-    """Bridge Name"""
+    """桥接名称"""
 
 }
+
 
 emqx_bridge_rabbitmq_connector {
 
 server.desc:
-"""The RabbitMQ server address that you want to connect to (for example, localhost)."""
+"""RabbitMQ 服务器的主机名或 IP 地址（例如 localhost）。"""
 
 server.label:
-"""Server"""
+"""服务器"""
 
 port.desc:
-"""The port number on which the RabbitMQ server is listening (default is 5672)."""
+"""RabbitMQ 服务器监听的端口号（默认为 5672）。"""
 
 port.label:
-"""Port"""
+"""端口号"""
 
 username.desc:
-"""The username used to authenticate with the RabbitMQ server."""
+"""用于认证的 RabbitMQ 用户名。"""
 
 username.label:
-"""Username"""
+"""用户名"""
 
 password.desc:
-"""The password used to authenticate with the RabbitMQ server."""
+"""用于认证的 RabbitMQ 密码。"""
 
 password.label:
-"""Password"""
+"""密码"""
 
 pool_size.desc:
-"""The size of the connection pool."""
+"""连接池的大小。"""
 
 pool_size.label:
-"""Pool Size"""
+"""连接池大小"""
 
 timeout.desc:
-"""The timeout for waiting on the connection to be established."""
+"""连接超时时间。"""
 
 timeout.label:
-"""Connection Timeout"""
+"""连接超时"""
 
 virtual_host.desc:
-"""The virtual host to use when connecting to the RabbitMQ server."""
+"""RabbitMQ 虚拟主机的名称。"""
 
 virtual_host.label:
-"""Virtual Host"""
+"""虚拟主机"""
 
 heartbeat.desc:
-"""The interval for sending heartbeat messages to the RabbitMQ server."""
+"""发送心跳的间隔时间。"""
 
 heartbeat.label:
-"""Heartbeat"""
+"""心跳"""
 
 auto_reconnect.desc:
-"""The interval for attempting to reconnect to the RabbitMQ server if the connection is lost."""
+"""是否自动重连。"""
 
 auto_reconnect.label:
-"""Auto Reconnect"""
+"""自动重连"""
 
 exchange.desc:
-"""The name of the RabbitMQ exchange where the messages will be sent."""
+""" RabbitMQ Exchange 名称。"""
 
 exchange.label:
 """Exchange"""
 
 exchange_type.desc:
-"""The type of the RabbitMQ exchange (direct, fanout, or topic)."""
+"""RabbitMQ Exchange 的类型（例如 direct，fanout，或 topic）。"""
 
 exchange_type.label:
-"""Exchange Type"""
+"""Exchange 类型"""
 
 routing_key.desc:
-"""The routing key used to route messages to the correct queue in the RabbitMQ exchange."""
+"""用于路由消息的 Routing Key。"""
 
 routing_key.label:
 """Routing Key"""
 
 delivery_mode.desc:
-"""The delivery mode for messages published to RabbitMQ. Delivery mode non_persistent (1) is suitable for messages that don't require persistence across RabbitMQ restarts, whereas delivery mode persistent (2) is designed for messages that must survive RabbitMQ restarts."""
+"""消息的投递模式。non_persistent(1) 表示非持久化消息，persistent(2) 表示持久化消息。"""
 
 delivery_mode.label:
-"""Message Delivery Mode"""
+"""投递模式"""
 
 payload_template.desc:
-"""The template for formatting the payload of the message before sending it to RabbitMQ. Template placeholders, such as ${field1.sub_field}, will be substituted with the respective field's value. When left empty, the entire input message will be used as the payload, formatted as a JSON text. This behavior is equivalent to specifying ${.} as the payload template."""
+"""用于生成 RabbitMQ 消息的模版。模板中的占位符（例如 '${fields.sub_field}'）会被替换成消息的字段值。如果该留空，则表示所有的输入字段都会被转发到 RabbitMQ，与使用 '${.}' 作为占位符的效果等价。"""
 
 payload_template.label:
-"""Payload Template"""
+"""消息模版"""
 
 publish_confirmation_timeout.desc:
-"""The timeout for waiting for RabbitMQ to confirm message publication when using publisher confirms."""
+"""等待 RabbitMQ 确认消息发布的超时时间。"""
 
 publish_confirmation_timeout.label:
-"""Publish Confirmation Timeout"""
+"""发布确认超时"""
 
 wait_for_publish_confirmations.desc:
-"""A boolean value that indicates whether to wait for RabbitMQ to confirm message publication when using publisher confirms."""
+"""是否等待 RabbitMQ 确认消息发布。"""
 
 wait_for_publish_confirmations.label:
-"""Wait for Publish Confirmations"""
+"""等待发布确认"""
 
 }
-
 
 emqx_bridge_rocketmq {
 
@@ -4619,38 +4620,33 @@ version.desc:
 emqx_dashboard_error_code_api {
 
 error_codes.desc:
-"""API Error Codes"""
+"""API 错误码"""
 error_codes.label:
-"""API Error Codes"""
-
-error_codes_u.desc:
-"""API Error Codes"""
-error_codes_u.label:
-"""API Error Codes"""
+"""API 错误码"""
 
 }
 
 emqx_dashboard_monitor_api {
 
 list_monitor.desc:
-"""List monitor data."""
+"""列出集群所有节点的监控数据"""
 list_monitor.label:
-"""List monitor data."""
+"""列出集群所有节点的监控数据"""
 
 list_monitor_node.desc:
-"""List the monitor data on the node."""
+"""列出指定节点的监控数据"""
 list_monitor_node.label:
-"""List the monitor data on the node."""
+"""列出指定节点的监控数据"""
 
 current_status.desc:
-"""Current status. Gauge and rate."""
+"""集群的运行监控。例如连接数量，连接新建速率。"""
 current_status.label:
-"""Current status. Gauge and rate."""
+"""集群运行监控"""
 
 current_status_node.desc:
-"""Node current status. Gauge and rate."""
+"""指定节点的运行监控。例如连接数量，连接新建速率。"""
 current_status_node.label:
-"""Node current status. Gauge and rate."""
+"""指定节点的运行监控"""
 
 }
 
@@ -4666,7 +4662,7 @@ bind.desc:
 """监听地址和端口，热更新此配置时，会重启 Dashboard 服务。"""
 
 bind.label:
-"""绑定端口"""
+"""Bind"""
 
 bootstrap_users_file.desc:
 """已废弃，请使用 api_key.bootstrap_file。"""
@@ -5446,83 +5442,80 @@ exproto_server.desc:
 emqx_ft_api {
 
 file_list.desc:
-"""List all uploaded files."""
+"""列出已上传的所有文件"""
 
 file_list_transfer.desc:
-"""List a file uploaded during specified transfer, identified by client id and file id."""
+"""根据客户端ID或者文件ID列出所有已上传的文件"""
 
 }
 
 emqx_ft_storage_exporter_fs_api {
 
 file_get.desc:
-"""Get a file by its id."""
+"""根据文件ID下载指定文件"""
 
 }
 
 emqx_ft_schema {
 
 enable.desc:
-"""Enable the File Transfer feature.<br/>
-Enabling File Transfer implies reserving special MQTT topics in order to serve the protocol.<br/>
-This toggle also affects the availability of the File Transfer REST API and
-storage-dependent background activities (e.g. garbage collection)."""
+"""启用文件传输（File Transfer）服务。<br/>
+文件传输服务允许客户端使用 `$file` 主题将分片上传到 EMQX。
+启用文件传输服务表示 `$file` 主题前缀已被预留，用于提供文件传输服务。<br/>
+这个开关也会影响文件传输 REST API 的可用性，以及依赖存储的后台任务（例如垃圾回收）。"""
 
 init_timeout.desc:
-"""Timeout for initializing the file transfer.<br/>
-After reaching the timeout, `init` message will be acked with an error"""
+"""指定文件传输初始化的时间限制。在<br/>
+EMQX 服务器过载时可能发生初始化超时。超时后给 `init` 的 PUBACK 中包含一个错误码 （0x80）。"""
 
 assemble_timeout.desc:
-"""Timeout for assembling and exporting file segments into a final file.<br/>
-After reaching the timeout, `fin` message will be acked with an error"""
+"""文件拼接超时。<br/>
+在收到 'fin' 消息后 EMQX 会对文件进行拼接，如果发生超时（例如系统过载），则会给 'fin' 的 PUBACK 中包含一个错误码（0x80）。"""
 
 store_segment_timeout.desc:
-"""Timeout for storing a file segment.<br/>
-After reaching the timeout, message with the segment will be acked with an error"""
+"""文件片段保存超时。<br/>
+EMQX 收到文件分片后，会对它进行保存，如果发生超时（例如系统过载），则会给这个发布消息的 PUBACK 中包含一个错误码（0x80）。"""
 
 storage_backend.desc:
-"""Storage settings for file transfer."""
+"""文件后端存储配置"""
 
 local_storage.desc:
-"""Local file system backend to store uploaded fragments and temporary data."""
+"""EMQX 节点本地用文件系统于存储文件分片的相关配置。"""
 
 local_storage_segments.desc:
-"""Settings for local segments storage, which include uploaded transfer fragments and temporary data."""
+"""本地文件系统存储配置，包括已上传的文件分片和临时数据。"""
 
 local_storage_segments_root.desc:
-"""File system path to keep uploaded fragments and temporary data."""
+"""文件分片存储的根目录。"""
 
 local_storage_exporter_backend.desc:
-"""Exporter for the local file system storage backend.<br/>
-Exporter defines where and how fully transferred and assembled files are stored."""
+"""将文件导出到本地存储<br/>
+该配置项指定所有分片都传输完成了的文件进行导出到本地存储的相关行为。"""
 
 local_storage_exporter.desc:
-"""Exporter to the local file system."""
+"""将文件导出到本地存储。"""
 
 s3_exporter.desc:
-"""Exporter to the S3 API compatible object storage."""
+"""将文件导出到 AWS s3 API 兼容的对象存储服务。"""
 
 local_storage_exporter_root.desc:
-"""Directory where the uploaded files are kept."""
+"""导出到本地文件时使用的根目录。"""
 
 local_storage_segments_gc.desc:
-"""Garbage collection settings for the intermediate and temporary files in the local file system."""
+"""文件系统中临时文件的垃圾回收配置。"""
 
 storage_gc_interval.desc:
-"""Interval of periodic garbage collection."""
+"""运行垃圾回收的时间间隔。"""
 
 storage_gc_max_segments_ttl.desc:
-"""Maximum TTL of a segment kept in the local file system.<br/>
-This is a hard limit: no segment will outlive this TTL, even if some file transfer specifies a
-TTL more than that."""
-
+"""分片的临时存储的最大 TTL。<br/>
+该配置为系统全局上限，所有的分片都不会超过这个 TTL，即使某些文件传输指定了一个更大的 TTL。"""
 storage_gc_min_segments_ttl.desc:
-"""Minimum TTL of a segment kept in the local file system.<br/>
-This is a hard limit: no segment will be garbage collected before reaching this TTL,
-even if some file transfer specifies a TTL less than that."""
+"""分片的临时存储的最小 TTL。<br/>
+分片在超过这个 TTL 之前不被垃圾回收。
+该配置为系统全局下限，所有的分片都不会低于这个 TTL，即使某些文件传输指定了一个更小的 TTL。"""
 
 }
-
 
 emqx_gateway_api {
 
@@ -6413,119 +6406,117 @@ who.label:
 emqx_mgmt_api_clients {
 
 list_clients.desc:
-"""List clients"""
+"""列出客户端"""
 list_clients.label:
-"""List clients"""
+"""列出客户端"""
 
 clients_info_from_id.desc:
-"""Get clients info by client ID"""
+"""获取指定客户端的详细信息"""
 clients_info_from_id.label:
-"""Get clients info by client ID"""
+"""获取客户端信息"""
 
 kick_client_id.desc:
-"""Kick out client by client ID"""
+"""踢出指定客户端"""
 kick_client_id.label:
-"""Kick out client by client ID"""
+"""踢出指定客户端"""
 
 get_authz_cache.desc:
-"""Get client authz cache in the cluster."""
+"""获取指定客户端的授权缓存"""
 get_authz_cache.label:
-"""Get client authz cache in the cluster."""
+"""获取指定客户端的授权缓存"""
 
 clean_authz_cache.desc:
-"""Clean client authz cache in the cluster."""
+"""清除指定客户端的授权缓存"""
 clean_authz_cache.label:
-"""Clean client authz cache in the cluster."""
+"""清除指定客户端的授权缓存"""
 
 get_client_subs.desc:
-"""Get client subscriptions"""
-get_client_subs.label:
-"""Get client subscriptions"""
+"""获取指定客户端的订阅信息"""
 
 subscribe.desc:
-"""Subscribe"""
+"""订阅"""
 subscribe.label:
-"""Subscribe"""
+"""订阅"""
 
 subscribe_g.desc:
-"""Subscribe bulk"""
+"""批量订阅"""
 subscribe_g.label:
-"""Subscribe bulk"""
+"""批量订阅"""
 
 unsubscribe.desc:
-"""Unsubscribe"""
+"""取消订阅"""
 unsubscribe.label:
-"""Unsubscribe"""
+"""取消订阅"""
 
 unsubscribe_g.desc:
-"""Unsubscribe bulk"""
+"""批量取消订阅"""
 unsubscribe_g.label:
-"""Unsubscribe bulk"""
+"""批量取消订阅"""
 
 set_keepalive_seconds.desc:
-"""Set the online client keepalive by seconds"""
+"""设置客户端的 MQTT 保活时间"""
 set_keepalive_seconds.label:
-"""Set the online client keepalive by seconds"""
+"""设置客户端的 MQTT 保活时间"""
 
 }
 
 emqx_mgmt_api_cluster {
 
 get_cluster_info.desc:
-"""Get cluster info"""
+"""获取集群信息"""
 get_cluster_info.label:
-"""Get cluster info"""
+"""获取集群信息"""
 
 invite_node.desc:
-"""Invite node to cluster"""
+"""邀请节点加入集群"""
 invite_node.label:
-"""Invite node to cluster"""
+"""邀请节点加入集群"""
 
 force_remove_node.desc:
-"""Force leave node from cluster"""
+"""强制节点离开集群"""
 force_remove_node.label:
-"""Force leave node from cluster"""
+"""强制节点离开集群"""
 
 }
 
 emqx_mgmt_api_configs {
 
 get_conf_node.desc:
-"""Get all the configurations of the specified node, including hot and non-hot updatable items."""
+"""获取节点的所有配置。支持和不支持热配置更新的配置项都包含在内。"""
 get_conf_node.label:
-"""Get all the configurations for node."""
+"""获取节点的所有配置"""
 
 node_name.desc:
-"""Node's name: If you do not fill in the fields, this node will be used by default."""
+"""指定节点名称。如果未指定，则返回收到这个HTTP请求的节点的配置。"""
 node_name.label:
-"""Node's name."""
+"""节点名称"""
 
 rest_conf_query.desc:
-"""Reset the config entry specified by the query string parameter `conf_path`.<br/>
-- For a config entry that has default value, this resets it to the default value;
-- For a config entry that has no default value, an error 400 will be returned"""
+"""重置（使用 `conf_path` 参数）指定的配置路径下的值<br/>
+- 若指定路径的配置有默认值，则使用默认值；
+- 若指定路径的配置没有默认值，则返回 HTTP 状态码 400。"""
 rest_conf_query.label:
-"""Reset the config entry with query"""
+"""重置配置项"""
 
 get_global_zone_configs.desc:
-"""Get the global zone configs"""
+"""获取全局默认 zone 的配置"""
 get_global_zone_configs.label:
-"""Get the global zone configs"""
+"""获取全局默认 zone 的配置"""
 
 update_global_zone_configs.desc:
-"""Update global zone configs"""
+"""更新全局默认 zone 的配置"""
 update_global_zone_configs.label:
-"""Update global zone configs"""
+"""更新全局默认 zone 的配置"""
 
 get_node_level_limiter_configs.desc:
-"""Get the node-level limiter configs"""
+"""获取节点级的速率限制参数"""
 get_node_level_limiter_configs.label:
-"""Get the node-level limiter configs"""
+"""获取节点级的速率限制参数"""
 
 update_node_level_limiter_configs.desc:
-"""Update the node-level limiter configs"""
+"""更新节点级的速率限制参数"""
 update_node_level_limiter_configs.label:
-"""Update the node-level limiter configs"""
+"""更新节点级的速率限制参数"""
 
 }
 
@@ -6552,59 +6543,54 @@ bootstrap_file.label:
 emqx_mgmt_api_listeners {
 
 list_node_live_statuses.desc:
-"""List all running node's listeners live status. group by listener type"""
+"""列出所有节点上的监听器状态。按监听器类型分组"""
 list_node_live_statuses.label:
-"""List all running node's listeners live status. group by listener type"""
+"""列出所有节点上的监听器状态"""
 
 list_listeners.desc:
-"""List all running node's listeners for the specified type."""
+"""列出所有节点上的指定类型的监听器"""
 list_listeners.label:
-"""List all running node's listeners for the specified type."""
+"""列出监听器"""
 
 listener_type.desc:
-"""Listener type"""
+"""监听器类型"""
 listener_type.label:
-"""Listener type"""
+"""监听器类型"""
 
 create_on_all_nodes.desc:
-"""Create the specified listener on all nodes."""
+"""在所有节点上创建指定的监听器"""
 create_on_all_nodes.label:
-"""Create the specified listener on all nodes."""
+"""创建监听器"""
 
 list_by_id.desc:
-"""List all running node's listeners for the specified id."""
+"""获取指定ID的监听器"""
 list_by_id.label:
-"""List all running node's listeners for the specified id."""
+"""获取指定ID的监听器"""
 
 update_lisener.desc:
-"""Update the specified listener on all nodes."""
+"""为集群中所有的节点更新指定ID的监听器"""
 update_lisener.label:
-"""Update the specified listener on all nodes."""
-
-create_on_all_nodes_2.desc:
-"""Create the specified listener on all nodes."""
-create_on_all_nodes_2.label:
-"""Create the specified listener on all nodes."""
+"""更新监听器"""
 
 delete_on_all_nodes.desc:
-"""Delete the specified listener on all nodes."""
+"""删除所有节点上指定ID的监听器"""
 delete_on_all_nodes.label:
-"""Delete the specified listener on all nodes."""
+"""删除监听器"""
 
 start_on_all_nodes.desc:
-"""Start the listener on all nodes."""
+"""在所有节点上启动指定ID的监听器"""
 start_on_all_nodes.label:
-"""Start the listener on all nodes."""
+"""启动监听器"""
 
 stop_on_all_nodes.desc:
-"""Stop the listener on all nodes."""
+"""在所有节点上停止指定ID的监听器"""
 stop_on_all_nodes.label:
-"""Stop the listener on all nodes."""
+"""停止监听器"""
 
 restart_on_all_nodes.desc:
-"""Restart listeners on all nodes."""
+"""在所有节点上重启指定ID的监听器"""
 restart_on_all_nodes.label:
-"""Restart listeners on all nodes."""
+"""重启监听器"""
 
 
 }
@@ -6612,33 +6598,33 @@ restart_on_all_nodes.label:
 emqx_mgmt_api_metrics {
 
 emqx_metrics.desc:
-"""EMQX metrics"""
+"""EMQX 监控指标信息"""
 emqx_metrics.label:
-"""EMQX metrics"""
+"""EMQX 监控指标信息"""
 
 }
 
 emqx_mgmt_api_nodes {
 
 list_nodes.desc:
-"""List EMQX nodes"""
+"""列出所有 EMQX 节点"""
 list_nodes.label:
-"""List EMQX nodes"""
+"""列出所有 EMQX 节点"""
 
 get_node_info.desc:
-"""Get node info"""
+"""获取节点信息"""
 get_node_info.label:
-"""Get node info"""
+"""获取节点信息"""
 
 get_node_metrics.desc:
-"""Get node metrics"""
+"""获取节节点上的运行计数信息，例如消息发送数量，收到或发送字节数，认证和授权成功失败次数等。"""
 get_node_metrics.label:
-"""Get node metrics"""
+"""获取节点运行计数信息"""
 
 get_node_stats.desc:
-"""Get node stats"""
+"""获取节点上的统计信息，例如主题数量，连接数量等。"""
 get_node_stats.label:
-"""Get node stats"""
+"""获取节点运行统计信息"""
 
 }
 
@@ -6771,142 +6757,137 @@ get_status_api_format.desc:
 emqx_mgmt_api_subscriptions {
 
 list_subs.desc:
-"""List subscriptions"""
+"""列出订阅"""
 list_subs.label:
-"""List subscriptions"""
+"""列出订阅"""
 
 }
 
 emqx_mgmt_api_topics {
 
 topic_list.desc:
-"""Topics list"""
+"""列出主题"""
 topic_list.label:
-"""Topics list"""
+"""列出主题"""
 
 topic_info_by_name.desc:
-"""Lookup topic info by name"""
+"""获取主题到节点名称的路由映射"""
 topic_info_by_name.label:
-"""Lookup topic info by name"""
+"""获取主题到节点名称的路由映射"""
 
 }
 
 emqx_mgmt_api_trace {
 
 list_all.desc:
-"""List all trace"""
+"""列出所有 trace"""
 list_all.label:
-"""List all trace"""
+"""列出 trace"""
 
 create_new.desc:
-"""Create new trace"""
+"""创建 trace"""
 create_new.label:
-"""Create new trace"""
+"""创建 trace"""
 
 clear_all.desc:
-"""Clear all traces"""
+"""清除所有 trace"""
 clear_all.label:
-"""Clear all traces"""
+"""清除所有 trace"""
 
 delete_trace.desc:
-"""Delete specified trace"""
+"""删除指定的 trace"""
 delete_trace.label:
-"""Delete specified trace"""
+"""删除 trace"""
 
 stop_trace.desc:
-"""Stop trace by name"""
+"""停止指定的 trace"""
 stop_trace.label:
-"""Stop trace by name"""
+"""停止 trace"""
 
 download_log_by_name.desc:
-"""Download trace log by name"""
+"""下载指定 trace 的日志文件"""
 download_log_by_name.label:
-"""Download trace log by name"""
+"""下载 trace"""
 
 trace_zip_file.desc:
-"""A trace zip file"""
+"""包含 trace 日志的 zip 压缩文件"""
 trace_zip_file.label:
-"""A trace zip file"""
+"""压缩文件"""
 
 get_trace_file_metadata.desc:
-"""get trace log file's metadata, such as size, last update time"""
+"""获取 trace 日志文件的元数据, 例如文件大小和修改时间"""
 get_trace_file_metadata.label:
-"""get trace log file's metadata"""
+"""获取 trace 信息"""
 
 view_trace_log.desc:
-"""view trace log"""
+"""查看 trace"""
 view_trace_log.label:
-"""view trace log"""
+"""查看 trace"""
 
 file_size.desc:
-"""file size"""
+"""文件大小"""
 file_size.label:
-"""file size"""
+"""文件大小"""
 
 modification_date.desc:
-"""the modification and last access times of a file"""
+"""文件最后修改时间"""
 modification_date.label:
-"""last access time"""
+"""文件最后修改时间"""
 
 format.desc:
-"""Unique and format by [a-zA-Z0-9-_]"""
+"""唯一的名称。只允许使用 a-z，A-Z，0-9 和 下划线（‘_’）这些字符。"""
 format.label:
-"""Unique and format by [a-zA-Z0-9-_]"""
+"""Trace 名称"""
 
 filter_type.desc:
-"""Filter type"""
+"""过滤器类型"""
 filter_type.label:
-"""Filter type"""
+"""过滤器类型"""
 
 support_wildcard.desc:
-"""support mqtt wildcard topic."""
+"""如果过滤器类型为 'topic' 则该字段可以指定用于匹配的 MQTT 主题或主题过滤器。"""
 support_wildcard.label:
-"""support mqtt wildcard topic"""
+"""MQTT 主题或主题过滤器"""
 
 mqtt_clientid.desc:
-"""mqtt clientid."""
+"""如果过滤器类型为 'clientid' 则该字段可以指定用于匹配的 MQTT 客户端 ID。"""
 mqtt_clientid.label:
-"""mqtt clientid"""
+"""MQTT 客户端 ID"""
 
 client_ip_addess.desc:
-"""client ip address"""
+"""如果过滤器类型为 'ip_address' 则该字段可以指定用于匹配的客户端 IP 地址。"""
 client_ip_addess.label:
-"""client ip address"""
+"""客户端 IP 地址"""
 
 trace_status.desc:
-"""trace status"""
+"""Trace 状态"""
 trace_status.label:
-"""trace status"""
+"""Trace 状态"""
 
 time_format.desc:
-"""rfc3339 timestamp or epoch second"""
+"""时间戳格式，rfc3339 或者 epoch second"""
 time_format.label:
-"""rfc3339 timestamp or epoch second"""
-
-time_format_g.desc:
-"""rfc3339 timestamp or epoch second"""
-time_format_g.label:
-"""rfc3339 timestamp or epoch second"""
+"""时间戳格式"""
 
 trace_log_size.desc:
-"""trace log size"""
+"""日志文件大小"""
 trace_log_size.label:
-"""trace log size"""
+"""日志文件大小"""
 
 node_name.desc:
-"""Node name"""
+"""指定从哪个节点获取 trace 文件内容。"""
 node_name.label:
-"""Node name"""
+"""节点名称"""
 
 max_response_bytes.desc:
-"""Maximum number of bytes to send in response"""
+"""单个 HTTP 相应中包含 trace 日志的字节数。"""
 max_response_bytes.label:
-"""Maximum response bytes"""
+"""响应字节数"""
 
 current_trace_offset.desc:
-"""Offset from the current trace position."""
+"""指定从该偏移量开始读取指定的 trace 日志文件。"""
 current_trace_offset.label:
-"""Offset from the current trace position."""
+"""读取偏移量"""
 
 }
 
@@ -10098,7 +10079,7 @@ message_dropped_count.label:
 topic_metrics_api_response404.desc:
 """未找到。主题监控数据未找到"""
 topic_metrics_api_response404.label:
-"""未找到""""
+"""未找到"""
 
 topic_in_path.desc:
 """主题字符串。注意：主题字符串在url路径中必须编码"""
