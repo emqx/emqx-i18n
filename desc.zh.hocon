@@ -9,27 +9,27 @@ authentication_get.label:
 authentication_id_delete.desc:
 """删除全局认证链上的指定认证器。"""
 authentication_id_delete.label:
-"""删除认证"""
+"""删除认证器"""
 
 authentication_id_get.desc:
 """获取全局认证链上的指定认证器。"""emqx_dashboard_error_code_apiemqx_dashboard_error_code_api
 authentication_id_get.label:
-"""获取认证器"""
+"""获取指定认证器"""
 
 authentication_id_position_put.desc:
-"""更改全局认证链上指定认证器的顺序。"""
+"""调整全局认证链上指定认证器的顺序。"""
 authentication_id_position_put.label:
-"""移动认证器的位置"""
+"""调整认证器顺序"""
 
 authentication_id_put.desc:
 """更新全局认证链上的指定认证器。"""
 authentication_id_put.label:
-"""更新认证器"""
+"""更新指定认证器"""
 
 authentication_id_status_get.desc:
-"""获取全局认证链上指定认证器的状态。"""
+"""获取全局认证链上指定认证器的指标与状态。"""
 authentication_id_status_get.label:
-"""获取认证器的状态"""
+"""获取指定认证器的指标与状态"""
 
 authentication_id_users_get.desc:
 """获取全局认证链上指定认证器中的用户列表。"""
@@ -37,34 +37,34 @@ authentication_id_users_get.label:
 """获取指定认证器中的用户列表"""
 
 authentication_id_users_post.desc:
-"""为全局认证链上的指定认证器创建用户数据。"""
+"""向全局认证链上的指定认证器添加用户数据，仅使用内置数据库作为数据源的认证器支持。"""
 authentication_id_users_post.label:
-"""为指定认证器创建用户"""
+"""向指定认证器添加用户"""
 
 authentication_id_users_user_id_delete.desc:
 """删除全局认证链上指定认证器中的指定用户数据。"""
 authentication_id_users_user_id_delete.label:
-"""为指定认证器删除用户"""
+"""在指定认证器删除指定用户"""
 
 authentication_id_users_user_id_get.desc:
 """获取全局认证链上指定认证器中的指定用户数据。"""
 authentication_id_users_user_id_get.label:
-"""获取指定认证器中的用户"""
+"""获取指定用户数据"""
 
 authentication_id_users_user_id_put.desc:
 """更新全局认证链上指定认证器中的指定用户数据。"""
 authentication_id_users_user_id_put.label:
-"""更新指定用户的认证信息"""
+"""更新指定用户数据"""
 
 authentication_post.desc:
 """为全局认证链创建认证器。"""
 authentication_post.label:
-"""创建一个认证器"""
+"""创建认证器"""
 
 is_superuser.desc:
 """是否是超级用户。"""
 is_superuser.label:
-"""是否是超级用户"""
+"""超级用户"""
 
 like_user_id.desc:
 """使用用户 ID （username 或 clientid）模糊查询。"""
@@ -80,75 +80,75 @@ listeners_listener_id_authentication_get.label:
 listeners_listener_id_authentication_id_delete.desc:
 """删除监听器认证链上的指定认证器。"""
 listeners_listener_id_authentication_id_delete.label:
-"""删除监听器认证链上的指定认证器"""
+"""删除监听器上的指定认证器"""
 
 listeners_listener_id_authentication_id_get.desc:
 """获取监听器认证链上的指定认证器。"""
 listeners_listener_id_authentication_id_get.label:
-"""获取监听器认证链上的指定认证器"""
+"""获取监听器上的指定认证器"""
 
 listeners_listener_id_authentication_id_position_put.desc:
-"""改变监听器认证链上指定认证器的顺序。"""
+"""调整监听器认证链上指定认证器的顺序。"""
 listeners_listener_id_authentication_id_position_put.label:
-"""改变监听器认证链上指定认证器的顺序"""
+"""调整监听器上认证器的顺序"""
 
 listeners_listener_id_authentication_id_put.desc:
 """更新监听器认证链上的指定认证器。"""
 listeners_listener_id_authentication_id_put.label:
-"""更新监听器认证链上的指定认证器"""
+"""更新监听器上的指定认证器"""
 
 listeners_listener_id_authentication_id_status_get.desc:
 """获取监听器认证链上指定认证器的状态。"""
 listeners_listener_id_authentication_id_status_get.label:
-"""获取监听器认证链上指定认证器的状态"""
+"""获取监听器上指定认证器的状态"""
 
 listeners_listener_id_authentication_id_users_get.desc:
 """列出监听器认证链上指定认证器中的用户数据。"""
 listeners_listener_id_authentication_id_users_get.label:
-"""列出监听器认证链上指定认证器中的用户数据"""
+"""列出监听器上指定认证器中的用户数据"""
 
 listeners_listener_id_authentication_id_users_post.desc:
-"""为监听器认证链上的指定认证器创建用户数据。"""
+"""向监听器认证链上的指定认证器添加用户数据。仅使用内置数据库作为数据源的认证器支持"""
 listeners_listener_id_authentication_id_users_post.label:
-"""为监听器认证链上的指定认证器创建用户数据"""
+"""向监听器上指定认证器添加用户"""
 
 listeners_listener_id_authentication_id_users_user_id_delete.desc:
 """删除监听器认证链上指定认证器中的指定用户数据。"""
 listeners_listener_id_authentication_id_users_user_id_delete.label:
-"""删除监听器认证链上指定认证器中的指定用户数据"""
+"""删除监听器上指定认证器中的指定用户"""
 
 listeners_listener_id_authentication_id_users_user_id_get.desc:
 """获取监听器认证链上指定认证器中的指定用户数据。"""
 listeners_listener_id_authentication_id_users_user_id_get.label:
-"""获取监听器认证链上指定认证器中的指定用户数据"""
+"""获取监听器上指定认证器中的指定用户数据"""
 
 listeners_listener_id_authentication_id_users_user_id_put.desc:
 """更新监听器认证链上指定认证器中的指定用户数据。"""
 listeners_listener_id_authentication_id_users_user_id_put.label:
-"""更新监听器认证链上指定认证器中的指定用户数据"""
+"""更新监听器上指定认证器中的指定用户数据"""
 
 listeners_listener_id_authentication_post.desc:
 """在监听器认证链上创建认证器。"""
 listeners_listener_id_authentication_post.label:
-"""在监听器认证链上创建认证器"""
+"""在监听器上创建认证器"""
 
 param_auth_id.desc:
-"""认证器 ID。"""
+"""认证器 ID。由认证方式与数据源组成 `{mechanism}:{built_in_database}`，如 `password_based:built_in_database`"""
 param_auth_id.label:
 """认证器 ID """
 
 param_listener_id.desc:
-"""监听器 ID。"""
+"""监听器 ID。由监听器类型与名称组成 `{type}:{name}`，如 `tcp:default`"""
 param_listener_id.label:
 """监听器 ID"""
 
 param_position.desc:
-"""认证器在链中的位置。可能的值是 'front', 'rear', 'before:{other_authenticator}', 'after:{other_authenticator}'"""
+"""认证器在链中的位置。可能的值是 'front', 'rear', 'before:{other_authenticator_id}', 'after:{other_authenticator_id}'"""
 param_position.label:
 """认证器在链中的位置"""
 
 param_user_id.desc:
-"""用户 ID。"""
+"""用户 ID，根据设置的账号类型不同，可以是 username 或 clientid"""
 param_user_id.label:
 """用户 ID"""
 
@@ -157,7 +157,10 @@ param_user_id.label:
 emqx_authn_http {
 
 body.desc:
-"""HTTP request body。"""
+"""HTTP request body，JSON 字符模板，支持使用占位符。
+使用 GET 请求时，将被转换为 URL Query。
+使用 POST 请求时，转换格式将取决于 content-type 头被设置为 application/json 还是 application/x-www-form-urlencoded。
+"""
 
 body.label:
 """Request Body"""
@@ -239,10 +242,10 @@ endpoint.label:
 """JWKS Endpoint"""
 
 from.desc:
-"""要从中获取 JWT 的字段。"""
+"""指定客户端连接请求中 JWT 的位置；可选值： password、 username（分别对应于 MQTT 客户端 CONNECT 报文中的 Password 和 Username 字段）"""
 
 from.label:
-"""源字段"""
+"""JWT 的位置"""
 
 jwt_hmac.desc:
 """用于认证的 JWT 使用 HMAC 算法签发时的配置。"""
