@@ -3,42 +3,68 @@ emqx_authn_api {
 
 authentication_get.desc:
 """列出全局认证链上的认证器。"""
+authentication_get.label:
+"""列出认证器"""
 
 authentication_id_delete.desc:
 """删除全局认证链上的指定认证器。"""
+authentication_id_delete.label:
+"""删除认证器"""
 
 authentication_id_get.desc:
-"""获取全局认证链上的指定认证器。"""
+"""获取全局认证链上的指定认证器。"""emqx_dashboard_error_code_apiemqx_dashboard_error_code_api
+authentication_id_get.label:
+"""获取指定认证器"""
 
 authentication_id_position_put.desc:
-"""更改全局认证链上指定认证器的顺序。"""
+"""调整全局认证链上指定认证器的顺序。"""
+authentication_id_position_put.label:
+"""调整认证器顺序"""
 
 authentication_id_put.desc:
 """更新全局认证链上的指定认证器。"""
+authentication_id_put.label:
+"""更新指定认证器"""
 
 authentication_id_status_get.desc:
-"""获取全局认证链上指定认证器的状态。"""
+"""获取全局认证链上指定认证器的指标与状态。"""
+authentication_id_status_get.label:
+"""获取指定认证器的指标与状态"""
 
 authentication_id_users_get.desc:
-"""获取全局认证链上指定认证器中的用户数据。"""
+"""获取全局认证链上指定认证器中的用户列表。"""
+authentication_id_users_get.label:
+"""获取指定认证器中的用户列表"""
 
 authentication_id_users_post.desc:
-"""为全局认证链上的指定认证器创建用户数据。"""
+"""向全局认证链上的指定认证器添加用户数据，仅使用内置数据库作为数据源的认证器支持。"""
+authentication_id_users_post.label:
+"""向指定认证器添加用户"""
 
 authentication_id_users_user_id_delete.desc:
 """删除全局认证链上指定认证器中的指定用户数据。"""
+authentication_id_users_user_id_delete.label:
+"""在指定认证器删除指定用户"""
 
 authentication_id_users_user_id_get.desc:
 """获取全局认证链上指定认证器中的指定用户数据。"""
+authentication_id_users_user_id_get.label:
+"""获取指定用户数据"""
 
 authentication_id_users_user_id_put.desc:
 """更新全局认证链上指定认证器中的指定用户数据。"""
+authentication_id_users_user_id_put.label:
+"""更新指定用户数据"""
 
 authentication_post.desc:
 """为全局认证链创建认证器。"""
+authentication_post.label:
+"""创建认证器"""
 
 is_superuser.desc:
-"""是否是超级用户"""
+"""是否是超级用户。"""
+is_superuser.label:
+"""超级用户"""
 
 like_user_id.desc:
 """使用用户 ID （username 或 clientid）模糊查询。"""
@@ -48,58 +74,93 @@ like_user_id.label:
 
 listeners_listener_id_authentication_get.desc:
 """列出监听器认证链上的认证器。"""
+listeners_listener_id_authentication_get.label:
+"""列出监听器上的认证器"""
 
 listeners_listener_id_authentication_id_delete.desc:
 """删除监听器认证链上的指定认证器。"""
+listeners_listener_id_authentication_id_delete.label:
+"""删除监听器上的指定认证器"""
 
 listeners_listener_id_authentication_id_get.desc:
 """获取监听器认证链上的指定认证器。"""
+listeners_listener_id_authentication_id_get.label:
+"""获取监听器上的指定认证器"""
 
 listeners_listener_id_authentication_id_position_put.desc:
-"""更改监听器认证链上指定认证器的顺序。"""
+"""调整监听器认证链上指定认证器的顺序。"""
+listeners_listener_id_authentication_id_position_put.label:
+"""调整监听器上认证器的顺序"""
 
 listeners_listener_id_authentication_id_put.desc:
 """更新监听器认证链上的指定认证器。"""
+listeners_listener_id_authentication_id_put.label:
+"""更新监听器上的指定认证器"""
 
 listeners_listener_id_authentication_id_status_get.desc:
 """获取监听器认证链上指定认证器的状态。"""
+listeners_listener_id_authentication_id_status_get.label:
+"""获取监听器上指定认证器的状态"""
 
 listeners_listener_id_authentication_id_users_get.desc:
 """列出监听器认证链上指定认证器中的用户数据。"""
+listeners_listener_id_authentication_id_users_get.label:
+"""列出监听器上指定认证器中的用户数据"""
 
 listeners_listener_id_authentication_id_users_post.desc:
-"""为监听器认证链上的指定认证器创建用户数据。"""
+"""向监听器认证链上的指定认证器添加用户数据。仅使用内置数据库作为数据源的认证器支持"""
+listeners_listener_id_authentication_id_users_post.label:
+"""向监听器上指定认证器添加用户"""
 
 listeners_listener_id_authentication_id_users_user_id_delete.desc:
 """删除监听器认证链上指定认证器中的指定用户数据。"""
+listeners_listener_id_authentication_id_users_user_id_delete.label:
+"""删除监听器上指定认证器中的指定用户"""
 
 listeners_listener_id_authentication_id_users_user_id_get.desc:
 """获取监听器认证链上指定认证器中的指定用户数据。"""
+listeners_listener_id_authentication_id_users_user_id_get.label:
+"""获取监听器上指定认证器中的指定用户数据"""
 
 listeners_listener_id_authentication_id_users_user_id_put.desc:
 """更新监听器认证链上指定认证器中的指定用户数据。"""
+listeners_listener_id_authentication_id_users_user_id_put.label:
+"""更新监听器上指定认证器中的指定用户数据"""
 
 listeners_listener_id_authentication_post.desc:
 """在监听器认证链上创建认证器。"""
+listeners_listener_id_authentication_post.label:
+"""在监听器上创建认证器"""
 
 param_auth_id.desc:
-"""认证器 ID。"""
+"""认证器 ID。由认证方式与数据源组成 `{mechanism}:{built_in_database}`，如 `password_based:built_in_database`"""
+param_auth_id.label:
+"""认证器 ID """
 
 param_listener_id.desc:
-"""监听器 ID。"""
+"""监听器 ID。由监听器类型与名称组成 `{type}:{name}`，如 `tcp:default`"""
+param_listener_id.label:
+"""监听器 ID"""
 
 param_position.desc:
-"""认证者在链中的位置。可能的值是 'front', 'rear', 'before:{other_authenticator}', 'after:{other_authenticator}'"""
+"""认证器在链中的位置。可能的值是 'front', 'rear', 'before:{other_authenticator_id}', 'after:{other_authenticator_id}'"""
+param_position.label:
+"""认证器在链中的位置"""
 
 param_user_id.desc:
-"""用户 ID。"""
+"""用户 ID，根据设置的账号类型不同，可以是 username 或 clientid"""
+param_user_id.label:
+"""用户 ID"""
 
 }
 
 emqx_authn_http {
 
 body.desc:
-"""HTTP request body。"""
+"""HTTP request body，JSON 字符模板，支持使用占位符。
+使用 GET 请求时，将被转换为 URL Query。
+使用 POST 请求时，转换格式将取决于 content-type 头被设置为 application/json 还是 application/x-www-form-urlencoded。
+"""
 
 body.label:
 """Request Body"""
@@ -181,10 +242,10 @@ endpoint.label:
 """JWKS Endpoint"""
 
 from.desc:
-"""要从中获取 JWT 的字段。"""
+"""指定客户端连接请求中 JWT 的位置；可选值： password、 username（分别对应于 MQTT 客户端 CONNECT 报文中的 Password 和 Username 字段）"""
 
 from.label:
-"""源字段"""
+"""JWT 的位置"""
 
 jwt_hmac.desc:
 """用于认证的 JWT 使用 HMAC 算法签发时的配置。"""
@@ -511,9 +572,14 @@ emqx_authn_user_import_api {
 
 authentication_id_import_users_post.desc:
 """为全局认证链上的指定认证器导入用户数据。"""
+authentication_id_import_users_post.label:
+"""为全局认证链上的指定认证器导入用户数据"""
 
 listeners_listener_id_authentication_id_import_users_post.desc:
 """为监听器认证链上的指定认证器导入用户数据。"""
+
+listeners_listener_id_authentication_id_import_users_post.label:
+"""为监听器认证链上的指定认证器导入用户数据"""
 
 }
 
@@ -521,6 +587,8 @@ emqx_authz_api_cache {
 
 authorization_cache_delete.desc:
 """清除集群中所有授权数据缓存。"""
+authorization_cache_delete.label:
+"""清除集群中所有授权数据缓存"""
 
 }
 
@@ -557,16 +625,24 @@ permission.label:
 """权限"""
 
 rules_all_delete.desc:
-"""删除 `all` 规则"""
+"""删除 'all' 规则"""
+rules_all_delete.label:
+"""删除 'all' 规则"""
 
 rules_all_get.desc:
-"""列出为所有客户端启用的规则列表"""
+"""列出适用于所有客户端规则 （即 'all' 规则）。"""
+rules_all_get.label:
+"""列出适用于所有客户端规则"""
 
 rules_all_post.desc:
-"""创建/更新 为所有客户端启用的规则列表。"""
+"""创建或更新适用于所有客户端的规则（即 'all' 规则）。"""
+rules_all_post.label:
+"""创建或更新适用于所有客户端的规则"""
 
 rules_delete.desc:
 """清除内置数据库中的所有类型（'users' 、'clients' 、'all'）的所有规则"""
+rules_delete.label:
+"""清除内置数据库中的规则"""
 
 topic.desc:
 """在指定主题上的规则"""
@@ -575,22 +651,34 @@ topic.label:
 """主题"""
 
 user_clientid_delete.desc:
-"""删除内置数据库中指定客户端标识符类型的规则记录"""
+"""删除内置数据库中指定客户端的授权规则"""
+user_clientid_delete.label:
+"""删除指定客户端的授权规则"""
 
 user_clientid_get.desc:
-"""获取内置数据库中指定客户端标识符类型的规则记录"""
+"""获取内置数据库中指定客户端的授权规则"""
+user_clientid_get.label:
+"""获取指定客户端的授权规则"""
 
 user_clientid_put.desc:
-"""更新内置数据库中指定客户端标识符类型的规则记录"""
+"""更新内置数据库中指定客户端的授权规则"""
+user_clientid_put.label:
+"""更新指定客户端的授权规则"""
 
 user_username_delete.desc:
-"""删除内置数据库中指定用户名类型的规则记录"""
+"""删除内置数据库中指定用户名的授权规则"""
+user_username_delete.label:
+"""删除指定用户的授权规则'"""
 
 user_username_get.desc:
-"""获取内置数据库中指定用户名类型的规则记录"""
+"""获取内置数据库中指定用户名授权规则"""
+user_username_get.label:
+"""获取指定用户的授权规则"""
 
 user_username_put.desc:
-"""更新内置数据库中指定用户名类型的规则记录"""
+"""更新内置数据库中指定用户名的授权规则"""
+user_username_put.label:
+"""更新指定用户的授权规则"""
 
 username.desc:
 """用户名"""
@@ -599,16 +687,24 @@ username.label:
 """用户名"""
 
 users_clientid_get.desc:
-"""获取内置数据库中所有客户端标识符类型的规则记录"""
+"""根据客户端ID查询内置数据库中的授权规则。"""
+users_clientid_get.label:
+"""根据客户端ID查询授权规则"""
 
 users_clientid_post.desc:
-"""添加内置数据库中客户端标识符类型的规则记录"""
+"""为指定客户端添加内置数据库中客户端的规则。"""
+users_clientid_post.label:
+"""为指定客户端添加授权规则'"""
 
 users_username_get.desc:
-"""获取内置数据库中所有用户名类型的规则记录"""
+"""根据用户名查询内置数据库中相关的授权规则。"""
+users_username_get.label:
+"""根据用户名查询授权规则"""
 
 users_username_post.desc:
-"""添加内置数据库中用户名类型的规则记录"""
+"""为指定的用户在内置数据库中添加授权规则。"""
+users_username_post.label:
+"""为指定的用户添加授权规则"""
 
 }
 
@@ -716,24 +812,38 @@ authorization_settings_put.desc:
 emqx_authz_api_sources {
 
 authorization_sources_get.desc:
+"""列出所有授权数据源。"""
+authorization_sources_get.label:
 """列出所有授权数据源"""
 
 authorization_sources_post.desc:
 """添加授权数据源"""
+authorization_sources_post.label:
+"""添加授权数据源"""
 
 authorization_sources_type_delete.desc:
+"""删除指定类型的授权数据源"""
+authorization_sources_type_delete.label:
 """删除指定类型的授权数据源"""
 
 authorization_sources_type_get.desc:
 """获取指定类型的授权数据源"""
+authorization_sources_type_get.label:
+"""获取指定类型的授权数据源"""
 
 authorization_sources_type_move_post.desc:
+"""更新授权数据源的优先执行顺序"""
+authorization_sources_type_move_post.label:
 """更新授权数据源的优先执行顺序"""
 
 authorization_sources_type_put.desc:
 """更新指定类型的授权数据源"""
+authorization_sources_type_put.label:
+"""更新指定类型的授权数据源"""
 
 authorization_sources_type_status_get.desc:
+"""获取指定授权数据源的状态"""
+authorization_sources_type_status_get.label:
 """获取指定授权数据源的状态"""
 
 source.desc:
@@ -1052,11 +1162,17 @@ emqx_auto_subscribe_api {
 
 list_auto_subscribe_api.desc:
 """获取自动订阅主题列表"""
+list_auto_subscribe_api.label:
+"""获取自动订阅主题列表"""
 
 update_auto_subscribe_api.desc:
 """更新自动订阅主题列表"""
+update_auto_subscribe_api.label:
+"""更新自动订阅主题列表"""
 
 update_auto_subscribe_api_response409.desc:
+"""超出自定订阅主题列表长度限制"""
+update_auto_subscribe_api_response409.label:
 """超出自定订阅主题列表长度限制"""
 
 }
@@ -1208,6 +1324,65 @@ desc_param_path_operation_on_node.desc:
 
 desc_param_path_operation_on_node.label:
 """节点可用操作"""
+
+}
+
+emqx_bridge_cassandra {
+
+config_enable.desc:
+"""启用/禁用桥接"""
+
+config_enable.label:
+"""启用/禁用桥接"""
+
+cql_template.desc:
+"""CQL 模板"""
+
+cql_template.label:
+"""CQL 模板"""
+
+desc_config.desc:
+"""Cassandra 桥接配置"""
+
+desc_config.label:
+"""Cassandra 桥接配置"""
+
+desc_name.desc:
+"""桥接名字"""
+
+desc_name.label:
+"""桥接名字"""
+
+desc_type.desc:
+"""Bridge 类型"""
+
+desc_type.label:
+"""桥接类型"""
+
+local_topic.desc:
+"""发送到 'local_topic' 的消息都会转发到 Cassandra。 </br>
+注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
+
+local_topic.label:
+"""本地 Topic"""
+
+}
+
+emqx_bridge_cassandra_connector {
+
+keyspace.desc:
+"""要连接到的 Keyspace 名称。"""
+
+keyspace.label:
+"""Keyspace"""
+
+servers.desc:
+"""将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>
+主机名具有以下形式：`Host[:Port][,Host2:Port]`。<br/>
+如果未指定 `[:Port]`，则使用 Cassandra 默认端口 9042。"""
+
+servers.label:
+"""Servers"""
 
 }
 
@@ -1541,6 +1716,84 @@ username.label:
 
 }
 
+emqx_bridge_iotdb {
+
+config_enable.desc:
+"""启用或禁用该桥接"""
+
+config_enable.label:
+"""启用或禁用"""
+
+config_authentication.desc:
+"""认证信息"""
+
+config_authentication.label:
+"""认证信息"""
+
+auth_basic.desc:
+"""基本认证（basic auth）的参数。"""
+
+auth_basic.label:
+"""基本认证(basic auth)"""
+
+config_auth_basic_username.desc:
+"""Basic auth 用户名。类似 IoTDB REST 接口中的用户名。"""
+
+config_auth_basic_username.label:
+"""Basic auth 用户名"""
+
+config_auth_basic_password.desc:
+"""Basic auth 密码。类似 IoTDB REST 接口中的密码。"""
+
+config_auth_basic_password.label:
+"""Basic auth 密码"""
+
+config_base_url.desc:
+"""IoTDB REST 服务的 URL。"""
+config_base_url.label:
+"""REST 服务 URL"""
+
+config_is_aligned.desc:
+"""是否对齐时间序列。"""
+
+config_is_aligned.label:
+"""对齐时间序列"""
+
+config_device_id.desc:
+"""IoTDB 的设备ID（DeviceID）。可以使用一个占位符。如果留空则 MQTT 消息体中必须有一个 `device_id` 字段，
+或者 EMQX 规则引擎的 SQL 必须输出一个 `device_id` 字段。"""
+config_device_id.label:
+"""Device ID"""
+
+config_iotdb_version.desc:
+"""IoTDB 版本。"""
+config_iotdb_version.label:
+"""IoTDB 版本"""
+
+config_max_retries.desc:
+"""HTTP 请求的最大重试次数。"""
+
+config_max_retries.label:
+"""最大重试次数"""
+
+config_request_timeout.desc:
+"""HTTP 请求超时时间。"""
+
+config_request_timeout.label:
+"""请求超时"""
+
+desc_config.desc:
+"""IoTDB Bridge 配置"""
+
+desc_config.label:
+"""IoTDB 配置"""
+
+desc_name.desc:
+"""IoTDB Bridge 名称。"""
+
+desc_name.label:
+"""桥接名称"""
+}
 emqx_bridge_kafka {
 
 connect_timeout.desc:
@@ -2243,6 +2496,142 @@ emqx_bridge_pulsar {
 
 }
 
+emqx_bridge_rabbitmq {
+
+    local_topic.desc:
+    """转发到 RabbitMQ 的消息 MQTT 主题或主题过滤器。对所有的 'PUBLISH' 消息，如果匹配到该配置的主题或主题过滤器时，
+注意：如果此桥接被用作规则的动作，同时又配置了 'local_topic'，那么这两份消息都会被转发到 RabbitMQ，这可能会导致消息重复。"""
+
+    local_topic.label:
+    """MQTT 主题"""
+
+    config_enable.desc:
+    """启用或禁用桥接"""
+
+    config_enable.label:
+    """启用或禁用桥接"""
+
+    desc_config.desc:
+    """RabbitMQ 桥接配置"""
+
+    desc_config.label:
+    """RabbitMQ 桥接配置"""
+
+    desc_type.desc:
+    """桥接类型"""
+
+    desc_type.label:
+    """桥接类型"""
+
+    desc_name.desc:
+    """桥接名称"""
+
+    desc_name.label:
+    """桥接名称"""
+
+}
+
+
+emqx_bridge_rabbitmq_connector {
+
+server.desc:
+"""RabbitMQ 服务器的主机名或 IP 地址（例如 localhost）。"""
+
+server.label:
+"""服务器"""
+
+port.desc:
+"""RabbitMQ 服务器监听的端口号（默认为 5672）。"""
+
+port.label:
+"""端口号"""
+
+username.desc:
+"""用于认证的 RabbitMQ 用户名。"""
+
+username.label:
+"""用户名"""
+
+password.desc:
+"""用于认证的 RabbitMQ 密码。"""
+
+password.label:
+"""密码"""
+
+pool_size.desc:
+"""连接池的大小。"""
+
+pool_size.label:
+"""连接池大小"""
+
+timeout.desc:
+"""连接超时时间。"""
+
+timeout.label:
+"""连接超时"""
+
+virtual_host.desc:
+"""RabbitMQ 虚拟主机的名称。"""
+
+virtual_host.label:
+"""虚拟主机"""
+
+heartbeat.desc:
+"""发送心跳的间隔时间。"""
+
+heartbeat.label:
+"""心跳"""
+
+auto_reconnect.desc:
+"""是否自动重连。"""
+
+auto_reconnect.label:
+"""自动重连"""
+
+exchange.desc:
+""" RabbitMQ Exchange 名称。"""
+
+exchange.label:
+"""Exchange"""
+
+exchange_type.desc:
+"""RabbitMQ Exchange 的类型（例如 direct，fanout，或 topic）。"""
+
+exchange_type.label:
+"""Exchange 类型"""
+
+routing_key.desc:
+"""用于路由消息的 Routing Key。"""
+
+routing_key.label:
+"""Routing Key"""
+
+delivery_mode.desc:
+"""消息的投递模式。non_persistent(1) 表示非持久化消息，persistent(2) 表示持久化消息。"""
+
+delivery_mode.label:
+"""投递模式"""
+
+payload_template.desc:
+"""用于生成 RabbitMQ 消息的模版。模板中的占位符（例如 '${fields.sub_field}'）会被替换成消息的字段值。如果该留空，则表示所有的输入字段都会被转发到 RabbitMQ，与使用 '${.}' 作为占位符的效果等价。"""
+
+payload_template.label:
+"""消息模版"""
+
+publish_confirmation_timeout.desc:
+"""等待 RabbitMQ 确认消息发布的超时时间。"""
+
+publish_confirmation_timeout.label:
+"""发布确认超时"""
+
+wait_for_publish_confirmations.desc:
+"""是否等待 RabbitMQ 确认消息发布。"""
+
+wait_for_publish_confirmations.label:
+"""等待发布确认"""
+
+}
+
 emqx_bridge_rocketmq {
 
 config_enable.desc:
@@ -2287,7 +2676,7 @@ template.label:
 
 }
 
-emqx_bridge_rocket_connector {
+emqx_bridge_rocketmq_connector {
 
 access_key.desc:
 """RocketMQ 服务器的 `accessKey`。"""
@@ -4152,14 +4541,22 @@ emqx_dashboard_api {
 
 change_pwd_api.desc:
 """更改 Dashboard 用户密码"""
+change_pwd_api.label:
+"""更改 Dashboard 用户密码"""
 
 create_user_api.desc:
+"""创建 Dashboard 用户"""
+create_user_api.label:
 """创建 Dashboard 用户"""
 
 create_user_api_success.desc:
 """创建 Dashboard 用户成功"""
+create_user_api_success.label:
+"""创建 Dashboard 用户成功"""
 
 delete_user_api.desc:
+"""删除 Dashboard 用户"""
+delete_user_api.label:
 """删除 Dashboard 用户"""
 
 license.desc:
@@ -4167,8 +4564,12 @@ license.desc:
 
 list_users_api.desc:
 """Dashboard 用户列表"""
+list_users_api.label:
+"""Dashboard 用户列表"""
 
 login_api.desc:
+"""获取 Dashboard 认证 Token。"""
+login_api.label:
 """获取 Dashboard 认证 Token。"""
 
 login_failed401.desc:
@@ -4181,6 +4582,8 @@ login_success.desc:
 """Dashboard 认证成功"""
 
 logout_api.desc:
+"""Dashboard 用户登出"""
+logout_api.label:
 """Dashboard 用户登出"""
 
 new_pwd.desc:
@@ -4196,6 +4599,8 @@ token.desc:
 """Dashboard 认证 Token"""
 
 update_user_api.desc:
+"""更新 Dashboard 用户描述"""
+update_user_api.label:
 """更新 Dashboard 用户描述"""
 
 update_user_api200.desc:
@@ -4215,6 +4620,39 @@ version.desc:
 
 }
 
+emqx_dashboard_error_code_api {
+
+error_codes.desc:
+"""API 错误码"""
+error_codes.label:
+"""API 错误码"""
+
+}
+
+emqx_dashboard_monitor_api {
+
+list_monitor.desc:
+"""列出集群所有节点的监控数据"""
+list_monitor.label:
+"""列出集群所有节点的监控数据"""
+
+list_monitor_node.desc:
+"""列出指定节点的监控数据"""
+list_monitor_node.label:
+"""列出指定节点的监控数据"""
+
+current_status.desc:
+"""集群的运行监控。例如连接数量，连接新建速率。"""
+current_status.label:
+"""集群运行监控"""
+
+current_status_node.desc:
+"""指定节点的运行监控。例如连接数量，连接新建速率。"""
+current_status_node.label:
+"""指定节点的运行监控"""
+
+}
+
 emqx_dashboard_schema {
 
 backlog.desc:
@@ -4227,7 +4665,7 @@ bind.desc:
 """监听地址和端口，热更新此配置时，会重启 Dashboard 服务。"""
 
 bind.label:
-"""绑定端口"""
+"""Bind"""
 
 bootstrap_users_file.desc:
 """已废弃，请使用 api_key.bootstrap_file。"""
@@ -4350,113 +4788,118 @@ emqx_delayed_api {
 
 bad_msgid_format.desc:
 """消息 ID 格式错误"""
+bad_msgid_format.label:
+"""消息 ID 格式错误"""
 
 count.desc:
+"""延迟消息总数"""
+count.label:
 """延迟消息总数"""
 
 delayed_interval.desc:
 """延迟时间(秒)"""
+delayed_interval.label:
+"""延迟时间(秒)"""
 
 delayed_remaining.desc:
+"""剩余时间(秒)"""
+delayed_remaining.label:
 """剩余时间(秒)"""
 
 delete_api.desc:
 """删除延迟消息"""
+delete_api.label:
+"""删除延迟消息"""
 
 expected_at.desc:
 """期望的发送时间, RFC 3339 格式"""
+expected_at.label:
+"""期望的发送时间"""
 
 from_clientid.desc:
+"""消息的 ClientID"""
+from_clientid.label:
 """消息的 ClientID"""
 
 from_username.desc:
 """消息的 Username"""
+from_username.label:
+"""消息的 Username"""
 
 get_message_api.desc:
+"""查看延迟消息"""
+get_message_api.label:
 """查看延迟消息"""
 
 illegality_limit.desc:
 """数量上限不合法"""
+illegality_limit.label:
+"""数量上限不合法"""
 
 list_api.desc:
+"""查看延迟消息列表"""
+list_api.label:
 """查看延迟消息列表"""
 
 msgid.desc:
 """延迟消息 ID"""
+msgid.label:
+"""延迟消息 ID"""
 
 msgid_not_found.desc:
+"""未找到对应消息"""
+msgid_not_found.label:
 """未找到对应消息"""
 
 node.desc:
 """消息的来源节点"""
+node.label:
+"""消息的来源节点"""
 
 payload.desc:
 """消息内容, base64 格式。如果消息的大小超过 2048 字节，则消息内容会被设置为 'PAYLOAD_TO_LARGE'"""
+payload.label:
+"""消息内容"""
 
 publish_at.desc:
 """客户端发送时间, RFC 3339 格式"""
+publish_at.label:
+"""客户端发送时间"""
 
 qos.desc:
+"""QoS"""
+qos.label:
 """QoS"""
 
 topic.desc:
 """主题"""
+topic.label:
+"""主题"""
 
 update_api.desc:
 """开启或者关闭功能，或者设置延迟消息数量上限"""
+update_api.label:
+"""更新配置"""
 
 update_success.desc:
-"""开启或者关闭功能操作成功"""
+"""配置更新请求执行成功"""
+update_success.label:
+"""配置更新成功"""
 
 view_limit.desc:
+"""每页数量"""
+view_limit.label:
 """每页数量"""
 
 view_page.desc:
 """查看的页数"""
+view_page.label:
+"""查看的页数"""
 
 view_status_api.desc:
 """查看慢订阅状态"""
-
-}
-
-emqx_ee_bridge_cassa {
-
-config_enable.desc:
-"""启用/禁用桥接"""
-
-config_enable.label:
-"""启用/禁用桥接"""
-
-cql_template.desc:
-"""CQL 模板"""
-
-cql_template.label:
-"""CQL 模板"""
-
-desc_config.desc:
-"""Cassandra 桥接配置"""
-
-desc_config.label:
-"""Cassandra 桥接配置"""
-
-desc_name.desc:
-"""桥接名字"""
-
-desc_name.label:
-"""桥接名字"""
-
-desc_type.desc:
-"""Bridge 类型"""
-
-desc_type.label:
-"""桥接类型"""
-
-local_topic.desc:
-"""发送到 'local_topic' 的消息都会转发到 Cassandra。 </br>
-注意：如果这个 Bridge 被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。"""
-
-local_topic.label:
-"""本地 Topic"""
+view_status_api.label:
+"""查看慢订阅状态"""
 
 }
 
@@ -4654,24 +5097,6 @@ local_topic.label:
 
 }
 
-emqx_ee_connector_cassa {
-
-keyspace.desc:
-"""要连接到的 Keyspace 名称。"""
-
-keyspace.label:
-"""Keyspace"""
-
-servers.desc:
-"""将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>
-主机名具有以下形式：`Host[:Port][,Host2:Port]`。<br/>
-如果未指定 `[:Port]`，则使用 Cassandra 默认端口 9042。"""
-
-servers.label:
-"""Servers"""
-
-}
-
 emqx_ee_connector_hstreamdb {
 
 config.desc:
@@ -4824,41 +5249,67 @@ emqx_exhook_api {
 
 add_server.desc:
 """添加 ExHook 服务器"""
+add_server.label:
+"""添加 ExHook 服务器"""
 
 delete_server.desc:
+"""删除 Exhook 服务器"""
+delete_server.label:
 """删除 Exhook 服务器"""
 
 get_detail.desc:
 """查看 Exhook 服务器详细信息"""
+get_detail.label:
+"""查看 Exhook 服务器详细信息"""
 
 get_hooks.desc:
+"""获取 Exhook 服务器的钩子信息"""
+get_hooks.label:
 """获取 Exhook 服务器的钩子信息"""
 
 hook_metrics.desc:
 """当前节点中该钩子的指标信息"""
+hook_metrics.label:
+"""钩子的指标信息"""
 
 hook_name.desc:
+"""钩子的名称"""
+hook_name.label:
 """钩子的名称"""
 
 hook_params.desc:
 """钩子注册时使用的参数"""
+hook_params.label:
+"""钩子参数"""
 
 list_all_servers.desc:
+"""查看ExHook 服务器列表"""
+list_all_servers.label:
 """查看ExHook 服务器列表"""
 
 metric_failed.desc:
 """钩子执行失败的次数"""
+metric_failed.label:
+"""钩子执行失败的次数"""
 
 metric_max_rate.desc:
+"""钩子的最大调用速率"""
+metric_max_rate.label:
 """钩子的最大调用速率"""
 
 metric_rate.desc:
 """钩子的调用速率"""
+metric_rate.label:
+"""钩子的调用速率"""
 
 metric_succeed.desc:
 """钩子执行成功的次数"""
+metric_succeed.label:
+"""钩子执行成功的次数"""
 
 metrics.desc:
+"""指标信息"""
+metrics.label:
 """指标信息"""
 
 move_api.desc:
@@ -4870,23 +5321,37 @@ move_api.label:
 
 move_position.desc:
 """移动的方向"""
+move_position.label:
+"""移动的方向"""
 
 node.desc:
+"""节点名称"""
+node.label:
 """节点名称"""
 
 node_hook_metrics.desc:
 """所有节点中该钩子的指标信息"""
+node_hook_metrics.label:
+"""所有节点中该钩子的指标信息"""
 
 node_metrics.desc:
+"""所有节点中该服务器的指标信息"""
+node_metrics.label:
 """所有节点中该服务器的指标信息"""
 
 node_status.desc:
 """所有节点中该服务器的状态信息"""
+node_status.label:
+"""所有节点中该服务器的状态信息"""
 
 server_metrics.desc:
 """当前节点中该服务器的指标信息"""
+server_metrics.label:
+"""当前节点中该服务器的指标信息"""
 
 server_name.desc:
+"""Exhook 服务器的名称"""
+server_name.label:
 """Exhook 服务器的名称"""
 
 status.desc:
@@ -4896,8 +5361,12 @@ connecting: 连接失败，重连中<br/>
 disconnected: 连接失败，且未设置自动重连<br/>
 disabled: 该服务器未开启<br/>
 error: 查看该服务器状态时发生错误"""
+status.label:
+"""Exhook 服务器的状态"""
 
 update_server.desc:
+"""更新 Exhook 服务器"""
+update_server.label:
 """更新 Exhook 服务器"""
 
 }
@@ -4970,6 +5439,84 @@ exproto_handler.desc:
 exproto_server.desc:
 """配置 ExProto 网关需要启动的 <code>ConnectionAdapter</code> 服务。
 该服务用于提供客户端的认证、发布、订阅和数据下行等功能。"""
+
+}
+
+emqx_ft_api {
+
+file_list.desc:
+"""列出已上传的所有文件"""
+
+file_list_transfer.desc:
+"""根据客户端ID或者文件ID列出所有已上传的文件"""
+
+}
+
+emqx_ft_storage_exporter_fs_api {
+
+file_get.desc:
+"""根据文件ID下载指定文件"""
+
+}
+
+emqx_ft_schema {
+
+enable.desc:
+"""启用文件传输（File Transfer）服务。<br/>
+文件传输服务允许客户端使用 `$file` 主题将分片上传到 EMQX。
+启用文件传输服务表示 `$file` 主题前缀已被预留，用于提供文件传输服务。<br/>
+这个开关也会影响文件传输 REST API 的可用性，以及依赖存储的后台任务（例如垃圾回收）。"""
+
+init_timeout.desc:
+"""指定文件传输初始化的时间限制。在<br/>
+EMQX 服务器过载时可能发生初始化超时。超时后给 `init` 的 PUBACK 中包含一个错误码 （0x80）。"""
+
+assemble_timeout.desc:
+"""文件拼接超时。<br/>
+在收到 'fin' 消息后 EMQX 会对文件进行拼接，如果发生超时（例如系统过载），则会给 'fin' 的 PUBACK 中包含一个错误码（0x80）。"""
+
+store_segment_timeout.desc:
+"""文件片段保存超时。<br/>
+EMQX 收到文件分片后，会对它进行保存，如果发生超时（例如系统过载），则会给这个发布消息的 PUBACK 中包含一个错误码（0x80）。"""
+
+storage_backend.desc:
+"""文件后端存储配置"""
+
+local_storage.desc:
+"""EMQX 节点本地用文件系统于存储文件分片的相关配置。"""
+
+local_storage_segments.desc:
+"""本地文件系统存储配置，包括已上传的文件分片和临时数据。"""
+
+local_storage_segments_root.desc:
+"""文件分片存储的根目录。"""
+
+local_storage_exporter_backend.desc:
+"""将文件导出到本地存储<br/>
+该配置项指定所有分片都传输完成了的文件进行导出到本地存储的相关行为。"""
+
+local_storage_exporter.desc:
+"""将文件导出到本地存储。"""
+
+s3_exporter.desc:
+"""将文件导出到 AWS s3 API 兼容的对象存储服务。"""
+
+local_storage_exporter_root.desc:
+"""导出到本地文件时使用的根目录。"""
+
+local_storage_segments_gc.desc:
+"""文件系统中临时文件的垃圾回收配置。"""
+
+storage_gc_interval.desc:
+"""运行垃圾回收的时间间隔。"""
+
+storage_gc_max_segments_ttl.desc:
+"""分片的临时存储的最大 TTL。<br/>
+该配置为系统全局上限，所有的分片都不会超过这个 TTL，即使某些文件传输指定了一个更大的 TTL。"""
+storage_gc_min_segments_ttl.desc:
+"""分片的临时存储的最小 TTL。<br/>
+分片在超过这个 TTL 之前不被垃圾回收。
+该配置为系统全局下限，所有的分片都不会低于这个 TTL，即使某些文件传输指定了一个更小的 TTL。"""
 
 }
 
@@ -5528,6 +6075,27 @@ license_root.label:
 
 emqx_limiter_schema {
 
+max_conn_rate.desc:
+"""Maximum connection rate.<br/>
+This is used to limit the connection rate for this node,
+once the limit is reached, new connections will be deferred or refused"""
+max_conn_rate.label:
+"""Maximum Connection Rate"""
+
+messages_rate.desc:
+"""Messages publish rate.<br/>
+This is used to limit the inbound message numbers for this node,
+once the limit is reached, the restricted client will slow down and even be hung for a while."""
+messages_rate.label:
+"""Messages Publish Rate"""
+
+bytes_rate.desc:
+"""Data publish rate.<br/>
+This is used to limit the inbound bytes rate for this node,
+once the limit is reached, the restricted client will slow down and even be hung for a while."""
+bytes_rate.label:
+"""Data Publish Rate"""
+
 bucket_cfg.desc:
 """桶的配置"""
 
@@ -5711,6 +6279,8 @@ deactivate_at.desc:
 
 delete_alarms_api.desc:
 """删除所有历史告警。"""
+delete_alarms_api.label:
+"""删除所有历史告警"""
 
 delete_alarms_api_response204.desc:
 """历史告警已成功清除。"""
@@ -5727,6 +6297,8 @@ get_alarms_qs_activated.desc:
 
 list_alarms_api.desc:
 """列出当前激活的告警或历史告警，由查询参数决定。"""
+list_alarms_api.label:
+"""列出告警"""
 
 message.desc:
 """告警消息，以人类可读的方式描述告警内容。"""
@@ -5736,6 +6308,40 @@ name.desc:
 
 node.desc:
 """触发此告警的节点名称。"""
+
+}
+
+emqx_mgmt_api_api_keys {
+
+api_key_list.desc:
+"""Return api_key list"""
+api_key_list.label:
+"""Return api_key list"""
+
+create_new_api_key.desc:
+"""Create new api_key"""
+create_new_api_key.label:
+"""Create new api_key"""
+
+get_api_key.desc:
+"""Return the specific api_key"""
+get_api_key.label:
+"""Return the specific api_key"""
+
+update_api_key.desc:
+"""Update the specific api_key"""
+update_api_key.label:
+"""Update the specific api_key"""
+
+delete_api_key.desc:
+"""Delete the specific api_key"""
+delete_api_key.label:
+"""Delete the specific api_key"""
+
+format.desc:
+"""Unique and format by [a-zA-Z0-9-_]"""
+format.label:
+"""Unique and format by [a-zA-Z0-9-_]"""
 
 }
 
@@ -5761,18 +6367,24 @@ by.label:
 
 create_banned_api.desc:
 """添加一个客户端 ID、用户名或者 IP 地址到黑名单。"""
+create_banned_api.label:
+"""添加一个新的黑名单条目"""
 
 create_banned_api_response400.desc:
 """错误的请求，可能是参数错误或封禁对象已存在等原因。"""
 
 delete_banned_api.desc:
 """将一个客户端 ID、用户名或者 IP 地址从黑名单中删除。"""
+delete_banned_api.label:
+"""从黑名单中移除"""
 
 delete_banned_api_response404.desc:
 """未在黑名单中找到该封禁对象。"""
 
 list_banned_api.desc:
 """列出目前所有被封禁的客户端 ID、用户名和 IP 地址。"""
+list_banned_api.label:
+"""列出目前所有被封禁的客户端"""
 
 reason.desc:
 """封禁原因，记录当前对象被封禁的原因。"""
@@ -5794,6 +6406,123 @@ who.label:
 
 }
 
+emqx_mgmt_api_clients {
+
+list_clients.desc:
+"""列出客户端"""
+list_clients.label:
+"""列出客户端"""
+
+clients_info_from_id.desc:
+"""获取指定客户端的详细信息"""
+clients_info_from_id.label:
+"""获取客户端信息"""
+
+kick_client_id.desc:
+"""踢出指定客户端"""
+kick_client_id.label:
+"""踢出指定客户端"""
+
+get_authz_cache.desc:
+"""获取指定客户端的授权缓存"""
+get_authz_cache.label:
+"""获取指定客户端的授权缓存"""
+
+clean_authz_cache.desc:
+"""清除指定客户端的授权缓存"""
+clean_authz_cache.label:
+"""清除指定客户端的授权缓存"""
+
+get_client_subs.desc:
+"""获取指定客户端的订阅信息"""
+
+subscribe.desc:
+"""订阅"""
+subscribe.label:
+"""订阅"""
+
+subscribe_g.desc:
+"""批量订阅"""
+subscribe_g.label:
+"""批量订阅"""
+
+unsubscribe.desc:
+"""取消订阅"""
+unsubscribe.label:
+"""取消订阅"""
+
+unsubscribe_g.desc:
+"""批量取消订阅"""
+unsubscribe_g.label:
+"""批量取消订阅"""
+
+set_keepalive_seconds.desc:
+"""设置客户端的 MQTT 保活时间"""
+set_keepalive_seconds.label:
+"""设置客户端的 MQTT 保活时间"""
+
+}
+
+emqx_mgmt_api_cluster {
+
+get_cluster_info.desc:
+"""获取集群信息"""
+get_cluster_info.label:
+"""获取集群信息"""
+
+invite_node.desc:
+"""邀请节点加入集群"""
+invite_node.label:
+"""邀请节点加入集群"""
+
+force_remove_node.desc:
+"""强制节点离开集群"""
+force_remove_node.label:
+"""强制节点离开集群"""
+
+}
+
+emqx_mgmt_api_configs {
+
+get_conf_node.desc:
+"""获取节点的所有配置。支持和不支持热配置更新的配置项都包含在内。"""
+get_conf_node.label:
+"""获取节点的所有配置"""
+
+node_name.desc:
+"""指定节点名称。如果未指定，则返回收到这个HTTP请求的节点的配置。"""
+node_name.label:
+"""节点名称"""
+
+rest_conf_query.desc:
+"""重置（使用 `conf_path` 参数）指定的配置路径下的值<br/>
+- 若指定路径的配置有默认值，则使用默认值；
+- 若指定路径的配置没有默认值，则返回 HTTP 状态码 400。"""
+rest_conf_query.label:
+"""重置配置项"""
+
+get_global_zone_configs.desc:
+"""获取全局默认 zone 的配置"""
+get_global_zone_configs.label:
+"""获取全局默认 zone 的配置"""
+
+update_global_zone_configs.desc:
+"""更新全局默认 zone 的配置"""
+update_global_zone_configs.label:
+"""更新全局默认 zone 的配置"""
+
+get_node_level_limiter_configs.desc:
+"""获取节点级的速率限制参数"""
+get_node_level_limiter_configs.label:
+"""获取节点级的速率限制参数"""
+
+update_node_level_limiter_configs.desc:
+"""更新节点级的速率限制参数"""
+update_node_level_limiter_configs.label:
+"""更新节点级的速率限制参数"""
+
+}
+
 emqx_mgmt_api_key_schema {
 
 api_key.desc:
@@ -5811,6 +6540,94 @@ bootstrap_file.desc:
 
 bootstrap_file.label:
 """API 密钥初始化文件"""
+
+}
+
+emqx_mgmt_api_listeners {
+
+list_node_live_statuses.desc:
+"""列出所有节点上的监听器状态。按监听器类型分组"""
+list_node_live_statuses.label:
+"""列出所有节点上的监听器状态"""
+
+list_listeners.desc:
+"""列出所有节点上的指定类型的监听器"""
+list_listeners.label:
+"""列出监听器"""
+
+listener_type.desc:
+"""监听器类型"""
+listener_type.label:
+"""监听器类型"""
+
+create_on_all_nodes.desc:
+"""在所有节点上创建指定的监听器"""
+create_on_all_nodes.label:
+"""创建监听器"""
+
+list_by_id.desc:
+"""获取指定ID的监听器"""
+list_by_id.label:
+"""获取指定ID的监听器"""
+
+update_lisener.desc:
+"""为集群中所有的节点更新指定ID的监听器"""
+update_lisener.label:
+"""更新监听器"""
+
+delete_on_all_nodes.desc:
+"""删除所有节点上指定ID的监听器"""
+delete_on_all_nodes.label:
+"""删除监听器"""
+
+start_on_all_nodes.desc:
+"""在所有节点上启动指定ID的监听器"""
+start_on_all_nodes.label:
+"""启动监听器"""
+
+stop_on_all_nodes.desc:
+"""在所有节点上停止指定ID的监听器"""
+stop_on_all_nodes.label:
+"""停止监听器"""
+
+restart_on_all_nodes.desc:
+"""在所有节点上重启指定ID的监听器"""
+restart_on_all_nodes.label:
+"""重启监听器"""
+
+
+}
+
+emqx_mgmt_api_metrics {
+
+emqx_metrics.desc:
+"""EMQX 监控指标信息"""
+emqx_metrics.label:
+"""EMQX 监控指标信息"""
+
+}
+
+emqx_mgmt_api_nodes {
+
+list_nodes.desc:
+"""列出所有 EMQX 节点"""
+list_nodes.label:
+"""列出所有 EMQX 节点"""
+
+get_node_info.desc:
+"""获取节点信息"""
+get_node_info.label:
+"""获取节点信息"""
+
+get_node_metrics.desc:
+"""获取节节点上的运行计数信息，例如消息发送数量，收到或发送字节数，认证和授权成功失败次数等。"""
+get_node_metrics.label:
+"""获取节点运行计数信息"""
+
+get_node_stats.desc:
+"""获取节点上的统计信息，例如主题数量，连接数量等。"""
+get_node_stats.label:
+"""获取节点运行统计信息"""
 
 }
 
@@ -5896,6 +6713,15 @@ topic_name.desc:
 
 }
 
+emqx_mgmt_api_stats {
+
+emqx_stats.desc:
+"""EMQX stats"""
+emqx_stats.label:
+"""EMQX stats"""
+
+}
+
 emqx_mgmt_api_status {
 
 get_status_api.desc:
@@ -5928,6 +6754,143 @@ get_status_response503.desc:
 
 get_status_api_format.desc:
 """指定返回的内容格式。使用 'text'（默认）则返回自由格式的字符串； 'json' 则返回 JSON 格式。"""
+
+}
+
+emqx_mgmt_api_subscriptions {
+
+list_subs.desc:
+"""列出订阅"""
+list_subs.label:
+"""列出订阅"""
+
+}
+
+emqx_mgmt_api_topics {
+
+topic_list.desc:
+"""列出主题"""
+topic_list.label:
+"""列出主题"""
+
+topic_info_by_name.desc:
+"""获取主题到节点名称的路由映射"""
+topic_info_by_name.label:
+"""获取主题到节点名称的路由映射"""
+
+}
+
+emqx_mgmt_api_trace {
+
+list_all.desc:
+"""列出所有 trace"""
+list_all.label:
+"""列出 trace"""
+
+create_new.desc:
+"""创建 trace"""
+create_new.label:
+"""创建 trace"""
+
+clear_all.desc:
+"""清除所有 trace"""
+clear_all.label:
+"""清除所有 trace"""
+
+delete_trace.desc:
+"""删除指定的 trace"""
+delete_trace.label:
+"""删除 trace"""
+
+stop_trace.desc:
+"""停止指定的 trace"""
+stop_trace.label:
+"""停止 trace"""
+
+download_log_by_name.desc:
+"""下载指定 trace 的日志文件"""
+download_log_by_name.label:
+"""下载 trace"""
+
+trace_zip_file.desc:
+"""包含 trace 日志的 zip 压缩文件"""
+trace_zip_file.label:
+"""压缩文件"""
+
+get_trace_file_metadata.desc:
+"""获取 trace 日志文件的元数据, 例如文件大小和修改时间"""
+get_trace_file_metadata.label:
+"""获取 trace 信息"""
+
+view_trace_log.desc:
+"""查看 trace"""
+view_trace_log.label:
+"""查看 trace"""
+
+file_size.desc:
+"""文件大小"""
+file_size.label:
+"""文件大小"""
+
+modification_date.desc:
+"""文件最后修改时间"""
+modification_date.label:
+"""文件最后修改时间"""
+
+format.desc:
+"""唯一的名称。只允许使用 a-z，A-Z，0-9 和 下划线（‘_’）这些字符。"""
+format.label:
+"""Trace 名称"""
+
+filter_type.desc:
+"""过滤器类型"""
+filter_type.label:
+"""过滤器类型"""
+
+support_wildcard.desc:
+"""如果过滤器类型为 'topic' 则该字段可以指定用于匹配的 MQTT 主题或主题过滤器。"""
+support_wildcard.label:
+"""MQTT 主题或主题过滤器"""
+
+mqtt_clientid.desc:
+"""如果过滤器类型为 'clientid' 则该字段可以指定用于匹配的 MQTT 客户端 ID。"""
+mqtt_clientid.label:
+"""MQTT 客户端 ID"""
+
+client_ip_addess.desc:
+"""如果过滤器类型为 'ip_address' 则该字段可以指定用于匹配的客户端 IP 地址。"""
+client_ip_addess.label:
+"""客户端 IP 地址"""
+
+trace_status.desc:
+"""Trace 状态"""
+trace_status.label:
+"""Trace 状态"""
+
+time_format.desc:
+"""时间戳格式，rfc3339 或者 epoch second"""
+time_format.label:
+"""时间戳格式"""
+
+trace_log_size.desc:
+"""日志文件大小"""
+trace_log_size.label:
+"""日志文件大小"""
+
+node_name.desc:
+"""指定从哪个节点获取 trace 文件内容。"""
+node_name.label:
+"""节点名称"""
+
+max_response_bytes.desc:
+"""单个 HTTP 相应中包含 trace 日志的字节数。"""
+max_response_bytes.label:
+"""响应字节数"""
+
+current_trace_offset.desc:
+"""指定从该偏移量开始读取指定的 trace 日志文件。"""
+current_trace_offset.label:
+"""读取偏移量"""
 
 }
 
@@ -6343,6 +7306,25 @@ states.label:
 
 }
 
+emqx_prometheus_api {
+
+get_prom_conf_info.desc:
+"""Get Prometheus config info"""
+get_prom_conf_info.label:
+"""Get Prometheus config info"""
+
+update_prom_conf_info.desc:
+"""Update Prometheus config"""
+update_prom_conf_info.label:
+"""Update Prometheus config"""
+
+get_prom_data.desc:
+"""Get Prometheus Data"""
+get_prom_data.label:
+"""Get Prometheus Data"""
+
+}
+
 emqx_prometheus_schema {
 
 enable.desc:
@@ -6543,6 +7525,8 @@ config_not_found.desc:
 
 delete_matching_api.desc:
 """删除对应的消息"""
+delete_matching_api.label:
+"""删除对应的消息"""
 
 from_clientid.desc:
 """发布者的 ClientID"""
@@ -6552,12 +7536,18 @@ from_username.desc:
 
 get_config_api.desc:
 """查看配置内容"""
+get_config_api.label:
+"""查看配置内容"""
 
 list_retained_api.desc:
+"""查看保留消息列表"""
+list_retained_api.label:
 """查看保留消息列表"""
 
 lookup_api.desc:
 """通过不带通配符的主题查看对应的保留消息"""
+lookup_api.label:
+"""查看保留消息"""
 
 message_detail.desc:
 """消息详情"""
@@ -6593,6 +7583,8 @@ update_config_success.desc:
 """配置更新成功"""
 
 update_retainer_api.desc:
+"""更新配置"""
+update_retainer_api.label:
 """更新配置"""
 
 }
@@ -6648,11 +7640,17 @@ emqx_rewrite_api {
 
 list_topic_rewrite_api.desc:
 """列出全部主题重写规则"""
+list_topic_rewrite_api.label:
+"""列出全部主题重写规则"""
 
 update_topic_rewrite_api.desc:
 """更新全部主题重写规则"""
+update_topic_rewrite_api.label:
+"""更新全部主题重写规则"""
 
 update_topic_rewrite_api_response413.desc:
+"""超出主题重写规则数量上限"""
+update_topic_rewrite_api_response413.label:
 """超出主题重写规则数量上限"""
 
 }
@@ -7315,6 +8313,45 @@ user_provided_function_function.desc:
 
 user_provided_function_function.label:
 """用户提供的函数"""
+
+}
+
+emqx_s3_schema {
+
+access_key_id.desc:
+"""The access key ID of the S3 bucket."""
+
+secret_access_key.desc:
+"""The secret access key of the S3 bucket."""
+
+bucket.desc:
+"""The name of the S3 bucket."""
+
+host.desc:
+"""The host of the S3 endpoint."""
+
+port.desc:
+"""The port of the S3 endpoint."""
+
+url_expire_time.desc:
+"""The time in seconds for which the signed URLs to the S3 objects are valid."""
+
+min_part_size.desc:
+"""The minimum part size for multipart uploads.<br/>
+Uploaded data will be accumulated in memory until this size is reached."""
+
+max_part_size.desc:
+"""The maximum part size for multipart uploads.<br/>
+S3 uploader won't try to upload parts larger than this size."""
+
+acl.desc:
+"""The ACL to use for the uploaded objects."""
+
+transport_options.desc:
+"""Options for the HTTP transport layer used by the S3 client."""
+
+ipv6_probe.desc:
+"""Whether to probe for IPv6 support."""
 
 }
 
@@ -8309,6 +9346,27 @@ base_listener_limiter.desc:
 base_listener_limiter.label:
 """速率限制类型"""
 
+max_conn_rate.desc:
+"""Maximum connection rate.<br/>
+This is used to limit the connection rate for this listener,
+once the limit is reached, new connections will be deferred or refused"""
+max_conn_rate.label:
+"""Maximum Connection Rate"""
+
+messages_rate.desc:
+"""Messages publish rate.<br/>
+This is used to limit the inbound message numbers for each client connected to this listener,
+once the limit is reached, the restricted client will slow down and even be hung for a while."""
+messages_rate.label:
+"""Messages Publish Rate"""
+
+bytes_rate.desc:
+"""Data publish rate.<br/>
+This is used to limit the inbound bytes rate for each client connected to this listener,
+once the limit is reached, the restricted client will slow down and even be hung for a while."""
+bytes_rate.label:
+"""Data Publish Rate"""
+
 persistent_session_store_backend.desc:
 """用于存储持久性会话和信息的数据库管理后端
 - `builtin`: 使用内置的数据库（mria）"""
@@ -8560,6 +9618,11 @@ RFC 5746 定义了一种更安全的方法。通过启用安全的重新协商�
 common_ssl_opts_schema_secure_renegotiate.label:
 """SSL 重新协商"""
 
+common_ssl_opts_schema_log_level.desc:
+"""SSL 握手的日志级别。默认值是 'notice'，可以设置为 'debug' 用来调查 SSL 握手的问题。"""
+common_ssl_opts_schema_log_level.label:
+"""SSL 日志级别"""
+
 sysmon_vm_busy_port.desc:
 """当一个系统接口（例如 TCP socket）过忙，会触发一条带有 <code>busy_port</code> 关键字的 warning 级别的日志。
 同时还会发布一条主题为 <code>$SYS/sysmon/busy_port</code> 的 MQTT 系统消息。"""
@@ -8794,14 +9857,20 @@ emqx_slow_subs_api {
 
 clear_records_api.desc:
 """清除当前记录，然后重新开始统计"""
+clear_records_api.label:
+"""清除当前记录，然后重新开始统计"""
 
 clientid.desc:
 """消息的客户端 ID"""
 
 get_records_api.desc:
 """查看慢订阅的统计数据"""
+get_records_api.label:
+"""查看慢订阅的统计数据"""
 
 get_setting_api.desc:
+"""查看配置"""
+get_setting_api.label:
 """查看配置"""
 
 last_update_time.desc:
@@ -8817,6 +9886,8 @@ topic.desc:
 """消息的主题"""
 
 update_setting_api.desc:
+"""更新配置"""
+update_setting_api.label:
 """更新配置"""
 
 }
@@ -8872,8 +9943,12 @@ enable.desc:
 
 get_telemetry_data_api.desc:
 """获取遥测数据"""
+get_telemetry_data_api.label:
+"""获取遥测数据"""
 
 get_telemetry_status_api.desc:
+"""获取遥测状态"""
+get_telemetry_status_api.label:
 """获取遥测状态"""
 
 license.desc:
@@ -8905,6 +9980,8 @@ up_time.desc:
 
 update_telemetry_status_api.desc:
 """更新遥测状态"""
+update_telemetry_status_api.label:
+"""更新遥测状态"""
 
 uuid.desc:
 """获取 UUID"""
@@ -8924,104 +10001,172 @@ emqx_topic_metrics_api {
 
 message_qos1_in_rate.desc:
 """QoS1 接收消息速率"""
+message_qos1_in_rate.label:
+"""QoS1 接收消息速率"""
 
 message_out_count.desc:
+"""发送消息数量"""
+message_out_count.label:
 """发送消息数量"""
 
 message_qos2_out_rate.desc:
 """QoS2 发送消息速率"""
+message_qos2_out_rate.label:
+"""QoS2 发送消息速率"""
 
 message_qos0_in_rate.desc:
+"""QoS0 接收消息速率"""
+message_qos0_in_rate.label:
 """QoS0 接收消息速率"""
 
 get_topic_metrics_api.desc:
 """获取主题监控数据"""
+get_topic_metrics_api.label:
+"""获取主题监控数据"""
 
 reset_time.desc:
 """重置时间。标准 rfc3339 时间格式，例如：2018-01-01T12:00:00Z。如果从未重置则为空"""
+reset_time.label:
+"""重置时间"""
 
 topic_metrics_api_response400.desc:
 """错误请求。已存在或错误的主题名称"""
+topic_metrics_api_response400.label:
+"""错误请求"""
 
 reset_topic_desc.desc:
 """主题名称。如果此参数不存在，则所有创建的主题监控数据都将重置。"""
+reset_topic_desc.label:
+"""主题名称"""
 
 topic_metrics_api_response409.desc:
 """冲突。主题监控数据超过最大限制512"""
+topic_metrics_api_response409.label:
+"""冲突"""
 
 post_topic_metrics_api.desc:
+"""创建主题监控数据"""
+post_topic_metrics_api.label:
 """创建主题监控数据"""
 
 message_dropped_rate.desc:
 """丢弃消息速率"""
+message_dropped_rate.label:
+"""丢弃消息速率"""
 
 message_qos2_in_rate.desc:
+"""QoS2 接收消息速率"""
+message_qos2_in_rate.label:
 """QoS2 接收消息速率"""
 
 message_in_rate.desc:
 """接收消息速率"""
+message_in_rate.label:
+"""接收消息速率"""
 
 message_qos0_out_rate.desc:
+"""QoS0 发送消息速率"""
+message_qos0_out_rate.label:
 """QoS0 发送消息速率"""
 
 message_qos2_in_count.desc:
 """QoS2 接收消息数量"""
+message_qos2_in_count.label:
+"""QoS2 接收消息数量"""
 
 message_dropped_count.desc:
+"""丢弃消息数量"""
+message_dropped_count.label:
 """丢弃消息数量"""
 
 topic_metrics_api_response404.desc:
 """未找到。主题监控数据未找到"""
+topic_metrics_api_response404.label:
+"""未找到"""
 
 topic_in_path.desc:
 """主题字符串。注意：主题字符串在url路径中必须编码"""
+topic_in_path.label:
+"""主题字符串"""
 
 action.desc:
 """操作，仅支持 reset"""
+action.label:
+"""操作"""
 
 message_qos0_in_count.desc:
+"""QoS0 接收消息数量"""
+message_qos0_in_count.label:
 """QoS0 接收消息数量"""
 
 message_qos1_out_rate.desc:
 """QoS1 发送消息速率"""
+message_qos1_out_rate.label:
+"""QoS1 发送消息速率"""
 
 topic.desc:
+"""主题"""
+topic.label:
 """主题"""
 
 reset_topic_metrics_api.desc:
 """重置主题监控状态"""
+reset_topic_metrics_api.label:
+"""重置主题监控状态"""
 
 create_time.desc:
 """创建时间。标准 rfc3339 时间格式，例如：2018-01-01T12:00:00Z"""
+create_time.label:
+"""创建时间"""
 
 metrics.desc:
 """监控数据"""
+metrics.label:
+"""Metrics"""
 
 message_qos1_out_count.desc:
+"""QoS1 发送消息数量"""
+message_qos1_out_count.label:
 """QoS1 发送消息数量"""
 
 gat_topic_metrics_data_api.desc:
 """获取主题监控数据"""
+gat_topic_metrics_data_api.label:
+"""获取主题监控数据"""
 
 message_qos1_in_count.desc:
+"""QoS1 接收消息数量"""
+message_qos1_in_count.label:
 """QoS1 接收消息数量"""
 
 delete_topic_metrics_data_api.desc:
 """删除主题监控数据"""
+delete_topic_metrics_data_api.label:
+"""删除主题监控数据"""
 
 message_qos0_out_count.desc:
+"""QoS0 发送消息数量"""
+message_qos0_out_count.label:
 """QoS0 发送消息数量"""
 
 topic_in_body.desc:
 """主题字符串"""
+topic_in_body.label:
+"""主题字符串"""
 
 message_in_count.desc:
+"""接收消息数量"""
+message_in_count.label:
 """接收消息数量"""
 
 message_qos2_out_count.desc:
 """QoS2 发送消息数量"""
+message_qos2_out_count.label:
+"""QoS2 发送消息数量"""
 
 message_out_rate.desc:
+"""发送消息速率"""
+message_out_rate.label:
 """发送消息速率"""
 
 }
