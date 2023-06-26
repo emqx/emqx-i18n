@@ -4070,7 +4070,7 @@ timeout.label:
 
 }
 
-emqx_connector_mongo {
+emqx_mongodb {
 
 auth_source.desc:
 """与用户证书关联的数据库名称。"""
@@ -4956,7 +4956,7 @@ payload.label:
 
 }
 
-emqx_ee_bridge_mongodb {
+emqx_bridge_mongodb {
 
 collection.desc:
 """数据将被存储到的集合"""
