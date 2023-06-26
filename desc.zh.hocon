@@ -4440,7 +4440,7 @@ server.label:
 
 }
 
-emqx_connector_redis {
+emqx_redis {
 
 cluster.desc:
 """集群模式。当 Redis 服务运行在集群模式下，该配置必须设置为 'cluster'。"""
@@ -5055,7 +5055,7 @@ sql_template.label:
 
 }
 
-emqx_ee_bridge_redis {
+emqx_bridge_redis {
 
 command_template.desc:
 """用于推送数据的 Redis 命令模板。 每个列表元素代表一个命令名称或其参数。
