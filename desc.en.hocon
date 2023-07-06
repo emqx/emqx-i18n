@@ -4828,10 +4828,10 @@ num_acceptors.label:
 """Number of acceptors"""
 
 proxy_header.desc:
-"""Enable support for `HAProxy` header. Be aware once enabled regular HTTP requests can't be handled anymore."""
+"""Enable support for Proxy Protocol. Be aware once enabled regular HTTP requests can't be handled anymore."""
 
 proxy_header.label:
-"""Enable support for HAProxy header"""
+"""Enable support for Proxy Protocol"""
 
 sample_interval.desc:
 """How often to update metrics displayed in the dashboard.
