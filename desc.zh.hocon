@@ -629,7 +629,7 @@ fuzzy_username.desc:
 """使用字串匹配模糊搜索用户名"""
 
 fuzzy_username.label:
-"""用户名子串"""
+"""用户名字串"""
 
 permission.desc:
 """该条规则对应的权限：
@@ -662,6 +662,7 @@ rules_delete.label:
 
 topic.desc:
 """该条规则对应的主题或主题过滤器，可以使用主题占位符：
+
 - ${clientid}: 替换为当前的客户端 ID
 - ${username}: 替换为当前的用户名
 """
@@ -1227,6 +1228,7 @@ rap.label:
 
 rh.desc:
 """订阅选项 Retain Handling, 指定订阅建立时服务端是否向客户端发送保留消息，可选值如下：
+
 - 0：只要客户端订阅成功，服务端就发送保留消息。
 - 1：客户端订阅成功且该订阅此前不存在，服务端才发送保留消息。毕竟有些时候客户端重新发起订阅可能只是为了改变一下 QoS，并不意味着它想再次接收保留消息。
 - 2：即便客户端订阅成功，服务端也不会发送保留消息。
@@ -1303,7 +1305,7 @@ desc_api9.label:
 """测试桥接创建"""
 
 desc_bridge_metrics.desc:
-"""通过 Id 来获取桥接的指标信息"""
+"""通过 ID 来获取桥接的指标信息"""
 
 desc_bridge_metrics.label:
 """获取桥接的指标"""
@@ -1653,6 +1655,7 @@ write_syntax.desc:
 参考 [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) 及
 [InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) </br>
 TLDR: </br>
+
 ```
 <measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]
 ```
@@ -1954,7 +1957,7 @@ consumer_mqtt_opts.label:
 """MQTT 转发"""
 
 auth_kerberos_principal.desc:
-"""SASL GSSAPI 认证方法的 Kerberos principal，例如 <code>client_name@MY.KERBEROS.REALM.MYDOMAIN.COM</code>注意：这里使用的 realm 需要配置在 EMQX 服务器的 /etc/krb5.conf 中"""
+"""SASL GSSAPI 认证方法的 Kerberos principal，例如 <code>client_name@MY.KERBEROS.REALM.MYDOMAIN.COM</code>注意：这里使用的 realm 需要配置在 EMQX 服务器的 /etc/krb5.conf 中。"""
 
 auth_kerberos_principal.label:
 """Kerberos Principal"""
@@ -2194,25 +2197,25 @@ emqx_bridge_opents {
 
     config_enable.desc:
         """启用/禁用桥接"""
-
+    
     config_enable.label:
         "启用/禁用桥接"
-
+    
     desc_config.desc:
         """OpenTSDB 桥接配置"""
-
+    
     desc_config.label:
         "OpenTSDB 桥接配置"
-
+    
     desc_type.desc:
         """Bridge 类型"""
-
+    
     desc_type.label:
         "桥接类型"
-
+    
     desc_name.desc:
         """桥接名字"""
-
+    
     desc_name.label:
         "桥接名字"
 }
@@ -2221,19 +2224,19 @@ emqx_bridge_opents_connector {
 
     server.desc:
         """服务器的地址。"""
-
+    
     server.label:
         "服务器地址"
-
+    
     summary.desc:
         """是否返回摘要信息。"""
-
+    
     summary.label:
         "摘要信息"
-
+    
     details.desc:
         """是否返回详细信息。"""
-
+    
     details.label:
         "详细信息"
 }
@@ -2523,28 +2526,28 @@ emqx_bridge_rabbitmq {
 
     local_topic.label:
     """MQTT 主题"""
-
+    
     config_enable.desc:
     """启用或禁用桥接"""
-
+    
     config_enable.label:
     """启用或禁用桥接"""
-
+    
     desc_config.desc:
     """RabbitMQ 桥接配置"""
-
+    
     desc_config.label:
     """RabbitMQ 桥接配置"""
-
+    
     desc_type.desc:
     """桥接类型"""
-
+    
     desc_type.label:
     """桥接类型"""
-
+    
     desc_name.desc:
     """桥接名称"""
-
+    
     desc_name.label:
     """桥接名称"""
 
@@ -2685,10 +2688,9 @@ local_topic.label:
 """本地 Topic"""
 
 template.desc:
-"""模板, 默认为空，为空时将会将整个消息转发给 RocketMQ。 <br>
-            模板可以是任意带有占位符的合法字符串, 例如:<br>
-            - ${id}, ${username}, ${clientid}, ${timestamp}<br>
-            - {"id" : ${id}, "username" : ${username}}"""
+"""模板, 默认为空，为空时将会将整个消息转发给 RocketMQ。 <br />
+            模板可以是任意带有占位符的合法字符串, 例如:<br />            ${id}, ${username}, ${clientid}, ${timestamp}<br />
+            {"id" : ${id}, "username" : ${username}}"""
 
 template.label:
 """模板"""
@@ -2801,10 +2803,10 @@ desc_node_status.label:
 
 desc_status.desc:
 """Bridge 的连接状态<br/>
-- <code>connecting</code>: 启动时的初始状态。<br/>
-- <code>connected</code>: 桥接驱动健康检查正常。<br/>
-- <code>disconnected</code>: 当桥接无法通过健康检查。<br/>
-- <code>stopped</code>: 桥接处于停用状态。<br/>
+- <code>connecting</code>: 启动时的初始状态。<br />
+- <code>connected</code>: 桥接驱动健康检查正常。<br />
+- <code>disconnected</code>: 当桥接无法通过健康检查。<br />
+- <code>stopped</code>: 桥接处于停用状态。<br />
 - <code>inconsistent</code>: 集群中有各节点汇报的状态不一致。"""
 
 desc_status.label:
@@ -3045,14 +3047,14 @@ config_enable.label:
 """启用/禁用数据桥接"""
 
 config_headers.desc:
-"""HTTP 请求的标头。<br/>
+"""HTTP 请求的标头。<br />
 允许使用带有变量的模板。"""
 
 config_headers.label:
 """HTTP 请求标头"""
 
 config_local_topic.desc:
-"""发送到 'local_topic' 的消息都会转发到 HTTP 服务器。 <br/>
+"""发送到 'local_topic' 的消息都会转发到 HTTP 服务器。 <br />
 注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 HTTP 服务器。"""
 
 config_local_topic.label:
@@ -3151,17 +3153,19 @@ coap_heartbeat.desc:
 当 <code>connection_required</code> 开启后，该参数用于检查客户端连接是否存活"""
 
 coap_notify_type.desc:
-"""投递给 CoAP 客户端的通知消息类型。当客户端 Observe 一个资源（或订阅某个主题）时，网关会向客户端推送新产生的消息。其消息类型可设置为：<br/>
-  - non: 不需要客户端返回确认消息;<br/>
-  - con: 需要客户端返回一个确认消息;<br/>
+"""投递给 CoAP 客户端的通知消息类型。当客户端 Observe 一个资源（或订阅某个主题）时，网关会向客户端推送新产生的消息。其消息类型可设置为：<br />
+
+  - non: 不需要客户端返回确认消息;<br />
+  - con: 需要客户端返回一个确认消息;<br />
   - qos: 取决于消息的 QoS 等级; QoS 0 会以 `non` 类型下发，QoS 1/2 会以 `con` 类型下发"""
 
 coap_publish_qos.desc:
 """客户端发布请求的默认 QoS 等级。
-当 CoAP 客户端发起发布请求时，如果未携带 `qos` 参数则会使用该默认值。默认值可设置为：<br>
-  - qos0、qos1、qos2: 设置为固定的 QoS 等级<br/>
-  - coap: 依据发布操作的 CoAP 报文类型来动态决定<br/>
-    * 当发布请求为 `non-confirmable` 类型时，取值为 qos0<br/>
+当 CoAP 客户端发起发布请求时，如果未携带 `qos` 参数则会使用该默认值。默认值可设置为：<br />
+
+  - qos0、qos1、qos2: 设置为固定的 QoS 等级<br />
+  - coap: 依据发布操作的 CoAP 报文类型来动态决定<br />
+    * 当发布请求为 `non-confirmable` 类型时，取值为 qos0<br />
     * 当发布请求为 `confirmable` 类型时，取值为 qos1"""
 
 coap_subscribe_qos.desc:
@@ -4381,7 +4385,8 @@ max_inflight.label:
 
 mode.desc:
 """MQTT 桥的模式。 <br/>
-- cluster_shareload：在 emqx 集群的每个节点上创建一个 MQTT 连接。<br/>
+
+cluster_shareload：在 emqx 集群的每个节点上创建一个 MQTT 连接。<br/>
 在“cluster_shareload”模式下，来自远程代理的传入负载通过共享订阅的方式接收。<br/>
 请注意，<code>clientid</code> 以节点名称为后缀，这是为了避免不同节点之间的 <code> clientid</code> 冲突。
 而且对于入口连接的 <code>remote.topic</code>，我们只能使用共享订阅主题过滤器。"""
@@ -5401,13 +5406,13 @@ failed_action.desc:
 """当 gRPC 请求失败后的操作"""
 
 keepalive.desc:
-"""当没有其他数据交换时，是否向连接的对端套接字定期的发送探测包。如果另一端没有响应，则认为连接断开，并向控制进程发送错误消息"""
+"""当没有其他数据交换时，是否向连接的对端套接字定期的发送探测包。如果另一端没有响应，则认为连接断开，并向控制进程发送错误消息。"""
 
 name.desc:
 """ExHook 服务器名称"""
 
 nodelay.desc:
-"""如果为 true，则为套接字设置 TCP_NODELAY 选项，这意味着会立即发送数据包"""
+"""如果为 true，则为套接字设置 TCP_NODELAY 选项，这意味着会立即发送数据包。"""
 
 pool_size.desc:
 """gRPC 客户端进程池大小"""
@@ -6660,7 +6665,7 @@ msg_correlation_data.desc:
 """对比数据，服务端在收到应用消息时会原封不动的把对比数据发送给所有的订阅者。对比数据只对请求消息(Request Message)的发送端和响应消息(Response Message)的接收端有意义。"""
 
 msg_message_expiry_interval.desc:
-"""消息过期间隔，单位为秒。当消息过期时，如果服务端还没有开始向匹配的订阅者投递该消息，则服务端会删除该订阅者的消息副本。如果不设置，则消息永远不会过期"""
+"""消息过期间隔，单位为秒。当消息过期时，如果服务端还没有开始向匹配的订阅者投递该消息，则服务端会删除该订阅者的消息副本。如果不设置，则消息永远不会过期。""
 
 msg_payload_format_indicator.desc:
 """Payload 格式，0 表示是未指定格式的数据，相当于没有发送 Payload 格式指示；1 表示 Payload 是 UTF-8 编码的字符数据，Payload 中的 UTF-8 数据必须是按照 Unicode 的规范和 RFC 3629 的标准要求进行编码的。"""
@@ -6880,9 +6885,14 @@ trace_status.label:
 """Trace 状态"""
 
 time_format.desc:
-"""时间戳格式，rfc3339 或者 epoch second"""
+"""rfc3339 或者 epoch 时间戳格式"""
 time_format.label:
-"""时间戳格式"""
+"""时间格式"""
+
+time_format_g.desc:
+"""rfc3339 或者 epoch 时间戳格式"""
+time_format_g.label:
+"""时间格式"""
 
 trace_log_size.desc:
 """日志文件大小"""
@@ -6962,15 +6972,15 @@ mqttsn_broadcast.desc:
 
 mqttsn_enable_qos3.desc:
 """是否允许无连接的客户端发送 QoS 等于 -1 的消息。
-该功能主要用于支持轻量的 MQTT-SN 客户端实现，它不会向网关建立连接，注册主题，也不会发起订阅；它只使用 QoS 为 -1 来发布消息"""
+该功能主要用于支持轻量的 MQTT-SN 客户端实现，它不会向网关建立连接，注册主题，也不会发起订阅；它只使用 QoS 为 -1 来发布消息。"""
 
 mqttsn_gateway_id.desc:
 """MQTT-SN 网关 ID。
-当 <code>broadcast</code> 打开时，MQTT-SN 网关会使用该 ID 来广播 ADVERTISE 消息"""
+当 <code>broadcast</code> 打开时，MQTT-SN 网关会使用该 ID 来广播 ADVERTISE 消息。"""
 
 mqttsn_predefined.desc:
 """预定义主题列表。
-预定义的主题列表，是一组 主题 ID 和 主题名称 的映射关系。使用预先定义的主题列表，可以减少 MQTT-SN 客户端和网关对于固定主题的注册请求"""
+预定义的主题列表，是一组 主题 ID 和 主题名称 的映射关系。使用预先定义的主题列表，可以减少 MQTT-SN 客户端和网关对于固定主题的注册请求。"""
 
 mqttsn_predefined_id.desc:
 """主题 ID。范围：1-65535"""
@@ -7278,7 +7288,7 @@ check_interval.desc:
 如果连续3次检查结果不一致，则报警。"""
 
 enable.desc:
-"""设置为“true”以启用此插件"""
+"""设置为“true”以启用此插件。"""
 
 enable.label:
 """启用"""
@@ -7644,7 +7654,7 @@ msg_expiry_interval.desc:
 
 stop_publish_clear_msg.desc:
 """是否不发送保留消息的清理消息，在 MQTT 5.0 中如果一条保留消息的消息体为空，则会清除掉之前存储
-的对应的保留消息，通过这个值控制是否停止发送清理消息"""
+的对应的保留消息，通过这个值控制是否停止发送清理消息。"""
 
 }
 
@@ -7760,7 +7770,7 @@ event_connected_at.label:
 """连接完成时的时刻"""
 
 metrics_sql_failed_exception.desc:
-"""SQL 由于执行异常而失败的次数。 这可能是因为调用 SQL 函数时崩溃，或者试图对未定义的变量进行算术运算"""
+"""SQL 由于执行异常而失败的次数。 这可能是因为调用 SQL 函数时崩溃，或者试图对未定义的变量进行算术运算。"""
 
 metrics_sql_failed_exception.label:
 """SQL 执行异常"""
@@ -8391,7 +8401,7 @@ sysmon_top_db_hostname.label:
 
 zones.desc:
 """<code>zone</code> 是按<code>name</code> 分组的一组配置。
-对于灵活的配置映射，可以将 <code>name</code> 设置为侦听器的 <code>zone</code> 配置。
+对于灵活的配置映射，可以将 <code>name</code> 设置为监听器的 <code>zone</code> 配置。
 注：名为 <code>default</code> 的内置区域是自动创建的，无法删除。"""
 
 fields_mqtt_quic_listener_certfile.desc:
@@ -8793,15 +8803,15 @@ ciphers_schema_quic.desc:
 选择一个好的密码套件对于应用程序的数据安全性、机密性和性能至关重要。
 
 名称应为 OpenSSL 字符串格式（而不是 RFC 格式）。
-EMQX 配置文档提供的所有默认值和示例都是 OpenSSL 格式<br/>
+EMQX 配置文档提供的所有默认值和示例都是 OpenSSL 格式。<br/>
 注意：某些密码套件仅与特定的 TLS <code>版本</code>兼容（'tlsv1.1'、'tlsv1.2'或'tlsv1.3'）。
 不兼容的密码套件将被自动删除。
 
 例如，如果只有 <code>versions</code> 仅配置为 <code>tlsv1.3</code>。为其他版本配置密码套件将无效。
 
 <br/>
-注：PSK 的 Ciphers 不支持 tlsv1.3<br/>
-如果打算使用PSK密码套件，<code>tlsv1.3</code>。应在<code>ssl.versions</code>中禁用。
+注：PSK 的 Ciphers 不支持 tlsv1.3。<br/>
+如果打算使用 PSK 密码套件，<code>tlsv1.3</code> 应在 <code>ssl.versions</code> 中禁用。
 
 <br/>
 PSK 密码套件：
@@ -8810,7 +8820,7 @@ RSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,
 RSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,
 RSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA"</code><br/>
 
-注：QUIC 监听器不支持 tlsv1.3 的 ciphers"""
+注：QUIC 监听器只支持 tlsv1.3 的 ciphers。"""
 
 ciphers_schema_quic.label:
 """"""
@@ -8970,7 +8980,7 @@ mqtt_mqueue_priorities.desc:
 默认优先级表为空，即所有的主题优先级相同。
 
 注：优先主题名称中不支持使用逗号和等号。
-注：不在此列表中的主题，被视为最高/最低优先级，这取决于<code>mqtt.mqueue_default_priority</code> 的配置
+注：不在此列表中的主题，被视为最高/最低优先级，这取决于<code>mqtt.mqueue_default_priority</code> 的配置。
 
 示例：
 配置 <code>"topic/1" > "topic/2"</code>:
@@ -9140,7 +9150,7 @@ fields_mqtt_quic_listener_stateless_operation_expiration_ms.label:
 """无状态操作过期 毫秒"""
 
 server_ssl_opts_schema_dhfile.desc:
-"""如果协商使用Diffie-Hellman密钥交换的密码套件，则服务器将使用包含PEM编码的Diffie-Hellman参数的文件的路径。如果未指定，则使用默认参数。<br/>
+"""如果协商使用 Diffie-Hellman 密钥交换的密码套件，则服务器将使用包含PEM编码的Diffie-Hellman参数的文件的路径。如果未指定，则使用默认参数。<br/>
 注意：TLS 1.3不支持<code>dhfile</code>选项。"""
 
 server_ssl_opts_schema_dhfile.label:
@@ -9213,10 +9223,10 @@ sysmon_vm_long_schedule.label:
 """启用长调度监控"""
 
 mqtt_keepalive_multiplier.desc:
-"""EMQX 判定客户端保活超时使用的阈值系数。计算公式为：Keep Alive * Backoff * 2"""
+"""EMQX 判定客户端 Keep Alive 超时使用的 Keep Alive 倍数。计算公式为：Keep Alive 超时 = Keep Alive 间隔 × Keep Alive 倍数。 默认值 1.5 遵循 MQTT 5.0 规范。此倍数可调整，为系统管理员提供根据特定需求进行定制的灵活性。例如，如果客户端的 10 秒保持连接间隔的 PINGREQ 因为额外的10 秒延迟，将倍数更改为 2 可以让 EMQX 容忍此延迟。"""
 
 mqtt_keepalive_multiplier.label:
-"""保活超时阈值系数"""
+"""Keep Alive 倍数"""
 
 force_gc_bytes.desc:
 """在进程处理过多少个字节之后，对此进程执行垃圾回收。"""
@@ -9233,7 +9243,7 @@ server_ssl_opts_schema_fail_if_no_peer_cert.label:
 """没有证书则 SSL 失败"""
 
 fields_ws_opts_compress.desc:
-"""如果 <code>true</code>，则使用<code>zlib</code> 压缩 WebSocket 消息<br/>
+"""如果 <code>true</code>，则使用 <code>zlib</code> 压缩 WebSocket 消息<br/>
 <code>deflate_opts</code> 下的配置项属于压缩相关参数配置。"""
 
 fields_ws_opts_compress.label:
@@ -9288,10 +9298,10 @@ overload_protection_backoff_gc.label:
 """跳过GC"""
 
 broker_perf_route_lock_type.desc:
-"""通配主题订阅/取消订阅性能调优。
+"""通配符主题订阅/取消订阅性能调优。
 建议仅当通配符主题较多时才更改此参数。
 
-注：当从/更改为 `global` 锁时，它要求集群中的所有节点在更改之前停止。
+注：当从 `global` 锁更改或更改为 `gloabal` 锁时，它要求集群中的所有节点在更改之前停止。
   - `key`：为 Mnesia 事务涉及到的每个 key 上锁，建议单节点时使用。
   - `tab`：为 Mnesia 事务涉及到的表上锁，建议在集群中使用。
   - `global`：所以更新操作都被全局的锁保护，仅建议在超大规模集群中使用。"""
@@ -9359,25 +9369,19 @@ base_listener_limiter.label:
 """速率限制类型"""
 
 max_conn_rate.desc:
-"""Maximum connection rate.<br/>
-This is used to limit the connection rate for this listener,
-once the limit is reached, new connections will be deferred or refused"""
+"""最大连接率。<br/> 用于限制该监听器的连接速率，一旦达到限制值，新的连接将被推迟或拒绝。"""
 max_conn_rate.label:
-"""Maximum Connection Rate"""
+"""最大连接率"""
 
 messages_rate.desc:
-"""Messages publish rate.<br/>
-This is used to limit the inbound message numbers for each client connected to this listener,
-once the limit is reached, the restricted client will slow down and even be hung for a while."""
+"""消息发布速率。<br/> 用于限制连接到该监听器的每个客户端的入站消息数，一旦达到限制值，受限制的客户端将会减速甚至暂时被挂起。"""
 messages_rate.label:
-"""Messages Publish Rate"""
+"""消息发布速率"""
 
 bytes_rate.desc:
-"""Data publish rate.<br/>
-This is used to limit the inbound bytes rate for each client connected to this listener,
-once the limit is reached, the restricted client will slow down and even be hung for a while."""
+"""数据发布速率。<br/> 用于限制连接到该监听器的每个客户端的入站字节速率，一旦达到限制值，受限制的客户端将会减速甚至暂时被挂起。"""
 bytes_rate.label:
-"""Data Publish Rate"""
+"""数据发布速率"""
 
 persistent_session_store_backend.desc:
 """用于存储持久性会话和信息的数据库管理后端
@@ -9599,7 +9603,7 @@ force_gc_enable.label:
 """启用强制垃圾回收"""
 
 fields_ws_opts_allow_origin_absence.desc:
-"""If <code>false</code> and <code>check_origin_enable</code> is <code>true</code>, the server will reject requests that don't have <code>origin</code> HTTP header."""
+"""如果设置为 <code>false</code> 并且 <code>check_origin_enable</code> 为 <code>true</code>，服务器将拒绝没有 <code>origin</code> HTTP头的请求。"""
 
 fields_ws_opts_allow_origin_absence.label:
 """允许 origin 缺失"""
@@ -9751,7 +9755,7 @@ EMQX 配置文档提供的所有默认值和示例都是 OpenSSL 格式<br/>
 
 <br/>
 注：PSK 的 Ciphers 不支持 tlsv1.3<br/>
-如果打算使用PSK密码套件 <code>tlsv1.3</code>。应在<code>ssl.versions</code>中禁用。
+如果打算使用PSK密码套件, <code>tlsv1.3</code> 应在<code>ssl.versions</code>中禁用。
 
 <br/>
 PSK 密码套件：
@@ -9810,7 +9814,7 @@ sysmon_top_sample_interval.label:
 """取样时间"""
 
 fields_mqtt_quic_listener_idle_timeout_ms.desc:
-"""一个连接在被优雅地关闭之前可以空闲多长时间。0 表示禁用超时"""
+"""一个连接在被优雅地关闭之前可以空闲多长时间。0 表示禁用超时。"""
 
 fields_mqtt_quic_listener_idle_timeout_ms.label:
 """空闲超时 毫秒"""
