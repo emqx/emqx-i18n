@@ -431,6 +431,33 @@ single.desc:
 
 emqx_authn_schema {
 
+global_authentication.desc:
+"""Default authentication configs for all MQTT listeners.
+
+For per-listener overrides see <code>authentication</code> in listener configs
+
+This option can be configured with:
+<ul>
+  <li><code>[]</code>: The default value, it allows *ALL* logins</li>
+  <li>one: For example <code>{enable:true,backend:"built_in_database",mechanism="password_based"}</code></li>
+  <li>chain: An array of structs.</li>
+</ul>
+
+When a chain is configured, the login credentials are checked against the backends per the configured order, until an 'allow' or 'deny' decision can be made.
+
+If there is no decision after a full chain exhaustion, the login is rejected."""
+
+global_authentication.label:
+"""Global authentication"""
+
+listener_authentication.desc:
+"""Per-listener authentication override.
+Authentication can be one single authenticator instance or a chain of authenticators as an array.
+When authenticating a login (username, client ID, etc.) the authenticators are checked in the configured order."""
+
+listener_authentication.label:
+"""Per-listener authentication override"""
+
 backend.desc:
 """Backend type."""
 
@@ -591,9 +618,19 @@ authorization_cache_delete.label:
 emqx_authz_api_mnesia {
 
 action.desc:
-"""Authorized action (pub/sub/all)"""
+"""Authorized action (publish/subscribe/all)"""
 action.label:
 """action"""
+
+qos.desc:
+"""QoS of authorized action"""
+qos.label:
+"""QoS"""
+
+retain.desc:
+"""Retain flag of authorized action"""
+retain.label:
+"""retain"""
 
 clientid.desc:
 """ClientID"""
@@ -1316,6 +1353,318 @@ desc_param_path_operation_on_node.label:
 
 }
 
+emqx_bridge_azure_event_hub {
+
+connect_timeout.desc:
+"""Maximum wait time for TCP connection establishment (including authentication time if enabled)."""
+
+connect_timeout.label:
+"""Connect Timeout"""
+
+producer_opts.desc:
+"""Local MQTT data source and Azure Event Hub bridge configs."""
+
+producer_opts.label:
+"""MQTT to Azure Event Hub"""
+
+min_metadata_refresh_interval.desc:
+"""Minimum time interval the client has to wait before refreshing Azure Event Hub Kafka broker and topic metadata. Setting too small value may add extra load on Azure Event Hub."""
+
+min_metadata_refresh_interval.label:
+"""Min Metadata Refresh Interval"""
+
+kafka_producer.desc:
+"""Azure Event Hub Producer configuration."""
+
+kafka_producer.label:
+"""Azure Event Hub Producer"""
+
+producer_buffer.desc:
+"""Configure producer message buffer.
+
+Tell Azure Event Hub producer how to buffer messages when EMQX has more messages to send than Azure Event Hub can keep up, or when Azure Event Hub is down."""
+
+producer_buffer.label:
+"""Message Buffer"""
+
+socket_send_buffer.desc:
+"""Fine tune the socket send buffer. The default value is tuned for high throughput."""
+
+socket_send_buffer.label:
+"""Socket Send Buffer Size"""
+
+socket_receive_buffer.desc:
+"""Fine tune the socket receive buffer. The default value is tuned for high throughput."""
+
+socket_receive_buffer.label:
+"""Socket Receive Buffer Size"""
+
+socket_tcp_keepalive.desc:
+"""Enable TCP keepalive for Azure Event Hub bridge connections.
+The value is three comma separated numbers in the format of 'Idle,Interval,Probes'
+ - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).
+ - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).
+ - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).
+For example "240,30,5" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.
+Default: 'none'"""
+
+socket_tcp_keepalive.label:
+"""TCP keepalive options"""
+
+desc_name.desc:
+"""Bridge name, used as a human-readable description of the bridge."""
+
+desc_name.label:
+"""Bridge Name"""
+
+producer_kafka_opts.desc:
+"""Azure Event Hub producer configs."""
+
+producer_kafka_opts.label:
+"""Azure Event Hub Producer"""
+
+kafka_topic.desc:
+"""Event Hub name"""
+
+kafka_topic.label:
+"""Event Hub Name"""
+
+kafka_message_timestamp.desc:
+"""Which timestamp to use. The timestamp is expected to be a millisecond precision Unix epoch which can be in string format, e.g. <code>1661326462115</code> or <code>'1661326462115'</code>. When the desired data field for this template is not found, or if the found data is not a valid integer, the current system timestamp will be used."""
+
+kafka_message_timestamp.label:
+"""Message Timestamp"""
+
+buffer_mode.desc:
+"""Message buffer mode.
+
+<code>memory</code>: Buffer all messages in memory. The messages will be lost in case of EMQX node restart
+<code>disk</code>: Buffer all messages on disk. The messages on disk are able to survive EMQX node restart.
+<code>hybrid</code>: Buffer message in memory first, when up to certain limit (see <code>segment_bytes</code> config for more information), then start offloading messages to disk, Like <code>memory</code> mode, the messages will be lost in case of EMQX node restart."""
+
+buffer_mode.label:
+"""Buffer Mode"""
+
+socket_opts.desc:
+"""Extra socket options."""
+
+socket_opts.label:
+"""Socket Options"""
+
+partition_count_refresh_interval.desc:
+"""The time interval for Azure Event Hub producer to discover increased number of partitions.
+After the number of partitions is increased in Azure Event Hub, EMQX will start taking the
+discovered partitions into account when dispatching messages per <code>partition_strategy</code>."""
+
+partition_count_refresh_interval.label:
+"""Partition Count Refresh Interval"""
+
+max_batch_bytes.desc:
+"""Maximum bytes to collect in an Azure Event Hub message batch. Most of the Kafka brokers default to a limit of 1 MB batch size. EMQX's default value is less than 1 MB in order to compensate Kafka message encoding overheads (especially when each individual message is very small). When a single message is over the limit, it is still sent (as a single element batch)."""
+
+max_batch_bytes.label:
+"""Max Batch Bytes"""
+
+required_acks.desc:
+"""Required acknowledgements for Azure Event Hub partition leader to wait for its followers before it sends back the acknowledgement to EMQX Azure Event Hub producer
+
+<code>all_isr</code>: Require all in-sync replicas to acknowledge.
+<code>leader_only</code>: Require only the partition-leader's acknowledgement."""
+
+required_acks.label:
+"""Required Acks"""
+
+kafka_headers.desc:
+"""Please provide a placeholder to be used as Azure Event Hub Headers<br/>
+e.g. <code>${pub_props}</code><br/>
+Notice that the value of the placeholder must either be an object:
+<code>{\"foo\": \"bar\"}</code>
+or an array of key-value pairs:
+<code>[{\"key\": \"foo\", \"value\": \"bar\"}]</code>"""
+
+kafka_headers.label:
+"""Azure Event Hub Headers"""
+
+producer_kafka_ext_headers.desc:
+"""Please provide more key-value pairs for Azure Event Hub headers<br/>
+The key-value pairs here will be combined with the
+value of <code>kafka_headers</code> field before sending to Azure Event Hub."""
+
+producer_kafka_ext_headers.label:
+"""Extra Azure Event Hub headers"""
+
+producer_kafka_ext_header_key.desc:
+"""Key of the Azure Event Hub header. Placeholders in format of ${var} are supported."""
+
+producer_kafka_ext_header_key.label:
+"""Azure Event Hub extra header key."""
+
+producer_kafka_ext_header_value.desc:
+"""Value of the Azure Event Hub header. Placeholders in format of ${var} are supported."""
+
+producer_kafka_ext_header_value.label:
+"""Value"""
+
+kafka_header_value_encode_mode.desc:
+"""Azure Event Hub headers value encode mode<br/>
+ - NONE: only add binary values to Azure Event Hub headers;<br/>
+ - JSON: only add JSON values to Azure Event Hub headers,
+and encode it to JSON strings before sending."""
+
+kafka_header_value_encode_mode.label:
+"""Azure Event Hub headers value encode mode"""
+
+metadata_request_timeout.desc:
+"""Maximum wait time when fetching metadata from Azure Event Hub."""
+
+metadata_request_timeout.label:
+"""Metadata Request Timeout"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+socket_nodelay.desc:
+"""When set to 'true', TCP buffer is sent as soon as possible. Otherwise, the OS kernel may buffer small TCP packets for a while (40 ms by default)."""
+
+socket_nodelay.label:
+"""No Delay"""
+
+authentication.desc:
+"""Authentication configs."""
+
+authentication.label:
+"""Authentication"""
+
+buffer_memory_overload_protection.desc:
+"""Applicable when buffer mode is set to <code>memory</code>
+EMQX will drop old buffered messages under high memory pressure. The high memory threshold is defined in config <code>sysmon.os.sysmem_high_watermark</code>. NOTE: This config only works on Linux."""
+
+buffer_memory_overload_protection.label:
+"""Memory Overload Protection"""
+
+auth_sasl_mechanism.desc:
+"""SASL authentication mechanism."""
+
+auth_sasl_mechanism.label:
+"""Mechanism"""
+
+config_enable.desc:
+"""Enable (true) or disable (false) this bridge."""
+
+config_enable.label:
+"""Enable or Disable"""
+
+desc_config.desc:
+"""Configuration for an Azure Event Hub bridge."""
+
+desc_config.label:
+"""Azure Event Hub Bridge Configuration"""
+
+buffer_per_partition_limit.desc:
+"""Number of bytes allowed to buffer for each Azure Event Hub partition. When this limit is exceeded, old messages will be dropped in a trade for credits for new messages to be buffered."""
+
+buffer_per_partition_limit.label:
+"""Per-partition Buffer Limit"""
+
+bootstrap_hosts.desc:
+"""A comma separated list of Azure Event Hub Kafka <code>host[:port]</code> namespace endpoints to bootstrap the client.  Default port number is 9093."""
+
+bootstrap_hosts.label:
+"""Bootstrap Hosts"""
+
+kafka_message_key.desc:
+"""Template to render Azure Event Hub message key. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Azure Event Hub's <code>NULL</code> (but not empty string) is used."""
+
+kafka_message_key.label:
+"""Message Key"""
+
+kafka_message.desc:
+"""Template to render an Azure Event Hub message."""
+
+kafka_message.label:
+"""Azure Event Hub Message Template"""
+
+mqtt_topic.desc:
+"""MQTT topic or topic filter as data source (bridge input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Azure Event Hub."""
+
+mqtt_topic.label:
+"""Source MQTT Topic"""
+
+kafka_message_value.desc:
+"""Template to render Azure Event Hub message value. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Azure Event Hub's <code>NULL</code> (but not empty string) is used."""
+
+kafka_message_value.label:
+"""Message Value"""
+
+partition_strategy.desc:
+"""Partition strategy is to tell the producer how to dispatch messages to Azure Event Hub partitions.
+
+<code>random</code>: Randomly pick a partition for each message
+<code>key_dispatch</code>: Hash Azure Event Hub message key to a partition number"""
+
+partition_strategy.label:
+"""Partition Strategy"""
+
+buffer_segment_bytes.desc:
+"""Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.
+This value is to specify the size of each on-disk buffer file."""
+
+buffer_segment_bytes.label:
+"""Segment File Bytes"""
+
+max_inflight.desc:
+"""Maximum number of batches allowed for Azure Event Hub producer (per-partition) to send before receiving acknowledgement from Azure Event Hub. Greater value typically means better throughput. However, there can be a risk of message reordering when this value is greater than 1."""
+
+max_inflight.label:
+"""Max Inflight"""
+
+compression.desc:
+"""Compression method."""
+
+compression.label:
+"""Compression"""
+
+query_mode.desc:
+"""Query mode. Optional 'sync/async', default 'async'."""
+
+query_mode.label:
+"""Query mode"""
+
+sync_query_timeout.desc:
+"""This parameter defines the timeout limit for synchronous queries. It applies only when the bridge query mode is configured to 'sync'."""
+
+sync_query_timeout.label:
+"""Synchronous Query Timeout"""
+
+auth_username_password.desc:
+"""Username/password based authentication."""
+
+auth_username_password.label:
+"""Username/password Auth"""
+
+auth_sasl_password.desc:
+"""The Connection String for connecting to Azure Event Hub.  Should be the "connection string-primary key" of a Namespace shared access policy."""
+
+auth_sasl_password.label:
+"""Connection String"""
+
+producer_kafka_opts.desc:
+"""Azure Event Hub producer configs."""
+
+producer_kafka_opts.label:
+"""Azure Event Hub Producer"""
+
+desc_config.desc:
+"""Configuration for an Azure Event Hub bridge."""
+
+desc_config.label:
+"""Azure Event Hub Bridge Configuration"""
+
+}
+
 emqx_bridge_cassandra {
 
 config_enable.desc:
@@ -1481,7 +1830,9 @@ local_topic.label:
 """Local Topic"""
 
 template.desc:
-"""Template, the default value is empty. When this value is empty the whole message will be stored in the database"""
+"""Template, the default value is empty. When this value is empty the whole message will be stored in the database.<br>
+The template can be any valid JSON with placeholders and make sure all keys for table are here, example:<br>
+  <code>{"id" : "${id}", "clientid" : "${clientid}", "data" : "${payload.data}"}</code>"""
 
 template.label:
 """Template"""
@@ -1564,6 +1915,18 @@ payload_template.desc:
 payload_template.label:
 """Payload template"""
 
+attributes_template.desc:
+"""The template for formatting the outgoing message attributes.  Undefined values will be rendered as empty string values.  Empty keys are removed from the attribute map."""
+
+attributes_template.label:
+"""Attributes template"""
+
+ordering_key_template.desc:
+"""The template for formatting the outgoing message ordering key.  Undefined values will be rendered as empty string values.  This value will not be added to the message if it's empty."""
+
+ordering_key_template.label:
+"""Ordering Key template"""
+
 pipelining.desc:
 """A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request."""
 
@@ -1582,11 +1945,35 @@ pubsub_topic.desc:
 pubsub_topic.label:
 """GCP PubSub Topic"""
 
-request_timeout.desc:
-"""Deprecated: Configure the request timeout in the buffer settings."""
+producer_attributes.desc:
+"""List of key-value pairs representing templates to construct the attributes for a given GCP PubSub message.  Both keys and values support the placeholder `${var_name}` notation.  Keys that are undefined or resolve to an empty string are omitted from the attribute map."""
 
-request_timeout.label:
-"""Request Timeout"""
+producer_attributes.label:
+"""Attributes Template"""
+
+producer_ordering_key.desc:
+"""Template for the Ordering Key of a given GCP PubSub message.  If the resolved value is undefined or an empty string, the ordering key property is omitted from the message."""
+
+producer_ordering_key.label:
+"""Ordering Key Template"""
+
+kv_pair_desc.desc:
+"""Key-value pair."""
+
+kv_pair_desc.label:
+"""Key-value pair"""
+
+kv_pair_key.desc:
+"""Key"""
+
+kv_pair_key.label:
+"""Key"""
+
+kv_pair_value.desc:
+"""Value"""
+
+kv_pair_value.label:
+"""Value"""
 
 service_account_json.desc:
 """JSON containing the GCP Service Account credentials to be used with PubSub.
@@ -1594,6 +1981,419 @@ When a GCP Service Account is created (as described in https://developers.google
 
 service_account_json.label:
 """GCP Service Account Credentials"""
+
+  consumer_opts {
+    desc: "Local MQTT publish and GCP PubSub consumer configs."
+    label: "GCP PubSub to MQTT"
+  }
+
+  consumer_pull_max_messages {
+    desc: "The maximum number of messages to retrieve from GCP PubSub in a single pull request."
+          " The actual number may be less than the specified value."
+    label: "Maximum Messages to Pull"
+  }
+
+  consumer_topic_mapping {
+    desc: "Defines the mapping between GCP PubSub topics and MQTT topics. Must contain at least one item."
+    label: "Topic Mapping"
+  }
+
+  consumer_pubsub_topic {
+    desc: "GCP PubSub topic to consume from."
+    label: "GCP PubSub"
+  }
+
+  consumer_mqtt_topic {
+    desc: "Local topic to which consumed GCP PubSub messages should be published to."
+    label: "MQTT Topic"
+  }
+
+  consumer_mqtt_qos {
+    desc: "MQTT QoS used to publish messages consumed from GCP PubSub."
+    label: "QoS"
+  }
+
+consumer_mqtt_payload.desc:
+"""The template for transforming the incoming GCP PubSub message.  By default, it will use JSON format to serialize inputs from the GCP PubSub message.  Available fields are:
+<code>message_id</code>: the message ID assigned by GCP PubSub.
+<code>publish_time</code>: message timestamp assigned by GCP PubSub.
+<code>topic</code>: GCP PubSub topic.
+<code>value</code>: the payload of the GCP PubSub message.  Omitted if there's no payload.
+<code>attributes</code>: an object containing string key-value pairs.  Omitted if there are no attributes.
+<code>ordering_key</code>: GCP PubSub message ordering key.  Omitted if there's none."""
+
+consumer_mqtt_payload.label:
+"Payload Template"
+
+  consumer {
+    desc: "GCP PubSub Consumer configuration."
+    label: "GCP PubSub Consumer"
+  }
+
+}
+
+emqx_bridge_greptimedb {
+
+config_enable.desc:
+"""Enable or disable this bridge."""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for an GreptimeDB bridge."""
+
+desc_config.label:
+"""GreptimeDB Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type."""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to the GreptimeDB. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+write_syntax.desc:
+"""Conf of GreptimeDB gRPC protocol to write data points. Write syntax is a text-based format that provides the measurement, tag set, field set, and timestamp of a data point, and placeholder supported, which is the same as InfluxDB line protocol.
+See also [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) and
+[GreptimeDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) </br>
+TLDR:</br>
+```
+<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]
+```
+Please note that a placeholder for an integer value must be annotated with a suffix `i`. For example `${payload.int_value}i`."""
+
+write_syntax.label:
+"""Write Syntax"""
+
+}
+
+emqx_bridge_greptimedb_connector {
+
+dbname.desc:
+"""GreptimeDB database."""
+
+dbname.label:
+"""Database"""
+
+greptimedb.desc:
+"""GreptimeDB's protocol. Support GreptimeDB v1.8 and before."""
+
+greptimedb.label:
+"""HTTP API Protocol"""
+
+password.desc:
+"""GreptimeDB password."""
+
+password.label:
+"""Password"""
+
+precision.desc:
+"""GreptimeDB time precision."""
+
+precision.label:
+"""Time Precision"""
+
+protocol.desc:
+"""GreptimeDB's protocol. gRPC API."""
+
+protocol.label:
+"""Protocol"""
+
+server.desc:
+"""The IPv4 or IPv6 address or the hostname to connect to.</br>
+A host entry has the following form: `Host[:Port]`.</br>
+The GreptimeDB default port 8086 is used if `[:Port]` is not specified."""
+
+server.label:
+"""Server Host"""
+
+username.desc:
+"""GreptimeDB username."""
+
+username.label:
+"""Username"""
+
+}
+
+emqx_bridge_hstreamdb {
+
+config_direction.desc:
+"""The direction of this bridge, MUST be 'egress'"""
+
+config_direction.label:
+"""Bridge Direction"""
+
+desc_config.desc:
+"""Configuration for an HStreamDB bridge."""
+
+desc_config.label:
+"""HStreamDB Bridge Configuration"""
+
+desc_connector.desc:
+"""Generic configuration for the connector."""
+
+desc_connector.label:
+"""Connector Generic Configuration"""
+
+desc_name.desc:
+"""Bridge name, used as a human-readable description of the bridge."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to the HStreamDB. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+record_template.desc:
+"""The HStream Record template to be forwarded to the HStreamDB. Placeholders supported.<br>
+NOTE: When you use `raw record` template (which means the data is not a valid JSON), you should use `read` or `subscription` in HStream to get the data."""
+
+record_template.label:
+"""HStream Record"""
+
+}
+
+emqx_bridge_hstreamdb_connector {
+
+config.desc:
+"""HStreamDB connection config"""
+
+config.label:
+"""Connection config"""
+
+type.desc:
+"""The Connector Type."""
+
+type.label:
+"""Connector Type"""
+
+name.desc:
+"""Connector name, used as a human-readable description of the connector."""
+
+name.label:
+"""Connector Name"""
+
+url.desc:
+"""HStreamDB Server URL. Using gRPC http server address."""
+
+url.label:
+"""HStreamDB Server URL"""
+
+stream_name.desc:
+"""HStreamDB Stream Name."""
+
+stream_name.label:
+"""HStreamDB Stream Name"""
+
+partition_key.desc:
+"""HStreamDB Partition Key. Placeholders supported."""
+
+partition_key.label:
+"""HStreamDB Partition Key"""
+
+pool_size.desc:
+"""HStreamDB Pool Size."""
+
+pool_size.label:
+"""HStreamDB Pool Size"""
+
+grpc_timeout.desc:
+"""HStreamDB gRPC Timeout."""
+
+grpc_timeout.label:
+"""HStreamDB gRPC Timeout"""
+
+}
+
+emqx_bridge_http_connector {
+
+body.desc:
+"""HTTP request body."""
+
+body.label:
+"""HTTP Body"""
+
+connect_timeout.desc:
+"""The timeout when connecting to the HTTP server."""
+
+connect_timeout.label:
+"""Connect Timeout"""
+
+enable_pipelining.desc:
+"""A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request."""
+
+enable_pipelining.label:
+"""HTTP Pipelineing"""
+
+headers.desc:
+"""List of HTTP headers."""
+
+headers.label:
+"""HTTP Headers"""
+
+max_retries.desc:
+"""Max retry times if error on sending request."""
+
+max_retries.label:
+"""Max Retries"""
+
+method.desc:
+"""HTTP method."""
+
+method.label:
+"""HTTP Method"""
+
+path.desc:
+"""URL path."""
+
+path.label:
+"""URL Path"""
+
+pool_size.desc:
+"""The pool size."""
+
+pool_size.label:
+"""Pool Size"""
+
+pool_type.desc:
+"""The type of the pool. Can be one of `random`, `hash`."""
+
+pool_type.label:
+"""Pool Type"""
+
+request.desc:
+"""Configure HTTP request parameters."""
+
+request.label:
+"""Request"""
+
+request_timeout.desc:
+"""HTTP request timeout."""
+
+request_timeout.label:
+"""Request Timeout"""
+
+}
+
+emqx_bridge_http_schema {
+
+config_body.desc:
+"""The body of the HTTP request.<br/>
+If not provided, the body will be a JSON object of all the available fields.<br/>
+There, 'all the available fields' means the context of a MQTT message when
+this webhook is triggered by receiving a MQTT message (the `local_topic` is set),
+or the context of the event when this webhook is triggered by a rule (i.e. this
+webhook is used as an action of a rule).<br/>
+Template with variables is allowed."""
+
+config_body.label:
+"""HTTP Body"""
+
+config_direction.desc:
+"""Deprecated, The direction of this bridge, MUST be 'egress'"""
+
+config_direction.label:
+"""Bridge Direction"""
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+config_headers.desc:
+"""The headers of the HTTP request.<br/>
+Template with variables is allowed."""
+
+config_headers.label:
+"""HTTP Header"""
+
+config_local_topic.desc:
+"""The MQTT topic filter to be forwarded to the HTTP server. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.<br/>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+config_local_topic.label:
+"""Local Topic"""
+
+config_max_retries.desc:
+"""HTTP request max retry times if failed."""
+
+config_max_retries.label:
+"""HTTP Request Max Retries"""
+
+config_method.desc:
+"""The method of the HTTP request. All the available methods are: post, put, get, delete.<br/>
+Template with variables is allowed."""
+
+config_method.label:
+"""HTTP Method"""
+
+config_request_timeout.desc:
+"""HTTP request timeout."""
+
+config_request_timeout.label:
+"""HTTP Request Timeout"""
+
+config_url.desc:
+"""The URL of the HTTP Bridge.<br/>
+Template with variables is allowed in the path, but variables cannot be used in the scheme, host,
+or port part.<br/>
+For example, <code> http://localhost:9901/${topic} </code> is allowed, but
+<code> http://${host}:9901/message </code> or <code> http://localhost:${port}/message </code>
+is not allowed."""
+
+config_url.label:
+"""HTTP Bridge"""
+
+desc_config.desc:
+"""Configuration for an HTTP bridge."""
+
+desc_config.label:
+"""HTTP Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name, used as a human-readable description of the bridge."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
 
 }
 
@@ -1764,7 +2564,9 @@ config_is_aligned.label:
 """Align Timeseries"""
 
 config_device_id.desc:
-"""A fixed device name this data should be inserted for. If empty it must either be set in the rule action, the message itself, or it will be extracted from the topic."""
+"""The IoTDB device ID this data should be inserted for.
+If left empty, the MQTT message payload must contain a `device_id` field,
+or EMQX's rule-engine SQL must produce a `device_id` field."""
 config_device_id.label:
 """Device ID"""
 
@@ -1778,12 +2580,6 @@ config_max_retries.desc:
 
 config_max_retries.label:
 """HTTP Request Max Retries"""
-
-config_request_timeout.desc:
-"""HTTP request timeout."""
-
-config_request_timeout.label:
-"""HTTP Request Timeout"""
 
 desc_config.desc:
 """Configuration for Apache IoTDB bridge."""
@@ -1838,6 +2634,24 @@ socket_send_buffer.desc:
 socket_send_buffer.label:
 """Socket Send Buffer Size"""
 
+socket_receive_buffer.desc:
+"""Fine tune the socket receive buffer. The default value is tuned for high throughput."""
+
+socket_receive_buffer.label:
+"""Socket Receive Buffer Size"""
+
+socket_tcp_keepalive.desc:
+"""Enable TCP keepalive for Kafka bridge connections.
+The value is three comma separated numbers in the format of 'Idle,Interval,Probes'
+ - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).
+ - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).
+ - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).
+For example "240,30,5" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.
+Default: 'none'"""
+
+socket_tcp_keepalive.label:
+"""TCP keepalive options"""
+
 desc_name.desc:
 """Bridge name, used as a human-readable description of the bridge."""
 
@@ -1855,12 +2669,6 @@ consumer_max_batch_bytes.desc:
 
 consumer_max_batch_bytes.label:
 """Fetch Bytes"""
-
-socket_receive_buffer.desc:
-"""Fine tune the socket receive buffer. The default value is tuned for high throughput."""
-
-socket_receive_buffer.label:
-"""Socket Receive Buffer Size"""
 
 consumer_topic_mapping.desc:
 """Defines the mapping between Kafka topics and MQTT topics. Must contain at least one item."""
@@ -1966,7 +2774,7 @@ consumer_offset_reset_policy.label:
 
 partition_count_refresh_interval.desc:
 """The time interval for Kafka producer to discover increased number of partitions.
-After the number of partitions is increased in Kafka, EMQX will start taking the 
+After the number of partitions is increased in Kafka, EMQX will start taking the
 discovered partitions into account when dispatching messages per <code>partition_strategy</code>."""
 
 partition_count_refresh_interval.label:
@@ -1987,6 +2795,46 @@ required_acks.desc:
 
 required_acks.label:
 """Required Acks"""
+
+kafka_headers.desc:
+"""Please provide a placeholder to be used as Kafka Headers<br/>
+e.g. <code>${pub_props}</code><br/>
+Notice that the value of the placeholder must either be an object:
+<code>{\"foo\": \"bar\"}</code>
+or an array of key-value pairs:
+<code>[{\"key\": \"foo\", \"value\": \"bar\"}]</code>"""
+
+kafka_headers.label:
+"""Kafka Headers"""
+
+producer_kafka_ext_headers.desc:
+"""Please provide more key-value pairs for Kafka headers<br/>
+The key-value pairs here will be combined with the
+value of <code>kafka_headers</code> field before sending to Kafka."""
+
+producer_kafka_ext_headers.label:
+"""Extra Kafka headers"""
+
+producer_kafka_ext_header_key.desc:
+"""Key of the Kafka header. Placeholders in format of ${var} are supported."""
+
+producer_kafka_ext_header_key.label:
+"""Kafka extra header key."""
+
+producer_kafka_ext_header_value.desc:
+"""Value of the Kafka header. Placeholders in format of ${var} are supported."""
+
+producer_kafka_ext_header_value.label:
+"""Value"""
+
+kafka_header_value_encode_mode.desc:
+"""Kafka headers value encode mode<br/>
+ - NONE: only add binary values to Kafka headers;<br/>
+ - JSON: only add JSON values to Kafka headers,
+and encode it to JSON strings before sending."""
+
+kafka_header_value_encode_mode.label:
+"""Kafka headers value encode mode"""
 
 metadata_request_timeout.desc:
 """Maximum wait time when fetching metadata from Kafka."""
@@ -2158,6 +3006,365 @@ compression.desc:
 compression.label:
 """Compression"""
 
+query_mode.desc:
+"""Query mode. Optional 'sync/async', default 'async'."""
+
+query_mode.label:
+"""Query mode"""
+
+sync_query_timeout.desc:
+"""This parameter defines the timeout limit for synchronous queries. It applies only when the bridge query mode is configured to 'sync'."""
+
+sync_query_timeout.label:
+"""Synchronous Query Timeout"""
+
+}
+
+emqx_bridge_kinesis {
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for an Amazon Kinesis bridge."""
+
+desc_config.label:
+"""Amazon Kinesis Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+pool_size.desc:
+"""The pool size."""
+
+pool_size.label:
+"""Pool Size"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to Amazon Kinesis. All MQTT `PUBLISH` messages with the topic
+matching the `local_topic` will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also `local_topic` is
+configured, then both the data got from the rule and the MQTT messages that match `local_topic`
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+payload_template.desc:
+"""The template for formatting the outgoing messages.  If undefined, will send all the available context in JSON format."""
+
+payload_template.label:
+"""Payload template"""
+
+aws_access_key_id.desc:
+"""Access Key ID for connecting to Amazon Kinesis."""
+
+aws_access_key_id.label:
+"""AWS Access Key ID"""
+
+aws_secret_access_key.desc:
+"""AWS Secret Access Key for connecting to Amazon Kinesis."""
+
+aws_secret_access_key.label:
+"""AWS Secret Access Key"""
+
+endpoint.desc:
+"""The url of Amazon Kinesis endpoint."""
+
+endpoint.label:
+"""Amazon Kinesis Endpoint"""
+
+stream_name.desc:
+"""The Amazon Kinesis Stream to publish messages to."""
+
+stream_name.label:
+"""Amazon Kinesis Stream"""
+
+partition_key.desc:
+"""The Amazon Kinesis Partition Key associated to published message. Placeholders in format of ${var} are supported."""
+
+partition_key.label:
+"""Partition key"""
+
+max_retries.desc:
+"""Max retry times if an error occurs when sending a request."""
+
+max_retries.label:
+"""Max Retries"""
+
+}
+
+emqx_bridge_mongodb {
+
+collection.desc:
+"""The collection where data will be stored into"""
+
+collection.label:
+"""Collection to be used"""
+
+desc_config.desc:
+"""Configuration for MongoDB Bridge"""
+
+desc_config.label:
+"""MongoDB Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type."""
+
+desc_type.label:
+"""Bridge Type"""
+
+enable.desc:
+"""Enable or disable this MongoDB Bridge"""
+
+enable.label:
+"""Enable or disable"""
+
+mongodb_rs_conf.desc:
+"""MongoDB (Replica Set) configuration"""
+
+mongodb_rs_conf.label:
+"""MongoDB (Replica Set) Configuration"""
+
+mongodb_sharded_conf.desc:
+"""MongoDB (Sharded) configuration"""
+
+mongodb_sharded_conf.label:
+"""MongoDB (Sharded) Configuration"""
+
+mongodb_single_conf.desc:
+"""MongoDB (Standalone) configuration"""
+
+mongodb_single_conf.label:
+"""MongoDB (Standalone) Configuration"""
+
+payload_template.desc:
+"""The template for formatting the outgoing messages.  If undefined, rule engine will use JSON format to serialize all visible inputs, such as clientid, topic, payload etc."""
+
+payload_template.label:
+"""Payload template"""
+
+batch_size.desc:
+"""There is no batching support for MongoDB at the moment, so this config field has no effect. Internally the value is overridden to 1."""
+batch_size.label:
+"""Batch Size"""
+
+}
+
+emqx_bridge_mqtt_connector_schema {
+
+bridge_mode.desc:
+"""If enable bridge mode.
+NOTE: This setting is only for MQTT protocol version older than 5.0, and the remote MQTT
+broker MUST support this feature.
+If bridge_mode is set to true, the bridge will indicate to the remote broker that it is a bridge not an ordinary client.
+This means that loop detection will be more effective and that retained messages will be propagated correctly."""
+
+bridge_mode.label:
+"""Bridge Mode"""
+
+clean_start.desc:
+"""Whether to start a clean session when reconnecting a remote broker for ingress bridge"""
+
+clean_start.label:
+"""Clean Session"""
+
+clientid_prefix.desc:
+"""Optional prefix to prepend to the clientid used by egress bridges."""
+
+clientid_prefix.label:
+"""Clientid Prefix"""
+
+egress_desc.desc:
+"""The egress config defines how this bridge forwards messages from the local broker to the remote broker.<br/>
+Template with variables is allowed in 'remote.topic', 'local.qos', 'local.retain', 'local.payload'.<br/>
+NOTE: if this bridge is used as the action of a rule, and also 'local.topic'
+is configured, then both the data got from the rule and the MQTT messages that matches
+'local.topic' will be forwarded."""
+
+egress_desc.label:
+"""Egress Configs"""
+
+egress_pool_size.desc:
+"""Size of the pool of MQTT clients that will publish messages to the remote broker.<br/>
+Each MQTT client will be assigned 'clientid' of the form '${clientid_prefix}:${bridge_name}:egress:${node}:${n}'
+where 'n' is the number of a client inside the pool."""
+
+egress_pool_size.label:
+"""Pool Size"""
+
+egress_local.desc:
+"""The configs about receiving messages from local broker."""
+
+egress_local.label:
+"""Local Configs"""
+
+egress_local_topic.desc:
+"""The local topic to be forwarded to the remote broker"""
+
+egress_local_topic.label:
+"""Local Topic"""
+
+egress_remote.desc:
+"""The configs about sending message to the remote broker."""
+
+egress_remote.label:
+"""Remote Configs"""
+
+egress_remote_qos.desc:
+"""The QoS of the MQTT message to be sent.<br/>
+Template with variables is allowed."""
+
+egress_remote_qos.label:
+"""Remote QoS"""
+
+egress_remote_topic.desc:
+"""Forward to which topic of the remote broker.<br/>
+Template with variables is allowed."""
+
+egress_remote_topic.label:
+"""Remote Topic"""
+
+ingress_desc.desc:
+"""The ingress config defines how this bridge receive messages from the remote MQTT broker, and then
+        send them to the local broker.<br/>
+        Template with variables is allowed in 'remote.qos', 'local.topic', 'local.qos', 'local.retain', 'local.payload'.<br/>
+        NOTE: if this bridge is used as the input of a rule, and also 'local.topic' is
+        configured, then messages got from the remote broker will be sent to both the 'local.topic' and
+        the rule."""
+
+ingress_desc.label:
+"""Ingress Configs"""
+
+ingress_pool_size.desc:
+"""Size of the pool of MQTT clients that will ingest messages from the remote broker.<br/>
+This value will be respected only if 'remote.topic' is a shared subscription topic or topic-filter
+(for example `$share/name1/topic1` or `$share/name2/topic2/#`), otherwise only a single MQTT client will be used.
+Each MQTT client will be assigned 'clientid' of the form '${clientid_prefix}:${bridge_name}:ingress:${node}:${n}'
+where 'n' is the number of a client inside the pool.
+NOTE: Non-shared subscription will not work well when EMQX is clustered."""
+
+ingress_pool_size.label:
+"""Pool Size"""
+
+ingress_local.desc:
+"""The configs about sending message to the local broker."""
+
+ingress_local.label:
+"""Local Configs"""
+
+ingress_local_qos.desc:
+"""The QoS of the MQTT message to be sent.<br/>
+Template with variables is allowed."""
+
+ingress_local_qos.label:
+"""Local QoS"""
+
+ingress_local_topic.desc:
+"""Send messages to which topic of the local broker.<br/>
+Template with variables is allowed."""
+
+ingress_local_topic.label:
+"""Local Topic"""
+
+ingress_remote.desc:
+"""The configs about subscribing to the remote broker."""
+
+ingress_remote.label:
+"""Remote Configs"""
+
+ingress_remote_qos.desc:
+"""The QoS level to be used when subscribing to the remote broker"""
+
+ingress_remote_qos.label:
+"""Remote QoS"""
+
+ingress_remote_topic.desc:
+"""Receive messages from which topic of the remote broker"""
+
+ingress_remote_topic.label:
+"""Remote Topic"""
+
+max_inflight.desc:
+"""Max inflight (sent, but un-acked) messages of the MQTT protocol"""
+
+max_inflight.label:
+"""Max Inflight Message"""
+
+mode.desc:
+"""The mode of the MQTT Bridge.<br/>
+- cluster_shareload: create an MQTT connection on each node in the emqx cluster.<br/>
+In 'cluster_shareload' mode, the incoming load from the remote broker is shared by
+using shared subscription.<br/>
+Note that the 'clientid' is suffixed by the node name, this is to avoid
+clientid conflicts between different nodes. And we can only use shared subscription
+topic filters for <code>remote.topic</code> of ingress connections."""
+
+mode.label:
+"""MQTT Bridge Mode"""
+
+password.desc:
+"""The password of the MQTT protocol"""
+
+password.label:
+"""Password"""
+
+payload.desc:
+"""The payload of the MQTT message to be sent.<br/>
+Template with variables is allowed."""
+
+payload.label:
+"""Payload"""
+
+proto_ver.desc:
+"""The MQTT protocol version"""
+
+proto_ver.label:
+"""Protocol Version"""
+
+retain.desc:
+"""The 'retain' flag of the MQTT message to be sent.<br/>
+Template with variables is allowed."""
+
+retain.label:
+"""Retain Flag"""
+
+server.desc:
+"""The host and port of the remote MQTT broker"""
+
+server.label:
+"""Broker IP And Port"""
+
+server_configs.desc:
+"""Configs related to the server."""
+
+server_configs.label:
+"""Server Configs"""
+
+username.desc:
+"""The username of the MQTT protocol"""
+
+username.label:
+"""Username"""
+
 }
 
 emqx_bridge_mqtt_schema {
@@ -2179,6 +3386,50 @@ desc_type.desc:
 
 desc_type.label:
 """Bridge Type"""
+
+}
+
+emqx_bridge_mysql {
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for an HStreamDB bridge."""
+
+desc_config.label:
+"""HStreamDB Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name, used as a human-readable description of the bridge."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to MySQL. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+sql_template.desc:
+"""SQL Template"""
+
+sql_template.label:
+"""SQL Template"""
 
 }
 
@@ -2649,6 +3900,52 @@ wait_for_publish_confirmations.label:
 
 }
 
+emqx_bridge_redis {
+
+command_template.desc:
+"""Redis command template used to export messages. Each list element stands for a command name or its argument.
+For example, to push payloads in a Redis list by key `msgs`, the elements should be the following:
+`rpush`, `msgs`, `${payload}`."""
+
+command_template.label:
+"""Redis Command Template"""
+
+config_enable.desc:
+"""Enable or disable this bridge"""
+
+config_enable.label:
+"""Enable Or Disable Bridge"""
+
+desc_config.desc:
+"""Configuration for a Redis bridge."""
+
+desc_config.label:
+"""Redis Bridge Configuration"""
+
+desc_name.desc:
+"""Bridge name, used as a human-readable description of the bridge."""
+
+desc_name.label:
+"""Bridge Name"""
+
+desc_type.desc:
+"""The Bridge Type"""
+
+desc_type.label:
+"""Bridge Type"""
+
+local_topic.desc:
+"""The MQTT topic filter to be forwarded to Redis. All MQTT 'PUBLISH' messages with the topic
+matching the local_topic will be forwarded.</br>
+NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
+configured, then both the data got from the rule and the MQTT messages that match local_topic
+will be forwarded."""
+
+local_topic.label:
+"""Local Topic"""
+
+}
+
 emqx_bridge_rocketmq {
 
 config_enable.desc:
@@ -3025,99 +4322,6 @@ server.label:
 
 }
 
-emqx_bridge_webhook_schema {
-
-config_body.desc:
-"""The body of the HTTP request.<br/>
-If not provided, the body will be a JSON object of all the available fields.<br/>
-There, 'all the available fields' means the context of a MQTT message when
-this webhook is triggered by receiving a MQTT message (the `local_topic` is set),
-or the context of the event when this webhook is triggered by a rule (i.e. this
-webhook is used as an action of a rule).<br/>
-Template with variables is allowed."""
-
-config_body.label:
-"""HTTP Body"""
-
-config_direction.desc:
-"""Deprecated, The direction of this bridge, MUST be 'egress'"""
-
-config_direction.label:
-"""Bridge Direction"""
-
-config_enable.desc:
-"""Enable or disable this bridge"""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-config_headers.desc:
-"""The headers of the HTTP request.<br/>
-Template with variables is allowed."""
-
-config_headers.label:
-"""HTTP Header"""
-
-config_local_topic.desc:
-"""The MQTT topic filter to be forwarded to the HTTP server. All MQTT 'PUBLISH' messages with the topic
-matching the local_topic will be forwarded.<br/>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
-configured, then both the data got from the rule and the MQTT messages that match local_topic
-will be forwarded."""
-
-config_local_topic.label:
-"""Local Topic"""
-
-config_max_retries.desc:
-"""HTTP request max retry times if failed."""
-
-config_max_retries.label:
-"""HTTP Request Max Retries"""
-
-config_method.desc:
-"""The method of the HTTP request. All the available methods are: post, put, get, delete.<br/>
-Template with variables is allowed."""
-
-config_method.label:
-"""HTTP Method"""
-
-config_request_timeout.desc:
-"""HTTP request timeout."""
-
-config_request_timeout.label:
-"""HTTP Request Timeout"""
-
-config_url.desc:
-"""The URL of the HTTP Bridge.<br/>
-Template with variables is allowed in the path, but variables cannot be used in the scheme, host,
-or port part.<br/>
-For example, <code> http://localhost:9901/${topic} </code> is allowed, but
-<code> http://${host}:9901/message </code> or <code> http://localhost:${port}/message </code>
-is not allowed."""
-
-config_url.label:
-"""HTTP Bridge"""
-
-desc_config.desc:
-"""Configuration for an HTTP bridge."""
-
-desc_config.label:
-"""HTTP Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name, used as a human-readable description of the bridge."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-}
-
 emqx_coap_api {
 
 content_type.desc:
@@ -3288,7 +4492,7 @@ common_handler_flush_qlen.label:
 
 common_handler_chars_limit.desc:
 """Set the maximum length of a single log message. If this length is exceeded, the log message will be truncated.
-NOTE: Restrict char limiter if formatter is JSON , it will get a truncated incomplete JSON data, which is not recommended."""
+When formatter is <code>json</code> the truncation is done on the JSON values, but not on the log message itself."""
 
 common_handler_chars_limit.label:
 """Single Log Max Length"""
@@ -3322,7 +4526,7 @@ log_overload_kill_restart_after.label:
 """Handler Restart Timer"""
 
 log_file_handler_max_size.desc:
-"""This parameter controls log file rotation. The value `infinity` means the log file will grow indefinitely, otherwise the log file will be rotated once it reaches `max_size` in bytes."""
+"""This parameter controls log file rotation. The value `infinity` means the log file will grow indefinitely, otherwise the log file will be rotated once it reaches `rotation_size` in bytes."""
 
 log_file_handler_max_size.label:
 """Rotation Size"""
@@ -3332,6 +4536,12 @@ desc_log_file_handler.desc:
 
 desc_log_file_handler.label:
 """Files Log Handler"""
+
+desc_audit_log_handler.desc:
+"""Audit log handler that prints log events to files."""
+
+desc_audit_log_handler.label:
+"""Audit Log Handler"""
 
 rpc_socket_keepalive_count.desc:
 """How many times the keepalive probe message can fail to receive a reply
@@ -3576,22 +4786,17 @@ cluster_mcast_ttl.desc:
 cluster_mcast_ttl.label:
 """Cluster Multicast TTL"""
 
-db_core_nodes.desc:
-"""List of core nodes that the replicant will connect to.<br/>
-Note: this parameter only takes effect when the <code>backend</code> is set
-to <code>rlog</code> and the <code>role</code> is set to <code>replicant</code>.<br/>
-This value needs to be defined for manual or static cluster discovery mechanisms.<br/>
-If an automatic cluster discovery mechanism is being used (such as <code>etcd</code>),
-there is no need to set this value."""
-
-db_core_nodes.label:
-"""Db Core Node"""
-
 log_file_handler_file.desc:
 """Name the log file."""
 
 log_file_handler_file.label:
 """Log File Name"""
+
+audit_file_handler_path.desc:
+"""Name the audit log file."""
+
+audit_file_handler_path.label:
+"""Audit Log File Name"""
 
 node_dist_net_ticktime.desc:
 """This is the approximate time an EMQX node may be unresponsive until it is considered down and thereby disconnected."""
@@ -3701,15 +4906,13 @@ cluster_autoclean.label:
 
 process_limit.desc:
 """Maximum number of simultaneously existing processes for this Erlang system.
-The actual maximum chosen may be much larger than the Number passed.
 For more information, see: https://www.erlang.org/doc/man/erl.html"""
 
 process_limit.label:
 """Erlang Process Limit"""
 
 max_ports.desc:
-"""Maximum number of simultaneously existing ports for this Erlang system.
-The actual maximum chosen may be much larger than the Number passed.
+"""Maximum number of simultaneously open files and sockets for this Erlang system.
 For more information, see: https://www.erlang.org/doc/man/erl.html"""
 
 max_ports.label:
@@ -3830,6 +5033,12 @@ log_file_handlers.desc:
 log_file_handlers.label:
 """File Handler"""
 
+log_audit_handler.desc:
+"""Audit file-based log handler."""
+
+log_audit_handler.label:
+"""Audit log Handler"""
+
 node_global_gc_interval.desc:
 """Periodic garbage collection interval. Set to <code>disabled</code> to have it disabled."""
 
@@ -3842,7 +5051,8 @@ Can be one of:
   - <code>system</code>: the time offset used by the local system
   - <code>utc</code>: the UTC time offset
   - <code>+-[hh]:[mm]</code>: user specified time offset, such as "-02:00" or "+00:00"
-Defaults to: <code>system</code>."""
+Defaults to: <code>system</code>.
+This config has no effect for when formatter is <code>json</code> as the timestamp in JSON is milliseconds since epoch."""
 
 common_handler_time_offset.label:
 """Time Offset"""
@@ -3876,6 +5086,18 @@ common_handler_level.desc:
 Defaults to warning."""
 
 common_handler_level.label:
+"""Log Level"""
+
+audit_handler_level.desc:
+"""The log level for the audit log handler.<br/>
+- Requests that take longer than 3 seconds to process are logged as <code>warning</code> logs.<br/>
+- GET requests with HTTP status codes between 200-300 are logged as <code>debug</code> logs.<br/>
+- Non-GET Requests with HTTP status codes between 200-300 are logged as <code>info</code> logs.<br/>
+- Requests with HTTP status codes between 300-400 are logged as <code>warning</code> logs.<br/>
+- Requests with HTTP status codes between 400-500 are logged as <code>error</code> logs.<br/>
+- Defaults to info."""
+
+audit_handler_level.label:
 """Log Level"""
 
 desc_rpc.desc:
@@ -3942,7 +5164,9 @@ cluster_discovery_strategy.desc:
 - static: Configure static nodes list by setting <code>seeds</code> in config file.<br/>
 - dns: Use DNS A record to discover peer nodes.<br/>
 - etcd: Use etcd to discover peer nodes.<br/>
-- k8s: Use Kubernetes API to discover peer pods."""
+- k8s: Use Kubernetes API to discover peer pods.
+- mcast: Deprecated since 5.1, will be removed in 5.2.
+  This supports discovery via UDP multicast."""
 
 cluster_discovery_strategy.label:
 """Cluster Discovery Strategy"""
@@ -3974,510 +5198,40 @@ the default is to use the value set in <code>db.default_shard_transport</code>."
 db_shard_transports.label:
 """Shard Transports"""
 
-}
-
-emqx_connector_api {
-
-conn_get.desc:
-"""List all connectors"""
-
-conn_get.label:
-"""List All Connectors"""
-
-conn_id_delete.desc:
-"""Delete a connector by ID"""
-
-conn_id_delete.label:
-"""Delete Connector"""
-
-conn_id_get.desc:
-"""Get the connector by ID"""
-
-conn_id_get.label:
-"""Get Connector"""
-
-conn_id_put.desc:
-"""Update an existing connector by ID"""
-
-conn_id_put.label:
-"""Update Connector"""
-
-conn_post.desc:
-"""Create a new connector"""
-
-conn_post.label:
-"""Create Connector"""
-
-conn_test_post.desc:
-"""Test creating a new connector by given ID <br/>
-The ID must be of format '{type}:{name}'"""
-
-conn_test_post.label:
-"""Create Test Connector"""
-
-id.desc:
-"""The connector ID. Must be of format {type}:{name}"""
-
-id.label:
-"""Connector ID"""
-
-}
-
-emqx_connector_http {
-
-body.desc:
-"""HTTP request body."""
-
-body.label:
-"""HTTP Body"""
-
-connect_timeout.desc:
-"""The timeout when connecting to the HTTP server."""
-
-connect_timeout.label:
-"""Connect Timeout"""
-
-enable_pipelining.desc:
-"""A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request."""
-
-enable_pipelining.label:
-"""HTTP Pipelineing"""
-
-headers.desc:
-"""List of HTTP headers."""
-
-headers.label:
-"""HTTP Headers"""
-
-max_retries.desc:
-"""Max retry times if error on sending request."""
-
-max_retries.label:
-"""Max Retries"""
-
-method.desc:
-"""HTTP method."""
-
-method.label:
-"""HTTP Method"""
-
-path.desc:
-"""URL path."""
-
-path.label:
-"""URL Path"""
-
-pool_size.desc:
-"""The pool size."""
-
-pool_size.label:
-"""Pool Size"""
-
-pool_type.desc:
-"""The type of the pool. Can be one of `random`, `hash`."""
-
-pool_type.label:
-"""Pool Type"""
-
-request.desc:
-"""Configure HTTP request parameters."""
-
-request.label:
-"""Request"""
-
-request_timeout.desc:
-"""HTTP request timeout."""
-
-request_timeout.label:
-"""Request Timeout"""
-
-}
-
-emqx_connector_ldap {
-
-bind_dn.desc:
-"""LDAP's Binding Distinguished Name (DN)"""
-
-bind_dn.label:
-"""Bind DN"""
-
-port.desc:
-"""LDAP Port"""
-
-port.label:
-"""Port"""
-
-timeout.desc:
-"""LDAP's query timeout"""
-
-timeout.label:
-"""timeout"""
-
-}
-
-emqx_connector_mongo {
-
-auth_source.desc:
-"""Database name associated with the user's credentials."""
-
-auth_source.label:
-"""Auth Source"""
-
-connect_timeout.desc:
-"""The duration to attempt a connection before timing out."""
-
-connect_timeout.label:
-"""Connect Timeout"""
-
-desc_rs.desc:
-"""Settings for replica set."""
-
-desc_rs.label:
-"""Setting Replica Set"""
-
-desc_sharded.desc:
-"""Settings for sharded cluster."""
-
-desc_sharded.label:
-"""Setting Sharded Cluster"""
-
-desc_single.desc:
-"""Settings for a single MongoDB instance."""
-
-desc_single.label:
-"""Setting Single MongoDB"""
-
-desc_topology.desc:
-"""Topology of MongoDB."""
-
-desc_topology.label:
-"""Setting Topology"""
-
-heartbeat_period.desc:
-"""Controls when the driver checks the state of the MongoDB deployment. Specify the interval between checks, counted from the end of the previous check until the beginning of the next one. If the number of connections is increased (which will happen, for example, if you increase the pool size), you may need to increase this period as well to avoid creating too many log entries in the MongoDB log file."""
-
-heartbeat_period.label:
-"""Heartbeat period"""
-
-local_threshold.desc:
-"""The size of the latency window for selecting among multiple suitable MongoDB instances."""
-
-local_threshold.label:
-"""Local Threshold"""
-
-max_overflow.desc:
-"""The maximum number of additional workers that can be created when all workers in the pool are busy. This helps to manage temporary spikes in workload by allowing more concurrent connections to the MongoDB server."""
-
-max_overflow.label:
-"""Max Overflow Workers"""
-
-min_heartbeat_period.desc:
-"""Controls the minimum amount of time to wait between heartbeats."""
-
-min_heartbeat_period.label:
-"""Minimum Heartbeat Period"""
-
-overflow_check_period.desc:
-"""Period for checking if there are more workers than configured ("overflow")."""
-
-overflow_check_period.label:
-"""Overflow Check Period"""
-
-overflow_ttl.desc:
-"""Period of time before workers that exceed the configured pool size ("overflow") to be terminated."""
-
-overflow_ttl.label:
-"""Overflow TTL"""
-
-r_mode.desc:
-"""Read mode."""
-
-r_mode.label:
-"""Read Mode"""
-
-replica_set_name.desc:
-"""Name of the replica set."""
-
-replica_set_name.label:
-"""Replica Set Name"""
-
-rs_mongo_type.desc:
-"""Replica set. Must be set to 'rs' when MongoDB server is running in 'replica set' mode."""
-
-rs_mongo_type.label:
-"""Replica set"""
-
-server.desc:
-"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
-A host entry has the following form: `Host[:Port]`.<br/>
-The MongoDB default port 27017 is used if `[:Port]` is not specified."""
-
-server.label:
-"""Server Host"""
-
-server_selection_timeout.desc:
-"""Specifies how long to block for server selection before throwing an exception."""
-
-server_selection_timeout.label:
-"""Server Selection Timeout"""
-
-servers.desc:
-"""A Node list for Cluster to connect to. The nodes should be separated with commas, such as: `Node[,Node].`
-For each Node should be: The IPv4 or IPv6 address or the hostname to connect to.
-A host entry has the following form: `Host[:Port]`.
-The MongoDB default port 27017 is used if `[:Port]` is not specified."""
-
-servers.label:
-"""Servers"""
-
-sharded_mongo_type.desc:
-"""Sharded cluster. Must be set to 'sharded' when MongoDB server is running in 'sharded' mode."""
-
-sharded_mongo_type.label:
-"""Sharded cluster"""
-
-single_mongo_type.desc:
-"""Standalone instance. Must be set to 'single' when MongoDB server is running in standalone mode."""
-
-single_mongo_type.label:
-"""Standalone instance"""
-
-socket_timeout.desc:
-"""The duration to attempt to send or to receive on a socket before the attempt times out."""
-
-socket_timeout.label:
-"""Socket Timeout"""
-
-srv_record.desc:
-"""Use DNS SRV record."""
-
-srv_record.label:
-"""Srv Record"""
-
-w_mode.desc:
-"""Write mode."""
-
-w_mode.label:
-"""Write Mode"""
-
-wait_queue_timeout.desc:
-"""The maximum duration that a worker can wait for a connection to become available."""
-
-wait_queue_timeout.label:
-"""Wait Queue Timeout"""
-
-}
-
-emqx_connector_mqtt {
-
-name.desc:
-"""Connector name, used as a human-readable description of the connector."""
-
-name.label:
-"""Connector Name"""
-
-num_of_bridges.desc:
-"""The current number of bridges that are using this connector."""
-
-num_of_bridges.label:
-"""Num of Bridges"""
-
-type.desc:
-"""The Connector Type."""
-
-type.label:
-"""Connector Type"""
-
-}
-
-emqx_connector_mqtt_schema {
-
-bridge_mode.desc:
-"""If enable bridge mode.
-NOTE: This setting is only for MQTT protocol version older than 5.0, and the remote MQTT
-broker MUST support this feature.
-If bridge_mode is set to true, the bridge will indicate to the remote broker that it is a bridge not an ordinary client.
-This means that loop detection will be more effective and that retained messages will be propagated correctly."""
-
-bridge_mode.label:
-"""Bridge Mode"""
-
-clean_start.desc:
-"""Whether to start a clean session when reconnecting a remote broker for ingress bridge"""
-
-clean_start.label:
-"""Clean Session"""
-
-clientid_prefix.desc:
-"""Optional prefix to prepend to the clientid used by egress bridges."""
-
-clientid_prefix.label:
-"""Clientid Prefix"""
-
-egress_desc.desc:
-"""The egress config defines how this bridge forwards messages from the local broker to the remote broker.<br/>
-Template with variables is allowed in 'remote.topic', 'local.qos', 'local.retain', 'local.payload'.<br/>
-NOTE: if this bridge is used as the action of a rule, and also 'local.topic'
-is configured, then both the data got from the rule and the MQTT messages that matches
-'local.topic' will be forwarded."""
-
-egress_desc.label:
-"""Egress Configs"""
-
-egress_local.desc:
-"""The configs about receiving messages from local broker."""
-
-egress_local.label:
-"""Local Configs"""
-
-egress_local_topic.desc:
-"""The local topic to be forwarded to the remote broker"""
-
-egress_local_topic.label:
-"""Local Topic"""
-
-egress_remote.desc:
-"""The configs about sending message to the remote broker."""
-
-egress_remote.label:
-"""Remote Configs"""
-
-egress_remote_qos.desc:
-"""The QoS of the MQTT message to be sent.<br/>
-Template with variables is allowed."""
-
-egress_remote_qos.label:
-"""Remote QoS"""
-
-egress_remote_topic.desc:
-"""Forward to which topic of the remote broker.<br/>
-Template with variables is allowed."""
-
-egress_remote_topic.label:
-"""Remote Topic"""
-
-ingress_desc.desc:
-"""The ingress config defines how this bridge receive messages from the remote MQTT broker, and then
-        send them to the local broker.<br/>
-        Template with variables is allowed in 'remote.qos', 'local.topic', 'local.qos', 'local.retain', 'local.payload'.<br/>
-        NOTE: if this bridge is used as the input of a rule, and also 'local.topic' is
-        configured, then messages got from the remote broker will be sent to both the 'local.topic' and
-        the rule."""
-
-ingress_desc.label:
-"""Ingress Configs"""
-
-ingress_local.desc:
-"""The configs about sending message to the local broker."""
-
-ingress_local.label:
-"""Local Configs"""
-
-ingress_local_qos.desc:
-"""The QoS of the MQTT message to be sent.<br/>
-Template with variables is allowed."""
-
-ingress_local_qos.label:
-"""Local QoS"""
-
-ingress_local_topic.desc:
-"""Send messages to which topic of the local broker.<br/>
-Template with variables is allowed."""
-
-ingress_local_topic.label:
-"""Local Topic"""
-
-ingress_remote.desc:
-"""The configs about subscribing to the remote broker."""
-
-ingress_remote.label:
-"""Remote Configs"""
-
-ingress_remote_qos.desc:
-"""The QoS level to be used when subscribing to the remote broker"""
-
-ingress_remote_qos.label:
-"""Remote QoS"""
-
-ingress_remote_topic.desc:
-"""Receive messages from which topic of the remote broker"""
-
-ingress_remote_topic.label:
-"""Remote Topic"""
-
-max_inflight.desc:
-"""Max inflight (sent, but un-acked) messages of the MQTT protocol"""
-
-max_inflight.label:
-"""Max Inflight Message"""
-
-mode.desc:
-"""The mode of the MQTT Bridge.<br/>
-- cluster_shareload: create an MQTT connection on each node in the emqx cluster.<br/>
-In 'cluster_shareload' mode, the incoming load from the remote broker is shared by
-using shared subscription.<br/>
-Note that the 'clientid' is suffixed by the node name, this is to avoid
-clientid conflicts between different nodes. And we can only use shared subscription
-topic filters for <code>remote.topic</code> of ingress connections."""
-
-mode.label:
-"""MQTT Bridge Mode"""
-
-password.desc:
-"""The password of the MQTT protocol"""
-
-password.label:
-"""Password"""
-
-payload.desc:
-"""The payload of the MQTT message to be sent.<br/>
-Template with variables is allowed."""
-
-payload.label:
-"""Payload"""
-
-proto_ver.desc:
-"""The MQTT protocol version"""
-
-proto_ver.label:
-"""Protocol Version"""
-
-retain.desc:
-"""The 'retain' flag of the MQTT message to be sent.<br/>
-Template with variables is allowed."""
-
-retain.label:
-"""Retain Flag"""
-
-server.desc:
-"""The host and port of the remote MQTT broker"""
-
-server.label:
-"""Broker IP And Port"""
-
-server_configs.desc:
-"""Configs related to the server."""
-
-server_configs.label:
-"""Server Configs"""
-
-username.desc:
-"""The username of the MQTT protocol"""
-
-username.label:
-"""Username"""
-
-}
-
-emqx_connector_mysql {
-
-server.desc:
-"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
-A host entry has the following form: `Host[:Port]`.<br/>
-The MySQL default port 3306 is used if `[:Port]` is not specified."""
-
-server.label:
-"""Server Host"""
+db_default_bootstrap_batch_size.desc:
+"""The number of built-in database table records to be pushed in one chunk from a core node to a replicant node during bootstrap.
+The bootstrapping occurs when a new replicant node is added to the cluster or an existing replicant node reconnects to a core one.
+Increasing this value may greatly reduce a replicant node startup time, especially when EMQX cluster interconnect network latency is high
+and EMQX built-in database holds large amount of data, e.g. when the number of subscriptions is high.
+Defaults to 500."""
+
+db_default_bootstrap_batch_size.label:
+"""Default Bootstrap Batch Size"""
+
+node_broker_pool_size.desc:
+"""The number of workers in emqx_broker pool. Increasing this value may improve performance
+by enhancing parallelism, especially when EMQX cluster interconnect network latency is high.
+Defaults to the number of Erlang schedulers (CPU cores) * 2."""
+
+node_broker_pool_size.label:
+"""Node Broker Pool Size"""
+
+node_generic_pool_size.desc:
+"""The number of workers in emqx_pool. Increasing this value may improve performance
+by enhancing parallelism, especially when EMQX cluster interconnect network latency is high.
+Defaults to the number of Erlang schedulers (CPU cores)."""
+
+node_generic_pool_size.label:
+"""Node Generic Pool Size"""
+
+node_channel_cleanup_batch_size.desc:
+"""The size of the channel cleanup batch. if EMQX cluster interconnect network latency is high,
+reducing this value together with increasing node.generic_pool_size may improve performance
+during an abrupt disconnect of a large numbers of clients.
+Defaults to 100000."""
+
+node_channel_cleanup_batch_size.label:
+"""Node Channel Cleanup Batch Size"""
 
 }
 
@@ -4490,57 +5244,6 @@ The PostgreSQL default port 5432 is used if `[:Port]` is not specified."""
 
 server.label:
 """Server Host"""
-
-}
-
-emqx_connector_redis {
-
-cluster.desc:
-"""Cluster mode. Must be set to 'cluster' when Redis server is running in clustered mode."""
-
-cluster.label:
-"""Cluster Mode"""
-
-database.desc:
-"""Redis database ID."""
-
-database.label:
-"""Database ID"""
-
-sentinel.desc:
-"""Sentinel mode. Must be set to 'sentinel' when Redis server is running in sentinel mode."""
-
-sentinel.label:
-"""Sentinel Mode"""
-
-sentinel_desc.desc:
-"""The cluster name in Redis sentinel mode."""
-
-sentinel_desc.label:
-"""Cluster Name"""
-
-server.desc:
-"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
-A host entry has the following form: `Host[:Port]`.<br/>
-The Redis default port 6379 is used if `[:Port]` is not specified."""
-
-server.label:
-"""Server Host"""
-
-servers.desc:
-"""A Node list for Cluster to connect to. The nodes should be separated with commas, such as: `Node[,Node].`
-For each Node should be: The IPv4 or IPv6 address or the hostname to connect to.
-A host entry has the following form: `Host[:Port]`.
-The Redis default port 6379 is used if `[:Port]` is not specified."""
-
-servers.label:
-"""Servers"""
-
-single.desc:
-"""Single mode. Must be set to 'single' when Redis server is running in single mode."""
-
-single.label:
-"""Single Mode"""
 
 }
 
@@ -4635,7 +5338,9 @@ login_success.desc:
 """Dashboard Auth Success"""
 
 logout_api.desc:
-"""Dashboard user logout"""
+"""Dashboard user logout.
+This endpoint is only for the Dashboard, not the `API Key`.
+The token from the `/login` endpoint must be a bearer authorization in the headers."""
 logout_api.label:
 """Dashboard user logout"""
 
@@ -4671,6 +5376,12 @@ users_api404.desc:
 version.desc:
 """EMQX Version"""
 
+role.desc:
+"""User role"""
+
+backend.desc:
+"""User account source"""
+
 }
 
 emqx_dashboard_error_code_api {
@@ -4680,34 +5391,29 @@ error_codes.desc:
 error_codes.label:
 """API Error Codes"""
 
-error_codes_u.desc:
-"""API Error Codes"""
-error_codes_u.label:
-"""API Error Codes"""
-
 }
 
 emqx_dashboard_monitor_api {
 
 list_monitor.desc:
-"""List monitor data."""
+"""List monitor (statistics) data for the whole cluster."""
 list_monitor.label:
-"""List monitor data."""
+"""List cluster stats data"""
 
 list_monitor_node.desc:
-"""List the monitor data on the node."""
+"""List the monitor (statistics) data on the specified node."""
 list_monitor_node.label:
-"""List the monitor data on the node."""
+"""List node's stats data"""
 
-current_status.desc:
-"""Current status. Gauge and rate."""
-current_status.label:
-"""Current status. Gauge and rate."""
+current_stats.desc:
+"""Current monitor (statistics) data, e.g. number of connections and connection rate in the whole cluster."""
+current_stats.label:
+"""Cluster runtime stats"""
 
-current_status_node.desc:
-"""Node current status. Gauge and rate."""
-current_status_node.label:
-"""Node current status. Gauge and rate."""
+current_stats_node.desc:
+"""Node monitor (statistics) data, e.g. number of connections and connection rate on the specified node."""
+current_stats_node.label:
+"""Node runtime stats"""
 
 }
 
@@ -4720,7 +5426,8 @@ backlog.label:
 """Backlog"""
 
 bind.desc:
-"""Port without IP(18083) or port with specified IP(127.0.0.1:18083)."""
+"""Port without IP(18083) or port with specified IP(127.0.0.1:18083).
+Disabled when setting bind to `0`."""
 
 bind.label:
 """Bind"""
@@ -4849,6 +5556,139 @@ token_expired_time.desc:
 token_expired_time.label:
 """Token expired time"""
 
+ssl_options.desc:
+"""SSL/TLS options for the dashboard listener."""
+
+ssl_options.label:
+"""SSL options"""
+
+}
+
+emqx_dashboard_api {
+
+list_running.desc:
+"""List all running SSO backends"""
+list_running.label:
+"""Running Backends"""
+
+get_sso.desc:
+"""List all SSO backends"""
+get_sso.label:
+"""SSO Backends"""
+
+login.desc:
+"""Get Dashboard Auth Token."""
+login.label:
+"""Get Dashboard Auth Token."""
+
+get_backend.desc:
+"""Get details of a backend"""
+get_backend.label:
+"""Backend Details"""
+
+update_backend.desc:
+"""Update a backend"""
+update_backend.label:
+"""Update Backend"""
+
+delete_backend.desc:
+"""Delete a backend"""
+delete_backend.label:
+"""Delete Backend"""
+
+saml_sso_acs.desc:
+"""SAML SSO ACS URL"""
+
+sp_saml_metadata.desc:
+"""SP SAML Metadata"""
+
+redirect.desc:
+"""Redirect to IDP SSO login page"""
+
+login_failed401.desc:
+"""Login failed. Bad username or password"""
+
+backend_not_found.desc:
+"""Operate failed. Backend not exists"""
+
+backend_name.desc:
+"""Backend name"""
+
+backend_name.label:
+"""Backend Name"""
+
+running.desc:
+"""Is the backend running"""
+
+running.label:
+"""Running"""
+
+last_error.desc:
+"""Last error of this backend"""
+
+last_error.label:
+"""Last Error"""
+
+}
+
+emqx_dashboard_sso_ldap {
+
+ldap_bind.desc:
+"""Configuration of authenticator using the LDAP bind operation as the authentication method."""
+
+query_timeout.desc:
+"""Timeout for the LDAP query."""
+
+query_timeout.label:
+"""Query Timeout"""
+
+filter.desc:
+"""The filter for matching users in LDAP is by default `(&(objectClass=person)(uid=${username}))`. For Active Directory, it should be set to `(&(objectClass=user)(sAMAccountName=${username}))` by default. Please refer to [LDAP Filters](https://ldap.com/ldap-filters/) for more details."""
+
+filter.label:
+"""Filter"""
+
+}
+
+emqx_dashboard_sso_saml {
+
+dashboard_addr.desc:
+"""The address of the EMQX Dashboard."""
+dashboard_addr.label:
+"""Dashboard Address"""
+
+idp_metadata_url.desc:
+"""The URL of the IdP metadata."""
+idp_metadata_url.label:
+"""IdP Metadata URL"""
+
+sign_request.desc:
+"""Whether to sign the SAML request."""
+sign_request.label:
+"""Sign SAML Request"""
+
+sp_public_key.desc:
+"""The public key of the SP."""
+sp_public_key.label:
+"""SP Public Key"""
+
+sp_private_key.desc:
+"""The private key of the SP."""
+sp_private_key.label:
+"""SP Private Key"""
+
+}
+
+emqx_dashboard_sso_schema {
+
+backend_enable.desc:
+"""Whether to enable this backend."""
+
+backend.desc:
+"""Backend type."""
+
+backend.label:
+"""Backend Type"""
 }
 
 emqx_delayed_api {
@@ -4967,348 +5807,6 @@ view_status_api.desc:
 """Get delayed status"""
 view_status_api.label:
 """Get delayed status"""
-
-}
-
-emqx_ee_bridge_hstreamdb {
-
-config_direction.desc:
-"""The direction of this bridge, MUST be 'egress'"""
-
-config_direction.label:
-"""Bridge Direction"""
-
-config_enable.desc:
-"""Enable or disable this bridge"""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-desc_config.desc:
-"""Configuration for an HStreamDB bridge."""
-
-desc_config.label:
-"""HStreamDB Bridge Configuration"""
-
-desc_connector.desc:
-"""Generic configuration for the connector."""
-
-desc_connector.label:
-"""Connector Generic Configuration"""
-
-desc_name.desc:
-"""Bridge name, used as a human-readable description of the bridge."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to the HStreamDB. All MQTT 'PUBLISH' messages with the topic
-matching the local_topic will be forwarded.</br>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
-configured, then both the data got from the rule and the MQTT messages that match local_topic
-will be forwarded."""
-
-local_topic.label:
-"""Local Topic"""
-
-payload.desc:
-"""The payload to be forwarded to the HStreamDB. Placeholders supported."""
-
-payload.label:
-"""Payload"""
-
-}
-
-emqx_ee_bridge_mongodb {
-
-collection.desc:
-"""The collection where data will be stored into"""
-
-collection.label:
-"""Collection to be used"""
-
-desc_config.desc:
-"""Configuration for MongoDB Bridge"""
-
-desc_config.label:
-"""MongoDB Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type."""
-
-desc_type.label:
-"""Bridge Type"""
-
-enable.desc:
-"""Enable or disable this MongoDB Bridge"""
-
-enable.label:
-"""Enable or disable"""
-
-mongodb_rs_conf.desc:
-"""MongoDB (Replica Set) configuration"""
-
-mongodb_rs_conf.label:
-"""MongoDB (Replica Set) Configuration"""
-
-mongodb_sharded_conf.desc:
-"""MongoDB (Sharded) configuration"""
-
-mongodb_sharded_conf.label:
-"""MongoDB (Sharded) Configuration"""
-
-mongodb_single_conf.desc:
-"""MongoDB (Standalone) configuration"""
-
-mongodb_single_conf.label:
-"""MongoDB (Standalone) Configuration"""
-
-payload_template.desc:
-"""The template for formatting the outgoing messages.  If undefined, rule engine will use JSON format to serialize all visible inputs, such as clientid, topic, payload etc."""
-
-payload_template.label:
-"""Payload template"""
-
-}
-
-emqx_ee_bridge_mysql {
-
-config_enable.desc:
-"""Enable or disable this bridge"""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-desc_config.desc:
-"""Configuration for an HStreamDB bridge."""
-
-desc_config.label:
-"""HStreamDB Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name, used as a human-readable description of the bridge."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to MySQL. All MQTT 'PUBLISH' messages with the topic
-matching the local_topic will be forwarded.</br>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
-configured, then both the data got from the rule and the MQTT messages that match local_topic
-will be forwarded."""
-
-local_topic.label:
-"""Local Topic"""
-
-sql_template.desc:
-"""SQL Template"""
-
-sql_template.label:
-"""SQL Template"""
-
-}
-
-emqx_ee_bridge_redis {
-
-command_template.desc:
-"""Redis command template used to export messages. Each list element stands for a command name or its argument.
-For example, to push payloads in a Redis list by key `msgs`, the elements should be the following:
-`rpush`, `msgs`, `${payload}`."""
-
-command_template.label:
-"""Redis Command Template"""
-
-config_enable.desc:
-"""Enable or disable this bridge"""
-
-config_enable.label:
-"""Enable Or Disable Bridge"""
-
-desc_config.desc:
-"""Configuration for a Redis bridge."""
-
-desc_config.label:
-"""Redis Bridge Configuration"""
-
-desc_name.desc:
-"""Bridge name, used as a human-readable description of the bridge."""
-
-desc_name.label:
-"""Bridge Name"""
-
-desc_type.desc:
-"""The Bridge Type"""
-
-desc_type.label:
-"""Bridge Type"""
-
-local_topic.desc:
-"""The MQTT topic filter to be forwarded to Redis. All MQTT 'PUBLISH' messages with the topic
-matching the local_topic will be forwarded.</br>
-NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is
-configured, then both the data got from the rule and the MQTT messages that match local_topic
-will be forwarded."""
-
-local_topic.label:
-"""Local Topic"""
-
-}
-
-emqx_ee_connector_hstreamdb {
-
-config.desc:
-"""HStreamDB connection config"""
-
-config.label:
-"""Connection config"""
-
-name.desc:
-"""Connector name, used as a human-readable description of the connector."""
-
-name.label:
-"""Connector Name"""
-
-ordering_key.desc:
-"""HStreamDB Ordering Key"""
-
-ordering_key.label:
-"""HStreamDB Ordering Key"""
-
-pool_size.desc:
-"""HStreamDB Pool Size"""
-
-pool_size.label:
-"""HStreamDB Pool Size"""
-
-stream_name.desc:
-"""HStreamDB Stream Name"""
-
-stream_name.label:
-"""HStreamDB Stream Name"""
-
-type.desc:
-"""The Connector Type."""
-
-type.label:
-"""Connector Type"""
-
-url.desc:
-"""HStreamDB Server URL"""
-
-url.label:
-"""HStreamDB Server URL"""
-
-}
-
-emqx_ee_schema_registry_http_api {
-
-desc_param_path_schema_name.desc:
-"""The schema name"""
-
-desc_param_path_schema_name.label:
-"""Schema name"""
-
-desc_schema_registry_api_delete.desc:
-"""Delete a schema"""
-
-desc_schema_registry_api_delete.label:
-"""Delete schema"""
-
-desc_schema_registry_api_get.desc:
-"""Get a schema by its name"""
-
-desc_schema_registry_api_get.label:
-"""Get schema"""
-
-desc_schema_registry_api_list.desc:
-"""List all registered schemas"""
-
-desc_schema_registry_api_list.label:
-"""List schemas"""
-
-desc_schema_registry_api_post.desc:
-"""Register a new schema"""
-
-desc_schema_registry_api_post.label:
-"""Register schema"""
-
-desc_schema_registry_api_put.desc:
-"""Update an existing schema"""
-
-desc_schema_registry_api_put.label:
-"""Update schema"""
-
-}
-
-emqx_ee_schema_registry_schema {
-
-avro_type.desc:
-"""[Apache Avro](https://avro.apache.org/) serialization format."""
-
-avro_type.label:
-"""Apache Avro"""
-
-protobuf_type.desc:
-"""[Protocol Buffers](https://protobuf.dev/) serialization format."""
-
-protobuf_type.label:
-"""Protocol Buffers"""
-
-schema_description.desc:
-"""A description for this schema."""
-
-schema_description.label:
-"""Schema description"""
-
-schema_name.desc:
-"""A name for the schema that will serve as its identifier."""
-
-schema_name.label:
-"""Schema name"""
-
-schema_registry_root.desc:
-"""Schema registry configurations."""
-
-schema_registry_root.label:
-"""Schema registry"""
-
-schema_registry_schemas.desc:
-"""Registered schemas."""
-
-schema_registry_schemas.label:
-"""Registered schemas"""
-
-schema_source.desc:
-"""Source text for the schema."""
-
-schema_source.label:
-"""Schema source"""
-
-schema_type.desc:
-"""Schema type."""
-
-schema_type.label:
-"""Schema type"""
 
 }
 
@@ -5501,6 +5999,15 @@ exproto.desc:
 exproto_grpc_handler_address.desc:
 """gRPC server address."""
 
+exproto_grpc_handler_service_name.desc:
+"""The service name to handle the connection events.
+In the initial version, we expected to use streams to improve the efficiency
+of requests in `ConnectionHandler`. But unfortunately, events between different
+streams are out of order. It causes the `OnSocketCreated` event to may arrive
+later than `OnReceivedBytes`.
+So we added the `ConnectionUnaryHandler` service since v5.0.25 and forced
+the use of Unary in it to avoid ordering problems."""
+
 exproto_grpc_handler_ssl.desc:
 """SSL configuration for the gRPC client."""
 
@@ -5526,6 +6033,12 @@ file_list.desc:
 file_list_transfer.desc:
 """List a file uploaded during specified transfer, identified by client id and file id."""
 
+file_transfer_get_config.desc:
+"""Show current File Transfer configuration."""
+
+file_transfer_update_config.desc:
+"""Replace File Transfer configuration."""
+
 }
 
 emqx_ft_storage_exporter_fs_api {
@@ -5544,16 +6057,19 @@ This toggle also affects the availability of the File Transfer REST API and
 storage-dependent background activities (e.g. garbage collection)."""
 
 init_timeout.desc:
-"""Timeout for initializing the file transfer.<br/>
-After reaching the timeout, `init` message will be acked with an error"""
+"""Timeout for EMQX to initialize the file transfer.<br/>
+After reaching the timeout (e.g. due to system is overloaded), the PUBACK message for `init` will contain error code (0x80)."""
 
 assemble_timeout.desc:
 """Timeout for assembling and exporting file segments into a final file.<br/>
-After reaching the timeout, `fin` message will be acked with an error"""
+After reaching the timeout (e.g. due to system is overloaded), the PUBACK message for `fin` will contain error code (0x80)"""
 
 store_segment_timeout.desc:
 """Timeout for storing a file segment.<br/>
-After reaching the timeout, message with the segment will be acked with an error"""
+After reaching the timeout (e.g. due to system overloaded), the PUBACK message will contain error code (0x80)."""
+
+backend_enable.desc:
+"""Whether to enable this backend."""
 
 storage_backend.desc:
 """Storage settings for file transfer."""
@@ -6110,6 +6626,205 @@ udp_listeners.desc:
 
 }
 
+emqx_gcp_device_api {
+
+gcp_device.desc:
+"""Configuration of authenticator using GCP Device as authentication data source."""
+
+gcp_devices_get.desc:
+"""List all devices imported from GCP IoT Core"""
+gcp_devices_get.label:
+"""List all GCP devices"""
+
+gcp_devices_post.desc:
+"""Import authentication and config data for devices from GCP IoT Core"""
+gcp_devices_post.label:
+"""Import GCP devices"""
+
+gcp_device_get.desc:
+"""Get a device imported from GCP IoT Core"""
+gcp_device_get.label:
+"""Get GCP device"""
+
+gcp_device_put.desc:
+"""Update a device imported from GCP IoT Core"""
+gcp_device_put.label:
+"""Update GCP device"""
+
+gcp_device_delete.desc:
+"""Remove a device imported from GCP IoT Core"""
+gcp_device_delete.label:
+"""Remove GCP device"""
+
+project.desc:
+"""Cloud project identifier"""
+project.label:
+"""Project"""
+
+location.desc:
+"""Cloud region"""
+location.label:
+"""Region"""
+
+registry.desc:
+"""Device registry identifier"""
+registry.label:
+"""Registry"""
+
+deviceid.label:
+"""Device identifier"""
+deviceid.desc:
+"""Device identifier"""
+
+keys.desc:
+"""Public keys associated to GCP device"""
+keys.label:
+"""Public keys"""
+
+key.desc:
+"""Public key"""
+key.label:
+"""Public key"""
+
+key_type.desc:
+"""Public key type"""
+key_type.label:
+"""Public key type"""
+
+expires_at.desc:
+"""Public key expiration time"""
+expires_at.label:
+"""Expiration time"""
+
+created_at.desc:
+"""Time when GCP device was imported"""
+created_at.label:
+"""Creation time"""
+
+config.label:
+"""Device configuration"""
+config.desc:
+"""Configuration"""
+
+blocked.label:
+"""If device is blocked from communicating to GCP IoT Core"""
+blocked.desc:
+"""Blocked"""
+
+gcp_device_response404.desc:
+"""The GCP device was not found"""
+
+imported_counter.desc:
+"""Number of successfully imported GCP devices"""
+
+imported_counter_errors.desc:
+"""Number of GCP devices not imported due to some error"""
+
+}
+
+emqx_ldap {
+
+server.desc:
+"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
+A host entry has the following form: `Host[:Port]`.<br/>
+The LDAP default port 389 is used if `[:Port]` is not specified."""
+
+server.label:
+"""Server Host"""
+
+base_dn.desc:
+"""The name of the base object entry (or possibly the root) relative to
+which the Search is to be performed."""
+
+base_dn.label:
+"""Base DN"""
+
+filter.desc:
+"""The filter that defines the conditions that must be fulfilled in order
+for the Search to match a given entry.<br>
+The syntax of the filter follows RFC 4515 and also supports placeholders."""
+
+filter.label:
+"""Filter"""
+
+request_timeout.desc:
+"""Sets the maximum time in milliseconds that is used for each individual request."""
+
+request_timeout.label:
+"""Request Timeout"""
+
+bind_password.desc:
+"""The template for password to bind."""
+
+bind_password.label:
+"""Bind Password"""
+}
+
+emqx_ldap_authn {
+
+ldap.desc:
+"""Configuration of authenticator using LDAP as authentication data source."""
+
+password_attribute.desc:
+"""Indicates which attribute is used to represent the user's password."""
+
+password_attribute.label:
+"""Password Attribute"""
+
+is_superuser_attribute.desc:
+"""Indicates which attribute is used to represent whether the user is a superuser."""
+
+is_superuser_attribute.label:
+"""IsSuperuser Attribute"""
+
+query_timeout.desc:
+"""Timeout for the LDAP query."""
+
+query_timeout.label:
+"""Query Timeout"""
+
+}
+
+emqx_ldap_authn_bind {
+
+ldap_bind.desc:
+"""Configuration of authenticator using the LDAP bind operation as the authentication method."""
+
+query_timeout.desc:
+"""Timeout for the LDAP query."""
+
+query_timeout.label:
+"""Query Timeout"""
+}
+
+emqx_ldap_authz {
+
+publish_attribute.desc:
+"""Indicates which attribute is used to represent the allowed topics list of the `publish`."""
+
+publish_attribute.label:
+"""Publish Attribute"""
+
+subscribe_attribute.desc:
+"""Indicates which attribute is used to represent the allowed topics list of the `subscribe`."""
+
+subscribe_attribute.label:
+"""Subscribe Attribute"""
+
+all_attribute.desc:
+"""Indicates which attribute is used to represent the both allowed topics list of  `publish` and `subscribe`."""
+
+all_attribute.label:
+"""All Attribute"""
+
+query_timeout.desc:
+"""Timeout for the LDAP query."""
+
+query_timeout.label:
+"""Query Timeout"""
+
+}
+
 emqx_license_http_api {
 
 desc_license_info_api.desc:
@@ -6123,6 +6838,12 @@ desc_license_key_api.desc:
 
 desc_license_key_api.label:
 """Update license"""
+
+desc_license_setting_api.desc:
+"""Update license setting"""
+
+desc_license_setting_api.label:
+"""Update license setting"""
 
 }
 
@@ -6140,6 +6861,18 @@ connection_low_watermark_field.desc:
 connection_low_watermark_field.label:
 """Connection low watermark"""
 
+connection_high_watermark_field_deprecated.desc:
+"""deprecated use /license/setting instead"""
+
+connection_high_watermark_field_deprecated.label:
+"""deprecated use /license/setting instead"""
+
+connection_low_watermark_field_deprecated.desc:
+"""deprecated use /license/setting instead"""
+
+connection_low_watermark_field_deprecated.label:
+"""deprecated use /license/setting instead"""
+
 key_field.desc:
 """License string"""
 
@@ -6147,12 +6880,12 @@ key_field.label:
 """License string"""
 
 license_root.desc:
-"""Defines the EMQX Enterprise license. 
+"""Defines the EMQX Enterprise license.
 
 
 The default license has 100 connections limit, it is issued on 2023-01-09 and valid for 5 years (1825 days).
 
-EMQX comes with a default trial license.  For production use, please 
+EMQX comes with a default trial license.  For production use, please
 visit https://www.emqx.com/apply-licenses/emqx to apply."""
 
 license_root.label:
@@ -6498,6 +7231,11 @@ who.desc:
 who.label:
 """Ban Object"""
 
+clear_banned_api.desc:
+"""Clear all banned data."""
+clear_banned_api.label:
+"""Clear"""
+
 }
 
 emqx_mgmt_api_clients {
@@ -6506,6 +7244,11 @@ list_clients.desc:
 """List clients"""
 list_clients.label:
 """List clients"""
+
+kickout_clients.desc:
+"""Kick out a batch of client by client IDs"""
+kickout_clients.label:
+"""Kick out a batch of client by client IDs"""
 
 clients_info_from_id.desc:
 """Get clients info by client ID"""
@@ -6566,6 +7309,11 @@ get_cluster_info.desc:
 get_cluster_info.label:
 """Get cluster info"""
 
+get_cluster_topology.desc:
+"""Get RLOG cluster topology: connections between core and replicant nodes."""
+get_cluster_topology.label:
+"""Get cluster topology"""
+
 invite_node.desc:
 """Invite node to cluster"""
 invite_node.label:
@@ -6580,15 +7328,20 @@ force_remove_node.label:
 
 emqx_mgmt_api_configs {
 
-get_conf_node.desc:
-"""Get all the configurations of the specified node, including hot and non-hot updatable items."""
-get_conf_node.label:
-"""Get all the configurations for node."""
+get_configs.desc:
+"""Get all the configurations of the specified keys, including hot and non-hot updatable items."""
+get_configs.label:
+"""Get all the configurations."""
+
+update_configs.desc:
+"""Update the configurations of the specified keys."""
+update_configs.label:
+"""Update Configurations."""
 
 node_name.desc:
-"""Node's name: If you do not fill in the fields, this node will be used by default."""
+"""Node's name. Will deprecated in 5.2.0."""
 node_name.label:
-"""Node's name."""
+"""Node's name (deprecated)."""
 
 rest_conf_query.desc:
 """Reset the config entry specified by the query string parameter `conf_path`.<br/>
@@ -6598,14 +7351,14 @@ rest_conf_query.label:
 """Reset the config entry with query"""
 
 get_global_zone_configs.desc:
-"""Get the global zone configs"""
+"""Get the MQTT-related configuration"""
 get_global_zone_configs.label:
-"""Get the global zone configs"""
+"""Get the MQTT-related configuration"""
 
 update_global_zone_configs.desc:
-"""Update global zone configs"""
+"""Update MQTT-related configuration"""
 update_global_zone_configs.label:
-"""Update global zone configs"""
+"""Update MQTT-related configuration"""
 
 get_node_level_limiter_configs.desc:
 """Get the node-level limiter configs"""
@@ -6628,12 +7381,10 @@ api_key.label:
 """API Key"""
 
 bootstrap_file.desc:
-"""Bootstrap file is used to add an api_key when emqx is launched,
-      the format is:
-       ```
-       7e729ae70d23144b:2QILI9AcQ9BYlVqLDHQNWN2saIjBV4egr1CZneTNKr9CpK
-       ec3907f865805db0:Ee3taYltUKtoBVD9C3XjQl9C6NXheip8Z9B69BpUv5JxVHL
-       ```"""
+"""The bootstrap file provides API keys for EMQX.
+EMQX will load these keys on startup to authorize API requests.
+It contains key-value pairs in the format:`api_key:api_secret`.
+Each line specifies an API key and its associated secret."""
 
 bootstrap_file.label:
 """Initialize api_key file."""
@@ -6645,12 +7396,12 @@ emqx_mgmt_api_listeners {
 list_node_live_statuses.desc:
 """List all running node's listeners live status. group by listener type"""
 list_node_live_statuses.label:
-"""List all running node's listeners live status. group by listener type"""
+"""List listeners live status"""
 
 list_listeners.desc:
 """List all running node's listeners for the specified type."""
 list_listeners.label:
-"""List all running node's listeners for the specified type."""
+"""List listeners per type"""
 
 listener_type.desc:
 """Listener type"""
@@ -6660,42 +7411,37 @@ listener_type.label:
 create_on_all_nodes.desc:
 """Create the specified listener on all nodes."""
 create_on_all_nodes.label:
-"""Create the specified listener on all nodes."""
+"""Create listener"""
 
 list_by_id.desc:
 """List all running node's listeners for the specified id."""
 list_by_id.label:
-"""List all running node's listeners for the specified id."""
+"""List listeners per ID"""
 
 update_lisener.desc:
 """Update the specified listener on all nodes."""
 update_lisener.label:
-"""Update the specified listener on all nodes."""
-
-create_on_all_nodes_2.desc:
-"""Create the specified listener on all nodes."""
-create_on_all_nodes_2.label:
-"""Create the specified listener on all nodes."""
+"""Update listener"""
 
 delete_on_all_nodes.desc:
 """Delete the specified listener on all nodes."""
 delete_on_all_nodes.label:
-"""Delete the specified listener on all nodes."""
+"""Delete listener"""
 
 start_on_all_nodes.desc:
 """Start the listener on all nodes."""
 start_on_all_nodes.label:
-"""Start the listener on all nodes."""
+"""Start listener"""
 
 stop_on_all_nodes.desc:
 """Stop the listener on all nodes."""
 stop_on_all_nodes.label:
-"""Stop the listener on all nodes."""
+"""Stop listener"""
 
 restart_on_all_nodes.desc:
 """Restart listeners on all nodes."""
 restart_on_all_nodes.label:
-"""Restart listeners on all nodes."""
+"""Restart listener"""
 
 
 }
@@ -6722,12 +7468,12 @@ get_node_info.label:
 """Get node info"""
 
 get_node_metrics.desc:
-"""Get node metrics"""
+"""Get node run-time counter metrics. Such as received or sent bytes or messages, the number of succeeded or failed authentications or authorizations, etc."""
 get_node_metrics.label:
 """Get node metrics"""
 
 get_node_stats.desc:
-"""Get node stats"""
+"""Get node run-time stats. Such as the number of topics, connections, etc."""
 get_node_stats.label:
 """Get node stats"""
 
@@ -6941,15 +7687,15 @@ file_size.desc:
 file_size.label:
 """file size"""
 
-modification_date.desc:
-"""the modification and last access times of a file"""
-modification_date.label:
-"""last access time"""
+file_mtime.desc:
+"""The last time this file is modified."""
+file_mtime.label:
+"""file mtime"""
 
-format.desc:
-"""Unique and format by [a-zA-Z0-9-_]"""
-format.label:
-"""Unique and format by [a-zA-Z0-9-_]"""
+trace_name.desc:
+"""Unique name of the trace. Only ascii letters in a-z, A-Z, 0-9 and underscore '_' are allowed."""
+trace_name.label:
+"""Unique name of the trace"""
 
 filter_type.desc:
 """Filter type"""
@@ -6957,19 +7703,19 @@ filter_type.label:
 """Filter type"""
 
 support_wildcard.desc:
-"""support mqtt wildcard topic."""
+"""Specify the topic or topic filter if the trace 'type' is 'topic'."""
 support_wildcard.label:
-"""support mqtt wildcard topic"""
+"""MQTT Topic"""
 
 mqtt_clientid.desc:
-"""mqtt clientid."""
+"""Specify the MQTT clientid if the trace 'type' is 'clientid'."""
 mqtt_clientid.label:
-"""mqtt clientid"""
+"""MQTT clientid"""
 
 client_ip_addess.desc:
-"""client ip address"""
+"""Specify the client's IP address if the trace type is 'ip_address'."""
 client_ip_addess.label:
-"""client ip address"""
+"""Client IP Address"""
 
 trace_status.desc:
 """trace status"""
@@ -6979,11 +7725,6 @@ trace_status.label:
 time_format.desc:
 """rfc3339 timestamp or epoch second"""
 time_format.label:
-"""rfc3339 timestamp or epoch second"""
-
-time_format_g.desc:
-"""rfc3339 timestamp or epoch second"""
-time_format_g.label:
 """rfc3339 timestamp or epoch second"""
 
 trace_log_size.desc:
@@ -7058,6 +7799,165 @@ tr_source_topic.label:
 
 }
 
+emqx_mongodb {
+
+auth_source.desc:
+"""Database name associated with the user's credentials."""
+
+auth_source.label:
+"""Auth Source"""
+
+connect_timeout.desc:
+"""The duration to attempt a connection before timing out."""
+
+connect_timeout.label:
+"""Connect Timeout"""
+
+desc_rs.desc:
+"""Settings for replica set."""
+
+desc_rs.label:
+"""Setting Replica Set"""
+
+desc_sharded.desc:
+"""Settings for sharded cluster."""
+
+desc_sharded.label:
+"""Setting Sharded Cluster"""
+
+desc_single.desc:
+"""Settings for a single MongoDB instance."""
+
+desc_single.label:
+"""Setting Single MongoDB"""
+
+desc_topology.desc:
+"""Topology of MongoDB."""
+
+desc_topology.label:
+"""Setting Topology"""
+
+heartbeat_period.desc:
+"""Controls when the driver checks the state of the MongoDB deployment. Specify the interval between checks, counted from the end of the previous check until the beginning of the next one. If the number of connections is increased (which will happen, for example, if you increase the pool size), you may need to increase this period as well to avoid creating too many log entries in the MongoDB log file."""
+
+heartbeat_period.label:
+"""Heartbeat period"""
+
+local_threshold.desc:
+"""The size of the latency window for selecting among multiple suitable MongoDB instances."""
+
+local_threshold.label:
+"""Local Threshold"""
+
+max_overflow.desc:
+"""The maximum number of additional workers that can be created when all workers in the pool are busy. This helps to manage temporary spikes in workload by allowing more concurrent connections to the MongoDB server."""
+
+max_overflow.label:
+"""Max Overflow Workers"""
+
+min_heartbeat_period.desc:
+"""Controls the minimum amount of time to wait between heartbeats."""
+
+min_heartbeat_period.label:
+"""Minimum Heartbeat Period"""
+
+overflow_check_period.desc:
+"""Period for checking if there are more workers than configured ("overflow")."""
+
+overflow_check_period.label:
+"""Overflow Check Period"""
+
+overflow_ttl.desc:
+"""Period of time before workers that exceed the configured pool size ("overflow") to be terminated."""
+
+overflow_ttl.label:
+"""Overflow TTL"""
+
+r_mode.desc:
+"""Read mode."""
+
+r_mode.label:
+"""Read Mode"""
+
+replica_set_name.desc:
+"""Name of the replica set."""
+
+replica_set_name.label:
+"""Replica Set Name"""
+
+rs_mongo_type.desc:
+"""Replica set. Must be set to 'rs' when MongoDB server is running in 'replica set' mode."""
+
+rs_mongo_type.label:
+"""Replica set"""
+
+server.desc:
+"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
+A host entry has the following form: `Host[:Port]`.<br/>
+The MongoDB default port 27017 is used if `[:Port]` is not specified."""
+
+server.label:
+"""Server Host"""
+
+server_selection_timeout.desc:
+"""Specifies how long to block for server selection before throwing an exception."""
+
+server_selection_timeout.label:
+"""Server Selection Timeout"""
+
+servers.desc:
+"""A Node list for Cluster to connect to. The nodes should be separated with commas, such as: `Node[,Node].`
+For each Node should be: The IPv4 or IPv6 address or the hostname to connect to.
+A host entry has the following form: `Host[:Port]`.
+The MongoDB default port 27017 is used if `[:Port]` is not specified."""
+
+servers.label:
+"""Servers"""
+
+sharded_mongo_type.desc:
+"""Sharded cluster. Must be set to 'sharded' when MongoDB server is running in 'sharded' mode."""
+
+sharded_mongo_type.label:
+"""Sharded cluster"""
+
+single_mongo_type.desc:
+"""Standalone instance. Must be set to 'single' when MongoDB server is running in standalone mode."""
+
+single_mongo_type.label:
+"""Standalone instance"""
+
+socket_timeout.desc:
+"""The duration to attempt to send or to receive on a socket before the attempt times out."""
+
+socket_timeout.label:
+"""Socket Timeout"""
+
+srv_record.desc:
+"""Use DNS SRV record."""
+
+srv_record.label:
+"""Srv Record"""
+
+w_mode.desc:
+"""Write mode."""
+
+w_mode.label:
+"""Write Mode"""
+
+wait_queue_timeout.desc:
+"""The maximum duration that a worker can wait for a connection to become available."""
+
+wait_queue_timeout.label:
+"""Wait Queue Timeout"""
+
+use_legacy_protocol.desc:
+"""Whether to use MongoDB's legacy protocol for communicating with the database.  The default is to attempt to automatically determine if the newer protocol is supported."""
+
+use_legacy_protocol.label:
+"""Use legacy protocol"""
+
+}
+
 emqx_mqttsn_schema {
 
 mqttsn.desc:
@@ -7087,6 +7987,18 @@ mqttsn_predefined_topic.desc:
 
 mqttsn_subs_resume.desc:
 """Whether to initiate all subscribed topic name registration messages to the client after the Session has been taken over by a new channel"""
+
+}
+
+emqx_mysql {
+
+server.desc:
+"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
+A host entry has the following form: `Host[:Port]`.<br/>
+The MySQL default port 3306 is used if `[:Port]` is not specified."""
+
+server.label:
+"""Server Host"""
 
 }
 
@@ -7134,6 +8046,18 @@ load_rebalance_evacuation_stop.desc:
 load_rebalance_evacuation_stop.label:
 """Stop evacuation"""
 
+cluster_purge_start.desc:
+"""Start purge process"""
+
+cluster_purge_start.label:
+"""Start purge"""
+
+cluster_purge_stop.desc:
+"""Stop purge process"""
+
+cluster_purge_stop.label:
+"""Stop purge"""
+
 param_node.desc:
 """Node name"""
 
@@ -7141,7 +8065,7 @@ param_node.label:
 """Node name"""
 
 wait_health_check.desc:
-"""Time to wait before starting the rebalance process, in seconds"""
+"""Time to wait before starting the rebalance/evacuation process, in seconds"""
 
 wait_health_check.label:
 """Wait health check"""
@@ -7241,6 +8165,12 @@ local_status_session_eviction_rate.desc:
 
 local_status_session_eviction_rate.label:
 """Session eviction rate"""
+
+local_status_purge_rate.desc:
+"""The rate of purging sessions, in sessions per second"""
+
+local_status_purge_rate.label:
+"""Session purge rate"""
 
 local_status_connection_goal.desc:
 """The number of connections that the node should have after the rebalance/evacuation process"""
@@ -7379,6 +8309,22 @@ emqx_oracle {
 
 }
 
+emqx_otel_schema {
+
+opentelemetry.desc: "Open Telemetry Toolkit configuration"
+
+exporter.desc: "Open Telemetry Exporter"
+
+enable.desc: "Enable or disable open telemetry metrics"
+
+protocol.desc: "Open Telemetry Exporter Protocol"
+
+endpoint.desc: "Open Telemetry Exporter Endpoint"
+
+interval.desc: "The interval of sending metrics to Open Telemetry Endpoint"
+
+}
+
 emqx_plugins_schema {
 
 check_interval.desc:
@@ -7460,7 +8406,7 @@ enable.desc:
 """Turn Prometheus data pushing on or off"""
 
 headers.desc:
-"""A list of HTTP Headers when pushing to Push Gateway.<br/>
+"""An HTTP Headers when pushing to Push Gateway.<br/>
 For example, <code> { Authorization = "some-authz-tokens"}</code>"""
 
 interval.desc:
@@ -7474,31 +8420,33 @@ For example, when the EMQX node name is <code>emqx@127.0.0.1</code> then the <co
 Default value is: <code>${name}/instance/${name}~${host}</code>"""
 
 mnesia_collector.desc:
-"""Enable or disable Mnesia collector, collects Mnesia metrics mainly using mnesia:system_info/1 ."""
+"""Enable or disable Mnesia metrics collector"""
 
 prometheus.desc:
-"""Settings for reporting metrics to Prometheus"""
+"""EMQX's Prometheus scraping endpoint is enabled by default without authentication.
+You can inspect it with a `curl` command like this: `curl -f "127.0.0.1:18083/api/v5/prometheus/stats"`<br/>
+The 'enable' flag is used to turn on and off for the push-gateway integration."""
 
 prometheus.label:
 """Prometheus"""
 
 push_gateway_server.desc:
-"""URL of Prometheus server"""
+"""URL of Prometheus server. Pushgateway is optional, should not be configured if prometheus is to scrape EMQX."""
 
 vm_dist_collector.desc:
 """Enable or disable VM distribution collector, collects information about the sockets and processes involved in the Erlang distribution mechanism."""
 
 vm_memory_collector.desc:
-"""Enable or disable VM memory collector, collects information about memory dynamically allocated by the Erlang emulator using erlang:memory/0 , also provides basic (D)ETS statistics ."""
+"""Enable or disable VM memory metrics collector."""
 
 vm_msacc_collector.desc:
-"""Enable or disable VM msacc collector, collects microstate accounting metrics using erlang:statistics(microstate_accounting) ."""
+"""Enable or disable VM microstate accounting metrics collector."""
 
 vm_statistics_collector.desc:
-"""Enable or disable VM statistics collector, collects Erlang VM metrics using erlang:statistics/1 ."""
+"""Enable or disable VM statistics collector."""
 
 vm_system_info_collector.desc:
-"""Enable or disable VM system info collector, collects Erlang VM metrics using erlang:system_info/1 ."""
+"""Enable or disable VM system info collector."""
 
 }
 
@@ -7531,13 +8479,58 @@ separator.desc:
 
 }
 
+emqx_redis {
+
+cluster.desc:
+"""Cluster mode. Must be set to 'cluster' when Redis server is running in clustered mode."""
+
+cluster.label:
+"""Cluster Mode"""
+
+database.desc:
+"""Redis database ID."""
+
+database.label:
+"""Database ID"""
+
+sentinel.desc:
+"""Sentinel mode. Must be set to 'sentinel' when Redis server is running in sentinel mode."""
+
+sentinel.label:
+"""Sentinel Mode"""
+
+sentinel_desc.desc:
+"""The cluster name in Redis sentinel mode."""
+
+sentinel_desc.label:
+"""Cluster Name"""
+
+server.desc:
+"""The IPv4 or IPv6 address or the hostname to connect to.<br/>
+A host entry has the following form: `Host[:Port]`.<br/>
+The Redis default port 6379 is used if `[:Port]` is not specified."""
+
+server.label:
+"""Server Host"""
+
+servers.desc:
+"""A Node list for Cluster to connect to. The nodes should be separated with commas, such as: `Node[,Node].`
+For each Node should be: The IPv4 or IPv6 address or the hostname to connect to.
+A host entry has the following form: `Host[:Port]`.
+The Redis default port 6379 is used if `[:Port]` is not specified."""
+
+servers.label:
+"""Servers"""
+
+single.desc:
+"""Single mode. Must be set to 'single' when Redis server is running in single mode."""
+
+single.label:
+"""Single Mode"""
+
+}
+
 emqx_resource_schema {
-
-auto_restart_interval.desc:
-"""The auto restart interval after the resource is disconnected."""
-
-auto_restart_interval.label:
-"""Auto Restart Interval"""
 
 batch_size.desc:
 """Maximum batch count. If equal to 1, there's effectively no batching."""
@@ -7609,11 +8602,11 @@ query_mode.desc:
 query_mode.label:
 """Query mode"""
 
-request_timeout.desc:
+request_ttl.desc:
 """Starting from the moment when the request enters the buffer, if the request remains in the buffer for the specified time or is sent but does not receive a response or acknowledgement in time, the request is considered expired."""
 
-request_timeout.label:
-"""Request Expiry"""
+request_ttl.label:
+"""Request TTL"""
 
 resource_opts.desc:
 """Resource options."""
@@ -7758,11 +8751,11 @@ mnesia_config_type.desc:
 """Backend type."""
 
 msg_clear_interval.desc:
-"""Periodic interval for cleaning up expired messages.
-Never clear if the value is 0."""
+"""Interval for EMQX to scan expired messages and delete them. Never scan if the value is 0."""
 
 msg_expiry_interval.desc:
-"""Message retention time. 0 means message will never be expired."""
+"""Message retention time. This config is only applicable for messages without the Message Expiry Interval message property.
+0 means message will never expire."""
 
 stop_publish_clear_msg.desc:
 """When the retained flag of the `PUBLISH` message is set and Payload is empty,
@@ -7770,6 +8763,8 @@ whether to continue to publish the message.
 See:
 http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc398718038"""
 
+delivery_rate.desc:
+"""The maximum rate of delivering retained messages"""
 }
 
 emqx_rewrite_api {
@@ -7788,6 +8783,11 @@ update_topic_rewrite_api_response413.desc:
 """Rules count exceed max limit"""
 update_topic_rewrite_api_response413.label:
 """Rules count exceed limit"""
+
+update_topic_rewrite_api_response400.desc:
+"""Bad request"""
+update_topic_rewrite_api_response400.label:
+"""Bad request"""
 
 }
 
@@ -8372,6 +9372,16 @@ You may also call <code>map_put</code> function like
 to inject user properties.
 NOTE: MQTT spec allows duplicated user property names, but EMQX Rule-Engine does not."""
 
+republish_args_user_properties.label:
+"""User Properties"""
+
+republish_args_mqtt_properties.desc:
+"""From which variable should the MQTT Publish Properties of the message be taken.
+Placeholders like <code>${.payload.content_type}</code> may be used."""
+
+republish_args_mqtt_properties.label:
+"""MQTT Properties"""
+
 republish_function.desc:
 """Republish the message as a new MQTT message"""
 
@@ -8604,7 +9614,8 @@ mqtt_max_topic_alias.label:
 """Max Topic Alias"""
 
 common_ssl_opts_schema_user_lookup_fun.desc:
-"""EMQX-internal callback that is used to lookup pre-shared key (PSK) identity."""
+"""EMQX-internal callback that is used to lookup pre-shared key (PSK) identity.</br>
+Has no effect when TLS version is configured (or negotiated) to 1.3"""
 
 common_ssl_opts_schema_user_lookup_fun.label:
 """SSL PSK user lookup fun"""
@@ -8667,7 +9678,7 @@ persistent_session_builtin_messages_table.label:
 
 sysmon_os_cpu_low_watermark.desc:
 """The threshold, as percentage of system CPU load,
- for how much system cpu can be used before the corresponding alarm is cleared."""
+ for how much system cpu can be used before the corresponding alarm is cleared. Disabled on Windows platform"""
 
 sysmon_os_cpu_low_watermark.label:
 """CPU low watermark"""
@@ -8773,6 +9784,12 @@ already established connections."""
 common_ssl_opts_schema_cacertfile.label:
 """CACertfile"""
 
+common_ssl_opts_schema_cacerts.desc:
+"""When enabled, uses the system trusted CA certificates for establishing to TLS connections."""
+
+common_ssl_opts_schema_cacerts.label:
+"""Use System CA Certificates"""
+
 fields_ws_opts_mqtt_path.desc:
 """WebSocket's MQTT protocol path. So the address of EMQX Broker's WebSocket is:
 <code>ws://{ip}:{port}/mqtt</code>"""
@@ -8783,7 +9800,7 @@ fields_ws_opts_mqtt_path.label:
 sysmon_os_procmem_high_watermark.desc:
 """The threshold, as percentage of system memory,
  for how much system memory can be allocated by one Erlang process before
- the corresponding alarm is raised."""
+ the corresponding alarm is raised. Disabled on Windows platform."""
 
 sysmon_os_procmem_high_watermark.label:
 """ProcMem high wartermark"""
@@ -8894,7 +9911,7 @@ fields_tcp_opts_sndbuf.label:
 """TCP send buffer"""
 
 sysmon_os_mem_check_interval.desc:
-"""The time interval for the periodic memory check."""
+"""The time interval for the periodic memory check. Disabled on Windows platform."""
 
 sysmon_os_mem_check_interval.label:
 """Mem check interval"""
@@ -9036,22 +10053,6 @@ mqtt_server_keepalive.desc:
 
 mqtt_server_keepalive.label:
 """Server Keep Alive"""
-
-global_authentication.desc:
-"""Default authentication configs for all MQTT listeners.
-
-For per-listener overrides see <code>authentication</code> in listener configs
-
-This option can be configured with:
-<ul>
-  <li><code>[]</code>: The default value, it allows *ALL* logins</li>
-  <li>one: For example <code>{enable:true,backend:"built_in_database",mechanism="password_based"}</code></li>
-  <li>chain: An array of structs.</li>
-</ul>
-
-When a chain is configured, the login credentials are checked against the backends per the configured order, until an 'allow' or 'deny' decision can be made.
-
-If there is no decision after a full chain exhaustion, the login is rejected."""
 
 fields_mqtt_quic_listener_load_balancing_mode.desc:
 """0: Disabled, 1: SERVER_ID_IP, 2: SERVER_ID_FIXED. default: 0"""
@@ -9208,7 +10209,12 @@ fields_mqtt_quic_listener_minimum_mtu.label:
 """Minimum MTU"""
 
 sys_msg_interval.desc:
-"""Time interval of publishing `$SYS` messages."""
+"""Time interval for publishing following system messages:
+  - `$SYS/brokers`
+  - `$SYS/brokers/<node>/version`
+  - `$SYS/brokers/<node>/sysdescr`
+  - `$SYS/brokers/<node>/stats/<name>`
+  - `$SYS/brokers/<node>/metrics/<name>`"""
 
 mqtt_await_rel_timeout.desc:
 """For client to broker QoS 2 message, the time limit for the broker to wait before the `PUBREL` message is received. The wait is aborted after timed out, meaning the packet ID is freed for new `PUBLISH` requests. Receiving a stale `PUBREL` causes a warning level log. Note, the message is delivered to subscribers before entering the wait for PUBREL."""
@@ -9242,7 +10248,7 @@ common_ssl_opts_schema_keyfile.label:
 
 sysmon_os_cpu_high_watermark.desc:
 """The threshold, as percentage of system CPU load,
- for how much system cpu can be used before the corresponding alarm is raised."""
+ for how much system cpu can be used before the corresponding alarm is raised. Disabled on Windows platform"""
 
 sysmon_os_cpu_high_watermark.label:
 """CPU high watermark"""
@@ -9298,7 +10304,7 @@ fields_ws_opts_proxy_address_header.label:
 
 sysmon_os_sysmem_high_watermark.desc:
 """The threshold, as percentage of system memory,
- for how much system memory can be allocated before the corresponding alarm is raised."""
+ for how much system memory can be allocated before the corresponding alarm is raised. Disabled on Windows platform"""
 
 sysmon_os_sysmem_high_watermark.label:
 """SysMem high wartermark"""
@@ -9487,6 +10493,18 @@ fields_tcp_opts_nodelay.desc:
 fields_tcp_opts_nodelay.label:
 """TCP_NODELAY"""
 
+fields_tcp_opts_keepalive.desc:
+"""Enable TCP keepalive for MQTT connections over TCP or SSL.
+The value is three comma separated numbers in the format of 'Idle,Interval,Probes'
+ - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).
+ - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).
+ - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).
+For example "240,30,5" means: EMQX should start sending TCP keepalive probes after the connection is in idle for 240 seconds, and the probes are sent every 30 seconds until a response is received from the MQTT client, if it misses 5 consecutive responses, EMQX should close the connection.
+Default: 'none'"""
+
+fields_tcp_opts_keepalive.label:
+"""TCP keepalive options"""
+
 sysmon_top_db_username.desc:
 """Username of the PostgreSQL database"""
 
@@ -9590,14 +10608,6 @@ See: https://erlang.org/doc/man/inet.html#setopts-2"""
 
 fields_tcp_opts_active_n.label:
 """active_n"""
-
-listener_authentication.desc:
-"""Per-listener authentication override.
-Authentication can be one single authenticator instance or a chain of authenticators as an array.
-When authenticating a login (username, client ID, etc.) the authenticators are checked in the configured order."""
-
-listener_authentication.label:
-"""Per-listener authentication override"""
 
 fields_trace_payload_encode.desc:
 """Determine the format of the payload format in the trace file.<br/>
@@ -9740,7 +10750,8 @@ The SSL application already takes measures to counter-act such attempts,
 but client-initiated renegotiation can be strictly disabled by setting this option to false.
 The default value is true. Note that disabling renegotiation can result in
 long-lived connections becoming unusable due to limits on
-the number of messages the underlying cipher suite can encipher."""
+the number of messages the underlying cipher suite can encipher.</br>
+Has no effect when TLS version is configured (or negotiated) to 1.3"""
 
 server_ssl_opts_schema_client_renegotiation.label:
 """SSL client renegotiation"""
@@ -9826,7 +10837,8 @@ common_ssl_opts_schema_secure_renegotiate.desc:
 """SSL parameter renegotiation is a feature that allows a client and a server
 to renegotiate the parameters of the SSL connection on the fly.
 RFC 5746 defines a more secure way of doing this. By enabling secure renegotiation,
-you drop support for the insecure renegotiation, prone to MitM attacks."""
+you drop support for the insecure renegotiation, prone to MitM attacks.</br>
+Has no effect when TLS version is configured (or negotiated) to 1.3"""
 
 common_ssl_opts_schema_secure_renegotiate.label:
 """SSL renegotiate"""
@@ -9855,13 +10867,14 @@ sysmon_vm_process_low_watermark.label:
 """Process low watermark"""
 
 mqtt_max_packet_size.desc:
-"""Maximum MQTT packet size allowed."""
+"""Maximum MQTT packet size allowed. Default: 1 MB, Maximum: 256 MB"""
 
 mqtt_max_packet_size.label:
 """Max Packet Size"""
 
 common_ssl_opts_schema_reuse_sessions.desc:
-"""Enable TLS session reuse."""
+"""Enable TLS session reuse.</br>
+Has no effect when TLS version is configured (or negotiated) to 1.3"""
 
 common_ssl_opts_schema_reuse_sessions.label:
 """TLS session reuse"""
@@ -10006,7 +11019,7 @@ fields_tcp_opts_send_timeout_close.label:
 """TCP send timeout close"""
 
 sysmon_os_cpu_check_interval.desc:
-"""The time interval for the periodic CPU check."""
+"""The time interval for the periodic CPU check. Disabled on Windows platform."""
 
 sysmon_os_cpu_check_interval.label:
 """The time interval for the periodic CPU check."""
@@ -10058,6 +11071,13 @@ fields_ws_opts_max_frame_size.label:
 sys_event_messages.desc:
 """Client events messages."""
 
+broker_routing_storage_schema.desc:
+"""Routing storage schema.
+Set <code>v1</code> to leave the default.
+<code>v2</code> is introduced in 5.2. It enables routing through 2 separate tables, one for topic filter and one for regular topic subscriptions. This schema should increase both subscription and routing performance at the cost of slight increase in memory consumption per subscription.
+NOTE: Schema <code>v2</code> is still experimental.
+NOTE: Full non-rolling cluster restart is needed after altering this option for it to take any effect."""
+
 broker_perf_trie_compaction.desc:
 """Enable trie path compaction.
 Enabling it significantly improves wildcard topic subscribe rate, if wildcard topics have unique prefixes like: 'sensor/{{id}}/+/', where ID is unique per subscriber.
@@ -10072,6 +11092,98 @@ the system topic <code>$SYS/sysmon/large_heap</code>."""
 
 sysmon_vm_large_heap.label:
 """Enable Large Heap monitoring."""
+
+}
+
+emqx_schema_registry_http_api {
+
+desc_param_path_schema_name.desc:
+"""The schema name"""
+
+desc_param_path_schema_name.label:
+"""Schema name"""
+
+desc_schema_registry_api_delete.desc:
+"""Delete a schema"""
+
+desc_schema_registry_api_delete.label:
+"""Delete schema"""
+
+desc_schema_registry_api_get.desc:
+"""Get a schema by its name"""
+
+desc_schema_registry_api_get.label:
+"""Get schema"""
+
+desc_schema_registry_api_list.desc:
+"""List all registered schemas"""
+
+desc_schema_registry_api_list.label:
+"""List schemas"""
+
+desc_schema_registry_api_post.desc:
+"""Register a new schema"""
+
+desc_schema_registry_api_post.label:
+"""Register schema"""
+
+desc_schema_registry_api_put.desc:
+"""Update an existing schema"""
+
+desc_schema_registry_api_put.label:
+"""Update schema"""
+
+}
+
+emqx_schema_registry_schema {
+
+avro_type.desc:
+"""[Apache Avro](https://avro.apache.org/) serialization format."""
+
+avro_type.label:
+"""Apache Avro"""
+
+protobuf_type.desc:
+"""[Protocol Buffers](https://protobuf.dev/) serialization format."""
+
+protobuf_type.label:
+"""Protocol Buffers"""
+
+schema_description.desc:
+"""A description for this schema."""
+
+schema_description.label:
+"""Schema description"""
+
+schema_name.desc:
+"""A name for the schema that will serve as its identifier."""
+
+schema_name.label:
+"""Schema name"""
+
+schema_registry_root.desc:
+"""Schema registry configurations."""
+
+schema_registry_root.label:
+"""Schema registry"""
+
+schema_registry_schemas.desc:
+"""Registered schemas."""
+
+schema_registry_schemas.label:
+"""Registered schemas"""
+
+schema_source.desc:
+"""Source text for the schema."""
+
+schema_source.label:
+"""Schema source"""
+
+schema_type.desc:
+"""Schema type."""
+
+schema_type.label:
+"""Schema type"""
 
 }
 
