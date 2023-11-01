@@ -6663,7 +6663,7 @@ msg_correlation_data.desc:
 """对比数据，服务端在收到应用消息时会原封不动的把对比数据发送给所有的订阅者。对比数据只对请求消息(Request Message)的发送端和响应消息(Response Message)的接收端有意义。"""
 
 msg_message_expiry_interval.desc:
-"""消息过期间隔，单位为秒。当消息过期时，如果服务端还没有开始向匹配的订阅者投递该消息，则服务端会删除该订阅者的消息副本。如果不设置，则消息永远不会过期。""
+"""消息过期间隔，单位为秒。当消息过期时，如果服务端还没有开始向匹配的订阅者投递该消息，则服务端会删除该订阅者的消息副本。如果不设置，则消息永远不会过期。"""
 
 msg_payload_format_indicator.desc:
 """Payload 格式，0 表示是未指定格式的数据，相当于没有发送 Payload 格式指示；1 表示 Payload 是 UTF-8 编码的字符数据，Payload 中的 UTF-8 数据必须是按照 Unicode 的规范和 RFC 3629 的标准要求进行编码的。"""
