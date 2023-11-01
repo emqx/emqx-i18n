@@ -6761,8 +6761,9 @@ get_status_response200.desc:
 
 ```
 Node emqx@127.0.0.1 is started
-emqx is running"""
+emqx is running
 ```
+"""
 
 get_status_response503.desc:
 """如果 EMQX 应用暂时没有启动，或正在重启，则可能返回 'emqx is not_running'"""
