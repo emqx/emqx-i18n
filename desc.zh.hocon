@@ -6546,11 +6546,7 @@ api_key.label:
 """API 密钥"""
 
 bootstrap_file.desc:
-"""用于在启动 EMQX 时，添加 API 密钥，其格式为 {appid}:{secret}，多个密钥用换行分隔。：
-      ```
-      7e729ae70d23144b:2QILI9AcQ9BYlVqLDHQNWN2saIjBV4egr1CZneTNKr9CpK
-      ec3907f865805db0:Ee3taYltUKtoBVD9C3XjQl9C6NXheip8Z9B69BpUv5JxVHL
-      ```"""
+"""Bootstrap 文件提供 EMQX 的 API 密钥。EMQX 将在启动时加载这些密钥以授权 API 请求。它包含了 api_key:api_secret 格式的键值对。每一行都指定了一个 API 密钥及其关联的密钥。"""
 
 bootstrap_file.label:
 """API 密钥初始化文件"""
