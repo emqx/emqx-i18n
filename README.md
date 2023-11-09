@@ -35,7 +35,7 @@ To make changes, follow these steps:
 
   - In `emqx` proejct, build the file with `make i18n`.
 
-  - Copy the dumped file `_build/docgen/$PROFILE/desc.en.hocon` to this repo.
+  - Copy the dumped file `_build/docgen/desc.en.hocon` to this repo.
 
   - Send a pull request for review.
 
