@@ -35,10 +35,10 @@ To make changes, follow these steps:
 
   - In `emqx` proejct, build the file with `make i18n`.
 
-  - Copy the dumped file `_build/docgen/desc.en.json` to this repo.
+  - Copy the dumped file `_build/docgen/$PROFILE/desc.en.hocon` to this repo.
 
   - Send a pull request for review.
 
 - Translators should review changes in the English version and apply corresponding updates to their translations.
 
-- Run `jq --sort-keys . desc.zh.json` to ensure the keys are sorted.
+- Run `jq --sort-keys . desc.zh.hocon` to ensure the keys are sorted.
