@@ -13,6 +13,11 @@ This repository contains multi-language translations for EMQX document generatio
 
 This is because older version EMQX may need to download the `.hocon` file.
 
+## Branches
+
+- main: EMQX before 5.3.2 downaloads from this branch
+- v53: EMQX since 5.3.2 (before 5.4) downloads from this branch
+
 ## Workflow
 
 The primary language is English, which originates from [emqx.git](https://github.com/emqx/emqx).
