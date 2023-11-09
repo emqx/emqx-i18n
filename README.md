@@ -11,7 +11,11 @@ This repository contains multi-language translations for EMQX document generatio
 
 ## Why named hocon while they are JSON
 
-This is because older version EMQX may need to download the `.hocon` file.
+!!! DO NOT ATTEMPT to change naming convention of the files for below reasons:
+
+1. HOCON is a super-set of JSON, so JSON IS technically also HOCON.
+2. The `en` flavor files in upstream (emqx project) are HOCON format, and even after they are merged, it's just one HOCON file concatenated.
+3. The file suffix `.hocon` is used by emqx when it tries to build the dictionary cache.
 
 ## Branches
 
