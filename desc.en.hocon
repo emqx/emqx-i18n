@@ -7637,8 +7637,8 @@ Otherwise it returns free text strings as below:<br />
 
 ```
 Node emqx@127.0.0.1 is started
-emqx is running"""
-```
+emqx is running
+```"""
 
 get_status_response503.desc:
 """When EMQX application is temporary not running or being restarted, it may return 'emqx is not_running'.
@@ -11063,7 +11063,7 @@ sysmon_top_sample_interval.label:
 """Top sample interval"""
 
 fields_mqtt_quic_listener_idle_timeout_ms.desc:
-"""How long a connection can go idle before it is gracefully shut down. 0 to disable timeout.""
+"""How long a connection can go idle before it is gracefully shut down. 0 to disable timeout."""
 
 fields_mqtt_quic_listener_idle_timeout_ms.label:
 """Idle timeout ms"""
