@@ -1,4 +1,4 @@
-# EMQX Dashboard Internationalization
+# EMQX Config Documentation and Dashboard Internationalization
 
 This repository contains multi-language translations for EMQX document generation and EMQX Dashboard.
 
