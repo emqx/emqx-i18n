@@ -2,9 +2,16 @@
 
 This repository contains multi-language translations for EMQX document generation and EMQX Dashboard.
 
-EMQX Dashboard includes translations in JSON or HOCON format within the package.
-This package is downloaded and built as part of EMQX's release package.
+## How the files are used
 
+- During EMQX build, it downloads the `desc.zh.hocon` file to dump `zh` flafor schema doc (which is then used to generate markdown docs).
+  EMQX does NOT download `desc.en.hocon` because `en` being the source of truth always resides in [upstream repository](https://github.com/emqx/emqx/tree/master/rel).
+
+- EMQX dashboard current builds their own dictionary, but will consider taking this repo as the source of truth in the future.
+
+## Why named hocon while they are JSON
+
+This is because older version EMQX may need to download the `.hocon` file.
 
 ## Workflow
 
@@ -13,10 +20,16 @@ Translations are stored in this repository.
 
 To make changes, follow these steps:
 
-1. Update English descriptions in the [upstream repository](https://github.com/emqx/emqx/tree/master/rel).
-2. Periodically sync the updated English description file to this repository.
+- Update English descriptions in the [upstream repository](https://github.com/emqx/emqx/tree/master/rel).
+
+- Periodically sync the updated English description file to this repository.
+
   - In `emqx` proejct, build the file with `make i18n`.
-  - Copy the dumped file `_build/docgen/desc.en.hocon` to this repo.
+
+  - Copy the dumped file `_build/docgen/desc.en.json` to this repo.
+
   - Send a pull request for review.
-3. Translators should review changes in the English version and apply corresponding updates to their translations.
-4. Run `jq --sort-keys . desc.zh.hocon` to ensure the keys are sorted.
+
+- Translators should review changes in the English version and apply corresponding updates to their translations.
+
+- Run `jq --sort-keys . desc.zh.json` to ensure the keys are sorted.
