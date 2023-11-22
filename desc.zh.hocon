@@ -759,8 +759,8 @@
       "label": "速率"
     },
     "rate_last5m": {
-      "desc": "5分钟内平均命中速率，单位：次/秒。",
-      "label": "5分钟内速率"
+      "desc": "5 分钟内平均命中速率，单位：次/秒。",
+      "label": "5 分钟内速率"
     },
     "rate_max": {
       "desc": "最大命中速率，单位：次/秒。",
@@ -1043,11 +1043,11 @@
   },
   "emqx_bridge_clickhouse_connector": {
     "base_url": {
-      "desc": "你想连接到的Clickhouse服务器的HTTP URL（例如http://myhostname:8123）。",
+      "desc": "你想连接到的 Clickhouse 服务器的 HTTP URL（例如 http://myhostname:8123）。",
       "label": "服务器 URL"
     },
     "connect_timeout": {
-      "desc": "连接HTTP服务器的超时时间。",
+      "desc": "连接 HTTP 服务器的超时时间。",
       "label": "连接超时"
     }
   },
@@ -1121,7 +1121,7 @@
       "label": "最大重试次数"
     },
     "payload_template": {
-      "desc": "用于格式化外发信息的模板。 如果未定义，将以JSON格式发送所有可用的上下文。",
+      "desc": "用于格式化外发信息的模板。 如果未定义，将以 JSON 格式发送所有可用的上下文。",
       "label": "HTTP 请求消息体模板"
     },
     "pipelining": {
@@ -1133,7 +1133,7 @@
       "label": "连接池大小"
     },
     "pubsub_topic": {
-      "desc": "要发布消息的GCP PubSub主题。",
+      "desc": "要发布消息的 GCP PubSub 主题。",
       "label": "GCP PubSub 主题"
     },
     "request_timeout": {
@@ -1141,7 +1141,7 @@
       "label": "HTTP 请求超时"
     },
     "service_account_json": {
-      "desc": "包含将与 PubSub 一起使用的 GCP 服务账户凭证的 JSON。\n当创建GCP服务账户时（如https://developers.google.com/identity/protocols/oauth2/service-account#creatinganaccount），可以选择下载 JSON 形式的凭证，然后在该配置项中使用。",
+      "desc": "包含将与 PubSub 一起使用的 GCP 服务账户凭证的 JSON。\n当创建 GCP 服务账户时（如 https://developers.google.com/identity/protocols/oauth2/service-account#creatinganaccount），可以选择下载 JSON 形式的凭证，然后在该配置项中使用。",
       "label": "GCP 服务账户凭证"
     }
   },
@@ -1239,7 +1239,7 @@
       "label": "REST 服务 URL"
     },
     "config_device_id": {
-      "desc": "IoTDB 的设备ID（DeviceID）。可以使用一个占位符。如果留空则 MQTT 消息体中必须有一个 `device_id` 字段，\n或者 EMQX 规则引擎的 SQL 必须输出一个 `device_id` 字段。",
+      "desc": "IoTDB 的设备 ID（DeviceID）。可以使用一个占位符。如果留空则 MQTT 消息体中必须有一个 `device_id` 字段，\n或者 EMQX 规则引擎的 SQL 必须输出一个 `device_id` 字段。",
       "label": "Device ID"
     },
     "config_enable": {
@@ -1263,11 +1263,11 @@
       "label": "请求超时"
     },
     "desc_config": {
-      "desc": "IoTDB数据桥接配置",
+      "desc": "IoTDB 数据桥接配置",
       "label": "IoTDB 配置"
     },
     "desc_name": {
-      "desc": "IoTDB数据桥接名称。",
+      "desc": "IoTDB 数据桥接名称。",
       "label": "桥接名称"
     }
   },
@@ -1337,7 +1337,7 @@
       "label": "连接超时"
     },
     "consumer_kafka_opts": {
-      "desc": "Kafka消费者配置。",
+      "desc": "Kafka 消费者配置。",
       "label": "Kafka 消费者"
     },
     "consumer_kafka_topic": {
@@ -1370,7 +1370,7 @@
     },
     "consumer_mqtt_topic": {
       "desc": "设置 Kafka 消息向哪个本地 MQTT 主题转发消息。",
-      "label": "MQTT主题"
+      "label": "MQTT 主题"
     },
     "consumer_offset_commit_interval_seconds": {
       "desc": "指定 Kafka 消费组偏移量提交的时间间隔。",
@@ -1495,7 +1495,7 @@
   },
   "emqx_bridge_mqtt_schema": {
     "config": {
-      "desc": "MQTT数据桥接的配置。",
+      "desc": "MQTT 数据桥接的配置。",
       "label": "配置"
     },
     "desc_name": {
@@ -1573,7 +1573,7 @@
       "label": "Oracle Database Sid"
     },
     "sql_template": {
-      "desc": "SQL模板。模板字符串可以包含消息元数据和有效载荷字段的占位符。占位符的插入不需要任何检查和特殊格式化，因此必须确保插入的数值格式化和转义正确。模板字符串可以包含占位符模板字符串可以包含消息元数据和有效载荷字段的占位符。这些占位符被插入所以必须确保插入的值的格式正确。因此，确保插入的值格式化和转义正确是非常重要的。模板字符串可以包含占位符模板字符串可以包含消息元数据和有效载荷字段的占位符。这些占位符被插入所以必须确保插入的值的格式正确。确保插入的值被正确地格式化和转义。",
+      "desc": "SQL 模板。模板字符串可以包含消息元数据和有效载荷字段的占位符。占位符的插入不需要任何检查和特殊格式化，因此必须确保插入的数值格式化和转义正确。模板字符串可以包含占位符模板字符串可以包含消息元数据和有效载荷字段的占位符。这些占位符被插入所以必须确保插入的值的格式正确。因此，确保插入的值格式化和转义正确是非常重要的。模板字符串可以包含占位符模板字符串可以包含消息元数据和有效载荷字段的占位符。这些占位符被插入所以必须确保插入的值的格式正确。确保插入的值被正确地格式化和转义。",
       "label": "SQL 模板"
     }
   },
@@ -1621,7 +1621,7 @@
       "label": "Token auth params"
     },
     "auth_token_jwt": {
-      "desc": "JWT认证令牌。",
+      "desc": "JWT 认证令牌。",
       "label": "JWT"
     },
     "authentication": {
@@ -1661,7 +1661,7 @@
       "label": "桥接类型"
     },
     "producer_batch_size": {
-      "desc": "在一个Pulsar消息中批处理的单个请求的最大数量。",
+      "desc": "在一个 Pulsar 消息中批处理的单个请求的最大数量。",
       "label": "批量大小"
     },
     "producer_buffer": {
@@ -1697,7 +1697,7 @@
       "label": "Pulsar 主题名称"
     },
     "producer_retention_period": {
-      "desc": "当没有连接到Pulsar代理时，信息将被缓冲的时间。 较长的时间意味着将使用更多的内存/磁盘",
+      "desc": "当没有连接到 Pulsar 代理时，信息将被缓冲的时间。 较长的时间意味着将使用更多的内存/磁盘",
       "label": "保留期"
     },
     "producer_send_buffer": {
@@ -1705,11 +1705,11 @@
       "label": "Socket 发送缓存大小"
     },
     "producer_strategy": {
-      "desc": "设置消息发布时应该如何选择 Pulsar 分区。\n\n<code>random</code>: 为每个消息随机选择一个分区。\n<code>roundrobin</code>: 依次为每条信息挑选可用的生产商。\n<code>key_dispatch</code>: 将一批信息中的第一条信息的Pulsar信息密钥哈希到一个分区编号。",
+      "desc": "设置消息发布时应该如何选择 Pulsar 分区。\n\n<code>random</code>: 为每个消息随机选择一个分区。\n<code>roundrobin</code>: 依次为每条信息挑选可用的生产商。\n<code>key_dispatch</code>: 将一批信息中的第一条信息的 Pulsar 信息密钥哈希到一个分区编号。",
       "label": "分区选择策略"
     },
     "producer_sync_timeout": {
-      "desc": "同步发布时，从Pulsar接收发送回执的最长等待时间。",
+      "desc": "同步发布时，从 Pulsar 接收发送回执的最长等待时间。",
       "label": "同步发布超时"
     },
     "producer_value_template": {
@@ -1721,7 +1721,7 @@
       "label": "Pulsar 桥接配置"
     },
     "servers": {
-      "desc": "以逗号分隔的 <code>scheme://host[:port]</code> 格式的 Pulsar URL 列表，支持的 scheme 有 <code>pulsar://</code> （默认）和<code>pulsar+ssl://</code>。默认的端口是6650。",
+      "desc": "以逗号分隔的 <code>scheme://host[:port]</code> 格式的 Pulsar URL 列表，支持的 scheme 有 <code>pulsar://</code> （默认）和<code>pulsar+ssl://</code>。默认的端口是 6650。",
       "label": "服务员"
     }
   },
@@ -1875,16 +1875,16 @@
   },
   "emqx_bridge_schema": {
     "bridges_mqtt": {
-      "desc": "桥接到另一个 MQTT Broker 的 MQTT数据桥接",
-      "label": "MQTT数据桥接"
+      "desc": "桥接到另一个 MQTT Broker 的 MQTT 数据桥接",
+      "label": "MQTT 数据桥接"
     },
     "bridges_webhook": {
       "desc": "转发消息到 HTTP 服务器的 WebHook",
       "label": "WebHook"
     },
     "desc_bridges": {
-      "desc": "MQTT数据桥接配置",
-      "label": "MQTT数据桥接配置"
+      "desc": "MQTT 数据桥接配置",
+      "label": "MQTT 数据桥接配置"
     },
     "desc_enable": {
       "desc": "启用/禁用数据桥接",
@@ -2077,12 +2077,12 @@
       "label": "HTTP 请求超时"
     },
     "config_url": {
-      "desc": "HTTP数据桥接的 URL。<br/>\n路径中允许使用带变量的模板，但是 host， port 不允许使用变量模板。<br/>\n例如，<code> http://localhost:9901/${topic} </code> 是允许的，\n但是<code> http://${host}:9901/message </code>\n或 <code> http://localhost:${port}/message </code>\n不允许。",
-      "label": "HTTP数据桥接"
+      "desc": "HTTP 数据桥接的 URL。<br/>\n路径中允许使用带变量的模板，但是 host， port 不允许使用变量模板。<br/>\n例如，<code> http://localhost:9901/${topic} </code> 是允许的，\n但是<code> http://${host}:9901/message </code>\n或 <code> http://localhost:${port}/message </code>\n不允许。",
+      "label": "HTTP 数据桥接"
     },
     "desc_config": {
-      "desc": "HTTP数据桥接配置",
-      "label": "HTTP数据桥接配置"
+      "desc": "HTTP 数据桥接配置",
+      "label": "HTTP 数据桥接配置"
     },
     "desc_name": {
       "desc": "Bridge 名字，Bridge 的可读描述",
@@ -2145,7 +2145,7 @@
       "label": "审计日志文件名"
     },
     "audit_handler_level": {
-      "desc": "审计日志处理进程处理的日志级别。<br/>\n- 处理时间超过3秒的请求将被记录为 <code>warning</code> 级别日志。<br/>\n- HTTP 状态码在200-300之间的 GET 请求记录为<code>debug</code>日志。<br/>\n- HTTP 状态码在200-300之间的非 GET 请求记录为<code>info</code>日志。<br/>\n- HTTP 状态码在300-400之间的请求记录为<code>warning</code>日志。<br/>\n- HTTP 状态码在400-500之间的请求记录为<code>error</code>日志。<br/>\n- 默认为 info 级别。",
+      "desc": "审计日志处理进程处理的日志级别。<br/>\n- 处理时间超过 3 秒的请求将被记录为 <code>warning</code> 级别日志。<br/>\n- HTTP 状态码在 200-300 之间的 GET 请求记录为<code>debug</code>日志。<br/>\n- HTTP 状态码在 200-300 之间的非 GET 请求记录为<code>info</code>日志。<br/>\n- HTTP 状态码在 300-400 之间的请求记录为<code>warning</code>日志。<br/>\n- HTTP 状态码在 400-500 之间的请求记录为<code>error</code>日志。<br/>\n- 默认为 info 级别。",
       "label": "日志级别"
     },
     "authorization": {
@@ -2178,11 +2178,11 @@
     },
     "cluster_dns_name": {
       "desc": "指定 DNS A 记录的名字。emqx 会通过访问这个 DNS A 记录来获取 IP 地址列表。\n当<code>cluster.discovery_strategy</code> 为 <code>dns</code> 时有效。",
-      "label": "DNS名称"
+      "label": "DNS 名称"
     },
     "cluster_dns_record_type": {
       "desc": "DNS 记录类型。",
-      "label": "DNS记录类型"
+      "label": "DNS 记录类型"
     },
     "cluster_etcd_node_ttl": {
       "desc": "指定 etcd 中节点信息的过期时间。\n当 cluster.discovery_strategy 为 etcd 时，此配置项才有效。",
@@ -2201,7 +2201,7 @@
       "label": "Etcd SSL 选项"
     },
     "cluster_k8s_address_type": {
-      "desc": "当使用 k8s 方式集群时，address_type 用来从 Kubernetes 接口的应答里获取什么形式的 Host 列表。\n指定 <code>cluster.k8s.address_type</code> 为 <code>ip</code>，则将从 Kubernetes 接口中获取集群中其他节点\n的IP地址。",
+      "desc": "当使用 k8s 方式集群时，address_type 用来从 Kubernetes 接口的应答里获取什么形式的 Host 列表。\n指定 <code>cluster.k8s.address_type</code> 为 <code>ip</code>，则将从 Kubernetes 接口中获取集群中其他节点\n的 IP 地址。",
       "label": "K8s 地址类型"
     },
     "cluster_k8s_apiserver": {
@@ -2250,10 +2250,10 @@
     },
     "cluster_mcast_ttl": {
       "desc": "指定多播的 Time-To-Live 值。\n当 cluster.discovery_strategy 为 mcast 时，此配置项才有效。",
-      "label": "多播TTL"
+      "label": "多播 TTL"
     },
     "cluster_name": {
-      "desc": "EMQX集群名称。每个集群都有一个唯一的名称。服务发现时会用于做路径的一部分。",
+      "desc": "EMQX 集群名称。每个集群都有一个唯一的名称。服务发现时会用于做路径的一部分。",
       "label": "集群名称"
     },
     "cluster_proto_dist": {
@@ -2261,15 +2261,15 @@
       "label": "集群内部通信协议"
     },
     "cluster_static_seeds": {
-      "desc": "集群中的EMQX节点名称列表，\n指定固定的节点列表，多个节点间使用逗号 , 分隔。\n当 cluster.discovery_strategy 为 static 时，此配置项才有效。\n适合于节点数量较少且固定的集群。",
+      "desc": "集群中的 EMQX 节点名称列表，\n指定固定的节点列表，多个节点间使用逗号 , 分隔。\n当 cluster.discovery_strategy 为 static 时，此配置项才有效。\n适合于节点数量较少且固定的集群。",
       "label": "集群静态节点"
     },
     "common_handler_chars_limit": {
-      "desc": "设置单个日志消息的最大长度。 如果超过此长度，则日志消息将被截断。最小可设置的长度为100。\n注意：如果日志格式为 JSON，限制字符长度可能会导致截断不完整的 JSON 数据。",
+      "desc": "设置单个日志消息的最大长度。 如果超过此长度，则日志消息将被截断。最小可设置的长度为 100。\n注意：如果日志格式为 JSON，限制字符长度可能会导致截断不完整的 JSON 数据。",
       "label": "单条日志长度限制"
     },
     "common_handler_drop_mode_qlen": {
-      "desc": "当缓冲的日志事件数大于此值时，新的日志事件将被丢弃。起到过载保护的功能。\n为了使过载保护算法正常工作必须要：<code> sync_mode_qlen =< drop_mode_qlen =< flush_qlen </code> 且 drop_mode_qlen > 1\n要禁用某些模式，请执行以下操作。\n- 如果sync_mode_qlen被设置为0，所有的日志事件都被同步处理。也就是说，异步日志被禁用。\n- 如果sync_mode_qlen被设置为与drop_mode_qlen相同的值，同步模式被禁用。也就是说，处理程序总是以异步模式运行，除非调用drop或flushing。\n- 如果drop_mode_qlen被设置为与flush_qlen相同的值，则drop模式被禁用，永远不会发生。",
+      "desc": "当缓冲的日志事件数大于此值时，新的日志事件将被丢弃。起到过载保护的功能。\n为了使过载保护算法正常工作必须要：<code> sync_mode_qlen =< drop_mode_qlen =< flush_qlen </code> 且 drop_mode_qlen > 1\n要禁用某些模式，请执行以下操作。\n- 如果 sync_mode_qlen 被设置为 0，所有的日志事件都被同步处理。也就是说，异步日志被禁用。\n- 如果 sync_mode_qlen 被设置为与 drop_mode_qlen 相同的值，同步模式被禁用。也就是说，处理程序总是以异步模式运行，除非调用 drop 或 flushing。\n- 如果 drop_mode_qlen 被设置为与 flush_qlen 相同的值，则 drop 模式被禁用，永远不会发生。",
       "label": "进入丢弃模式的队列长度"
     },
     "common_handler_enable": {
@@ -2301,7 +2301,7 @@
       "label": "报告类型"
     },
     "common_handler_sync_mode_qlen": {
-      "desc": "只要缓冲的日志事件的数量低于这个值，所有的日志事件都会被异步处理。\n这意味着，日志落地速度不会影响正常的业务进程，因为它们不需要等待日志处理进程的响应。\n如果消息队列的增长超过了这个值，处理程序开始同步处理日志事件。也就是说，发送事件的客户进程必须等待响应。\n当处理程序将消息队列减少到低于sync_mode_qlen阈值的水平时，异步操作就会恢复。\n默认为100条信息，当等待的日志事件大于100条时，就开始同步处理日志。",
+      "desc": "只要缓冲的日志事件的数量低于这个值，所有的日志事件都会被异步处理。\n这意味着，日志落地速度不会影响正常的业务进程，因为它们不需要等待日志处理进程的响应。\n如果消息队列的增长超过了这个值，处理程序开始同步处理日志事件。也就是说，发送事件的客户进程必须等待响应。\n当处理程序将消息队列减少到低于 sync_mode_qlen 阈值的水平时，异步操作就会恢复。\n默认为 100 条信息，当等待的日志事件大于 100 条时，就开始同步处理日志。",
       "label": "进入异步模式的队列长度"
     },
     "common_handler_time_offset": {
@@ -2317,7 +2317,7 @@
       "label": "数据库核心节点"
     },
     "db_default_bootstrap_batch_size": {
-      "desc": "在引导过程中，从核心节点向复制节点推送的内置数据库表记录的批量数量。\n引导是在当新的复制节点添加到集群中或现有的复制节点重新连接到核心节点时发生的。\n增加此值可能会大大缩短复制节点的启动时间，特别是在 EMQX 集群互连网络延迟较高且 EMQX 内置数据库保存大量数据（例如订阅量很高时）的情况下\n默认值为500。",
+      "desc": "在引导过程中，从核心节点向复制节点推送的内置数据库表记录的批量数量。\n引导是在当新的复制节点添加到集群中或现有的复制节点重新连接到核心节点时发生的。\n增加此值可能会大大缩短复制节点的启动时间，特别是在 EMQX 集群互连网络延迟较高且 EMQX 内置数据库保存大量数据（例如订阅量很高时）的情况下\n默认值为 500。",
       "label": "默认引导批量大小"
     },
     "db_default_shard_transport": {
@@ -2330,7 +2330,7 @@
     },
     "db_rpc_module": {
       "desc": "集群间推送事务日志到复制节点使用的协议。",
-      "label": "RPC协议"
+      "label": "RPC 协议"
     },
     "db_shard_transports": {
       "desc": "允许为每个 shard 下的事务日志复制操作的传输方法进行调优。<br/>\n<code>gen_rpc</code> 使用 <code>gen_rpc</code> 库，\n<code>distr</code> 使用 Erlang 自带的 rpc 库。<br/>如果未指定，\n默认是使用 <code>db.default_shard_transport</code> 中设置的值。",
@@ -2338,7 +2338,7 @@
     },
     "db_tlog_push_mode": {
       "desc": "同步模式下，核心节点等待复制节点的确认信息，然后再发送下一条事务日志。",
-      "label": "Tlog推送模式"
+      "label": "Tlog 推送模式"
     },
     "desc_audit_log_handler": {
       "desc": "将日志时间输出到文件的审计日志处理进程。",
@@ -2413,8 +2413,8 @@
       "label": "RPC"
     },
     "dist_buffer_size": {
-      "desc": "Erlang分布式缓冲区的繁忙阈值，单位是KB。",
-      "label": "Erlang分布式缓冲区的繁忙阈值(KB)"
+      "desc": "Erlang 分布式缓冲区的繁忙阈值，单位是 KB。",
+      "label": "Erlang 分布式缓冲区的繁忙阈值(KB)"
     },
     "log_audit_handler": {
       "desc": "审计日志文件处理进程",
@@ -2437,7 +2437,7 @@
       "label": "日志文件名字"
     },
     "log_file_handler_max_size": {
-      "desc": "此参数控制日志文件轮换。 `infinity` 意味着日志文件将无限增长，否则日志文件将在达到 `max_size`（以字节为单位）时进行轮换。\n与 rotation count配合使用。如果 counter 为 10，则是10个文件轮换。",
+      "desc": "此参数控制日志文件轮换。 `infinity` 意味着日志文件将无限增长，否则日志文件将在达到 `max_size`（以字节为单位）时进行轮换。\n与 rotation count 配合使用。如果 counter 为 10，则是 10 个文件轮换。",
       "label": "日志文件轮换大小"
     },
     "log_file_handlers": {
@@ -2473,11 +2473,11 @@
       "label": "Erlang 表的最大数量"
     },
     "max_ports": {
-      "desc": "Erlang系统同时存在的最大端口数。\n实际选择的最大值可能比设置的数字大得多。\n参考: https://www.erlang.org/doc/man/erl.html",
+      "desc": "Erlang 系统同时存在的最大端口数。\n实际选择的最大值可能比设置的数字大得多。\n参考: https://www.erlang.org/doc/man/erl.html",
       "label": "Erlang 最大端口数"
     },
     "node_applications": {
-      "desc": "当新EMQX 加入集群时，应重启的Erlang应用程序的列表。",
+      "desc": "当新 EMQX 加入集群时，应重启的 Erlang 应用程序的列表。",
       "label": "应用"
     },
     "node_backtrace_depth": {
@@ -2497,19 +2497,19 @@
       "label": "节点 Cookie"
     },
     "node_crash_dump_bytes": {
-      "desc": "限制崩溃文件的大小，当崩溃时节点内存太大，\n如果为了保存现场，需要全部存到崩溃文件中，此处限制最多能保存多大的文件。\n如果超过此限制，崩溃转储将被截断。如果设置为0，系统不会尝试写入崩溃转储文件。",
+      "desc": "限制崩溃文件的大小，当崩溃时节点内存太大，\n如果为了保存现场，需要全部存到崩溃文件中，此处限制最多能保存多大的文件。\n如果超过此限制，崩溃转储将被截断。如果设置为 0，系统不会尝试写入崩溃转储文件。",
       "label": "崩溃文件最大大小"
     },
     "node_crash_dump_file": {
       "desc": "设置 Erlang crash_dump 文件的存储路径和文件名。",
-      "label": "节点崩溃时的Dump文件"
+      "label": "节点崩溃时的 Dump 文件"
     },
     "node_crash_dump_seconds": {
-      "desc": "该配置给出了运行时系统允许花费的写入崩溃转储的秒数。当给定的秒数已经过去，运行时系统将被终止。<br/>\n- 如果设置为0秒，运行时会立即终止，不会尝试写入崩溃转储文件。<br/>\n- 如果设置为一个正数 S，节点会等待 S 秒来完成崩溃转储文件，然后用SIGALRM信号终止运行时系统。<br/>\n- 如果设置为一个负值导致运行时系统的终止等待无限期地直到崩溃转储文件已经完全写入。",
+      "desc": "该配置给出了运行时系统允许花费的写入崩溃转储的秒数。当给定的秒数已经过去，运行时系统将被终止。<br/>\n- 如果设置为 0 秒，运行时会立即终止，不会尝试写入崩溃转储文件。<br/>\n- 如果设置为一个正数 S，节点会等待 S 秒来完成崩溃转储文件，然后用 SIGALRM 信号终止运行时系统。<br/>\n- 如果设置为一个负值导致运行时系统的终止等待无限期地直到崩溃转储文件已经完全写入。",
       "label": "保存崩溃文件最长时间"
     },
     "node_data_dir": {
-      "desc": "节点数据存放目录，可能会自动创建的子目录如下：<br/>\n- `mnesia/<node_name>`。EMQX的内置数据库目录。例如，`mnesia/emqx@127.0.0.1`。<br/>\n如果节点要被重新命名（例如，`emqx@10.0.1.1`）。旧目录应该首先被删除。<br/>\n- `configs`。在启动时生成的配置，以及集群/本地覆盖的配置。<br/>\n- `patches`: 热补丁文件将被放在这里。<br/>\n- `trace`: 日志跟踪文件。<br/>\n\n**注意**: 一个数据dir不能被两个或更多的EMQX节点同时使用。",
+      "desc": "节点数据存放目录，可能会自动创建的子目录如下：<br/>\n- `mnesia/<node_name>`。EMQX 的内置数据库目录。例如，`mnesia/emqx@127.0.0.1`。<br/>\n如果节点要被重新命名（例如，`emqx@10.0.1.1`）。旧目录应该首先被删除。<br/>\n- `configs`。在启动时生成的配置，以及集群/本地覆盖的配置。<br/>\n- `patches`: 热补丁文件将被放在这里。<br/>\n- `trace`: 日志跟踪文件。<br/>\n\n**注意**: 一个数据 dir 不能被两个或更多的 EMQX 节点同时使用。",
       "label": "节点数据目录"
     },
     "node_dist_net_ticktime": {
@@ -2521,7 +2521,7 @@
       "label": "Etc 目录"
     },
     "node_generic_pool_size": {
-      "desc": "emqx_pool 中的工作进程数。增加此值可能会通过增强并行性提高性能，\n特别是当EMQX集群互连网络延迟较高时。\n默认值为 Erlang 调度器（CPU 核心数）的数量。",
+      "desc": "emqx_pool 中的工作进程数。增加此值可能会通过增强并行性提高性能，\n特别是当 EMQX 集群互连网络延迟较高时。\n默认值为 Erlang 调度器（CPU 核心数）的数量。",
       "label": "节点通用池大小"
     },
     "node_global_gc_interval": {
@@ -2533,7 +2533,7 @@
       "label": "节点名"
     },
     "process_limit": {
-      "desc": "Erlang系统同时存在的最大进程数。\n实际选择的最大值可能比设置的数字大得多。\n参考: https://www.erlang.org/doc/man/erl.html",
+      "desc": "Erlang 系统同时存在的最大进程数。\n实际选择的最大值可能比设置的数字大得多。\n参考: https://www.erlang.org/doc/man/erl.html",
       "label": "Erlang 最大进程数"
     },
     "rpc_async_batch_size": {
@@ -2573,7 +2573,7 @@
       "label": "RPC 私钥文件"
     },
     "rpc_mode": {
-      "desc": "在 <code>sync</code> 模式下，发送端等待接收端的 ack信号。",
+      "desc": "在 <code>sync</code> 模式下，发送端等待接收端的 ack 信号。",
       "label": "RPC 模式"
     },
     "rpc_port_discovery": {
@@ -2609,7 +2609,7 @@
       "label": "RPC 套接字发送缓冲区大小"
     },
     "rpc_ssl_server_port": {
-      "desc": "RPC 本地服务使用的监听SSL端口。<br/>\n只有当 rpc.port_discovery 设置为 manual 且 <code> dirver </code> 设置为 <code>ssl</code>，\n此配置才会生效。",
+      "desc": "RPC 本地服务使用的监听 SSL 端口。<br/>\n只有当 rpc.port_discovery 设置为 manual 且 <code> dirver </code> 设置为 <code>ssl</code>，\n此配置才会生效。",
       "label": "RPC SSL 服务监听端口"
     },
     "rpc_tcp_client_num": {
@@ -2653,11 +2653,11 @@
   },
   "emqx_connector_http": {
     "body": {
-      "desc": "HTTP请求报文主体。",
-      "label": "HTTP请求报文主体"
+      "desc": "HTTP 请求报文主体。",
+      "label": "HTTP 请求报文主体"
     },
     "connect_timeout": {
-      "desc": "连接HTTP服务器的超时时间。",
+      "desc": "连接 HTTP 服务器的超时时间。",
       "label": "连接超时"
     },
     "enable_pipelining": {
@@ -2677,8 +2677,8 @@
       "label": "HTTP 请求方法"
     },
     "path": {
-      "desc": "HTTP请求路径。",
-      "label": "HTTP请求路径"
+      "desc": "HTTP 请求路径。",
+      "label": "HTTP 请求路径"
     },
     "pool_size": {
       "desc": "连接池大小。",
@@ -2737,11 +2737,11 @@
       "label": "配置 Topology"
     },
     "heartbeat_period": {
-      "desc": "控制驱动程序何时检查MongoDB部署的状态。指定检查的间隔时间，从上一次检查结束到下一次检查开始计算。如果连接数增加（例如，如果你增加池子的大小，就会发生这种情况），你可能也需要增加这个周期，以避免在MongoDB日志文件中创建太多的日志条目。",
+      "desc": "控制驱动程序何时检查 MongoDB 部署的状态。指定检查的间隔时间，从上一次检查结束到下一次检查开始计算。如果连接数增加（例如，如果你增加池子的大小，就会发生这种情况），你可能也需要增加这个周期，以避免在 MongoDB 日志文件中创建太多的日志条目。",
       "label": "心跳期"
     },
     "local_threshold": {
-      "desc": "在多个合适的MongoDB实例中进行选择的延迟窗口的大小。",
+      "desc": "在多个合适的 MongoDB 实例中进行选择的延迟窗口的大小。",
       "label": "本地阈值"
     },
     "max_overflow": {
@@ -2758,7 +2758,7 @@
     },
     "overflow_ttl": {
       "desc": "当池内工人太多时，等待多久清除多余工人。",
-      "label": "溢出TTL"
+      "label": "溢出 TTL"
     },
     "r_mode": {
       "desc": "读模式。",
@@ -2769,7 +2769,7 @@
       "label": "副本集名称"
     },
     "rs_mongo_type": {
-      "desc": "Replica set模式。当 MongoDB 服务运行在 replica-set 模式下，该配置必须设置为 'rs'。",
+      "desc": "Replica set 模式。当 MongoDB 服务运行在 replica-set 模式下，该配置必须设置为 'rs'。",
       "label": "Replica set 模式"
     },
     "server": {
@@ -2785,7 +2785,7 @@
       "label": "服务器列表"
     },
     "sharded_mongo_type": {
-      "desc": "Sharded cluster模式。当 MongoDB 服务运行在 sharded 模式下，该配置必须设置为 'sharded'。",
+      "desc": "Sharded cluster 模式。当 MongoDB 服务运行在 sharded 模式下，该配置必须设置为 'sharded'。",
       "label": "Sharded cluster 模式"
     },
     "single_mongo_type": {
@@ -2825,7 +2825,7 @@
   },
   "emqx_connector_mqtt_schema": {
     "bridge_mode": {
-      "desc": "是否启用数据桥接Mode。\n注意：此设置只针对 MQTT 协议版本 < 5.0 有效，并且需要远程 MQTT Broker 支持数据桥接Mode。\n如果设置为 true ，桥接会告诉远端服务器当前连接是一个桥接而不是一个普通的客户端。\n这意味着消息回环检测会更加高效，并且远端服务器收到的保留消息的标志位会透传给本地。",
+      "desc": "是否启用数据桥接 Mode。\n注意：此设置只针对 MQTT 协议版本 < 5.0 有效，并且需要远程 MQTT Broker 支持数据桥接 Mode。\n如果设置为 true ，桥接会告诉远端服务器当前连接是一个桥接而不是一个普通的客户端。\n这意味着消息回环检测会更加高效，并且远端服务器收到的保留消息的标志位会透传给本地。",
       "label": "Bridge 模式"
     },
     "clean_start": {
@@ -2833,8 +2833,8 @@
       "label": "清除会话"
     },
     "clientid_prefix": {
-      "desc": "可选的前缀，用于在出口网桥使用的clientid前加上前缀。",
-      "label": "客户ID前缀"
+      "desc": "可选的前缀，用于在出口网桥使用的 clientid 前加上前缀。",
+      "label": "客户 ID 前缀"
     },
     "egress_desc": {
       "desc": "出口配置定义了该桥接如何将消息从本地 Broker 转发到远程 Broker。\n以下字段中允许使用带有变量的模板：'remote.topic', 'local.qos', 'local.retain', 'local.payload'。<br/>\n注意：如果此桥接被用作规则的动作，并且配置了 'local.topic'，则从规则输出的数据以及匹配到 'local.topic' 的 MQTT 消息都会被转发。",
@@ -2845,7 +2845,7 @@
       "label": "本地配置"
     },
     "egress_local_topic": {
-      "desc": "要转发到远程broker的本地主题",
+      "desc": "要转发到远程 broker 的本地主题",
       "label": "本地主题"
     },
     "egress_remote": {
@@ -2857,7 +2857,7 @@
       "label": "远程 QoS"
     },
     "egress_remote_topic": {
-      "desc": "转发到远程broker的哪个topic。<br/>\n允许使用带有变量的模板。",
+      "desc": "转发到远程 broker 的哪个 topic。<br/>\n允许使用带有变量的模板。",
       "label": "远程主题"
     },
     "ingress_desc": {
@@ -2873,7 +2873,7 @@
       "label": "本地 QoS"
     },
     "ingress_local_topic": {
-      "desc": "向本地broker的哪个topic发送消息。<br/>\n允许使用带有变量的模板。",
+      "desc": "向本地 broker 的哪个 topic 发送消息。<br/>\n允许使用带有变量的模板。",
       "label": "本地主题"
     },
     "ingress_remote": {
@@ -2881,11 +2881,11 @@
       "label": "远程配置"
     },
     "ingress_remote_qos": {
-      "desc": "订阅远程borker时要使用的 QoS 级别",
+      "desc": "订阅远程 borker 时要使用的 QoS 级别",
       "label": "远程 QoS"
     },
     "ingress_remote_topic": {
-      "desc": "从远程broker的哪个topic接收消息",
+      "desc": "从远程 broker 的哪个 topic 接收消息",
       "label": "远程主题"
     },
     "max_inflight": {
@@ -2913,8 +2913,8 @@
       "label": "保留消息标志"
     },
     "server": {
-      "desc": "远程 MQTT Broker的主机和端口。",
-      "label": "Broker主机和端口"
+      "desc": "远程 MQTT Broker 的主机和端口。",
+      "label": "Broker 主机和端口"
     },
     "server_configs": {
       "desc": "服务器相关的配置。",
@@ -2990,7 +2990,7 @@
     },
     "ssl": {
       "desc": "启用 SSL 连接。",
-      "label": "启用SSL"
+      "label": "启用 SSL"
     },
     "username": {
       "desc": "内部数据库的用户名。",
@@ -3202,7 +3202,7 @@
       "label": "Swagger API 默认语言"
     },
     "inet6": {
-      "desc": "启用IPv6， 如果机器不支持IPv6，请关闭此选项，否则会导致 Dashboard 无法使用。",
+      "desc": "启用 IPv6， 如果机器不支持 IPv6，请关闭此选项，否则会导致 Dashboard 无法使用。",
       "label": "IPv6"
     },
     "ipv6_v6only": {
@@ -3214,7 +3214,7 @@
       "label": "启用监听器"
     },
     "listeners": {
-      "desc": "Dashboard 监听器设置。监听器必须有唯一的端口号和IP地址的组合。\n例如，可以通过指定IP地址 0.0.0.0 来监听机器上给定端口上的所有配置的IP地址。\n或者，可以为每个监听器指定唯一的IP地址，但使用相同的端口。",
+      "desc": "Dashboard 监听器设置。监听器必须有唯一的端口号和 IP 地址的组合。\n例如，可以通过指定 IP 地址 0.0.0.0 来监听机器上给定端口上的所有配置的 IP 地址。\n或者，可以为每个监听器指定唯一的 IP 地址，但使用相同的端口。",
       "label": "监听器"
     },
     "max_connections": {
@@ -3423,8 +3423,8 @@
       "label": "将要使用的集合（Collection）"
     },
     "desc_config": {
-      "desc": "为MongoDB桥配置",
-      "label": "MongoDB桥配置"
+      "desc": "为 MongoDB 桥配置",
+      "label": "MongoDB 桥配置"
     },
     "desc_name": {
       "desc": "桥接名称。",
@@ -3435,7 +3435,7 @@
       "label": "桥接类型"
     },
     "enable": {
-      "desc": "启用或停用该MongoDB桥",
+      "desc": "启用或停用该 MongoDB 桥",
       "label": "启用或禁用"
     },
     "mongodb_rs_conf": {
@@ -3633,8 +3633,8 @@
       "label": "钩子参数"
     },
     "list_all_servers": {
-      "desc": "查看ExHook 服务器列表",
-      "label": "查看ExHook 服务器列表"
+      "desc": "查看 ExHook 服务器列表",
+      "label": "查看 ExHook 服务器列表"
     },
     "metric_failed": {
       "desc": "钩子执行失败的次数",
@@ -3658,7 +3658,7 @@
     },
     "move_api": {
       "desc": "移动 Exhook 服务器顺序。\n注意: 移动的参数只能是：front | rear | before:{name} | after:{name}",
-      "label": "改变已注册的Exhook服务器的执行顺序"
+      "label": "改变已注册的 Exhook 服务器的执行顺序"
     },
     "move_position": {
       "desc": "移动的方向",
@@ -3746,7 +3746,7 @@
       "desc": "对端 gRPC 服务器地址。"
     },
     "exproto_grpc_handler_service_name": {
-      "desc": "用于处理连接事件的服务名称\n在初始版本中，我们期望使用流来提高 ConnectionHandler 中请求的效率。\n但不幸的是，不同流之间的事件顺序混乱。\n这导致 OnSocketCreated 事件可能会\n在 OnReceivedBytes 之后到达。\n因此，自v5.0.25起，我们添加了 `ConnectionUnaryHandler` 服务，并强制在其中使用了 Unary，以避免顺序问题。"
+      "desc": "用于处理连接事件的服务名称\n在初始版本中，我们期望使用流来提高 ConnectionHandler 中请求的效率。\n但不幸的是，不同流之间的事件顺序混乱。\n这导致 OnSocketCreated 事件可能会\n在 OnReceivedBytes 之后到达。\n因此，自 v5.0.25 起，我们添加了 `ConnectionUnaryHandler` 服务，并强制在其中使用了 Unary，以避免顺序问题。"
     },
     "exproto_grpc_handler_ssl": {
       "desc": "gRPC 客户端的 SSL 配置。"
@@ -3769,7 +3769,7 @@
       "desc": "列出已上传的所有文件"
     },
     "file_list_transfer": {
-      "desc": "根据客户端ID或者文件ID列出所有已上传的文件"
+      "desc": "根据客户端 ID 或者文件 ID 列出所有已上传的文件"
     },
     "file_transfer_get_config": {
       "desc": "显示当前文件传输配置。"
@@ -3833,7 +3833,7 @@
   },
   "emqx_ft_storage_exporter_fs_api": {
     "file_get": {
-      "desc": "根据文件ID下载指定文件"
+      "desc": "根据文件 ID 下载指定文件"
     }
   },
   "emqx_gateway_api": {
@@ -4136,7 +4136,7 @@
       "desc": "订阅属性"
     },
     "subid": {
-      "desc": "订阅ID，仅用于 Stomp 网关。用于创建订阅关系时指定订阅 ID。取值范围 1-65535。"
+      "desc": "订阅 ID，仅用于 Stomp 网关。用于创建订阅关系时指定订阅 ID。取值范围 1-65535。"
     },
     "subscriptions_cnt": {
       "desc": "客户端已订阅主题数"
@@ -4399,7 +4399,7 @@
       "label": "绑定的密码"
     },
     "filter": {
-      "desc": "定义哪些条件必须被依次满足的过滤器\n用于搜索匹配一条给定的条目.<br>\n筛选器的语法遵循RFC 4515，并且还支持占位符。",
+      "desc": "定义哪些条件必须被依次满足的过滤器\n用于搜索匹配一条给定的条目.<br>\n筛选器的语法遵循 RFC 4515，并且还支持占位符。",
       "label": "过滤器"
     },
     "request_timeout": {
@@ -4604,7 +4604,7 @@
       "desc": "允许 LwM2M 客户端允许设置的心跳最小值。"
     },
     "lwm2m_qmode_time_window": {
-      "desc": "在QMode模式下，LwM2M网关认为网络链接有效的时间窗口的值。\n例如，在收到客户端的更新信息后，在这个时间窗口内的任何信息都会直接发送到LwM2M客户端，而超过这个时间窗口的所有信息都会暂时储存在内存中。"
+      "desc": "在 QMode 模式下，LwM2M 网关认为网络链接有效的时间窗口的值。\n例如，在收到客户端的更新信息后，在这个时间窗口内的任何信息都会直接发送到 LwM2M 客户端，而超过这个时间窗口的所有信息都会暂时储存在内存中。"
     },
     "lwm2m_translators": {
       "desc": "LwM2M 网关订阅/发布消息的主题映射配置。"
@@ -4622,10 +4622,10 @@
       "desc": "用于网关发布来自 LwM2M 客户端的确认事件的主题。"
     },
     "lwm2m_translators_update": {
-      "desc": "用于发布来自LwM2M客户端的更新事件的主题。"
+      "desc": "用于发布来自 LwM2M 客户端的更新事件的主题。"
     },
     "lwm2m_update_msg_publish_condition": {
-      "desc": "发布UPDATE事件消息的策略。<br/>\n  - always: 只要收到 UPDATE 请求，就发送更新事件。<br/>\n  - contains_object_list: 仅当 UPDATE 请求携带 Object 列表时才发送更新事件。"
+      "desc": "发布 UPDATE 事件消息的策略。<br/>\n  - always: 只要收到 UPDATE 请求，就发送更新事件。<br/>\n  - contains_object_list: 仅当 UPDATE 请求携带 Object 列表时才发送更新事件。"
     },
     "lwm2m_xml_dir": {
       "desc": "LwM2M Resource 定义的 XML 文件目录路径。"
@@ -4873,12 +4873,12 @@
       "label": "创建监听器"
     },
     "delete_on_all_nodes": {
-      "desc": "删除所有节点上指定ID的监听器",
+      "desc": "删除所有节点上指定 ID 的监听器",
       "label": "删除监听器"
     },
     "list_by_id": {
-      "desc": "获取指定ID的监听器",
-      "label": "获取指定ID的监听器"
+      "desc": "获取指定 ID 的监听器",
+      "label": "获取指定 ID 的监听器"
     },
     "list_listeners": {
       "desc": "列出所有节点上的指定类型的监听器",
@@ -4893,19 +4893,19 @@
       "label": "监听器类型"
     },
     "restart_on_all_nodes": {
-      "desc": "在所有节点上重启指定ID的监听器",
+      "desc": "在所有节点上重启指定 ID 的监听器",
       "label": "重启监听器"
     },
     "start_on_all_nodes": {
-      "desc": "在所有节点上启动指定ID的监听器",
+      "desc": "在所有节点上启动指定 ID 的监听器",
       "label": "启动监听器"
     },
     "stop_on_all_nodes": {
-      "desc": "在所有节点上停止指定ID的监听器",
+      "desc": "在所有节点上停止指定 ID 的监听器",
       "label": "停止监听器"
     },
     "update_lisener": {
-      "desc": "为集群中所有的节点更新指定ID的监听器",
+      "desc": "为集群中所有的节点更新指定 ID 的监听器",
       "label": "更新监听器"
     }
   },
@@ -4996,14 +4996,14 @@
   },
   "emqx_mgmt_api_status": {
     "get_status_api": {
-      "desc": "节点的健康检查 API，返回当前节点状态信息。\n\n如果 EMQX 应用程序已经启动并运行，返回状态代码 200，否则返回 503。\n\n这个API是在 v5.0.10 中引入的。GET `/status` 端点（没有 `/api/...` 前缀）也是这个端点的一个别名。 这个别名从 v5.0.0 开始就有了。自 v5.0.25 和 e5.0.4 开始，可以通过指定 'format' 参数来得到 JSON 格式的信息。",
+      "desc": "节点的健康检查 API，返回当前节点状态信息。\n\n如果 EMQX 应用程序已经启动并运行，返回状态代码 200，否则返回 503。\n\n这个 API 是在 v5.0.10 中引入的。GET `/status` 端点（没有 `/api/...` 前缀）也是这个端点的一个别名。 这个别名从 v5.0.0 开始就有了。自 v5.0.25 和 e5.0.4 开始，可以通过指定 'format' 参数来得到 JSON 格式的信息。",
       "label": "节点健康检查"
     },
     "get_status_api_format": {
       "desc": "指定返回的内容格式。使用 'text'（默认）则返回自由格式的字符串； 'json' 则返回 JSON 格式。"
     },
     "get_status_response200": {
-      "desc": "如果 'format' 参数为 'json'，则返回如下JSON：<br/>\n{\n  \"rel_vsn\": \"v5.0.23\",\n  \"node_name\": \"emqx@127.0.0.1\",\n  \"broker_status\": \"started\",\n  \"app_status\": \"running\"\n}\n<br/>\n否则返回 2 行自由格式的文本，第一行描述节点的状态，第二行描述 EMQX 应用运行状态。例如：<br/>\n\n```\nNode emqx@127.0.0.1 is started\nemqx is running\n```\n"
+      "desc": "如果 'format' 参数为 'json'，则返回如下 JSON：<br/>\n{\n  \"rel_vsn\": \"v5.0.23\",\n  \"node_name\": \"emqx@127.0.0.1\",\n  \"broker_status\": \"started\",\n  \"app_status\": \"running\"\n}\n<br/>\n否则返回 2 行自由格式的文本，第一行描述节点的状态，第二行描述 EMQX 应用运行状态。例如：<br/>\n\n```\nNode emqx@127.0.0.1 is started\nemqx is running\n```\n"
     },
     "get_status_response503": {
       "desc": "如果 EMQX 应用暂时没有启动，或正在重启，则可能返回 'emqx is not_running'"
@@ -5412,7 +5412,7 @@
   },
   "emqx_plugins_schema": {
     "check_interval": {
-      "desc": "检查间隔：检查集群中插件的状态是否一致，<br/>\n如果连续3次检查结果不一致，则报警。"
+      "desc": "检查间隔：检查集群中插件的状态是否一致，<br/>\n如果连续 3 次检查结果不一致，则报警。"
     },
     "enable": {
       "desc": "设置为“true”以启用此插件。",
@@ -5423,11 +5423,11 @@
       "label": "安装目录"
     },
     "name_vsn": {
-      "desc": "插件的名称{name}-{version}。<br/>\n它应该与插件的发布包名称一致，如my_plugin-0.1.0。",
+      "desc": "插件的名称{name}-{version}。<br/>\n它应该与插件的发布包名称一致，如 my_plugin-0.1.0。",
       "label": "名称-版本"
     },
     "plugins": {
-      "desc": "管理EMQX插件。<br/>\n插件可以是EMQX安装包中的一部分，也可以是一个独立的安装包。<br/>\n独立安装的插件称为“外部插件”。",
+      "desc": "管理 EMQX 插件。<br/>\n插件可以是 EMQX 安装包中的一部分，也可以是一个独立的安装包。<br/>\n独立安装的插件称为“外部插件”。",
       "label": "插件"
     },
     "state": {
@@ -5503,7 +5503,7 @@
       "desc": "如果设置了初始化文件，EMQX 将在启动时从初始化文件中导入 PSK 信息到内建数据库中。\n这个文件需要按行进行组织，每一行必须遵守如下格式: <code>PSKIdentity:SharedSecret</code>\n例如: <code>mydevice1:c2VjcmV0</code>"
     },
     "psk_authentication": {
-      "desc": "此配置用于启用 TLS-PSK 身份验证。\n\nPSK 是 “Pre-Shared-Keys” 的缩写。\n\n注意: 确保 SSL 监听器仅启用了 'tlsv1.2'，并且配置了PSK 密码套件，例如 'RSA-PSK-AES256-GCM-SHA384'。\n\n可以通过查看监听器中的 SSL 选项，了解更多详细信息。\n\n可以通过配置 'init_file' 来设置初始化的 ID 和 密钥"
+      "desc": "此配置用于启用 TLS-PSK 身份验证。\n\nPSK 是 “Pre-Shared-Keys” 的缩写。\n\n注意: 确保 SSL 监听器仅启用了 'tlsv1.2'，并且配置了 PSK 密码套件，例如 'RSA-PSK-AES256-GCM-SHA384'。\n\n可以通过查看监听器中的 SSL 选项，了解更多详细信息。\n\n可以通过配置 'init_file' 来设置初始化的 ID 和 密钥"
     },
     "separator": {
       "desc": "PSK 文件中 <code>PSKIdentity</code> 和 <code>SharedSecret</code> 之间的分隔符"
@@ -5515,7 +5515,7 @@
       "label": "自动重连间隔"
     },
     "batch_size": {
-      "desc": "最大批量请求大小。如果设为1，则无批处理。",
+      "desc": "最大批量请求大小。如果设为 1，则无批处理。",
       "label": "最大批量请求大小"
     },
     "batch_time": {
@@ -5826,7 +5826,7 @@
       "label": "保留消息"
     },
     "event_server": {
-      "desc": "MQTT broker的 IP 地址（或主机名）和端口，采用 IP:Port 格式",
+      "desc": "MQTT broker 的 IP 地址（或主机名）和端口，采用 IP:Port 格式",
       "label": "服务器 IP 地址和端口"
     },
     "event_sockname": {
@@ -5882,7 +5882,7 @@
       "label": "Matched Rate"
     },
     "metrics_sql_matched_rate_last5m": {
-      "desc": "5分钟平均命中速率，次/秒",
+      "desc": "5 分钟平均命中速率，次/秒",
       "label": "平均命中速率"
     },
     "metrics_sql_matched_rate_max": {
@@ -6112,7 +6112,7 @@
       "label": "规则"
     },
     "rules_actions": {
-      "desc": "规则的动作列表。\n动作可以是指向 EMQX数据桥接的引用，也可以是一个指向函数的对象。\n我们支持一些内置函数，如“republish”和“console”，我们还支持用户提供的函数，它的格式为：“{module}:{function}”。\n列表中的动作按顺序执行。这意味着如果其中一个动作执行缓慢，则以下所有动作都不会被执行直到它返回。\n如果其中一个动作崩溃，在它之后的所有动作仍然会被按照原始顺序执行。\n如果运行动作时出现任何错误，则会出现错误消息，并且相应的计数器会增加。",
+      "desc": "规则的动作列表。\n动作可以是指向 EMQX 数据桥接的引用，也可以是一个指向函数的对象。\n我们支持一些内置函数，如“republish”和“console”，我们还支持用户提供的函数，它的格式为：“{module}:{function}”。\n列表中的动作按顺序执行。这意味着如果其中一个动作执行缓慢，则以下所有动作都不会被执行直到它返回。\n如果其中一个动作崩溃，在它之后的所有动作仍然会被按照原始顺序执行。\n如果运行动作时出现任何错误，则会出现错误消息，并且相应的计数器会增加。",
       "label": "动作列表"
     },
     "rules_description": {
@@ -6213,7 +6213,7 @@
       "label": "最大并发连接数"
     },
     "base_listener_mountpoint": {
-      "desc": "发布或订阅时，请在所有主题前面加上 mountpoint 字符串。\n\n将消息传递给订阅者时，将从主题名称中删除带前缀的字符串。挂载点是一种用户可以用来实现不同侦听器之间消息路由隔离的方法。\n\n例如，如果客户机 A 使用 <code>listeners.tcp.\\<name>.mountpoint</code> 设置为'some_tenant'，那么客户端实际上订阅了主题'some_tenant/t'。<br/>\n类似地，如果另一个客户端B（与客户端A连接到同一个侦听器）向主题 't' 发送消息，该消息将路由到所有订阅了'some_租户/t'的客户端，因此客户端 A 将接收主题名为't'的消息<br/>\n\n设置为<code>\"\"</code> 以禁用该功能<br/>\n\nmountpoint 字符串中的变量：\n- <code>${clientid}</code>: clientid\n- <code>${username}</code>: username",
+      "desc": "发布或订阅时，请在所有主题前面加上 mountpoint 字符串。\n\n将消息传递给订阅者时，将从主题名称中删除带前缀的字符串。挂载点是一种用户可以用来实现不同侦听器之间消息路由隔离的方法。\n\n例如，如果客户机 A 使用 <code>listeners.tcp.\\<name>.mountpoint</code> 设置为'some_tenant'，那么客户端实际上订阅了主题'some_tenant/t'。<br/>\n类似地，如果另一个客户端 B（与客户端 A 连接到同一个侦听器）向主题 't' 发送消息，该消息将路由到所有订阅了'some_租户/t'的客户端，因此客户端 A 将接收主题名为't'的消息<br/>\n\n设置为<code>\"\"</code> 以禁用该功能<br/>\n\nmountpoint 字符串中的变量：\n- <code>${clientid}</code>: clientid\n- <code>${username}</code>: username",
       "label": "mountpoint"
     },
     "base_listener_zone": {
@@ -6233,7 +6233,7 @@
       "desc": "是否开启主题表压缩存储。\n启用它会显着提高通配符主题订阅率，如果通配符主题具有唯一前缀，例如：'sensor/{{id}}/+/'，其中每个订阅者的 ID 是唯一的。\n如果消息主要发布到具有大量级别的主题，则主题匹配性能（发布时）可能会降低。\n\n注意：这是一个集群范围的配置。 它要求在更改之前停止所有节点。"
     },
     "broker_routing_storage_schema": {
-      "desc": "路由存储模式。\n设置为 <code>v1</code> 以保留默认设置。\n<code>v2</code> 在版本5.2中引入。它允许通过两个单独的表进行路由，一个用于主题过滤，一个用于常规主题订阅。这个模式会同时提高订阅和路由性能，但会略微增加每个订阅的内存消耗。\n注意：模式 <code>v2</code> 仍然处于实验阶段。\n注意：更改此选项后，需要进行完整的非滚动集群重启才能生效。"
+      "desc": "路由存储模式。\n设置为 <code>v1</code> 以保留默认设置。\n<code>v2</code> 在版本 5.2 中引入。它允许通过两个单独的表进行路由，一个用于主题过滤，一个用于常规主题订阅。这个模式会同时提高订阅和路由性能，但会略微增加每个订阅的内存消耗。\n注意：模式 <code>v2</code> 仍然处于实验阶段。\n注意：更改此选项后，需要进行完整的非滚动集群重启才能生效。"
     },
     "broker_session_locking_strategy": {
       "desc": "Session 在集群中的锁策略。\n  - `loca`：仅锁本节点的 Session；\n  - `one`：任选一个其它节点加锁；\n  - `quorum`：选择集群中半数以上的节点加锁；\n  - `all`：选择所有节点加锁。"
@@ -6249,7 +6249,7 @@
       "label": "数据发布速率"
     },
     "ciphers_schema_common": {
-      "desc": "此配置保存由逗号分隔的 TLS 密码套件名称，或作为字符串数组。例如\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code>或\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>。\n<br/>\n密码（及其顺序）定义了客户端和服务器通过网络连接加密信息的方式。\n选择一个好的密码套件对于应用程序的数据安全性、机密性和性能至关重要。\n\n名称应为 OpenSSL 字符串格式（而不是 RFC 格式）。\nEMQX 配置文档提供的所有默认值和示例都是 OpenSSL 格式<br/>\n注意：某些密码套件仅与特定的 TLS <code>版本</code>兼容（'tlsv1.1'、'tlsv1.2'或'tlsv1.3'）。\n不兼容的密码套件将被自动删除。\n\n例如，如果只有 <code>versions</code> 仅配置为 <code>tlsv1.3</code>。为其他版本配置密码套件将无效。\n\n<br/>\n注：PSK 的 Ciphers 不支持 tlsv1.3<br/>\n如果打算使用PSK密码套件, <code>tlsv1.3</code> 应在<code>ssl.versions</code>中禁用。\n\n<br/>\nPSK 密码套件：\n<code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code>",
+      "desc": "此配置保存由逗号分隔的 TLS 密码套件名称，或作为字符串数组。例如\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code>或\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>。\n<br/>\n密码（及其顺序）定义了客户端和服务器通过网络连接加密信息的方式。\n选择一个好的密码套件对于应用程序的数据安全性、机密性和性能至关重要。\n\n名称应为 OpenSSL 字符串格式（而不是 RFC 格式）。\nEMQX 配置文档提供的所有默认值和示例都是 OpenSSL 格式<br/>\n注意：某些密码套件仅与特定的 TLS <code>版本</code>兼容（'tlsv1.1'、'tlsv1.2'或'tlsv1.3'）。\n不兼容的密码套件将被自动删除。\n\n例如，如果只有 <code>versions</code> 仅配置为 <code>tlsv1.3</code>。为其他版本配置密码套件将无效。\n\n<br/>\n注：PSK 的 Ciphers 不支持 tlsv1.3<br/>\n如果打算使用 PSK 密码套件, <code>tlsv1.3</code> 应在<code>ssl.versions</code>中禁用。\n\n<br/>\nPSK 密码套件：\n<code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code>",
       "label": ""
     },
     "ciphers_schema_quic": {
@@ -6265,7 +6265,7 @@
       "label": "服务器名称指示"
     },
     "common_ssl_opts_schema_cacertfile": {
-      "desc": "受信任的PEM格式 CA  证书捆绑文件<br/>\n此文件中的证书用于验证TLS对等方的证书。\n如果要信任新 CA，请将新证书附加到文件中。\n无需重启EMQX即可加载更新的文件，因为系统会定期检查文件是否已更新（并重新加载）<br/>\n注意：从文件中失效（删除）证书不会影响已建立的连接。",
+      "desc": "受信任的 PEM 格式 CA  证书捆绑文件<br/>\n此文件中的证书用于验证 TLS 对等方的证书。\n如果要信任新 CA，请将新证书附加到文件中。\n无需重启 EMQX 即可加载更新的文件，因为系统会定期检查文件是否已更新（并重新加载）<br/>\n注意：从文件中失效（删除）证书不会影响已建立的连接。",
       "label": "CA 证书文件"
     },
     "common_ssl_opts_schema_cacerts": {
@@ -6273,11 +6273,11 @@
       "label": "使用系统 CA 证书"
     },
     "common_ssl_opts_schema_certfile": {
-      "desc": "PEM格式证书链文件<br/>\n此文件中的证书应与证书颁发链的顺序相反。也就是说，主机的证书应该放在文件的开头，\n然后是直接颁发者 CA 证书，依此类推，一直到根 CA 证书。\n根 CA 证书是可选的，如果想要添加，应加到文件到最末端。",
+      "desc": "PEM 格式证书链文件<br/>\n此文件中的证书应与证书颁发链的顺序相反。也就是说，主机的证书应该放在文件的开头，\n然后是直接颁发者 CA 证书，依此类推，一直到根 CA 证书。\n根 CA 证书是可选的，如果想要添加，应加到文件到最末端。",
       "label": "证书文件"
     },
     "common_ssl_opts_schema_depth": {
-      "desc": "在有效的证书路径中，可以跟随对等证书的非自颁发中间证书的最大数量。\n因此，如果深度为0，则对等方必须由受信任的根 CA 直接签名；<br/>\n如果是1，路径可以是 PEER、中间 CA、ROOT-CA；<br/>\n如果是2，则路径可以是PEER、中间 CA1、中间 CA2、ROOT-CA。",
+      "desc": "在有效的证书路径中，可以跟随对等证书的非自颁发中间证书的最大数量。\n因此，如果深度为 0，则对等方必须由受信任的根 CA 直接签名；<br/>\n如果是 1，路径可以是 PEER、中间 CA、ROOT-CA；<br/>\n如果是 2，则路径可以是 PEER、中间 CA1、中间 CA2、ROOT-CA。",
       "label": "CA 证书深度"
     },
     "common_ssl_opts_schema_hibernate_after": {
@@ -6285,7 +6285,7 @@
       "label": "闲置多久后休眠"
     },
     "common_ssl_opts_schema_keyfile": {
-      "desc": "PEM格式的私钥文件。",
+      "desc": "PEM 格式的私钥文件。",
       "label": "私钥文件"
     },
     "common_ssl_opts_schema_log_level": {
@@ -6313,7 +6313,7 @@
       "label": "对等验证"
     },
     "common_ssl_opts_schema_versions": {
-      "desc": "支持所有TLS/DTLS版本<br/>\n注：PSK 的 Ciphers 无法在 <code>tlsv1.3</code> 中使用，如果打算使用 PSK 密码套件，请确保这里配置为 <code>[\"tlsv1.2\",\"tlsv1.1\"]</code>。",
+      "desc": "支持所有 TLS/DTLS 版本<br/>\n注：PSK 的 Ciphers 无法在 <code>tlsv1.3</code> 中使用，如果打算使用 PSK 密码套件，请确保这里配置为 <code>[\"tlsv1.2\",\"tlsv1.1\"]</code>。",
       "label": "SSL 版本"
     },
     "conn_congestion_enable_alarm": {
@@ -6333,7 +6333,7 @@
       "label": "CRL 缓存刷新 HTTP 超时"
     },
     "crl_cache_refresh_interval": {
-      "desc": "从服务器刷新CRL的周期。 该配置对所有 URL 和监听器有效。",
+      "desc": "从服务器刷新 CRL 的周期。 该配置对所有 URL 和监听器有效。",
       "label": "CRL 缓存刷新间隔"
     },
     "fields_authorization_deny_action": {
@@ -6341,7 +6341,7 @@
       "label": "授权检查拒绝操作时的操作"
     },
     "fields_authorization_no_match": {
-      "desc": "如果用户或客户端不匹配ACL规则，或者从可配置授权源(比如内置数据库、HTTP API 或 PostgreSQL 等。)内未找\n到此类用户或客户端时，模式的认访问控制操作。\n在“授权”中查找更多详细信息。",
+      "desc": "如果用户或客户端不匹配 ACL 规则，或者从可配置授权源(比如内置数据库、HTTP API 或 PostgreSQL 等。)内未找\n到此类用户或客户端时，模式的认访问控制操作。\n在“授权”中查找更多详细信息。",
       "label": "未匹时的默认授权动作"
     },
     "fields_cache_enable": {
@@ -6417,11 +6417,11 @@
       "label": "流控窗口"
     },
     "fields_mqtt_quic_listener_datagram_receive_enabled": {
-      "desc": "宣传对QUIC Datagram 扩展的支持。为将来保留。默认为0（FALSE）",
+      "desc": "宣传对 QUIC Datagram 扩展的支持。为将来保留。默认为 0（FALSE）",
       "label": "启用 Datagram 接收"
     },
     "fields_mqtt_quic_listener_disconnect_timeout_ms": {
-      "desc": "在判定路径无效和断开连接之前，要等待多长时间的ACK。默认：16000",
+      "desc": "在判定路径无效和断开连接之前，要等待多长时间的 ACK。默认：16000",
       "label": "断开连接超时 毫秒"
     },
     "fields_mqtt_quic_listener_handshake_idle_timeout": {
@@ -6433,7 +6433,7 @@
       "label": "握手空闲超时 毫秒"
     },
     "fields_mqtt_quic_listener_idle_timeout": {
-      "desc": "一个连接在被关闭之前可以空闲多长时间。0表示禁用。",
+      "desc": "一个连接在被关闭之前可以空闲多长时间。0 表示禁用。",
       "label": "空闲超时时间"
     },
     "fields_mqtt_quic_listener_idle_timeout_ms": {
@@ -6441,7 +6441,7 @@
       "label": "空闲超时 毫秒"
     },
     "fields_mqtt_quic_listener_initial_rtt_ms": {
-      "desc": "初始RTT估计",
+      "desc": "初始 RTT 估计",
       "label": "Initial RTT 毫秒"
     },
     "fields_mqtt_quic_listener_initial_window_packets": {
@@ -6453,7 +6453,7 @@
       "label": "PING 保活频率"
     },
     "fields_mqtt_quic_listener_keep_alive_interval_ms": {
-      "desc": "多长时间发送一次PING帧以保活连接。",
+      "desc": "多长时间发送一次 PING 帧以保活连接。",
       "label": "保持活着的时间间隔 毫秒"
     },
     "fields_mqtt_quic_listener_keyfile": {
@@ -6465,7 +6465,7 @@
       "label": "负载平衡模式"
     },
     "fields_mqtt_quic_listener_max_ack_delay_ms": {
-      "desc": "在收到数据后要等待多长时间才能发送一个ACK。默认值：25",
+      "desc": "在收到数据后要等待多长时间才能发送一个 ACK。默认值：25",
       "label": "最大应答延迟 毫秒"
     },
     "fields_mqtt_quic_listener_max_binding_stateless_operations": {
@@ -6485,7 +6485,7 @@
       "label": "最大无状态操作数"
     },
     "fields_mqtt_quic_listener_maximum_mtu": {
-      "desc": "一个连接所支持的最大MTU。这将是最大的探测值。默认值：1500",
+      "desc": "一个连接所支持的最大 MTU。这将是最大的探测值。默认值：1500",
       "label": "最大 MTU"
     },
     "fields_mqtt_quic_listener_migration_enabled": {
@@ -6493,12 +6493,12 @@
       "label": "启用地址迁移"
     },
     "fields_mqtt_quic_listener_minimum_mtu": {
-      "desc": "一个连接所支持的最小MTU。这将被作为起始MTU使用。默认值：1248",
+      "desc": "一个连接所支持的最小 MTU。这将被作为起始 MTU 使用。默认值：1248",
       "label": "最小 MTU"
     },
     "fields_mqtt_quic_listener_mtu_discovery_missing_probe_count": {
       "desc": "在任何时候都可以在一个绑定上排队的无状态操作的最大数量。默认值：3",
-      "label": "MTU发现丢失的探针数量"
+      "label": "MTU 发现丢失的探针数量"
     },
     "fields_mqtt_quic_listener_mtu_discovery_search_complete_timeout_us": {
       "desc": "如果没有达到 max ，在重新尝试 MTU 探测之前要等待的时间，单位是微秒。默认值：600000000",
@@ -6549,7 +6549,7 @@
       "label": "流接收窗口默认"
     },
     "fields_mqtt_quic_listener_tls_server_max_send_buffer": {
-      "desc": "缓冲多少TLS数据。 默认值：8192",
+      "desc": "缓冲多少 TLS 数据。 默认值：8192",
       "label": "TLS 服务器最大发送缓冲区"
     },
     "fields_rate_limit_conn_bytes_in": {
@@ -6581,7 +6581,7 @@
       "label": "TCP 高水位线"
     },
     "fields_tcp_opts_keepalive": {
-      "desc": "为 MQTT 连接在 TCP 或 SSL 上启用 TCP 保活。\n值是以逗号分隔的三个数字，格式为 'Idle,Interval,Probes'\n - Idle: 在服务器开始发送保活探测之前，连接需要处于空闲状态的秒数（Linux 默认为7200）。\n - Interval: TCP 保活探测间隔的秒数（Linux默认值为75）。\n - Probes: 在放弃并终止连接之前，从另一端未获得响应时要发送的 TCP 保活探测的最大数量（Linux 默认值为 9 次）。\n例如 \"240,30,5\" 表示：在连接空闲 240 秒后发送 TCP 保活探测，每隔 30 秒发送一次，直到收到响应，如果连续丢失 5 个响应，连接应该被关闭。\n默认值为 'none'",
+      "desc": "为 MQTT 连接在 TCP 或 SSL 上启用 TCP 保活。\n值是以逗号分隔的三个数字，格式为 'Idle,Interval,Probes'\n - Idle: 在服务器开始发送保活探测之前，连接需要处于空闲状态的秒数（Linux 默认为 7200）。\n - Interval: TCP 保活探测间隔的秒数（Linux 默认值为 75）。\n - Probes: 在放弃并终止连接之前，从另一端未获得响应时要发送的 TCP 保活探测的最大数量（Linux 默认值为 9 次）。\n例如 \"240,30,5\" 表示：在连接空闲 240 秒后发送 TCP 保活探测，每隔 30 秒发送一次，直到收到响应，如果连续丢失 5 个响应，连接应该被关闭。\n默认值为 'none'",
       "label": "TCP keepalive 选项"
     },
     "fields_tcp_opts_nodelay": {
@@ -6609,11 +6609,11 @@
       "label": "TCP 发送缓冲区"
     },
     "fields_trace_payload_encode": {
-      "desc": "确定跟踪文件中有效负载格式的格式。<br/>\n`text`：基于文本的协议或纯文本协议。\n建议在有效负载为JSON编码时使用<br/>\n`hex`：二进制十六进制编码。当有效负载是自定义二进制协议时，建议使用此选项<br/>\n`hidden`：有效负载被模糊化为 `******`",
+      "desc": "确定跟踪文件中有效负载格式的格式。<br/>\n`text`：基于文本的协议或纯文本协议。\n建议在有效负载为 JSON 编码时使用<br/>\n`hex`：二进制十六进制编码。当有效负载是自定义二进制协议时，建议使用此选项<br/>\n`hidden`：有效负载被模糊化为 `******`",
       "label": "有效负载编码"
     },
     "fields_ws_opts_allow_origin_absence": {
-      "desc": "如果设置为 <code>false</code> 并且 <code>check_origin_enable</code> 为 <code>true</code>，服务器将拒绝没有 <code>origin</code> HTTP头的请求。",
+      "desc": "如果设置为 <code>false</code> 并且 <code>check_origin_enable</code> 为 <code>true</code>，服务器将拒绝没有 <code>origin</code> HTTP 头的请求。",
       "label": "允许 origin 缺失"
     },
     "fields_ws_opts_check_origin_enable": {
@@ -6641,11 +6641,11 @@
       "label": "最大数据包长度"
     },
     "fields_ws_opts_mqtt_path": {
-      "desc": "WebSocket 的 MQTT 协议路径。因此，EMQX Broker的WebSocket地址为：\n<code>ws://{ip}:{port}/mqtt</code>",
+      "desc": "WebSocket 的 MQTT 协议路径。因此，EMQX Broker 的 WebSocket 地址为：\n<code>ws://{ip}:{port}/mqtt</code>",
       "label": "WS MQTT 路径"
     },
     "fields_ws_opts_mqtt_piggyback": {
-      "desc": "WebSocket消息是否允许包含多个 MQTT 数据包。",
+      "desc": "WebSocket 消息是否允许包含多个 MQTT 数据包。",
       "label": "MQTT Piggyback"
     },
     "fields_ws_opts_proxy_address_header": {
@@ -6719,7 +6719,7 @@
       "desc": "全局的 MQTT 配置项。\nmqtt 下所有的配置作为全局的默认值存在，它可以被 <code>zone</code> 中的配置覆盖。"
     },
     "mqtt_await_rel_timeout": {
-      "desc": "客户端发布 QoS 2 消息时，服务器等待 `PUBREL` 的最长时延。超过该时长后服务器会放弃等待，该PACKET ID 会被释放，从而允许后续新的 PUBLISH 消息使用。如果超时后收到 PUBREL，服务器将会产生一条告警日志。注意，向订阅客户端转发消息的动作发生在进入等待之前。",
+      "desc": "客户端发布 QoS 2 消息时，服务器等待 `PUBREL` 的最长时延。超过该时长后服务器会放弃等待，该 PACKET ID 会被释放，从而允许后续新的 PUBLISH 消息使用。如果超时后收到 PUBREL，服务器将会产生一条告警日志。注意，向订阅客户端转发消息的动作发生在进入等待之前。",
       "label": "PUBREL 最大等待时间"
     },
     "mqtt_exclusive_subscription": {
@@ -6735,7 +6735,7 @@
       "label": "忽略循环投递"
     },
     "mqtt_keepalive_multiplier": {
-      "desc": "EMQX 判定客户端 Keep Alive 超时使用的 Keep Alive 倍数。计算公式为：Keep Alive 超时 = Keep Alive 间隔 × Keep Alive 倍数。 默认值 1.5 遵循 MQTT 5.0 规范。此倍数可调整，为系统管理员提供根据特定需求进行定制的灵活性。例如，如果客户端的 10 秒保持连接间隔的 PINGREQ 因为额外的10 秒延迟，将倍数更改为 2 可以让 EMQX 容忍此延迟。",
+      "desc": "EMQX 判定客户端 Keep Alive 超时使用的 Keep Alive 倍数。计算公式为：Keep Alive 超时 = Keep Alive 间隔 × Keep Alive 倍数。 默认值 1.5 遵循 MQTT 5.0 规范。此倍数可调整，为系统管理员提供根据特定需求进行定制的灵活性。例如，如果客户端的 10 秒保持连接间隔的 PINGREQ 因为额外的 10 秒延迟，将倍数更改为 2 可以让 EMQX 容忍此延迟。",
       "label": "Keep Alive 倍数"
     },
     "mqtt_listener_access_rules": {
@@ -6743,11 +6743,11 @@
       "label": "访问控制规则"
     },
     "mqtt_listener_proxy_protocol": {
-      "desc": "如果EMQX集群部署在 HAProxy 或 Nginx 之后，请启用代理协议 V1/2 <br/>\n详情见: https://www.haproxy.com/blog/haproxy/proxy-protocol/",
+      "desc": "如果 EMQX 集群部署在 HAProxy 或 Nginx 之后，请启用代理协议 V1/2 <br/>\n详情见: https://www.haproxy.com/blog/haproxy/proxy-protocol/",
       "label": "Proxy protocol"
     },
     "mqtt_listener_proxy_protocol_timeout": {
-      "desc": "代理协议超时。如果在超时时间内未收到代理协议数据包，EMQX将关闭TCP连接。",
+      "desc": "代理协议超时。如果在超时时间内未收到代理协议数据包，EMQX 将关闭 TCP 连接。",
       "label": "Proxy protocol 超时时间"
     },
     "mqtt_max_awaiting_rel": {
@@ -6852,7 +6852,7 @@
     },
     "overload_protection_backoff_gc": {
       "desc": "高负载时，跳过强制 GC。",
-      "label": "跳过GC"
+      "label": "跳过 GC"
     },
     "overload_protection_backoff_hibernation": {
       "desc": "高负载时，跳过进程休眠。",
@@ -6911,7 +6911,7 @@
       "label": "SSL 客户端冲协商"
     },
     "server_ssl_opts_schema_dhfile": {
-      "desc": "如果协商使用 Diffie-Hellman 密钥交换的密码套件，则服务器将使用包含PEM编码的Diffie-Hellman参数的文件的路径。如果未指定，则使用默认参数。<br/>\n注意：TLS 1.3不支持<code>dhfile</code>选项。",
+      "desc": "如果协商使用 Diffie-Hellman 密钥交换的密码套件，则服务器将使用包含 PEM 编码的 Diffie-Hellman 参数的文件的路径。如果未指定，则使用默认参数。<br/>\n注意：TLS 1.3 不支持<code>dhfile</code>选项。",
       "label": "SSL dhfile"
     },
     "server_ssl_opts_schema_enable_crl_check": {
@@ -6923,12 +6923,12 @@
       "label": "启用 OCSP Stapling"
     },
     "server_ssl_opts_schema_fail_if_no_peer_cert": {
-      "desc": "TLS/DTLS 服务器与 {verify，verify_peer} 一起使用。\n如果设置为true，则如果客户端没有要发送的证书，即发送空证书，服务器将失败。\n如果设置为false，则仅当客户端发送无效证书（空证书被视为有效证书）时才会失败。",
+      "desc": "TLS/DTLS 服务器与 {verify，verify_peer} 一起使用。\n如果设置为 true，则如果客户端没有要发送的证书，即发送空证书，服务器将失败。\n如果设置为 false，则仅当客户端发送无效证书（空证书被视为有效证书）时才会失败。",
       "label": "没有证书则 SSL 失败"
     },
     "server_ssl_opts_schema_gc_after_handshake": {
-      "desc": "内存使用调优。如果启用，将在TLS/SSL握手完成后立即执行垃圾回收。TLS/SSL握手建立后立即进行GC。",
-      "label": "握手后执行GC"
+      "desc": "内存使用调优。如果启用，将在 TLS/SSL 握手完成后立即执行垃圾回收。TLS/SSL 握手建立后立即进行 GC。",
+      "label": "握手后执行 GC"
     },
     "server_ssl_opts_schema_handshake_timeout": {
       "desc": "握手完成所允许的最长时间",
@@ -6947,7 +6947,7 @@
       "label": "OCSP 刷新 HTTP 超时"
     },
     "server_ssl_opts_schema_ocsp_refresh_interval": {
-      "desc": "为服务器刷新OCSP响应的周期。",
+      "desc": "为服务器刷新 OCSP 响应的周期。",
       "label": "OCSP 刷新间隔"
     },
     "server_ssl_opts_schema_ocsp_responder_url": {
@@ -6955,7 +6955,7 @@
       "label": "OCSP Responder 的 URL"
     },
     "shared_subscription_group_strategy": {
-      "desc": "设置共享订阅组为单位的分发策略。该配置是一个从组名到\n策略名的一个map，组名不得包含 `[A-Za-z0-9]` 之外的特殊字符。"
+      "desc": "设置共享订阅组为单位的分发策略。该配置是一个从组名到\n策略名的一个 map，组名不得包含 `[A-Za-z0-9]` 之外的特殊字符。"
     },
     "shared_subscription_strategy_enum": {
       "desc": "共享订阅的分发策略名称。\n- `random`：随机选择一个组内成员；\n- `round_robin`：循环选择下一个成员；\n- `round_robin_per_group`：在共享组内循环选择下一个成员；\n- `sticky`：使用上一次选中的成员；\n- `hash`：根据 ClientID 哈希映射到一个成员；\n- `local`：随机分发到节点本地成成员，如果本地成员不存在，则随机分发到任意一个成员。"
@@ -6993,11 +6993,11 @@
       "label": "定期 CPU 检查的时间间隔"
     },
     "sysmon_os_cpu_high_watermark": {
-      "desc": "在发出相应警报之前可以使用多少系统 CPU 的阈值，以系统CPU负载的百分比表示。",
+      "desc": "在发出相应警报之前可以使用多少系统 CPU 的阈值，以系统 CPU 负载的百分比表示。",
       "label": "CPU 高水位线"
     },
     "sysmon_os_cpu_low_watermark": {
-      "desc": "在解除相应警报之前可以使用多少系统 CPU 的阈值，以系统CPU负载的百分比表示。",
+      "desc": "在解除相应警报之前可以使用多少系统 CPU 的阈值，以系统 CPU 负载的百分比表示。",
       "label": "CPU 低水位线"
     },
     "sysmon_os_mem_check_interval": {
@@ -7005,7 +7005,7 @@
       "label": "内存检查间隔"
     },
     "sysmon_os_procmem_high_watermark": {
-      "desc": "在发出相应警报之前，一个Erlang进程可以分配多少系统内存的阈值，以系统内存的百分比表示。",
+      "desc": "在发出相应警报之前，一个 Erlang 进程可以分配多少系统内存的阈值，以系统内存的百分比表示。",
       "label": "进程内存高水位线"
     },
     "sysmon_os_sysmem_high_watermark": {
