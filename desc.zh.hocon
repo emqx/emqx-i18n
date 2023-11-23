@@ -605,9 +605,9 @@
     "path": {
       "desc": "包含 ACL 规则的文件路径。\n如果该文件在启动 EMQX 节点之前已经配置好，\n只要 EMQX 有读取权限，它可以放置在任何位置。\n即，EMQX 将把它视为只读。\n\n如果规则集是从 EMQX Dashboard 或 HTTP API 创建或更新的，\n将创建一个新文件并放置在 EMQX 的 data_dir 中的 authz 子目录下，\n旧文件将不再使用。",
       "label": "路径"
-     }
-    },
-    "emqx_authz_http_schema": {
+    }
+  },
+  "emqx_authz_http_schema": {
     "body": {
       "desc": "HTTP 请求体",
       "label": "请求体"
@@ -689,9 +689,9 @@
     "mongo_single": {
       "desc": "使用 MongoDB 授权（单实例）。",
       "label": "mongo_single"
-     }
+    }
   },
- "emqx_authz_mysql_schema": {
+  "emqx_authz_mysql_schema": {
     "mysql": {
       "desc": "使用 MySQL 数据库进行授权。",
       "label": "mysql"
@@ -996,13 +996,12 @@
     }
   },
   "ssl_client_opts": {
-      "desc": "用于 Azure Event Hub 客户端的 TLS/SSL 选项。",
-      "label": "TLS/SSL 选项"
-    },
-    "sync_query_timeout": {
-      "desc": "此参数定义同步查询的超时限制。仅当桥接查询模式配置为 'sync' 时适用。",
-      "label": "同步查询超时"
-    }
+    "desc": "用于 Azure Event Hub 客户端的 TLS/SSL 选项。",
+    "label": "TLS/SSL 选项"
+  },
+  "sync_query_timeout": {
+    "desc": "此参数定义同步查询的超时限制。仅当桥接查询模式配置为 'sync' 时适用。",
+    "label": "同步查询超时"
   },
   "emqx_bridge_cassandra": {
     "config_enable": {
@@ -1514,7 +1513,7 @@
       "label": "Kafka 确认数量"
     },
     "server_name_indication": {
-      "desc": "TLS 握手的 Server Name Indication (SNI) 设置。<br/>\n- <code>auto</code>：客户端将使用 <code>"servicebus.windows.net"</code> 作为 SNI。<br/>\n- <code>disable</code>：如果您希望阻止客户端发送 SNI。<br/>\n- 其他字符串值将按原样发送。",
+      "desc": "TLS 握手的 Server Name Indication (SNI) 设置。<br/>\n- <code>auto</code>：客户端将使用 <code>\"servicebus.windows.net\"</code> 作为 SNI。<br/>\n- <code>disable</code>：如果您希望阻止客户端发送 SNI。<br/>\n- 其他字符串值将按原样发送。",
       "label": "SNI"
     },
     "socket_nodelay": {
@@ -2096,7 +2095,7 @@
       "label": "服务器地址"
     }
   },
-    "emqx_bridge_v2_api": {
+  "emqx_bridge_v2_api": {
     "desc_api1": {
       "desc": "列出所有创建的数据桥接。",
       "label": "列出所有数据桥接"
@@ -2710,7 +2709,7 @@
       "label": "RPC 私钥文件"
     },
     "rpc_listen_address": {
-      "desc": "指示 RPC 服务器监听的 IP 地址。例如，使用 <code>"0.0.0.0"</code> 表示 IPv4 或 <code>"::"</code> 表示 IPv6。",
+      "desc": "指示 RPC 服务器监听的 IP 地址。例如，使用 <code>\"0.0.0.0\"</code> 表示 IPv4 或 <code>\"::\"</code> 表示 IPv6。",
       "label": "RPC 监听 IP 地址"
     },
     "rpc_mode": {
@@ -2762,10 +2761,10 @@
       "label": "RPC TCP 服务监听端口"
     }
   },
-   "emqx_connector_api": {
+  "emqx_connector_api": {
     "desc_api1": {
       "desc": "列出所有创建的连接器。",
-      "label": "列出所有连接器""
+      "label": "列出所有连接器"
     },
     "desc_api2": {
       "desc": "通过类型和名称创建一个新的连接器。",
@@ -2837,7 +2836,7 @@
       "desc": "用于连接到外部系统的连接器。",
       "label": "连接器"
     }
-  },  
+  },
   "emqx_connector_http": {
     "body": {
       "desc": "HTTP 请求报文主体。",
