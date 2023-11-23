@@ -11,7 +11,16 @@ This repository contains multi-language translations for EMQX document generatio
 
 ## Why named hocon while they are JSON
 
-This is because older version EMQX may need to download the `.hocon` file.
+!!! DO NOT ATTEMPT to change naming convention of the files for below reasons:
+
+1. HOCON is a super-set of JSON, so JSON IS technically also HOCON.
+2. The `en` flavor files in upstream (emqx project) are HOCON format, and even after they are merged, it's just one HOCON file concatenated.
+3. The file suffix `.hocon` is used by emqx when it tries to build the dictionary cache.
+
+## Branches
+
+- main: EMQX before 5.3.2 downaloads from this branch
+- v53: EMQX since 5.3.2 (before 5.4) downloads from this branch
 
 ## Workflow
 
@@ -26,10 +35,10 @@ To make changes, follow these steps:
 
   - In `emqx` proejct, build the file with `make i18n`.
 
-  - Copy the dumped file `_build/docgen/desc.en.json` to this repo.
+  - Copy the dumped file `_build/docgen/desc.en.hocon` to this repo.
 
   - Send a pull request for review.
 
 - Translators should review changes in the English version and apply corresponding updates to their translations.
 
-- Run `jq --sort-keys . desc.zh.json` to ensure the keys are sorted.
+- Run `jq --sort-keys . desc.zh.hocon` to ensure the keys are sorted.

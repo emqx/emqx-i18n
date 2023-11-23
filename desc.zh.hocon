@@ -1,7 +1,7 @@
 {
   "emqx_authn_api": {
     "authentication_get": {
-      "desc": "列出全局认证链上的认证器。",
+      "desc": "列出全局认证的认证器。",
       "label": "列出认证器"
     },
     "authentication_id_delete": {
@@ -29,7 +29,7 @@
       "label": "获取指定认证器中的用户列表"
     },
     "authentication_id_users_post": {
-      "desc": "向全局认证链上的指定认证器添加用户数据，仅使用内置数据库作为数据源的认证器支持。",
+      "desc": "向全局认证链上的指定认证器添加用户数据。",
       "label": "向指定认证器添加用户"
     },
     "authentication_id_users_user_id_delete": {
@@ -57,7 +57,7 @@
       "label": "like_user_id"
     },
     "listeners_listener_id_authentication_get": {
-      "desc": "列出监听器认证链上的认证器。",
+      "desc": "列出监听器上的认证器。",
       "label": "列出监听器上的认证器"
     },
     "listeners_listener_id_authentication_id_delete": {
@@ -85,7 +85,7 @@
       "label": "列出监听器上指定认证器中的用户数据"
     },
     "listeners_listener_id_authentication_id_users_post": {
-      "desc": "向监听器认证链上的指定认证器添加用户数据。仅使用内置数据库作为数据源的认证器支持",
+      "desc": "向监听器认证链上的指定认证器添加用户数据。",
       "label": "向监听器上指定认证器添加用户"
     },
     "listeners_listener_id_authentication_id_users_user_id_delete": {
@@ -109,7 +109,7 @@
       "label": "认证器 ID "
     },
     "param_listener_id": {
-      "desc": "监听器 ID。由监听器类型与名称组成 `{type}:{name}`，如 `tcp:default`",
+      "desc": "监听器 ID。",
       "label": "监听器 ID"
     },
     "param_position": {
@@ -121,9 +121,9 @@
       "label": "用户 ID"
     }
   },
-  "emqx_authn_http": {
+  "emqx_authn_http_schema": {
     "body": {
-      "desc": "HTTP 请求体，JSON 字符模板，支持使用认证占位符。\n使用 GET 请求时，将被转换为 URL Query。\n使用 POST 请求时，转换格式将取决于 content-type 头被设置为 application/json 还是 application/x-www-form-urlencoded。\n",
+      "desc": "HTTP 请求体。",
       "label": "请求体"
     },
     "get": {
@@ -153,10 +153,10 @@
       "label": "URL"
     }
   },
-  "emqx_authn_jwt": {
+  "emqx_authn_jwt_schema": {
     "acl_claim_name": {
-      "desc": "JWT claim name to use for getting ACL rules.",
-      "label": "ACL claim name"
+      "desc": "用于获取 ACL 规则的 JWT 声明名称。",
+      "label": "ACL 声明名称"
     },
     "algorithm": {
       "desc": "JWT 签名算法，支持 HMAC (配置为 <code>hmac-based</code>）和 RSA、ECDSA (配置为 <code>public-key</code>)。",
@@ -179,7 +179,7 @@
       "label": "JWKS Endpoint"
     },
     "from": {
-      "desc": "指定客户端连接请求中 JWT 的位置；可选值： password、 username（分别对应于 MQTT 客户端 CONNECT 报文中的 Password 和 Username 字段）",
+      "desc": "指定客户端连接请求中 JWT 的位置。",
       "label": "JWT 的位置"
     },
     "jwt_hmac": {
@@ -208,12 +208,12 @@
       "label": "Secret"
     },
     "secret_base64_encoded": {
-      "desc": "密钥是否为 Base64 编码。",
+      "desc": "密钥是否为 base64 编码。",
       "label": "密钥是否为 Base64 编码"
     },
     "server_name_indication": {
       "desc": "服务器名称指示（SNI）。",
-      "label": "SNI"
+      "label": "服务器名称指示"
     },
     "ssl": {
       "desc": "SSL 选项。",
@@ -228,20 +228,46 @@
       "label": "Verify"
     },
     "verify_claims": {
-      "desc": "需要验证的自定义声明列表。\n指定一个键(Key)来查找 JWT 中对应的声明(Claim)，并提供一个预期值(Expected Value)来与声明的实际值进行比较，以确保只有满足特定条件的 JWT 才能被接受和使用。\n例如要求 JWT 中的特定声明(如 clientid)的值必须与当前连接的客户端 ID 相匹配。\n\n预期值可以使用以下占位符：\n- <code>${username}</code>: 将在运行时被替换为客户端连接时使用的用户名\n- <code>${clientid}</code>: 将在运行时被替换为客户端连接时使用的客户端 ID\n。",
+      "desc": "需要验证的自定义声明列表，是一个由名称/值对组成的列表。指定一个键(Key)来查找 JWT 中对应的声明(Claim)，并提供一个预期值(Expected Value)来与声明的实际值进行比较，以确保只有满足特定条件的 JWT 才能被接受和使用。\n例如要求 JWT 中的特定声明(如 clientid)的值必须与当前连接的客户端 ID 相匹配。\n预期值可以使用以下占位符：\n- <code>${username}</code>: 将在运行时被替换为客户端连接时使用的用户名\n- <code>${clientid}</code>: 将在运行时被替换为客户端连接时使用的客户端 ID\n身份认证将确认 JWT 中的声明值（从密码字段中获取）与 <code>verify_claims</code> 中要求的内容是否匹配。",
       "label": "自定义声明检查"
     }
   },
-  "emqx_authn_mnesia": {
+  "emqx_authn_ldap_bind_schema": {
+    "ldap_bind": {
+      "desc": "使用 LDAP 绑定操作作为认证方式的认证器的配置项。"
+    },
+    "query_timeout": {
+      "desc": "LDAP 查询超时时间",
+      "label": "查询超时"
+    }
+  },
+  "emqx_authn_ldap_schema": {
+    "is_superuser_attribute": {
+      "desc": "指示哪个属性用于表示用户是否为超级用户。",
+      "label": "是否为超级用户属性"
+    },
+    "ldap": {
+      "desc": "使用 LDAP 作为认证数据源的认证器的配置项。"
+    },
+    "password_attribute": {
+      "desc": "指示哪个属性用于表示用户密码。",
+      "label": "密码属性"
+    },
+    "query_timeout": {
+      "desc": "LDAP 查询的超时时间。",
+      "label": "查询超时"
+    }
+  },
+  "emqx_authn_mnesia_schema": {
     "builtin_db": {
       "desc": "使用内置数据库作为认证数据源的认证器的配置项。"
     },
     "user_id_type": {
-      "desc": "指定用于客户端身份 ID 认证的字段。\n可选值： username、 clientid（分别对应于 MQTT 客户端 CONNECT 报文中的 Username 和 Client Identifier 字段）\n",
+      "desc": "指定用于客户端身份 ID 认证的字段。",
       "label": "账号类型"
     }
   },
-  "emqx_authn_mongodb": {
+  "emqx_authn_mongodb_schema": {
     "collection": {
       "desc": "存储认证数据的集合。",
       "label": "集合"
@@ -272,7 +298,7 @@
       "desc": "使用 MongoDB (Standalone) 作为认证数据源的认证器的配置项。"
     }
   },
-  "emqx_authn_mysql": {
+  "emqx_authn_mysql_schema": {
     "mysql": {
       "desc": "使用 MySQL 作为认证数据源的认证器的配置项。"
     },
@@ -285,7 +311,7 @@
       "label": "查询超时"
     }
   },
-  "emqx_authn_pgsql": {
+  "emqx_authn_postgresql_schema": {
     "postgresql": {
       "desc": "使用 PostgreSQL 作为认证数据源的认证器的配置项。"
     },
@@ -294,7 +320,7 @@
       "label": "查询 SQL"
     }
   },
-  "emqx_authn_redis": {
+  "emqx_authn_redis_schema": {
     "cluster": {
       "desc": "使用 Redis (Cluster) 作为认证数据源的认证器的配置项。"
     },
@@ -315,7 +341,7 @@
       "label": "后端类型"
     },
     "enable": {
-      "desc": "设为 <code>true</code> 或 <code>false</code> 以启用或禁用此认证数据源。",
+      "desc": "设为 <code>true</code> 或 <code>false</code> 以禁用此认证数据源。",
       "label": "启用"
     },
     "failed": {
@@ -335,7 +361,7 @@
       "label": "查询次数"
     },
     "mechanism": {
-      "desc": "认证方式，支持方式如下：\n- password_based: 密码认证\n- jwt: JWT 认证\n- scram: MQTT 5.0 增强认证\n",
+      "desc": "认证方式。",
       "label": "认证方式"
     },
     "metrics": {
@@ -351,7 +377,7 @@
       "label": "忽略认证次数"
     },
     "metrics_rate": {
-      "desc": "当前认证器执行速度，包括成功、失败与忽略认证，单位：次/秒。",
+      "desc": "当前认证器执行速度，次/秒。",
       "label": "认证速度"
     },
     "metrics_rate_last5m": {
@@ -375,7 +401,7 @@
       "label": "节点名称"
     },
     "node_error": {
-      "desc": "当认证器或数据源发生错误时，对应节点上的错误信息。",
+      "desc": "节点上的错误信息。",
       "label": "节点错误信息"
     },
     "node_metrics": {
@@ -425,7 +451,7 @@
   },
   "emqx_authz_api_mnesia": {
     "action": {
-      "desc": "该条规则对应的动作：\n- publish: 发布\n- subscribe: 订阅\n- all: 发布与订阅\n",
+      "desc": "授权的动作 （发布/订阅/发布与订阅）",
       "label": "动作"
     },
     "clientid": {
@@ -441,7 +467,7 @@
       "label": "用户名字串"
     },
     "permission": {
-      "desc": "该条规则对应的权限：\n- allow: 允许\n- deny: 拒绝\n",
+      "desc": "对应的权限",
       "label": "权限"
     },
     "qos": {
@@ -469,110 +495,52 @@
       "label": "清除内置数据库中的规则"
     },
     "topic": {
-      "desc": "该条规则对应的主题或主题过滤器，可以使用主题占位符：\n- ${clientid}: 替换为当前的客户端 ID\n- ${username}: 替换为当前的用户名\n",
+      "desc": "该条规则对应的主题",
       "label": "主题"
     },
     "user_clientid_delete": {
-      "desc": "删除内置数据库中指定客户端的授权规则",
-      "label": "删除指定客户端的授权规则"
+      "desc": "删除指定客户端的规则",
+      "label": "删除指定客户端的规则"
     },
     "user_clientid_get": {
-      "desc": "获取内置数据库中指定客户端的授权规则",
-      "label": "获取指定客户端的授权规则"
+      "desc": "获取指定客户端的规则",
+      "label": "获取指定客户端的规则"
     },
     "user_clientid_put": {
-      "desc": "更新内置数据库中指定客户端的授权规则",
-      "label": "更新指定客户端的授权规则"
+      "desc": "设置指定客户端的规则",
+      "label": "设置指定客户端的规则"
     },
     "user_username_delete": {
-      "desc": "删除内置数据库中指定用户名的授权规则",
-      "label": "删除指定用户的授权规则'"
+      "desc": "删除指定用户名的规则",
+      "label": "删除指定用户名的规则'"
     },
     "user_username_get": {
-      "desc": "获取内置数据库中指定用户名授权规则",
-      "label": "获取指定用户的授权规则"
+      "desc": "获取指定用户名规则",
+      "label": "获取指定用户名的规则"
     },
     "user_username_put": {
-      "desc": "更新内置数据库中指定用户名的授权规则",
-      "label": "更新指定用户的授权规则"
+      "desc": "设置指定用户名的规则",
+      "label": "设置指定用户名的规则"
     },
     "username": {
       "desc": "用户名",
       "label": "用户名"
     },
     "users_clientid_get": {
-      "desc": "根据客户端 ID 查询内置数据库中的授权规则。",
-      "label": "根据客户端 ID 查询授权规则"
+      "desc": "显示客户端规则列表。",
+      "label": "显示客户端的规则"
     },
     "users_clientid_post": {
-      "desc": "为指定客户端添加内置数据库中客户端的规则。",
-      "label": "为指定客户端添加授权规则'"
+      "desc": "为指定客户端添加规则。",
+      "label": "为指定客户端添加规则'"
     },
     "users_username_get": {
-      "desc": "根据用户名查询内置数据库中相关的授权规则。",
-      "label": "根据用户名查询授权规则"
+      "desc": "显示用户名规则列表。",
+      "label": "显示用户名规则"
     },
     "users_username_post": {
-      "desc": "为指定的用户在内置数据库中添加授权规则。",
-      "label": "为指定的用户添加授权规则"
-    }
-  },
-  "emqx_authz_api_schema": {
-    "body": {
-      "desc": "HTTP 请求体，JSON 字符模板，支持使用数据查询占位符。\n使用 GET 请求时，将被转换为 URL Query。\n使用 POST 请求时，转换格式将取决于 content-type 头被设置为 application/json 还是 application/x-www-form-urlencoded。\n",
-      "label": "请求体"
-    },
-    "cmd": {
-      "desc": "用于查询动作、主题、权限等权限数据的 Redis 命令，目前仅支持 <code>HGET</code> 与 <code>HMGET</code>。",
-      "label": "Redis 命令"
-    },
-    "collection": {
-      "desc": "存储权限数据的集合。",
-      "label": "集合"
-    },
-    "enable": {
-      "desc": "设为 <code>true</code> 或 <code>false</code> 以启用或禁用此访问控制数据源。",
-      "label": "是否启用"
-    },
-    "filter": {
-      "desc": "在查询中定义过滤条件的条件表达式。\n过滤器支持如下占位符：\n- <code>${username}</code>: 将在运行时被替换为客户端连接时使用的用户名\n- <code>${clientid}</code>: 将在运行时被替换为客户端连接时使用的客户端 ID",
-      "label": "过滤器"
-    },
-    "headers": {
-      "desc": "HTTP Headers 列表",
-      "label": "请求头"
-    },
-    "headers_no_content_type": {
-      "desc": "HTTP Headers 列表（无 <code>content-type</code>）。",
-      "label": "请求头(无 content-type)"
-    },
-    "method": {
-      "desc": "HTTP 请求方法。",
-      "label": "请求方法"
-    },
-    "position": {
-      "desc": "授权器在链中的位置。可能的值是 'front', 'rear', 'before:{authorizer_source_type}', 'after:{authorizer_source_type}'",
-      "label": "授权器在链中的位置"
-    },
-    "query": {
-      "desc": "用于查询动作、主题、权限等权限数据的 SQL 语句。",
-      "label": "查询 SQL"
-    },
-    "request_timeout": {
-      "desc": "HTTP 请求超时时长。",
-      "label": "请求超时"
-    },
-    "rules": {
-      "desc": "授权规则。",
-      "label": "规则"
-    },
-    "type": {
-      "desc": "后端类型。",
-      "label": "后端类型"
-    },
-    "url": {
-      "desc": "认证服务器 URL。",
-      "label": "URL"
+      "desc": "为指定的用户添加规则。",
+      "label": "为指定的用户添加规则"
     }
   },
   "emqx_authz_api_settings": {
@@ -625,54 +593,24 @@
       "label": "数据源类型"
     },
     "sources": {
-      "desc": "数据源列表",
-      "label": "数据源列表"
+      "desc": "授权数据源",
+      "label": "数据源"
     }
   },
-  "emqx_authz_schema": {
-    "allow": {
-      "desc": "授权允许的次数。",
-      "label": "允许次数"
-    },
-    "authorization": {
-      "desc": "客户端授权相关配置",
-      "label": "授权"
-    },
-    "body": {
-      "desc": "HTTP 请求体。",
-      "label": "请求体"
-    },
-    "builtin_db": {
-      "desc": "使用内置数据库作为数据源的授权器的配置项。",
-      "label": "内置数据库"
-    },
-    "cmd": {
-      "desc": "用于查询动作、主题、权限等权限数据的 Redis 命令，目前仅支持 <code>HGET</code> 与 <code>HMGET</code>。",
-      "label": "Redis 命令"
-    },
-    "collection": {
-      "desc": "存储权限数据的集合。",
-      "label": "集合"
-    },
-    "deny": {
-      "desc": "授权拒绝的次数。",
-      "label": "拒绝次数"
-    },
-    "enable": {
-      "desc": "设为 <code>true</code> 或 <code>false</code> 以启用或禁用此访问控制数据源",
-      "label": "是否启用"
-    },
-    "failed": {
-      "desc": "请求失败次数。",
-      "label": "失败"
-    },
+  "emqx_authz_file_schema": {
     "file": {
       "desc": "使用 ACL 文件授权。",
       "label": "文件"
     },
-    "filter": {
-      "desc": "在查询中定义过滤条件的条件表达式。\n过滤器支持如下占位符：<br/>\n- <code>${username}</code>：将在运行时被替换为客户端连接时使用的用户名<br/>\n- <code>${clientid}</code>：将在运行时被替换为客户端连接时使用的客户端 ID",
-      "label": "过滤器"
+    "path": {
+      "desc": "包含 ACL 规则的文件路径。\n如果该文件在启动 EMQX 节点之前已经配置好，\n只要 EMQX 有读取权限，它可以放置在任何位置。\n即，EMQX 将把它视为只读。\n\n如果规则集是从 EMQX Dashboard 或 HTTP API 创建或更新的，\n将创建一个新文件并放置在 EMQX 的 data_dir 中的 authz 子目录下，\n旧文件将不再使用。",
+      "label": "路径"
+     }
+    },
+    "emqx_authz_http_schema": {
+    "body": {
+      "desc": "HTTP 请求体",
+      "label": "请求体"
     },
     "headers": {
       "desc": "HTTP Headers 列表",
@@ -698,13 +636,47 @@
       "desc": "HTTP 请求方法",
       "label": "请求方法"
     },
-    "metrics": {
-      "desc": "资源统计指标。",
-      "label": "指标"
+    "request_timeout": {
+      "desc": "HTTP 请求超时。",
+      "label": "请求超时"
     },
-    "metrics_total": {
-      "desc": "当前授权器执行授权的总次数。",
-      "label": "授权总次数"
+    "url": {
+      "desc": "认证服务器地址",
+      "label": "URL"
+    }
+  },
+  "emqx_authz_ldap_schema": {
+    "all_attribute": {
+      "desc": "表示使用哪个属性来表示允许`发布`和`订阅`的主题列表。",
+      "label": "所有属性"
+    },
+    "publish_attribute": {
+      "desc": "表示使用哪个属性来表示允许`发布`的主题列表。",
+      "label": "发布属性"
+    },
+    "query_timeout": {
+      "desc": "LDAP 查询超时。",
+      "label": "查询超时"
+    },
+    "subscribe_attribute": {
+      "desc": "表示使用哪个属性来表示允许`订阅`的主题列表。",
+      "label": "订阅属性"
+    }
+  },
+  "emqx_authz_mnesia_schema": {
+    "builtin_db": {
+      "desc": "使用内置数据库 (mnesia) 进行授权。",
+      "label": "内置数据库"
+    }
+  },
+  "emqx_authz_mongodb_schema": {
+    "collection": {
+      "desc": "包含授权数据的 `MongoDB` 集合。",
+      "label": "集合"
+    },
+    "filter": {
+      "desc": "定义查询中过滤条件的条件表达式。\n过滤器支持以下占位符<br/>\n - <code>${username}</code>：在连接时将用客户端使用的 <code>用户名</code> 替换<br/>\n - <code>${clientid}</code>：在连接时将用客户端使用的 <code>客户端 ID</code> 替换",
+      "label": "过滤器"
     },
     "mongo_rs": {
       "desc": "使用 MongoDB 授权（副本集模式）",
@@ -717,10 +689,78 @@
     "mongo_single": {
       "desc": "使用 MongoDB 授权（单实例）。",
       "label": "mongo_single"
-    },
+     }
+  },
+ "emqx_authz_mysql_schema": {
     "mysql": {
-      "desc": "使用 MySOL 数据库授权",
+      "desc": "使用 MySQL 数据库进行授权。",
       "label": "mysql"
+    },
+    "query": {
+      "desc": "用于检索授权数据的数据库查询。",
+      "label": "查询"
+    }
+  },
+  "emqx_authz_postgresql_schema": {
+    "postgresql": {
+      "desc": "使用 PostgreSQL 数据库进行授权。",
+      "label": "postgresql"
+    },
+    "query": {
+      "desc": "用于检索授权数据的数据库查询。",
+      "label": "查询"
+    }
+  },
+  "emqx_authz_redis_schema": {
+    "cmd": {
+      "desc": "用于检索授权数据的数据库查询。",
+      "label": "命令"
+    },
+    "redis_cluster": {
+      "desc": "使用 Redis 集群进行授权。",
+      "label": "redis_cluster"
+    },
+    "redis_sentinel": {
+      "desc": "使用 Redis Sentinel 进行授权。",
+      "label": "redis_sentinel"
+    },
+    "redis_single": {
+      "desc": "使用单个 Redis 实例进行授权。",
+      "label": "redis_single"
+    }
+  },
+  "emqx_authz_schema": {
+    "allow": {
+      "desc": "----",
+      "label": "认证成功的次数"
+    },
+    "authorization": {
+      "desc": "与客户端授权相关的配置。",
+      "label": "授权"
+    },
+    "deny": {
+      "desc": "----",
+      "label": "认证失败的次数"
+    },
+    "enable": {
+      "desc": "设置为 <code>true</code> 或 <code>false</code> 来禁用此 ACL 提供者",
+      "label": "启用"
+    },
+    "failed": {
+      "desc": "查询失败的次数",
+      "label": "失败"
+    },
+    "matched": {
+      "desc": "此资源被查询的次数",
+      "label": "匹配"
+    },
+    "metrics": {
+      "desc": "资源的指标",
+      "label": "指标"
+    },
+    "metrics_total": {
+      "desc": "触发授权规则的总次数。",
+      "label": "授权规则触发的总次数"
     },
     "node": {
       "desc": "节点名称。",
@@ -742,18 +782,6 @@
       "desc": "没有匹配到任何授权规则的次数。",
       "label": "没有匹配到任何授权规则的次数"
     },
-    "path": {
-      "desc": "包含 ACL 规则的文件路径。\n如果在启动 EMQX 节点前预先配置了该路径，请确保 EMQX 具有读取权限。\n\n如果从 EMQX Dashboard 或 HTTP API 创建或修改了规则，EMQX 将生成一个新的文件并将其存放在 `data_dir` 下的 `authz` 子目录中，并弃用旧的文件。\n",
-      "label": "ACL 文件"
-    },
-    "postgresql": {
-      "desc": "使用 PostgreSQL 数据库授权",
-      "label": "postgresql"
-    },
-    "query": {
-      "desc": "用于查询动作、主题、权限等权限数据的 SQL 语句。",
-      "label": "查询 SQL"
-    },
     "rate": {
       "desc": "命中速率，单位：次/秒。",
       "label": "速率"
@@ -766,25 +794,9 @@
       "desc": "最大命中速率，单位：次/秒。",
       "label": "最大速率"
     },
-    "redis_cluster": {
-      "desc": "使用 Redis 授权（集群模式）。",
-      "label": "redis_cluster"
-    },
-    "redis_sentinel": {
-      "desc": "使用 Redis 授权（哨兵模式）。",
-      "label": "redis_sentinel"
-    },
-    "redis_single": {
-      "desc": "使用 Redis 授权（单实例）。",
-      "label": "redis_single"
-    },
-    "request_timeout": {
-      "desc": "HTTP 请求超时时长。",
-      "label": "请求超时"
-    },
     "sources": {
-      "desc": "授权器列表。\n\n配置多个授权器时，将按照顺序依次执行授权检查。\n如果在当前授权检查器中未检索到权限数据，将会切换至链上的下一个已启用的授权器继续权限检查，直至得到 'allow' 或 'deny' 的结果。\n\n如果在所有授权器中都未找到对应的客户端信息，则根据 `authorization.no_match` 配置的行为允许或拒绝当前操作。\n\n注意：\n- 数据源类型使用 'type' 进行标识；\n- 使用同一类型的数据源只能被使用一次。\n\n",
-      "label": "授权器"
+      "desc": "<br/>\n授权（ACL）数据提供者的数组。\n它被设计为一个数组，而不是哈希映射，因此可以\n将源按顺序排列形成访问控制链。<br/>\n\n在授权 '发布' 或 '订阅' 操作时，配置的\n源会按顺序检查。在检查 ACL 源时，\n如果未找到客户端（通过用户名或客户端 ID 标识），\n则继续检查下一个源。一旦返回 '允许' 或 '拒绝' 决定，\n立即停止检查。<br/>\n\n如果在任何源中都未找到客户端，\n则应用 'authorization.no_match' 中配置的默认操作。<br/>\n\n注意：\n源元素由它们的 '类型' 标识。\n不允许配置两个或更多相同类型的源。",
+      "label": "数据源"
     },
     "status": {
       "desc": "数据源状态。",
@@ -797,10 +809,6 @@
     "type": {
       "desc": "数据后端类型",
       "label": "type"
-    },
-    "url": {
-      "desc": "授权 HTTP 服务器地址。",
-      "label": "URL"
     }
   },
   "emqx_auto_subscribe_api": {
@@ -810,7 +818,7 @@
     },
     "update_auto_subscribe_api": {
       "desc": "更新自动订阅主题列表",
-      "label": "更新自动订阅主题列表"
+      "label": "更新自动订阅主题"
     },
     "update_auto_subscribe_api_response409": {
       "desc": "超出自动订阅主题列表长度限制",
@@ -819,27 +827,27 @@
   },
   "emqx_auto_subscribe_schema": {
     "auto_subscribe": {
-      "desc": "给 EMQX 预设多个规则，在客户端连接成功后按照规则为其订阅指定主题，不需要额外发起订阅。",
+      "desc": "设备成功登录后，通过预定义的订阅表示法自动为设备完成订阅。支持使用占位符。",
       "label": "自动订阅"
     },
     "nl": {
-      "desc": "订阅选项 No Local，默认为 0，不同协议版本行为如下：\n\n- MQTT v3.1.1：如果设备订阅了自己发布消息的主题，那么将收到自己发布的所有消息。\n- MQTT v5：如果设备在订阅时将此选项设置为 1，那么服务端将不会向设备转发自己发布的消息\n",
+      "desc": "默认值为 0。\nMQTT v3.1.1：如果你订阅了自己发布的主题，你将收到所有自己发布的消息。\nMQTT v5：如果在订阅时将此选项设置为 1，服务器将不会将你发布的消息转发给你。",
       "label": "No Local"
     },
     "qos": {
-      "desc": "订阅 QoS",
+      "desc": "默认值 0。消息服务质量。\n至多一次（0）\n至少一次（1）\n恰好一次（2）",
       "label": "QoS"
     },
     "rap": {
-      "desc": "订阅选项 Retain As Publish, 默认为 0。\n\n这用来指定服务端向客户端转发消息时是否要保留其中的 RETAIN 标识，注意这一选项不会影响保留消息中的 RETAIN 标识。因此当 Retain As Publish 选项被设置为 0 时，客户端直接依靠消息中的 RETAIN 标识来区分这是一个正常的转发消息还是一个保留消息，而不是去判断消息是否是自己订阅后收到的第一个消息（转发消息甚至可能会先于保留消息被发送，视不同 Broker 的具体实现而定）。",
+      "desc": "默认值为 0。此选项用于指定服务器在向客户端转发消息时是否保留 RETAIN 标记，而且此选项不影响保留消息中的 RETAIN 标记。因此，当选项 Retain As Publish 设置为 0 时，客户端将直接根据消息中的 RETAIN 标记来区分这是普通的转发消息还是保留消息，而不是判断此消息是否为订阅后首次收到的消息（转发的消息可能在保留消息之前发送，这取决于不同消息服务器的具体实现）。",
       "label": "Retain As Publish"
     },
     "rh": {
-      "desc": "订阅选项 Retain Handling, 指定订阅建立时服务端是否向客户端发送保留消息，可选值如下：\n- 0：只要客户端订阅成功，服务端就发送保留消息。\n- 1：客户端订阅成功且该订阅此前不存在，服务端才发送保留消息。毕竟有些时候客户端重新发起订阅可能只是为了改变一下 QoS，并不意味着它想再次接收保留消息。\n- 2：即便客户端订阅成功，服务端也不会发送保留消息。\n",
+      "desc": "默认值为 0。此选项用于指定客户端建立订阅时，服务器是否向客户端转发保留的消息。\n当 Retain Handling 等于 0 时，只要客户端成功订阅，服务器就会发送保留消息。\n当 Retain Handling 等于 1 时，如果客户端成功订阅并且此前不存在此订阅，服务器发送保留消息。毕竟，有时客户端重新发起订阅只是为了改变 QoS，并不意味着它想再次接收保留的消息。\n当 Retain Handling 等于 2 时，即使客户端成功订阅，服务器也不会发送保留消息。",
       "label": "Retain Handling"
     },
     "topic": {
-      "desc": "要订阅的主题或者主题过滤器，支持使用占位符，例如 client/${clientid}/username/${username}/host/${host}/port/${port}\n必填，且不可为空字符串\n",
+      "desc": "主题名称，支持占位符。例如：client/${clientid}/username/${username}/host/${host}/port/${port}\n为必填字段，且不能为空字符串。",
       "label": "主题"
     }
   },
@@ -853,20 +861,20 @@
       "label": "创建数据桥接"
     },
     "desc_api3": {
-      "desc": "通过 ID 获取数据桥接",
+      "desc": "通过 Id 获取数据桥接",
       "label": "获取数据桥接"
     },
     "desc_api4": {
-      "desc": "通过 ID 更新数据桥接",
+      "desc": "通过 Id 更新数据桥接",
       "label": "更新数据桥接"
     },
     "desc_api5": {
-      "desc": "通过 ID 删除数据桥接",
+      "desc": "通过 Id 删除数据桥接",
       "label": "删除数据桥接"
     },
     "desc_api6": {
-      "desc": "通过 ID 重置数据桥接的计数",
-      "label": "重置数据桥接计数"
+      "desc": "通过 Id 重置数据桥接的指标",
+      "label": "重置数据桥接指标"
     },
     "desc_api7": {
       "desc": "停止或启用所有节点上的桥接",
@@ -877,11 +885,11 @@
       "label": "单节点数据桥接操作"
     },
     "desc_api9": {
-      "desc": "通过给定的 ID 测试创建一个新的桥接。 </br>\nID 的格式必须为 ’{type}:{name}”",
+      "desc": "通过给定的 ID 测试创建一个新的桥接。 <br/>\nID 的格式必须为 ’{type}:{name}”",
       "label": "测试桥接创建"
     },
     "desc_bridge_metrics": {
-      "desc": "通过 ID 来获取桥接的指标信息",
+      "desc": "通过 Id 来获取桥接的指标信息",
       "label": "获取桥接的指标"
     },
     "desc_enable_bridge": {
@@ -910,6 +918,10 @@
     }
   },
   "emqx_bridge_azure_event_hub": {
+    "actions": {
+      "desc": "一个动作的配置项",
+      "label": "动作配置"
+    },
     "auth_sasl_password": {
       "desc": "用于连接 Azure Event Hub 的连接字符串。应为命名空间共享访问策略的 \"连接字符串-主键\"。",
       "label": "连接字符串"
@@ -925,6 +937,14 @@
     "connect_timeout": {
       "desc": "TCP 连接建立的最大等待时间（包括如果已启用身份认证则包括身份认证时间）",
       "label": "连接超时"
+    },
+    "connector_type": {
+      "desc": "连接器类型",
+      "label": "连接器类型"
+    },
+    "desc_config": {
+      "desc": "Azure Event Hubs 数据桥接配置项。",
+      "label": "Azure Event Hubs 数据桥接配置项"
     },
     "desc_name": {
       "desc": "桥接名称，作为桥接的一个可读描述。",
@@ -975,6 +995,15 @@
       "label": "TCP keepalive 选项"
     }
   },
+  "ssl_client_opts": {
+      "desc": "用于 Azure Event Hub 客户端的 TLS/SSL 选项。",
+      "label": "TLS/SSL 选项"
+    },
+    "sync_query_timeout": {
+      "desc": "此参数定义同步查询的超时限制。仅当桥接查询模式配置为 'sync' 时适用。",
+      "label": "同步查询超时"
+    }
+  },
   "emqx_bridge_cassandra": {
     "config_enable": {
       "desc": "启用/禁用桥接",
@@ -997,7 +1026,7 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 Cassandra。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 Cassandra。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
       "label": "本地 Topic"
     }
   },
@@ -1033,7 +1062,7 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 Clickhouse。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 Clickhouse。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
       "label": "本地 Topic"
     },
     "sql_template": {
@@ -1069,7 +1098,7 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 DynamoDB。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 DynamoDB。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
       "label": "本地 Topic"
     },
     "template": {
@@ -1113,7 +1142,7 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 GCP PubSub。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 GCP PubSub。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 GCP PubSub。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 GCP PubSub。",
       "label": "本地 Topic"
     },
     "max_retries": {
@@ -1163,11 +1192,11 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 InfluxDB。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 InfluxDB。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 InfluxDB。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 InfluxDB。",
       "label": "本地 Topic"
     },
     "write_syntax": {
-      "desc": "使用 InfluxDB API Line Protocol 写入 InfluxDB 的数据，支持占位符</br>\n参考 [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) 及\n[InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) </br>\nTLDR: </br>\n\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\n注意，整形数值占位符后需要添加一个字符 `i` 类型标识。例如 `${payload.int_value}i`",
+      "desc": "使用 InfluxDB API Line Protocol 写入 InfluxDB 的数据，支持占位符<br/>\n参考 [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) 及\n[InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) <br/>\nTLDR: <br/>\n\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\n注意，整形数值占位符后需要添加一个字符 `i` 类型标识。例如 `${payload.int_value}i`",
       "label": "写语句"
     }
   },
@@ -1205,7 +1234,7 @@
       "label": "协议"
     },
     "server": {
-      "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。</br>\n主机名具有以下形式：`Host[:Port]`。</br>\n如果未指定 `[:Port]`，则使用 InfluxDB 默认端口 8086。",
+      "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>\n主机名具有以下形式：`Host[:Port]`。<br/>\n如果未指定 `[:Port]`，则使用 InfluxDB 默认端口 8086。",
       "label": "服务器地址"
     },
     "token": {
@@ -1308,6 +1337,10 @@
       "desc": "用逗号分隔的 <code>host[:port]</code> 主机列表。默认端口号为 9092。",
       "label": "主机列表"
     },
+    "bridge_v2_type": {
+      "desc": "数据桥接类型",
+      "label": "数据桥接类型"
+    },
     "buffer_memory_overload_protection": {
       "desc": "缓存模式是 <code>memory</code> 或 <code>hybrid</code> 时适用。当系统处于高内存压力时，从队列中丢弃旧的消息以减缓内存增长。内存压力值由配置项 <code>sysmon.os.sysmem_high_watermark</code> 决定。注意，该配置仅在 Linux 系统中有效。",
       "label": "内存过载保护"
@@ -1393,8 +1426,8 @@
       "label": "Value 编码模式"
     },
     "desc_config": {
-      "desc": "Kafka 桥接配置",
-      "label": "Kafka 桥接配置"
+      "desc": "一个 Kafka 生产者客户端的配置项",
+      "label": "Kafka 生产者客户端配置"
     },
     "desc_name": {
       "desc": "桥接名字，可读描述",
@@ -1425,8 +1458,12 @@
       "label": "消息的 Value"
     },
     "kafka_producer": {
-      "desc": "Kafka Producer 配置。",
-      "label": "Kafka Producer"
+      "desc": "Kafka 生产者配置。",
+      "label": "Kafka 生产者"
+    },
+    "kafka_producer_action": {
+      "desc": "Kafka 生产者动作",
+      "label": "Kafka 生产者动作"
     },
     "kafka_topic": {
       "desc": "Kafka 主题名称",
@@ -1476,6 +1513,10 @@
       "desc": "设置 Kafka leader 在返回给 EMQX 确认之前需要等待多少个 follower 的确认。\n\n<code>all_isr</code>: 需要所有的在线复制者都确认。\n<code>leader_only</code>: 仅需要分区 leader 确认。\n<code>none</code>: 无需 Kafka 回复任何确认。",
       "label": "Kafka 确认数量"
     },
+    "server_name_indication": {
+      "desc": "TLS 握手的 Server Name Indication (SNI) 设置。<br/>\n- <code>auto</code>：客户端将使用 <code>"servicebus.windows.net"</code> 作为 SNI。<br/>\n- <code>disable</code>：如果您希望阻止客户端发送 SNI。<br/>\n- 其他字符串值将按原样发送。",
+      "label": "SNI"
+    },
     "socket_nodelay": {
       "desc": "设置‘true’让系统内核立即发送。否则当需要发送的内容很少时，可能会有一定延迟（默认 40 毫秒）。",
       "label": "是否关闭延迟发送"
@@ -1491,6 +1532,18 @@
     "socket_send_buffer": {
       "desc": "TCP socket 的发送缓存调优。默认值是针对高吞吐量的一个推荐值。",
       "label": "Socket 发送缓存大小"
+    },
+    "socket_tcp_keepalive": {
+      "desc": "为 Kafka 桥接连接启用 TCP keepalive。\n该值是3个由逗号分隔的数字，格式为 'Idle,Interval,Probes'。\n - Idle: 连接在服务器开始发送 keep-alive 探测（Linux 默认 7200）之前需要空闲的秒数。\n - Interval: TCP keep-alive 探测发送间隔的秒数（Linux 默认 75）。\n - Probes: 如果没有从另一端获得响应，在放弃并终止连接之前发送的 TCP keep-alive 探测的最大数量 （Linux 默认 9）。\n例如 \"240,30,5\" 表示： 在连接空闲 240 秒后发送 TCP keepalive 探测 ，并且每 30 秒发送一次探测，直到收到响应，如果连续错过 5 个响应，则应关闭连接。\n默认值： 'none'",
+      "label": "TCP keepalive 选项"
+    },
+    "ssl_client_opts": {
+      "desc": "Kafka 客户端的 TLS/SSL 选项",
+      "label": "TLS/SSL 选项"
+    },
+    "sync_query_timeout": {
+      "desc": "该参数定义同步查询的超时限制。仅当桥接查询模式配置为'sync'时才适用。",
+      "label": "同步查询超时"
     }
   },
   "emqx_bridge_mqtt_schema": {
@@ -1499,12 +1552,12 @@
       "label": "配置"
     },
     "desc_name": {
-      "desc": "Bridge 名字，Bridge 的可读描述",
-      "label": "Bridge 名字"
+      "desc": "桥接名字，桥接的可读描述",
+      "label": "桥接名字"
     },
     "desc_type": {
-      "desc": "Bridge 的类型",
-      "label": "Bridge 类型"
+      "desc": "数据桥接的类型",
+      "label": "桥接类型"
     }
   },
   "emqx_bridge_opents": {
@@ -1557,7 +1610,7 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 Oracle Database。 </br>注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 Oracle Database。 <br/>注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
       "label": "本地 Topic"
     },
     "server": {
@@ -1595,7 +1648,7 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 PostgreSQL。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 PostgreSQL。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
       "label": "本地 Topic"
     },
     "sql_template": {
@@ -1831,11 +1884,11 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 RocketMQ。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 RocketMQ。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
       "label": "本地 Topic"
     },
     "template": {
-      "desc": "模板, 默认为空，为空时将会将整个消息转发给 RocketMQ。 <br />\n            模板可以是任意带有占位符的合法字符串, 例如:<br />            ${id}, ${username}, ${clientid}, ${timestamp}<br />\n            {\"id\" : ${id}, \"username\" : ${username}}",
+      "desc": "模板, 默认为空，为空时将会将整个消息转发给 RocketMQ。 <br/>\n            模板可以是任意带有占位符的合法字符串, 例如:<br/>            ${id}, ${username}, ${clientid}, ${timestamp}<br/>\n            {\"id\" : ${id}, \"username\" : ${username}}",
       "label": "模板"
     }
   },
@@ -1907,7 +1960,7 @@
       "label": "节点的状态"
     },
     "desc_status": {
-      "desc": "Bridge 的连接状态<br/>\n- <code>connecting</code>: 启动时的初始状态。<br />\n- <code>connected</code>: 桥接驱动健康检查正常。<br />\n- <code>disconnected</code>: 当桥接无法通过健康检查。<br />\n- <code>stopped</code>: 桥接处于停用状态。<br />\n- <code>inconsistent</code>: 集群中有各节点汇报的状态不一致。",
+      "desc": "Bridge 的连接状态<br/>\n- <code>connecting</code>: 启动时的初始状态。<br/>\n- <code>connected</code>: 桥接驱动健康检查正常。<br/>\n- <code>disconnected</code>: 当桥接无法通过健康检查。<br/>\n- <code>stopped</code>: 桥接处于停用状态。<br/>\n- <code>inconsistent</code>: 集群中有各节点汇报的状态不一致。",
       "label": "Bridge 状态"
     },
     "desc_status_reason": {
@@ -1997,7 +2050,7 @@
       "label": "SQL Server Driver 名称"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 Microsoft SQL Server。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 Microsoft SQL Server。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
       "label": "本地 Topic"
     },
     "sql_template": {
@@ -2029,7 +2082,7 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 TDengine。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 TDengine。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
       "label": "本地 Topic"
     },
     "sql_template": {
@@ -2041,6 +2094,86 @@
     "server": {
       "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>\n主机名具有以下形式：`Host[:Port]`。<br/>\n如果未指定 `[:Port]`，则使用 TDengine 默认端口 6041。",
       "label": "服务器地址"
+    }
+  },
+    "emqx_bridge_v2_api": {
+    "desc_api1": {
+      "desc": "列出所有创建的数据桥接。",
+      "label": "列出所有数据桥接"
+    },
+    "desc_api10": {
+      "desc": "列出所有可用的动作类型。",
+      "label": "列出动作类型"
+    },
+    "desc_api2": {
+      "desc": "通过类型和名称创建一个新的数据桥接。",
+      "label": "创建数据桥接"
+    },
+    "desc_api3": {
+      "desc": "通过 id 获取一个数据桥接",
+      "label": "获取数据桥接"
+    },
+    "desc_api4": {
+      "desc": "通过 id 更新数据桥接",
+      "label": "更新数据桥接"
+    },
+    "desc_api5": {
+      "desc": "通过 id 删除数据桥接",
+      "label": "删除数据桥接"
+    },
+    "desc_api6": {
+      "desc": "通过 id 重置数据桥接指标。",
+      "label": "重置数据桥接指标"
+    },
+    "desc_api7": {
+      "desc": "启用集群中所有节点上的数据桥接。",
+      "label": "集群数据桥接操作"
+    },
+    "desc_api8": {
+      "desc": "在某个节点上启动数据桥接。",
+      "label": "单节点数据桥接操作"
+    },
+    "desc_api9": {
+      "desc": "测试创建一个新的数据桥接。",
+      "label": "测试数据桥接创建"
+    },
+    "desc_bridge_metrics": {
+      "desc": "通过 id 来获取数据桥接的指标信息。",
+      "label": "获取数据桥接指标"
+    },
+    "desc_enable_bridge": {
+      "desc": "启用或禁用集群内所有节点上的数据桥接。",
+      "label": "是否启用集群内的数据桥接"
+    },
+    "desc_param_path_enable": {
+      "desc": "是否启用该数据桥接。",
+      "label": "启用数据桥接"
+    },
+    "desc_param_path_id": {
+      "desc": "数据桥接 ID，格式必须为 {type}:{name}。",
+      "label": "数据桥接 ID"
+    },
+    "desc_param_path_node": {
+      "desc": "节点名称，例如： 'emqx@127.0.0.1'。",
+      "label": "节点名称"
+    },
+    "desc_param_path_operation_cluster": {
+      "desc": "集群可用操作：'启动'。",
+      "label": "集群可用操作"
+    },
+    "desc_param_path_operation_on_node": {
+      "desc": "节点可用操作：'启动'。",
+      "label": "节点可用操作 "
+    },
+    "desc_qs_also_delete_dep_actions": {
+      "desc": "是否级联删除依赖的动作。",
+      "label": "级联删除依赖的动作?"
+    }
+  },
+  "emqx_bridge_v2_schema": {
+    "desc_bridges_v2": {
+      "desc": "数据桥接的配置信息",
+      "label": "数据桥接配置"
     }
   },
   "emqx_bridge_webhook_schema": {
@@ -2057,11 +2190,11 @@
       "label": "启用/禁用数据桥接"
     },
     "config_headers": {
-      "desc": "HTTP 请求的标头。<br />\n允许使用带有变量的模板。",
+      "desc": "HTTP 请求的标头。<br/>\n允许使用带有变量的模板。",
       "label": "HTTP 请求标头"
     },
     "config_local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 HTTP 服务器。 <br />\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 HTTP 服务器。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 HTTP 服务器。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 HTTP 服务器。",
       "label": "本地 Topic"
     },
     "config_max_retries": {
@@ -2130,10 +2263,10 @@
       "desc": "CoAP 网关要求客户端的最小心跳间隔时间。\n当 <code>connection_required</code> 开启后，该参数用于检查客户端连接是否存活"
     },
     "coap_notify_type": {
-      "desc": "投递给 CoAP 客户端的通知消息类型。当客户端 Observe 一个资源（或订阅某个主题）时，网关会向客户端推送新产生的消息。其消息类型可设置为：<br />\n\n  - non: 不需要客户端返回确认消息;<br />\n  - con: 需要客户端返回一个确认消息;<br />\n  - qos: 取决于消息的 QoS 等级; QoS 0 会以 `non` 类型下发，QoS 1/2 会以 `con` 类型下发"
+      "desc": "投递给 CoAP 客户端的通知消息类型。当客户端 Observe 一个资源（或订阅某个主题）时，网关会向客户端推送新产生的消息。其消息类型可设置为：<br/>\n\n  - non: 不需要客户端返回确认消息;<br/>\n  - con: 需要客户端返回一个确认消息;<br/>\n  - qos: 取决于消息的 QoS 等级; QoS 0 会以 `non` 类型下发，QoS 1/2 会以 `con` 类型下发"
     },
     "coap_publish_qos": {
-      "desc": "客户端发布请求的默认 QoS 等级。\n当 CoAP 客户端发起发布请求时，如果未携带 `qos` 参数则会使用该默认值。默认值可设置为：<br />\n\n  - qos0、qos1、qos2: 设置为固定的 QoS 等级<br />\n  - coap: 依据发布操作的 CoAP 报文类型来动态决定<br />\n    * 当发布请求为 `non-confirmable` 类型时，取值为 qos0<br />\n    * 当发布请求为 `confirmable` 类型时，取值为 qos1"
+      "desc": "客户端发布请求的默认 QoS 等级。\n当 CoAP 客户端发起发布请求时，如果未携带 `qos` 参数则会使用该默认值。默认值可设置为：<br/>\n\n  - qos0、qos1、qos2: 设置为固定的 QoS 等级<br/>\n  - coap: 依据发布操作的 CoAP 报文类型来动态决定<br/>\n    * 当发布请求为 `non-confirmable` 类型时，取值为 qos0<br/>\n    * 当发布请求为 `confirmable` 类型时，取值为 qos1"
     },
     "coap_subscribe_qos": {
       "desc": "客户端订阅请求的默认 QoS 等级。\n当 CoAP 客户端发起订阅请求时，如果未携带 `qos` 参数则会使用该默认值。默认值可设置为：<br/>\n  - qos0、 qos1、qos2: 设置为固定的 QoS 等级<br/>\n  - coap: 依据订阅操作的 CoAP 报文类型来动态决定<br/>\n    * 当订阅请求为 `non-confirmable` 类型时，取值为 qos0<br/>\n    * 当订阅请求为 `confirmable` 类型时，取值为 qos1"
@@ -2257,7 +2390,7 @@
       "label": "集群名称"
     },
     "cluster_proto_dist": {
-      "desc": "分布式 Erlang 集群协议类型。可选值为:<br/>\n- inet_tcp: 使用 IPv4 <br/>\n- inet_tls: 使用 TLS，需要配合 <code>etc/ssl_dist.conf</code> 一起使用。",
+      "desc": "分布式 Erlang 集群协议类型。可选值为:<br/>\n- inet_tcp: 使用 IPv4 <br/>\n- inet_tls: 使用 TLS，需要配合 <code>etc/ssl_dist.conf</code> 一起使用。<br/>\n- inet6_tcp: IPv6 TCP <br/>\n- inet6_tls: IPv6 TLS， 与 <code>etc/ssl_dist.conf</code> 配合使用。",
       "label": "集群内部通信协议"
     },
     "cluster_static_seeds": {
@@ -2568,9 +2701,17 @@
       "desc": "兼容旧的无鉴权模式",
       "label": "向后兼容旧的无鉴权模式"
     },
+    "rpc_ipv6_only": {
+      "desc": "此设置仅在 <code>rpc.listen_address</code> 被分配了一个 IPv6 地址时有效。\n如果设置为 <code>true</code>，RPC 客户端将仅使用 IPv6 进行连接。\n否则，即使服务器位于 IPv6 上，客户端也可能选择 IPv4。",
+      "label": "仅使用 IPv6"
+    },
     "rpc_keyfile": {
       "desc": "<code>rpc.certfile</code> 的私钥文件的路径。<br/>\n注意：此文件内容是私钥，所以需要设置权限为 600。",
       "label": "RPC 私钥文件"
+    },
+    "rpc_listen_address": {
+      "desc": "指示 RPC 服务器监听的 IP 地址。例如，使用 <code>"0.0.0.0"</code> 表示 IPv4 或 <code>"::"</code> 表示 IPv6。",
+      "label": "RPC 监听 IP 地址"
     },
     "rpc_mode": {
       "desc": "在 <code>sync</code> 模式下，发送端等待接收端的 ack 信号。",
@@ -2621,36 +2762,82 @@
       "label": "RPC TCP 服务监听端口"
     }
   },
-  "emqx_connector_api": {
-    "conn_get": {
-      "desc": "列出所有连接器",
-      "label": "列出所有连接器"
+   "emqx_connector_api": {
+    "desc_api1": {
+      "desc": "列出所有创建的连接器。",
+      "label": "列出所有连接器""
     },
-    "conn_id_delete": {
-      "desc": "通过 ID 删除一个连接器",
-      "label": "删除连接器"
-    },
-    "conn_id_get": {
-      "desc": "通过 ID 获取连接器",
-      "label": "获取连接器"
-    },
-    "conn_id_put": {
-      "desc": "通过 ID 更新一个连接器",
-      "label": "更新连接器"
-    },
-    "conn_post": {
-      "desc": "创建一个新的连接器",
+    "desc_api2": {
+      "desc": "通过类型和名称创建一个新的连接器。",
       "label": "创建连接器"
     },
-    "conn_test_post": {
-      "desc": "通过给定的 ID 测试创建一个新的连接器 <br/>\nID 的格式必须为“{type}:{name}”",
-      "label": "创建测试连接器"
+    "desc_api3": {
+      "desc": "通过 id 获取一个连接器。",
+      "label": "获取连接器"
     },
-    "id": {
-      "desc": "连接器 ID， 格式必须为 {type}:{name}",
+    "desc_api4": {
+      "desc": "通过 id 更新一个连接器。",
+      "label": "更新连接器"
+    },
+    "desc_api5": {
+      "desc": "通过 id 删除一个连接器。",
+      "label": "删除连接器"
+    },
+    "desc_api6": {
+      "desc": "通过 id 重置连接器指标。",
+      "label": "重置连接器指标"
+    },
+    "desc_api7": {
+      "desc": "在集群的所有节点上启动连接器。",
+      "label": "集群连接器操作"
+    },
+    "desc_api8": {
+      "desc": "在特定节点上启动连接器。",
+      "label": "节点连接器操作"
+    },
+    "desc_api9": {
+      "desc": "测试创建一个新的连接器。",
+      "label": "测试连接器创建"
+    },
+    "desc_connector_metrics": {
+      "desc": "通过 id 获取连接器指标。",
+      "label": "获取连接器指标"
+    },
+    "desc_enable_connector": {
+      "desc": "在集群的所有节点上启用或禁用连接器。",
+      "label": "集群连接器启用"
+    },
+    "desc_param_path_enable": {
+      "desc": "是否启用此连接器。",
+      "label": "启用连接器"
+    },
+    "desc_param_path_id": {
+      "desc": "连接器 id。必须是 {type}:{name} 的格式。",
       "label": "连接器 ID"
+    },
+    "desc_param_path_node": {
+      "desc": "节点名称，例如 'emqx@127.0.0.1'。",
+      "label": "节点名称"
+    },
+    "desc_param_path_operation_cluster": {
+      "desc": "集群可用操作：'start'。",
+      "label": "集群操作"
+    },
+    "desc_param_path_operation_on_node": {
+      "desc": "节点可用操作：'start'。",
+      "label": "节点操作"
     }
   },
+  "emqx_connector_schema": {
+    "connector_field": {
+      "desc": "由动作指定的连接器名称，用于选择外部资源。",
+      "label": "连接器"
+    },
+    "desc_connectors": {
+      "desc": "用于连接到外部系统的连接器。",
+      "label": "连接器"
+    }
+  },  
   "emqx_connector_http": {
     "body": {
       "desc": "HTTP 请求报文主体。",
@@ -3409,7 +3596,7 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 HStreamDB。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 HStreamDB。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 HStreamDB。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 HStreamDB。",
       "label": "本地 Topic"
     },
     "payload": {
@@ -3473,7 +3660,7 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 MySQL。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 MySQL。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
       "label": "本地 Topic"
     },
     "sql_template": {
@@ -3503,7 +3690,7 @@
       "label": "桥接类型"
     },
     "local_topic": {
-      "desc": "发送到 'local_topic' 的消息都会转发到 Redis。 </br>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 Redis。",
+      "desc": "发送到 'local_topic' 的消息都会转发到 Redis。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发到 Redis。",
       "label": "本地 Topic"
     }
   },
@@ -3714,7 +3901,7 @@
       "desc": "ExHook 服务器名称"
     },
     "nodelay": {
-      "desc": "如果为 true，则为套接字设置 TCP_NODELAY 选项，这意味着会立即发送数据包。"
+      "desc": "如果为 true，则为套接字设置 TCP_NODELAY 选项，这意味着会立即发送数据包"
     },
     "pool_size": {
       "desc": "gRPC 客户端进程池大小"
@@ -3886,7 +4073,7 @@
       "desc": "网关启用状态"
     },
     "gateway_status_in_qs": {
-      "desc": "通过网关状态筛选<br/>\n可选值为 `running`、`stopped`、`unloaded`"
+      "desc": "通过网关状态筛选<br/>\n状态是一个枚举类型，包括 `running`、`stopped`、`unloaded`"
     },
     "gateway_stopped_at": {
       "desc": "网关停用时间"
@@ -4221,7 +4408,7 @@
       "desc": "DTLS Socket 配置"
     },
     "gateway_common_authentication": {
-      "desc": "网关的认证器配置，对该网关下所以的监听器生效。如果每个监听器需要配置不同的认证器，需要配置监听器下的 <code>authentication</code> 字段。"
+      "desc": "网关的认证器配置，对该网关下所以的监听器生效。如果每个监听器需要配置不同的认证器，需要配置监听器下的 <code>authentication</code> 字段"
     },
     "gateway_common_clientinfo_override": {
       "desc": "ClientInfo 重写。"
@@ -4411,50 +4598,6 @@
       "label": "服务器地址"
     }
   },
-  "emqx_ldap_authn": {
-    "is_superuser_attribute": {
-      "desc": "指定使用哪个属性来表示用户是否为超级用户。",
-      "label": "IsSuperuser 属性"
-    },
-    "ldap": {
-      "desc": "使用 LDAP 绑定操作作为认证方式的认证器配置。"
-    },
-    "password_attribute": {
-      "desc": "指定使用哪个属性来表示用户的密码。",
-      "label": "密码属性"
-    },
-    "query_timeout": {
-      "desc": "LDAP 查询超时。",
-      "label": "查询超时"
-    }
-  },
-  "emqx_ldap_authn_bind": {
-    "ldap_bind": {
-      "desc": "使用 LDAP 绑定操作作为认证方式的认证器配置。"
-    },
-    "query_timeout": {
-      "desc": "LDAP 查询超时。",
-      "label": "查询超时"
-    }
-  },
-  "emqx_ldap_authz": {
-    "all_attribute": {
-      "desc": "指定哪些属性用于表示允许同时 `publish` 和 `subscribe` 的主题列表。",
-      "label": "全部属性"
-    },
-    "publish_attribute": {
-      "desc": "指定哪些属性用于表示允许 `publish` 的主题列表。",
-      "label": "Publish 属性"
-    },
-    "query_timeout": {
-      "desc": "LDAP 查询超时。",
-      "label": "查询超时"
-    },
-    "subscribe_attribute": {
-      "desc": "指定哪些属性用于表示允许 `subscribe` 的主题列表。",
-      "label": "Subscribe 属性"
-    }
-  },
   "emqx_license_http_api": {
     "desc_license_info_api": {
       "desc": "获取 License 信息",
@@ -4496,72 +4639,17 @@
     }
   },
   "emqx_limiter_schema": {
-    "bucket_cfg": {
-      "desc": "桶的配置",
-      "label": "桶的配置"
-    },
-    "burst": {
-      "desc": "突发速率。\n突发速率允许短时间内速率超过设置的速率值，突发速率 + 速率 = 当前桶能达到的最大速率值",
-      "label": "突发速率"
-    },
-    "bytes": {
-      "desc": "流入字节率控制器。\n这个是用来控制当前节点上的数据流入的字节率，每条消息将会消耗和其二进制大小等量的令牌，当达到最大速率后，会话将会被限速甚至被强制挂起一小段时间",
-      "label": "流入字节率"
-    },
     "bytes_rate": {
-      "desc": "消息发布流量大小，一旦达到限制被限制的客户端将变慢甚至被挂起一段时间。",
-      "label": "消息发布流量"
-    },
-    "client": {
-      "desc": "对桶的每个使用者的速率控制设置",
-      "label": "每个使用者的限制"
-    },
-    "connection": {
-      "desc": "连接速率控制器。\n这个用来控制当前节点上的连接速率，当达到最大速率后，新的连接将会被拒绝",
-      "label": "连接速率"
-    },
-    "divisible": {
-      "desc": "申请的令牌数是否可以被分割",
-      "label": "是否可分割"
-    },
-    "failure_strategy": {
-      "desc": "当所有的重试都失败后的处理策略",
-      "label": "失败策略"
-    },
-    "initial": {
-      "desc": "桶中的初始令牌数",
-      "label": "初始令牌数"
-    },
-    "internal": {
-      "desc": "EMQX 内部功能所用限制器。"
-    },
-    "low_watermark": {
-      "desc": "当桶中剩余的令牌数低于这个值，即使令牌申请成功了，也会被强制暂停一会儿",
-      "label": "低水位线"
+      "desc": "数据发布速率。<br/>\n这用于限制该节点的入站字节速率。\n一旦达到限制，受限制的客户端将减速甚至暂时挂起。<br/>\n字节的单位可以是：KB MB GB。<br/>\n例如：<br/>\n- <code>500KB/s</code>：每秒只发送前500千字节，其他消息被缓冲。<br/>\n- <code>500MB/10s</code>：即使是10秒，也只发送前500兆字节，其他消息被缓冲。",
+      "label": "数据发布速率"
     },
     "max_conn_rate": {
-      "desc": "一旦达到限制，新的连接将被延迟或拒绝。",
-      "label": "连接速度"
-    },
-    "max_retry_time": {
-      "desc": "申请失败后，尝试重新申请的时长最大值",
-      "label": "最大重试时间"
-    },
-    "message_routing": {
-      "desc": "消息派发速率控制器。\n这个用来控制当前节点内的消息派发速率，当达到最大速率后，新的推送将会被拒绝",
-      "label": "消息派发"
-    },
-    "messages": {
-      "desc": "流入速率控制器。\n这个用来控制当前节点上的消息流入速率，当达到最大速率后，会话将会被限速甚至被强制挂起一小段时间",
-      "label": "消息流入速率"
+      "desc": "最大连接速率。<br/>\n这用于限制该节点的连接速率。\n一旦达到限制，新的连接将被推迟或拒绝。<br/>\n例如：<br/>\n- <code>1000/s</code>：每秒只接受1000个连接<br/>\n- <code>1000/10s</code>：每10秒只接受1000个连接。",
+      "label": "最大连接速率"
     },
     "messages_rate": {
-      "desc": "限制消息发布速度（数量），一旦达到限制被限制的客户端将变慢甚至被挂起一段时间。",
-      "label": "消息发布速度"
-    },
-    "rate": {
-      "desc": "桶的令牌生成速率",
-      "label": "速率"
+      "desc": "消息发布速率。<br/>\n这用于限制该节点的入站消息数量。\n一旦达到限制，受限制的客户端将减速甚至暂时挂起。<br/>\n例如：<br/>\n- <code>500/s</code>：每秒只发送前500条消息，其他消息被缓冲。<br/>\n- <code>500/10s</code>：即使是10秒，也只发送前500条消息，其他消息被缓冲。",
+      "label": "消息发布速率"
     }
   },
   "emqx_lwm2m_api": {
@@ -4610,10 +4698,10 @@
       "desc": "LwM2M 网关订阅/发布消息的主题映射配置。"
     },
     "lwm2m_translators_command": {
-      "desc": "下行命令主题。\n对于每个成功上线的新 LwM2M 客户端，网关会创建一个订阅关系来接收下行消息并将其发送给客户端。"
+      "desc": "下行命令主题。\n对于每个成功上线的新 LwM2M 客户端，网关会创建一个订阅关系来接收下行消息并将其发送给客户端"
     },
     "lwm2m_translators_notify": {
-      "desc": "用于发布来自 LwM2M 客户端的通知事件的主题。\n在成功 Observe 到 LwM2M 客户端的资源后，如果客户端报告任何资源状态的变化，网关将通过该主题发送通知事件。"
+      "desc": "用于发布来自 LwM2M 客户端的通知事件的主题。\n在成功 Observe 到 LwM2M 客户端的资源后，如果客户端报告任何资源状态的变化，网关将通过该主题发送通知事件"
     },
     "lwm2m_translators_register": {
       "desc": "用于发布来自 LwM2M 客户端的注册事件的主题。"
@@ -4944,19 +5032,19 @@
       "desc": "PUBLISH 消息里的 Property 字段。"
     },
     "msg_content_type": {
-      "desc": "消息内容类型，用来描述应用消息的内容，服务端会将收到的应用消息中的内容类型原封不动的发送给所有的订阅者。"
+      "desc": "消息内容类型必须是 UTF-8 编码的字符串。"
     },
     "msg_correlation_data": {
-      "desc": "对比数据，服务端在收到应用消息时会原封不动的把对比数据发送给所有的订阅者。对比数据只对请求消息(Request Message)的发送端和响应消息(Response Message)的接收端有意义。"
+      "desc": "关联数据的标识符，服务器必须将关联数据原封不动地发送给接收应用消息的所有的订阅者。"
     },
     "msg_message_expiry_interval": {
-      "desc": "消息过期间隔，单位为秒。当消息过期时，如果服务端还没有开始向匹配的订阅者投递该消息，则服务端会删除该订阅者的消息副本。如果不设置，则消息永远不会过期。"
+      "desc": "消息过期间隔的标识符。如果消息过期间隔已过，而服务器未能开始向匹配的订阅者转发消息，则必须删除该订阅者的消息副本。"
     },
     "msg_payload_format_indicator": {
-      "desc": "Payload 格式，0 表示是未指定格式的数据，相当于没有发送 Payload 格式指示；1 表示 Payload 是 UTF-8 编码的字符数据，Payload 中的 UTF-8 数据必须是按照 Unicode 的规范和 RFC 3629 的标准要求进行编码的。"
+      "desc": "Payload 格式，0 (0x00) 字节表示是未指定格式的数据，相当于没有发送 Payload 格式指示；1 (0x01) 字节表示 Payload 是 UTF-8 编码的字符数据，Payload 中的 UTF-8 数据必须是按照 Unicode 的规范和 RFC 3629 的标准要求进行编码的。"
     },
     "msg_response_topic": {
-      "desc": "响应主题，用作响应消息的主题名。响应主题不能包含通配符，也不能包含多个主题，否则将造成协议错误。当存在响应主题时，消息将被视作请求报文。服务端在收到应用消息时必须将响应主题原封不动的发送给所有的订阅者。"
+      "desc": "响应主题的标识符。响应主题必须是 UTF-8 编码的，且不得包含通配符字符。"
     },
     "msg_user_properties": {
       "desc": "指定 MQTT 消息的 User Property 键值对。注意，如果出现重复的键，只有最后一个会保留。"
@@ -5100,7 +5188,7 @@
     },
     "time_format": {
       "desc": "rfc3339 或者 epoch 时间戳格式",
-      "label": "时间格式"
+      "label": "rfc3339 或者 epoch 时间戳格式"
     },
     "time_format_g": {
       "desc": "rfc3339 或者 epoch 时间戳格式",
@@ -5168,13 +5256,13 @@
       "desc": "是否周期性广播 ADVERTISE 消息"
     },
     "mqttsn_enable_qos3": {
-      "desc": "是否允许无连接的客户端发送 QoS 等于 -1 的消息。\n该功能主要用于支持轻量的 MQTT-SN 客户端实现，它不会向网关建立连接，注册主题，也不会发起订阅；它只使用 QoS 为 -1 来发布消息。"
+      "desc": "是否允许无连接的客户端发送 QoS 等于 -1 的消息。\n该功能主要用于支持轻量的 MQTT-SN 客户端实现，它不会向网关建立连接，注册主题，也不会发起订阅；它只使用 QoS 为 -1 来发布消息"
     },
     "mqttsn_gateway_id": {
-      "desc": "MQTT-SN 网关 ID。\n当 <code>broadcast</code> 打开时，MQTT-SN 网关会使用该 ID 来广播 ADVERTISE 消息。"
+      "desc": "MQTT-SN 网关 ID。\n当 <code>broadcast</code> 打开时，MQTT-SN 网关会使用该 ID 来广播 ADVERTISE 消息"
     },
     "mqttsn_predefined": {
-      "desc": "预定义主题列表。\n预定义的主题列表，是一组 主题 ID 和 主题名称 的映射关系。使用预先定义的主题列表，可以减少 MQTT-SN 客户端和网关对于固定主题的注册请求。"
+      "desc": "预定义主题列表。\n预定义的主题列表，是一组 主题 ID 和 主题名称 的映射关系。使用预先定义的主题列表，可以减少 MQTT-SN 客户端和网关对于固定主题的注册请求"
     },
     "mqttsn_predefined_id": {
       "desc": "主题 ID。范围：1-65535"
@@ -5188,11 +5276,11 @@
   },
   "emqx_node_rebalance_api": {
     "abs_conn_threshold": {
-      "desc": "当前节点上的连接数与迁入节点上的平均连接数的差值（绝对值）上限，低于该差值时停止迁移连接。",
+      "desc": "当前节点上的连接数与迁入节点上的平均连接数的最大期望差值，低于此比例是重平衡过程的目的。",
       "label": "连接数差值"
     },
     "abs_sess_threshold": {
-      "desc": "当前节点上的会话数与迁入节点上的平均会话数之间的差值（绝对值）上限，低于该差值时停止迁移会话。",
+      "desc": "当前节点上的会话数与迁入节点上的平均会话数之间的最大期望差值，低于此比例是节点疏散过程的目的。",
       "label": "会话数差值"
     },
     "cluster_purge_start": {
@@ -5336,7 +5424,7 @@
       "label": "重定向至"
     },
     "rel_conn_threshold": {
-      "desc": "当前节点上的连接数与迁入节点上的平均连接数的比值上限，低于该比值时停止迁移连接。",
+      "desc": "当前节点上的连接数与迁入节点上的平均连接数的最大期望比值，低于该比值时停止重平衡。",
       "label": "连接数比值"
     },
     "rel_sess_threshold": {
@@ -5437,6 +5525,12 @@
     "states": {
       "desc": "一组插件的状态。插件将按照定义的顺序启动",
       "label": "插件启动顺序及状态"
+    }
+  },
+  "emqx_postgresql": {
+    "server": {
+      "desc": "要连接的 IPv4 或 IPv6 地址或主机名。<br/>\n一个主机条目的格式为：Host[:Port]。<br/>\n如果没有指定 [:Port]，将使用 PostgreSQL 默认端口 5432。",
+      "label": "服务器主机"
     }
   },
   "emqx_prometheus_api": {
@@ -5695,7 +5789,7 @@
       "desc": "消息保留时间。0 代表永久保留"
     },
     "stop_publish_clear_msg": {
-      "desc": "是否不发送保留消息的清理消息，在 MQTT 5.0 中如果一条保留消息的消息体为空，则会清除掉之前存储\n的对应的保留消息，通过这个值控制是否停止发送清理消息。"
+      "desc": "当 PUBLISH 消息的保留标志被设置且有效载荷为空时，是否继续发布消息。\n参见：\nhttp://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc398718038"
     }
   },
   "emqx_rewrite_api": {
@@ -6227,7 +6321,7 @@
       "desc": "是否启用 Session Registry"
     },
     "broker_perf_route_lock_type": {
-      "desc": "通配符主题订阅/取消订阅性能调优。\n建议仅当通配符主题较多时才更改此参数。\n\n注：当从 `global` 锁更改或更改为 `gloabal` 锁时，它要求集群中的所有节点在更改之前停止。\n  - `key`：为 Mnesia 事务涉及到的每个 key 上锁，建议单节点时使用。\n  - `tab`：为 Mnesia 事务涉及到的表上锁，建议在集群中使用。\n  - `global`：所以更新操作都被全局的锁保护，仅建议在超大规模集群中使用。"
+      "desc": "通配符主题订阅/取消订阅性能调优。\n建议仅当通配符主题较多时才更改此参数。\n\n注：当从 `global` 锁更改或更改为 `gloabal` 锁时，它要求集群中的所有节点在更改之前停止。\n  - `key`：为 mnesia 事务涉及到的每个 key 上锁，建议单节点时使用。\n  - `tab`：为 mnesia 事务涉及到的表上锁，建议在集群中使用。\n  - `global`：所以更新操作都被全局的锁保护，仅建议在超大规模集群中使用。"
     },
     "broker_perf_trie_compaction": {
       "desc": "是否开启主题表压缩存储。\n启用它会显着提高通配符主题订阅率，如果通配符主题具有唯一前缀，例如：'sensor/{{id}}/+/'，其中每个订阅者的 ID 是唯一的。\n如果消息主要发布到具有大量级别的主题，则主题匹配性能（发布时）可能会降低。\n\n注意：这是一个集群范围的配置。 它要求在更改之前停止所有节点。"
@@ -6336,6 +6430,10 @@
       "desc": "从服务器刷新 CRL 的周期。 该配置对所有 URL 和监听器有效。",
       "label": "CRL 缓存刷新间隔"
     },
+    "description": {
+      "desc": "描述性文本。",
+      "label": "描述"
+    },
     "fields_authorization_deny_action": {
       "desc": "授权检查拒绝操作时的操作。",
       "label": "授权检查拒绝操作时的操作"
@@ -6437,7 +6535,7 @@
       "label": "空闲超时时间"
     },
     "fields_mqtt_quic_listener_idle_timeout_ms": {
-      "desc": "一个连接在被优雅地关闭之前可以空闲多长时间。0 表示禁用超时。",
+      "desc": "一个连接在被优雅地关闭之前可以空闲多长时间。0 表示禁用超时",
       "label": "空闲超时 毫秒"
     },
     "fields_mqtt_quic_listener_initial_rtt_ms": {
@@ -6450,11 +6548,11 @@
     },
     "fields_mqtt_quic_listener_keep_alive_interval": {
       "desc": "发送 PING 帧的频率，以保活连接. 设为 0 表示禁用。",
-      "label": "PING 保活频率"
+      "label": "Keep Alive 间隔"
     },
     "fields_mqtt_quic_listener_keep_alive_interval_ms": {
       "desc": "多长时间发送一次 PING 帧以保活连接。",
-      "label": "保持活着的时间间隔 毫秒"
+      "label": "Keep Alive 间隔毫秒"
     },
     "fields_mqtt_quic_listener_keyfile": {
       "desc": "私钥文件。在 5.1 中会被废弃，使用 .ssl_options.keyfile 代替。",
@@ -6669,7 +6767,7 @@
       "label": "启用抖动检测"
     },
     "flapping_detect_max_count": {
-      "desc": "MQTT 客户端在“窗口”时间内允许的最大断开次数。",
+      "desc": "MQTT 客户端在“窗口”时间内允许的最大断开次数",
       "label": "最大断开次数"
     },
     "flapping_detect_window_time": {
@@ -6707,16 +6805,8 @@
       "desc": "监听器认证重载。\n认证配置可以是单个认证器实例，也可以是一个认证器数组组成的认证链。\n执行登录验证时（用户名、客户端 ID 等），将按配置的顺序执行。",
       "label": "每个监听器的认证覆盖"
     },
-    "max_conn_rate": {
-      "desc": "最大连接率。<br/> 用于限制该监听器的连接速率，一旦达到限制值，新的连接将被推迟或拒绝。",
-      "label": "最大连接率"
-    },
-    "messages_rate": {
-      "desc": "消息发布速率。<br/> 用于限制连接到该监听器的每个客户端的入站消息数，一旦达到限制值，受限制的客户端将会减速甚至暂时被挂起。",
-      "label": "消息发布速率"
-    },
     "mqtt": {
-      "desc": "全局的 MQTT 配置项。\nmqtt 下所有的配置作为全局的默认值存在，它可以被 <code>zone</code> 中的配置覆盖。"
+      "desc": "全局的 MQTT 配置项。\nmqtt 下所有的配置作为全局的默认值存在，它可以被 <code>zone</code> 中的配置覆盖"
     },
     "mqtt_await_rel_timeout": {
       "desc": "客户端发布 QoS 2 消息时，服务器等待 `PUBREL` 的最长时延。超过该时长后服务器会放弃等待，该 PACKET ID 会被释放，从而允许后续新的 PUBLISH 消息使用。如果超时后收到 PUBREL，服务器将会产生一条告警日志。注意，向订阅客户端转发消息的动作发生在进入等待之前。",
@@ -6958,7 +7048,7 @@
       "desc": "设置共享订阅组为单位的分发策略。该配置是一个从组名到\n策略名的一个 map，组名不得包含 `[A-Za-z0-9]` 之外的特殊字符。"
     },
     "shared_subscription_strategy_enum": {
-      "desc": "共享订阅的分发策略名称。\n- `random`：随机选择一个组内成员；\n- `round_robin`：循环选择下一个成员；\n- `round_robin_per_group`：在共享组内循环选择下一个成员；\n- `sticky`：使用上一次选中的成员；\n- `hash`：根据 ClientID 哈希映射到一个成员；\n- `local`：随机分发到节点本地成成员，如果本地成员不存在，则随机分发到任意一个成员。"
+      "desc": "共享订阅的分发策略名称。\n- `random`：随机选择一个组内成员；\n- `round_robin`：循环选择下一个成员；\n- `round_robin_per_group`：在共享组内循环选择下一个成员；\n- `sticky`：使用上一次选中的成员；\n- `hash`：根据 ClientID 哈希映射到一个成员；\n- `local`：随机分发到节点本地成成员，如果本地成员不存在，则随机分发到任意一个成员"
     },
     "stats_enable": {
       "desc": "启用/禁用统计数据收集功能。",
@@ -7330,8 +7420,8 @@
       "label": "主题"
     },
     "topic_in_path": {
-      "desc": "需要对主题进行 URL 编码，避免主题分隔符与 URL 路径分隔符 `/` 冲突。",
-      "label": "主题"
+      "desc": "主题字符串。注意：URL 路径中的主题字符串必须进行编码",
+      "label": "主题字符串"
     },
     "topic_metrics_api_response400": {
       "desc": "错误请求，已存在或错误的主题名称",

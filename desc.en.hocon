@@ -1,7 +1,7 @@
 {
   "emqx_authn_api": {
     "authentication_get": {
-      "desc": "List authenticators for global authentication chain.",
+      "desc": "List authenticators for global authentication.",
       "label": "List authenticators"
     },
     "authentication_id_delete": {
@@ -29,7 +29,7 @@
       "label": "List users in authenticator"
     },
     "authentication_id_users_post": {
-      "desc": "Create users for authenticator in global authentication chain. Only for authenticators using built-in database as data source.",
+      "desc": "Create users for authenticator in global authentication chain.",
       "label": "Create users for authenticator"
     },
     "authentication_id_users_user_id_delete": {
@@ -57,7 +57,7 @@
       "label": "like_user_id"
     },
     "listeners_listener_id_authentication_get": {
-      "desc": "List authenticators for listener authentication chain.",
+      "desc": "List authenticators for listener authentication.",
       "label": "List authenticators for listener"
     },
     "listeners_listener_id_authentication_id_delete": {
@@ -85,7 +85,7 @@
       "label": "List users in authenticator in listener"
     },
     "listeners_listener_id_authentication_id_users_post": {
-      "desc": "Create users for authenticator in listener authentication chain. Only for authenticators using built-in database as data source.",
+      "desc": "Create users for authenticator in listener authentication chain.",
       "label": "Create users for authenticator in listener"
     },
     "listeners_listener_id_authentication_id_users_user_id_delete": {
@@ -109,7 +109,7 @@
       "label": "Authenticator ID"
     },
     "param_listener_id": {
-      "desc": "Listener ID. The ID is composed of listener type and name `{type}:{name}`, e.g. `tcp:default`.",
+      "desc": "Listener ID.",
       "label": "Listener ID"
     },
     "param_position": {
@@ -121,9 +121,9 @@
       "label": "User ID"
     }
   },
-  "emqx_authn_http": {
+  "emqx_authn_http_schema": {
     "body": {
-      "desc": "HTTP request body. The template is in JSON format and authentication placeholders are supported.\nWhen using GET request, the format will be transformed to URL Query.\nWhen using POST  request, the transfromed format depends on whether the content-type header is set to application/json or application/x-www-form-urlencoded.",
+      "desc": "HTTP request body.",
       "label": "Request Body"
     },
     "get": {
@@ -153,7 +153,7 @@
       "label": "URL"
     }
   },
-  "emqx_authn_jwt": {
+  "emqx_authn_jwt_schema": {
     "acl_claim_name": {
       "desc": "JWT claim name to use for getting ACL rules.",
       "label": "ACL claim name"
@@ -179,7 +179,7 @@
       "label": "JWKS Endpoint"
     },
     "from": {
-      "desc": "Field to take JWT from; Optional values: password, username (corresponding to the Password and Username fields respectively in CONNECT packets of MQTT client).",
+      "desc": "Field to take JWT from.",
       "label": "From Field"
     },
     "jwt_hmac": {
@@ -208,12 +208,12 @@
       "label": "Secret"
     },
     "secret_base64_encoded": {
-      "desc": "Whether secret is Base64 encoded.",
+      "desc": "Whether secret is base64 encoded.",
       "label": "Whether Secret is Base64 Encoded"
     },
     "server_name_indication": {
       "desc": "Server Name Indication (SNI).",
-      "label": "SNI"
+      "label": "Server Name Indication"
     },
     "ssl": {
       "desc": "SSL options.",
@@ -228,20 +228,46 @@
       "label": "Verify"
     },
     "verify_claims": {
-      "desc": "A list of custom claims to validate, which is a list of name/value pairs. Authentication will verify that the value of claims in the JWT (taken from the Password field) matches what is required in <code>verify_claims</code>.\nValues can use the following placeholders:\n\n- <code>${username}</code>: Will be replaced at runtime with <code>Username</code> used by the client when connecting\n- <code>${clientid}</code>: Will be replaced at runtime with <code>Client ID</code> used by the client when connecting\n",
+      "desc": "A list of custom claims to validate, which is a list of name/value pairs.\nValues can use the following placeholders:\n- <code>${username}</code>: Will be replaced at runtime with <code>Username</code> used by the client when connecting\n- <code>${clientid}</code>: Will be replaced at runtime with <code>Client ID</code> used by the client when connecting\nAuthentication will verify that the value of claims in the JWT (taken from the Password field) matches what is required in <code>verify_claims</code>.",
       "label": "Verify Claims"
     }
   },
-  "emqx_authn_mnesia": {
+  "emqx_authn_ldap_bind_schema": {
+    "ldap_bind": {
+      "desc": "Configuration of authenticator using the LDAP bind operation as the authentication method."
+    },
+    "query_timeout": {
+      "desc": "Timeout for the LDAP query.",
+      "label": "Query Timeout"
+    }
+  },
+  "emqx_authn_ldap_schema": {
+    "is_superuser_attribute": {
+      "desc": "Indicates which attribute is used to represent whether the user is a superuser.",
+      "label": "IsSuperuser Attribute"
+    },
+    "ldap": {
+      "desc": "Configuration of authenticator using LDAP as authentication data source."
+    },
+    "password_attribute": {
+      "desc": "Indicates which attribute is used to represent the user's password.",
+      "label": "Password Attribute"
+    },
+    "query_timeout": {
+      "desc": "Timeout for the LDAP query.",
+      "label": "Query Timeout"
+    }
+  },
+  "emqx_authn_mnesia_schema": {
     "builtin_db": {
       "desc": "Configuration of authenticator using built-in database as data source."
     },
     "user_id_type": {
-      "desc": "Specify whether to use `clientid` or `username` for authentication. Optional values: password, username (corresponding to the Password and Username fields respectively in CONNECT packets of MQTT client).",
+      "desc": "Specify whether to use `clientid` or `username` for authentication.",
       "label": "Authentication ID Type"
     }
   },
-  "emqx_authn_mongodb": {
+  "emqx_authn_mongodb_schema": {
     "collection": {
       "desc": "Collection used to store authentication data.",
       "label": "Collection"
@@ -272,7 +298,7 @@
       "desc": "Configuration of authenticator using MongoDB (Standalone) as authentication data source."
     }
   },
-  "emqx_authn_mysql": {
+  "emqx_authn_mysql_schema": {
     "mysql": {
       "desc": "Configuration of authenticator using MySQL as authentication data source."
     },
@@ -285,7 +311,7 @@
       "label": "Query Timeout"
     }
   },
-  "emqx_authn_pgsql": {
+  "emqx_authn_postgresql_schema": {
     "postgresql": {
       "desc": "Configuration of authenticator using PostgreSQL as authentication data source."
     },
@@ -294,7 +320,7 @@
       "label": "Query"
     }
   },
-  "emqx_authn_redis": {
+  "emqx_authn_redis_schema": {
     "cluster": {
       "desc": "Configuration of authenticator using Redis (Cluster) as authentication data source."
     },
@@ -315,7 +341,7 @@
       "label": "Backend Type"
     },
     "enable": {
-      "desc": "Set to <code>true</code> or <code>false</code> to enable or disable this auth provider.",
+      "desc": "Set to <code>true</code> or <code>false</code> to disable this auth provider.",
       "label": "Enable"
     },
     "failed": {
@@ -335,7 +361,7 @@
       "label": "Matched"
     },
     "mechanism": {
-      "desc": "Authentication mechanism. Supported mechanisms are:\n\n- Password_based: password authentication\n\n- jet: JWT authentication\n\n- scram: MQTT 5.0 enhanced authentication\n\n   ",
+      "desc": "Authentication mechanism.",
       "label": "Authentication Mechanism"
     },
     "metrics": {
@@ -351,7 +377,7 @@
       "label": "Nomatch Times"
     },
     "metrics_rate": {
-      "desc": "The total rate at which instances are triggered, including successful, failed or ignored authentication; unit: times/second.",
+      "desc": "The total rate at which instances are triggered, times/second.",
       "label": "Total Triggered Rate"
     },
     "metrics_rate_last5m": {
@@ -375,7 +401,7 @@
       "label": "Node Name."
     },
     "node_error": {
-      "desc": "The error of node when there are errors in authenticator or data source.",
+      "desc": "The error of node.",
       "label": "Error in Node"
     },
     "node_metrics": {
@@ -425,12 +451,12 @@
   },
   "emqx_authz_api_mnesia": {
     "action": {
-      "desc": "Authorized action corresponding to the rule:\n\n- publish: publish\n\n- subscribe: subscribe\n\n- all: publish and subscribe\n\n  ",
-      "label": "Action"
+      "desc": "Authorized action (publish/subscribe/all)",
+      "label": "action"
     },
     "clientid": {
       "desc": "ClientID",
-      "label": "Clientid"
+      "label": "clientid"
     },
     "fuzzy_clientid": {
       "desc": "Fuzzy search `clientid` as substring",
@@ -438,10 +464,10 @@
     },
     "fuzzy_username": {
       "desc": "Fuzzy search `username` as substring",
-      "label": "Fuzzy_username"
+      "label": "fuzzy_username"
     },
     "permission": {
-      "desc": "Permission corresponding to the rule:\n\n- allow: allow\n- deny: deny\n\n",
+      "desc": "Permission",
       "label": "permission"
     },
     "qos": {
@@ -469,110 +495,52 @@
       "label": "Delete all rules"
     },
     "topic": {
-      "desc": "Rule on specific topic or topic filter, and topic placeholder can be used:\n\n- ${clientid}: replaced with current client ID\n- ${username}: replaced with current user name\n\n",
+      "desc": "Rule on specific topic",
       "label": "topic"
     },
     "user_clientid_delete": {
-      "desc": "Delete authorization rule for 'clientid' in built-in database",
+      "desc": "Delete rule for 'clientid'",
       "label": "Delete rule for 'clientid'"
     },
     "user_clientid_get": {
-      "desc": "Get authorization rule for 'clientid' in built-in database",
+      "desc": "Get rule for 'clientid'",
       "label": "Get rule for 'clientid'"
     },
     "user_clientid_put": {
-      "desc": "Set authorization rule for 'clientid' in built-in database",
+      "desc": "Set rule for 'clientid'",
       "label": "Set rule for 'clientid'"
     },
     "user_username_delete": {
-      "desc": "Delete authorization rule for 'username' in built-in database",
+      "desc": "Delete rule for 'username'",
       "label": "Delete rule for 'username'"
     },
     "user_username_get": {
-      "desc": "Get authorization rule for 'username' in built-in database",
+      "desc": "Get rule for 'username'",
       "label": "Get rule for 'username'"
     },
     "user_username_put": {
-      "desc": "Set authorization rule for 'username' in built-in database",
+      "desc": "Set rule for 'username'",
       "label": "Set rule for 'username'"
     },
     "username": {
       "desc": "Username",
-      "label": "Username"
+      "label": "username"
     },
     "users_clientid_get": {
-      "desc": "Show the list of authorization rules for clients in built-in database",
+      "desc": "Show the list of rules for clients",
       "label": "Show rules for clients"
     },
     "users_clientid_post": {
-      "desc": "Add new rule for 'clientid' in built-in database",
+      "desc": "Add new rule for 'clientid'",
       "label": "Add rule for 'clientid'"
     },
     "users_username_get": {
-      "desc": "Show the list of rules for users in built-in database",
+      "desc": "Show the list of rules for users",
       "label": "Show rules for users"
     },
     "users_username_post": {
-      "desc": "Add new rule to built-in database for 'username'",
+      "desc": "Add new rule for 'username'",
       "label": "Add rule for 'username'"
-    }
-  },
-  "emqx_authz_api_schema": {
-    "body": {
-      "desc": "HTTP request body. The template is in JSON format and authorization placeholders are supported.\nWhen using GET request, the format will be transformed to URL Query.\nWhen using POST  request, the transfromed format depends on whether the content-type header is set to application/json or application/x-www-form-urlencoded.",
-      "label": "Request body"
-    },
-    "cmd": {
-      "desc": "Database query used to retrieve authorization data such as action, topic and permission.",
-      "label": "Redis command"
-    },
-    "collection": {
-      "desc": "Collection containing the authorization data.",
-      "label": "collection"
-    },
-    "enable": {
-      "desc": "Set to <code>true</code> or <code>false</code> to enable or disable this ACL provider.",
-      "label": "Enable"
-    },
-    "filter": {
-      "desc": "Conditional expression that defines the filter condition in the query.\nFilter supports the following placeholders:\n - <code>${username}</code>: Will be replaced at runtime with <code>Username</code> used by the client when connecting;\n - <code>${clientid}</code>: Will be replaced at runtime with <code>Client ID</code> used by the client when connecting.",
-      "label": "Filter"
-    },
-    "headers": {
-      "desc": "List of HTTP Headers.",
-      "label": "Headers"
-    },
-    "headers_no_content_type": {
-      "desc": "List of HTTP headers (without <code>content-type</code>).",
-      "label": "HTTP headers (without `content-type`)"
-    },
-    "method": {
-      "desc": "HTTP method.",
-      "label": "Method"
-    },
-    "position": {
-      "desc": "Where to place the authorization source, possible values: 'front', 'rear', 'before:{authorizer_source_type}', 'after:{authorizer_source_type}.",
-      "label": "Position"
-    },
-    "query": {
-      "desc": "Database query used to retrieve authorization data, such as action, topic, and permission.",
-      "label": "Query SQL"
-    },
-    "request_timeout": {
-      "desc": "HTTP request timeout.",
-      "label": "Request timeout"
-    },
-    "rules": {
-      "desc": "Authorization static file rules.",
-      "label": "Authorization rules"
-    },
-    "type": {
-      "desc": "Backend type.",
-      "label": "Type"
-    },
-    "url": {
-      "desc": "URL of the authorization server.",
-      "label": "URL"
     }
   },
   "emqx_authz_api_settings": {
@@ -609,70 +577,40 @@
       "label": "Update source"
     },
     "authorization_sources_type_status_get": {
-      "desc": "Get an authorization source",
-      "label": "Get an authorization source"
+      "desc": "Get a authorization source",
+      "label": "Get a authorization source"
     },
     "source": {
       "desc": "Authorization source",
-      "label": "Source"
+      "label": "source"
     },
     "source_config": {
-      "desc": "Authorization source configuration",
-      "label": "Source configuration"
+      "desc": "Source config",
+      "label": "source_config"
     },
     "source_type": {
       "desc": "Authorization type",
-      "label": "Source type"
+      "label": "source_type"
     },
     "sources": {
-      "desc": "List of authorization sources",
-      "label": "List of sources"
+      "desc": "Authorization sources",
+      "label": "sources"
     }
   },
-  "emqx_authz_schema": {
-    "allow": {
-      "desc": "The number of times the authorization was successful.",
-      "label": "Number of Successful Authorization"
-    },
-    "authorization": {
-      "desc": "Configuration related to the client authorization.",
-      "label": "Authorization"
-    },
-    "body": {
-      "desc": "HTTP request body.",
-      "label": "Request Body"
-    },
-    "builtin_db": {
-      "desc": "Authorization using a built-in database (mnesia).",
-      "label": "Builtin Database"
-    },
-    "cmd": {
-      "desc": "Database query used to retrieve authorization data, such as action, topic and permission.",
-      "label": "Redis cmd"
-    },
-    "collection": {
-      "desc": "Collection containing the authorization data.",
-      "label": "Collection"
-    },
-    "deny": {
-      "desc": "The number of authentication failures.",
-      "label": "Authentication Failures"
-    },
-    "enable": {
-      "desc": "Set to <code>true</code> or <code>false</code> to enable or disable this ACL provider.",
-      "label": "enable"
-    },
-    "failed": {
-      "desc": "The number of failed queries.",
-      "label": "Failed"
-    },
+  "emqx_authz_file_schema": {
     "file": {
       "desc": "Authorization using a static file.",
       "label": "file"
     },
-    "filter": {
-      "desc": "Conditional expression that defines the filter condition in the query.\nFilter supports the following placeholders:<br />\n\n - <code>${username}</code>: Will be replaced at runtime with <code>Username</code> used by the client when connecting<br />\n - <code>${clientid}</code>: Will be replaced at runtime with <code>Client ID</code> used by the client when connecting",
-      "label": "Filter"
+    "path": {
+      "desc": "Path to the file which contains the ACL rules.\nIf the file provisioned before starting EMQX node,\nit can be placed anywhere as long as EMQX has read access to it.\nThat is, EMQX will treat it as read only.\n\nIn case the rule-set is created or updated from EMQX Dashboard or HTTP API,\na new file will be created and placed in `authz` subdirectory inside EMQX's `data_dir`,\nand the old file will not be used anymore.",
+      "label": "path"
+    }
+  },
+  "emqx_authz_http_schema": {
+    "body": {
+      "desc": "HTTP request body.",
+      "label": "Request Body"
     },
     "headers": {
       "desc": "List of HTTP Headers.",
@@ -690,21 +628,51 @@
       "desc": "Authorization using an external HTTP server (via POST requests).",
       "label": "http_post"
     },
-    "matched": {
-      "desc": "Request hit count.",
-      "label": "Matched"
-    },
     "method": {
       "desc": "HTTP method.",
-      "label": "Method"
+      "label": "method"
     },
-    "metrics": {
-      "desc": "The metrics of the resource.",
-      "label": "Metrics"
+    "request_timeout": {
+      "desc": "HTTP request timeout.",
+      "label": "Request Timeout"
     },
-    "metrics_total": {
-      "desc": "The total number of times the authorization rule was triggered.",
-      "label": "Total Authorization Rule Trigger Times"
+    "url": {
+      "desc": "URL of the auth server.",
+      "label": "URL"
+    }
+  },
+  "emqx_authz_ldap_schema": {
+    "all_attribute": {
+      "desc": "Indicates which attribute is used to represent the both allowed topics list of  `publish` and `subscribe`.",
+      "label": "All Attribute"
+    },
+    "publish_attribute": {
+      "desc": "Indicates which attribute is used to represent the allowed topics list of the `publish`.",
+      "label": "Publish Attribute"
+    },
+    "query_timeout": {
+      "desc": "Timeout for the LDAP query.",
+      "label": "Query Timeout"
+    },
+    "subscribe_attribute": {
+      "desc": "Indicates which attribute is used to represent the allowed topics list of the `subscribe`.",
+      "label": "Subscribe Attribute"
+    }
+  },
+  "emqx_authz_mnesia_schema": {
+    "builtin_db": {
+      "desc": "Authorization using a built-in database (mnesia).",
+      "label": "Builtin Database"
+    }
+  },
+  "emqx_authz_mongodb_schema": {
+    "collection": {
+      "desc": "`MongoDB` collection containing the authorization data.",
+      "label": "collection"
+    },
+    "filter": {
+      "desc": "Conditional expression that defines the filter condition in the query.\nFilter supports the following placeholders<br/>\n - <code>${username}</code>: Will be replaced at runtime with <code>Username</code> used by the client when connecting<br/>\n - <code>${clientid}</code>: Will be replaced at runtime with <code>Client ID</code> used by the client when connecting",
+      "label": "Filter"
     },
     "mongo_rs": {
       "desc": "Authorization using a MongoDB replica set.",
@@ -717,10 +685,78 @@
     "mongo_single": {
       "desc": "Authorization using a single MongoDB instance.",
       "label": "mongo_single"
-    },
+    }
+  },
+  "emqx_authz_mysql_schema": {
     "mysql": {
       "desc": "Authorization using a MySQL database.",
       "label": "mysql"
+    },
+    "query": {
+      "desc": "Database query used to retrieve authorization data.",
+      "label": "query"
+    }
+  },
+  "emqx_authz_postgresql_schema": {
+    "postgresql": {
+      "desc": "Authorization using a PostgreSQL database.",
+      "label": "postgresql"
+    },
+    "query": {
+      "desc": "Database query used to retrieve authorization data.",
+      "label": "query"
+    }
+  },
+  "emqx_authz_redis_schema": {
+    "cmd": {
+      "desc": "Database query used to retrieve authorization data.",
+      "label": "cmd"
+    },
+    "redis_cluster": {
+      "desc": "Authorization using a Redis cluster.",
+      "label": "redis_cluster"
+    },
+    "redis_sentinel": {
+      "desc": "Authorization using a Redis Sentinel.",
+      "label": "redis_sentinel"
+    },
+    "redis_single": {
+      "desc": "Authorization using a single Redis instance.",
+      "label": "redis_single"
+    }
+  },
+  "emqx_authz_schema": {
+    "allow": {
+      "desc": "The number of times the authentication was successful.",
+      "label": "The Number of Times the Authentication was Successful"
+    },
+    "authorization": {
+      "desc": "Configuration related to the client authorization.",
+      "label": "authorization"
+    },
+    "deny": {
+      "desc": "The number of authentication failures.",
+      "label": "The Number of Authentication Failures"
+    },
+    "enable": {
+      "desc": "Set to <code>true</code> or <code>false</code> to disable this ACL provider",
+      "label": "enable"
+    },
+    "failed": {
+      "desc": "Count of query failed.",
+      "label": "Failed"
+    },
+    "matched": {
+      "desc": "Count of this resource is queried.",
+      "label": "Matched"
+    },
+    "metrics": {
+      "desc": "The metrics of the resource.",
+      "label": "Metrics"
+    },
+    "metrics_total": {
+      "desc": "The total number of times the authorization rule was triggered.",
+      "label": "The Total Number of Times the Authorization Rule was Triggered"
     },
     "node": {
       "desc": "Node name.",
@@ -740,19 +776,7 @@
     },
     "nomatch": {
       "desc": "The number of times that no authorization rules were matched.",
-      "label": "Times of Not Match"
-    },
-    "path": {
-      "desc": "Path to the file which contains the ACL rules.\nIf the file provisioned before starting EMQX node, it can be located anywhere as long as EMQX has read access to it. In such cases, EMQX will treat the file as read-only.\n\nIn case the rule-set is created or updated from EMQX Dashboard or HTTP API, a new file will be generated and placed in the `authz` subdirectory within EMQX's `data_dir`, and the previous file will no longer be used.",
-      "label": "ACL file"
-    },
-    "postgresql": {
-      "desc": "Authorization using a PostgreSQL database.",
-      "label": "postgresql"
-    },
-    "query": {
-      "desc": "Database query used to retrieve authorization data, such as action, topic and permission.",
-      "label": "Query SQL"
+      "label": "The Number of Times that no Authorization Rules were Matched"
     },
     "rate": {
       "desc": "The rate of matched, times/second.",
@@ -766,25 +790,9 @@
       "desc": "The max rate of matched, times/second.",
       "label": "Max Rate"
     },
-    "redis_cluster": {
-      "desc": "Authorization using a Redis cluster.",
-      "label": "redis_cluster"
-    },
-    "redis_sentinel": {
-      "desc": "Authorization using a Redis Sentinel.",
-      "label": "Redis sentinel"
-    },
-    "redis_single": {
-      "desc": "Authorization using a single Redis instance.",
-      "label": "redis_single"
-    },
-    "request_timeout": {
-      "desc": "HTTP request timeout.",
-      "label": "Request Timeout"
-    },
     "sources": {
-      "desc": "List of authorization data sources.<br />\nAn array of authorization data providers (ACL) .\nIt is designed as an array, not a hash-map, so the sources can be\nordered to form a chain of access controls.<br />\n\nWhen authorizing a 'publish' or 'subscribe' action, the configured\nsources are checked in order. When checking an ACL source,\nin case the client (identified by username or client ID) is not found,\nit moves on to the next source. And it stops immediately\nonce an 'allow' or 'deny' decision is returned.<br />\n\nIf the client is not found in any of the sources,\nthe default action configured in 'authorization.no_match' is applied.<br />\n\nNOTE:\nThe source elements are identified by their 'type'.\nIt is NOT allowed to configure two or more sources of the same type.",
-      "label": "Sources"
+      "desc": "Authorization data sources.<br/>\nAn array of authorization (ACL) data providers.\nIt is designed as an array, not a hash-map, so the sources can be\nordered to form a chain of access controls.<br/>\n\nWhen authorizing a 'publish' or 'subscribe' action, the configured\nsources are checked in order. When checking an ACL source,\nin case the client (identified by username or client ID) is not found,\nit moves on to the next source. And it stops immediately\nonce an 'allow' or 'deny' decision is returned.<br/>\n\nIf the client is not found in any of the sources,\nthe default action configured in 'authorization.no_match' is applied.<br/>\n\nNOTE:\nThe source elements are identified by their 'type'.\nIt is NOT allowed to configure two or more sources of the same type.",
+      "label": "sources"
     },
     "status": {
       "desc": "The status of the resource.",
@@ -797,10 +805,6 @@
     "type": {
       "desc": "Backend type.",
       "label": "type"
-    },
-    "url": {
-      "desc": "URL of the authorization server.",
-      "label": "URL"
     }
   },
   "emqx_auto_subscribe_api": {
@@ -810,62 +814,62 @@
     },
     "update_auto_subscribe_api": {
       "desc": "Update auto subscribe topic list",
-      "label": "Update auto subscribe topics list"
+      "label": "Update auto subscribe topics"
     },
     "update_auto_subscribe_api_response409": {
-      "desc": "Exceeded the maximum limit for auto-subscribed topics.",
-      "label": "Auto-subscribe topics maximum limit exceeded"
+      "desc": "Auto Subscribe topics max limit",
+      "label": "Auto Subscribe topics max limit"
     }
   },
   "emqx_auto_subscribe_schema": {
     "auto_subscribe": {
-      "desc": "After the device logs in successfully, the subscription is automatically completed for the device through the pre-defined subscription rules. Using placeholders is supported.",
+      "desc": "After the device logs in successfully, the subscription is automatically completed for the device through the pre-defined subscription representation. Supports the use of placeholders.",
       "label": "Auto Subscribe"
     },
     "nl": {
-      "desc": "No Local subscription option, default value is 0. The behavior varies based on different protocol versions:\n\n- MQTT v3.1.1: If a device subscribes to a topic it has published to, it will receive all messages it has published.\n- MQTT v5: If a device sets this option to 1 when subscribing, the server will not forward messages published by the device to itself.\n\n",
+      "desc": "Default value 0.\nMQTT v3.1.1： if you subscribe to the topic published by yourself, you will receive all messages that you published.\nMQTT v5: if you set this option as 1 when subscribing, the server will not forward the message you published to you.",
       "label": "No Local"
     },
     "qos": {
-      "desc": "Quality of Service. Default value 0.\nAt most once (0)\nAt least once (1)\nExactly once (2)",
+      "desc": "Default value 0. Quality of service.\nAt most once (0)\nAt least once (1)\nExactly once (2)",
       "label": "Quality of Service"
     },
     "rap": {
-      "desc": "Retain As Publish subscription option. Default value 0. \n\nThis option is used to specify whether the server retains the RETAIN mark when forwarding messages to the client, and this option does not affect the RETAIN mark in the retained message. When the Retain As Publish option is set to 0, the client distinguishes between normal forwarded messages and retained messages based on the RETAIN flag in the message. It does not rely on determining whether the message is the first one received after subscribing (the forwarded message may be sent before the retained message, depending on the specific implementation of different brokers).",
+      "desc": "Default value 0. This option is used to specify whether the server retains the RETAIN mark when forwarding messages to the client, and this option does not affect the RETAIN mark in the retained message. Therefore, when the option Retain As Publish is set to 0, the client will directly distinguish whether this is a normal forwarded message or a retained message according to the RETAIN mark in the message, instead of judging whether this message is the first received after subscribing(the forwarded message may be sent before the retained message, which depends on the specific implementation of different brokers).",
       "label": "Retain As Publish"
     },
     "rh": {
-      "desc": "Retain Handling subscription option. Default value 0. \n\nThis option is used to specify whether the server forwards the retained message to the client when establishing a subscription.\n\n- 0: The server sends the retained message as long as the client subscribes successfully.\n- 1: The server sends the retained message only if the client subscribes successfully and this subscription did not exist previously. Sometimes, clients may re-initiate the subscription just to change the Quality of Service (QoS), and it does not necessarily indicate the client's desire to receive the retained messages again.\n- 2: The server does not send the retained message even if the client subscribes successfully.",
+      "desc": "Default value 0. This option is used to specify whether the server forwards the retained message to the client when establishing a subscription.\nRetain Handling is equal to 0, as long as the client successfully subscribes, the server will send the retained message.\nRetain Handling is equal to 1, if the client successfully subscribes and this subscription does not exist previously, the server sends the retained message. After all, sometimes the client re-initiate the subscription just to change the QoS, but it does not mean that it wants to receive the reserved messages again.\nRetain Handling is equal to 2, even if the client successfully subscribes, the server does not send the retained message.",
       "label": "Retain Handling"
     },
     "topic": {
-      "desc": "Specify the name of the topic or topic filter, and it supports placeholders. For example: client/${clientid}/username/${username}/host/${host}/port/${port}. This is a required field and cannot be an empty string.",
+      "desc": "Topic name, placeholders are supported. For example: client/${clientid}/username/${username}/host/${host}/port/${port}\nRequired field, and cannot be empty string",
       "label": "Topic"
     }
   },
   "emqx_bridge_api": {
     "desc_api1": {
-      "desc": "List all created bridges.",
+      "desc": "List all created bridges",
       "label": "List All Bridges"
     },
     "desc_api2": {
-      "desc": "Create a new bridge by type and name.",
+      "desc": "Create a new bridge by type and name",
       "label": "Create Bridge"
     },
     "desc_api3": {
-      "desc": "Get a bridge by ID.",
+      "desc": "Get a bridge by Id",
       "label": "Get Bridge"
     },
     "desc_api4": {
-      "desc": "Update a bridge by ID.",
+      "desc": "Update a bridge by Id",
       "label": "Update Bridge"
     },
     "desc_api5": {
-      "desc": "Delete a bridge by ID.",
+      "desc": "Delete a bridge by Id",
       "label": "Delete Bridge"
     },
     "desc_api6": {
-      "desc": "Reset a bridge metrics by ID.",
+      "desc": "Reset a bridge metrics by Id",
       "label": "Reset Bridge Metrics"
     },
     "desc_api7": {
@@ -877,39 +881,43 @@
       "label": "Node Bridge Operate"
     },
     "desc_api9": {
-      "desc": "Test creating a new bridge by given ID. <br />\nThe ID must be of format '{type}:{name}'",
+      "desc": "Test creating a new bridge by given ID <br/>\nThe ID must be of format '{type}:{name}'",
       "label": "Test Bridge Creation"
     },
     "desc_bridge_metrics": {
-      "desc": "Get bridge metrics by ID",
+      "desc": "Get bridge metrics by Id",
       "label": "Get Bridge Metrics"
     },
     "desc_enable_bridge": {
-      "desc": "Enable or disable bridges on all nodes in the cluster.",
+      "desc": "Enable or Disable bridges on all nodes in the cluster.",
       "label": "Cluster Bridge Enable"
     },
     "desc_param_path_enable": {
-      "desc": "Whether to enable this bridge.",
+      "desc": "Whether to enable this bridge",
       "label": "Enable bridge"
     },
     "desc_param_path_id": {
-      "desc": "The bridge ID. The format must be {type}:{name}.",
+      "desc": "The bridge Id. Must be of format {type}:{name}",
       "label": "Bridge ID"
     },
     "desc_param_path_node": {
       "desc": "The node name, e.g. emqx@127.0.0.1",
-      "label": "Node name"
+      "label": "The node name"
     },
     "desc_param_path_operation_cluster": {
-      "desc": "Cluster available operations: stop, restart",
+      "desc": "Operations can be one of: stop, restart",
       "label": "Cluster Operation"
     },
     "desc_param_path_operation_on_node": {
-      "desc": "Node available operations: stop, restart",
+      "desc": "Operations can be one of: stop, restart",
       "label": "Node Operation "
     }
   },
   "emqx_bridge_azure_event_hub": {
+    "actions": {
+      "desc": "The configuration for an action.",
+      "label": "Action Config"
+    },
     "auth_sasl_mechanism": {
       "desc": "SASL authentication mechanism.",
       "label": "Mechanism"
@@ -929,6 +937,10 @@
     "bootstrap_hosts": {
       "desc": "A comma separated list of Azure Event Hub Kafka <code>host[:port]</code> namespace endpoints to bootstrap the client.  Default port number is 9093.",
       "label": "Bootstrap Hosts"
+    },
+    "bridge_v2_type": {
+      "desc": "The type of the bridge.",
+      "label": "Bridge Type"
     },
     "buffer_memory_overload_protection": {
       "desc": "Applicable when buffer mode is set to <code>memory</code>\nEMQX will drop old buffered messages under high memory pressure. The high memory threshold is defined in config <code>sysmon.os.sysmem_high_watermark</code>. NOTE: This config only works on Linux.",
@@ -958,16 +970,20 @@
       "desc": "Maximum wait time for TCP connection establishment (including authentication time if enabled).",
       "label": "Connect Timeout"
     },
+    "connector_type": {
+      "desc": "The type of the connector.",
+      "label": "Connector Type"
+    },
     "desc_config": {
-      "desc": "Configuration for an Azure Event Hub bridge.",
-      "label": "Azure Event Hub Bridge Configuration"
+      "desc": "Configuration for an Azure Event Hubs bridge.",
+      "label": "Azure Event Hubs Bridge Configuration"
     },
     "desc_name": {
       "desc": "Bridge name, used as a human-readable description of the bridge.",
       "label": "Bridge Name"
     },
     "desc_type": {
-      "desc": "The type of the data bridge.",
+      "desc": "The Bridge Type",
       "label": "Bridge Type"
     },
     "kafka_header_value_encode_mode": {
@@ -1062,6 +1078,10 @@
       "desc": "Required acknowledgements for Azure Event Hub partition leader to wait for its followers before it sends back the acknowledgement to EMQX Azure Event Hub producer\n\n<code>all_isr</code>: Require all in-sync replicas to acknowledge.\n<code>leader_only</code>: Require only the partition-leader's acknowledgement.",
       "label": "Required Acks"
     },
+    "server_name_indication": {
+      "desc": "Server Name Indication (SNI) setting for TLS handshake.<br/>\n- <code>auto</code>: The client will use <code>\"servicebus.windows.net\"</code> as SNI.<br/>\n- <code>disable</code>: If you wish to prevent the client from sending the SNI.<br/>\n- Other string values it will be sent as-is.",
+      "label": "SNI"
+    },
     "socket_nodelay": {
       "desc": "When set to 'true', TCP buffer is sent as soon as possible. Otherwise, the OS kernel may buffer small TCP packets for a while (40 ms by default).",
       "label": "No Delay"
@@ -1081,6 +1101,10 @@
     "socket_tcp_keepalive": {
       "desc": "Enable TCP keepalive for Azure Event Hub bridge connections.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
       "label": "TCP keepalive options"
+    },
+    "ssl_client_opts": {
+      "desc": "TLS/SSL options for Azure Event Hub client.",
+      "label": "TLS/SSL options"
     },
     "sync_query_timeout": {
       "desc": "This parameter defines the timeout limit for synchronous queries. It applies only when the bridge query mode is configured to 'sync'.",
@@ -1109,7 +1133,7 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to Cassandra. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to Cassandra. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     }
   },
@@ -1145,7 +1169,7 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to Clickhouse. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to Clickhouse. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "sql_template": {
@@ -1181,7 +1205,7 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to DynamoDB. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also `local_topic` is\nconfigured, then both the data got from the rule and the MQTT messages that match `local_topic`\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to DynamoDB. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also `local_topic` is\nconfigured, then both the data got from the rule and the MQTT messages that match `local_topic`\nwill be forwarded.",
       "label": "Local Topic"
     },
     "template": {
@@ -1273,7 +1297,7 @@
       "label": "Value"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to GCP PubSub. All MQTT 'PUBLISH' messages with the topic\nmatching `local_topic` will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to GCP PubSub. All MQTT 'PUBLISH' messages with the topic\nmatching `local_topic` will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "max_retries": {
@@ -1331,11 +1355,11 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to the GreptimeDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to the GreptimeDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "write_syntax": {
-      "desc": "Conf of GreptimeDB gRPC protocol to write data points. Write syntax is a text-based format that provides the measurement, tag set, field set, and timestamp of a data point, and placeholder supported, which is the same as InfluxDB line protocol.\nSee also [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) and\n[GreptimeDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) </br>\nTLDR:</br>\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\nPlease note that a placeholder for an integer value must be annotated with a suffix `i`. For example `${payload.int_value}i`.",
+      "desc": "Conf of GreptimeDB gRPC protocol to write data points. Write syntax is a text-based format that provides the measurement, tag set, field set, and timestamp of a data point, and placeholder supported, which is the same as InfluxDB line protocol.\nSee also [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) and\n[GreptimeDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) <br/>\nTLDR:<br/>\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\nPlease note that a placeholder for an integer value must be annotated with a suffix `i`. For example `${payload.int_value}i`.",
       "label": "Write Syntax"
     }
   },
@@ -1361,7 +1385,7 @@
       "label": "Protocol"
     },
     "server": {
-      "desc": "The IPv4 or IPv6 address or the hostname to connect to.</br>\nA host entry has the following form: `Host[:Port]`.</br>\nThe GreptimeDB default port 8086 is used if `[:Port]` is not specified.",
+      "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe GreptimeDB default port 8086 is used if `[:Port]` is not specified.",
       "label": "Server Host"
     },
     "username": {
@@ -1391,7 +1415,7 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to the HStreamDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to the HStreamDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "record_template": {
@@ -1547,11 +1571,11 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to the InfluxDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to the InfluxDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "write_syntax": {
-      "desc": "Conf of InfluxDB line protocol to write data points. It is a text-based format that provides the measurement, tag set, field set, and timestamp of a data point, and placeholder supported.\nSee also [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) and\n[InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) </br>\nTLDR:</br>\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\nPlease note that a placeholder for an integer value must be annotated with a suffix `i`. For example `${payload.int_value}i`.",
+      "desc": "Conf of InfluxDB line protocol to write data points. It is a text-based format that provides the measurement, tag set, field set, and timestamp of a data point, and placeholder supported.\nSee also [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) and\n[InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) <br/>\nTLDR:<br/>\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\nPlease note that a placeholder for an integer value must be annotated with a suffix `i`. For example `${payload.int_value}i`.",
       "label": "Write Syntax"
     }
   },
@@ -1589,7 +1613,7 @@
       "label": "Protocol"
     },
     "server": {
-      "desc": "The IPv4 or IPv6 address or the hostname to connect to.</br>\nA host entry has the following form: `Host[:Port]`.</br>\nThe InfluxDB default port 8086 is used if `[:Port]` is not specified.",
+      "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe InfluxDB default port 8086 is used if `[:Port]` is not specified.",
       "label": "Server Host"
     },
     "token": {
@@ -1773,8 +1797,8 @@
       "label": "Value Encoding Mode"
     },
     "desc_config": {
-      "desc": "Configuration for a Kafka bridge.",
-      "label": "Kafka Bridge Configuration"
+      "desc": "Configuration for a Kafka Producer Client.",
+      "label": "Kafka Producer Client Configuration"
     },
     "desc_name": {
       "desc": "Bridge name, used as a human-readable description of the bridge.",
@@ -1815,6 +1839,10 @@
     "kafka_producer": {
       "desc": "Kafka Producer configuration.",
       "label": "Kafka Producer"
+    },
+    "kafka_producer_action": {
+      "desc": "Kafka Producer Action",
+      "label": "Kafka Producer Action"
     },
     "kafka_topic": {
       "desc": "Kafka topic name",
@@ -1880,6 +1908,10 @@
       "desc": "Required acknowledgements for Kafka partition leader to wait for its followers before it sends back the acknowledgement to EMQX Kafka producer\n\n<code>all_isr</code>: Require all in-sync replicas to acknowledge.\n<code>leader_only</code>: Require only the partition-leader's acknowledgement.\n<code>none</code>: No need for Kafka to acknowledge at all.",
       "label": "Required Acks"
     },
+    "server_name_indication": {
+      "desc": "Server Name Indication (SNI) setting for TLS handshake.<br/>\n- <code>auto</code>: Allow the client to automatically determine the appropriate SNI.<br/>\n- <code>disable</code>: If you wish to prevent the client from sending the SNI.<br/>\n- Other string values will be sent as-is.",
+      "label": "SNI"
+    },
     "socket_nodelay": {
       "desc": "When set to 'true', TCP buffer is sent as soon as possible. Otherwise, the OS kernel may buffer small TCP packets for a while (40 ms by default).",
       "label": "No Delay"
@@ -1899,6 +1931,10 @@
     "socket_tcp_keepalive": {
       "desc": "Enable TCP keepalive for Kafka bridge connections.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
       "label": "TCP keepalive options"
+    },
+    "ssl_client_opts": {
+      "desc": "TLS/SSL options for Kafka client.",
+      "label": "TLS/SSL options"
     },
     "sync_query_timeout": {
       "desc": "This parameter defines the timeout limit for synchronous queries. It applies only when the bridge query mode is configured to 'sync'.",
@@ -1935,7 +1971,7 @@
       "label": "Amazon Kinesis Endpoint"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to Amazon Kinesis. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also `local_topic` is\nconfigured, then both the data got from the rule and the MQTT messages that match `local_topic`\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to Amazon Kinesis. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also `local_topic` is\nconfigured, then both the data got from the rule and the MQTT messages that match `local_topic`\nwill be forwarded.",
       "label": "Local Topic"
     },
     "max_retries": {
@@ -2143,7 +2179,7 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to MySQL. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to MySQL. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "sql_template": {
@@ -2201,7 +2237,7 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to Oracle Database. All MQTT 'PUBLISH' messages with the topic matching the local_topic will be forwarded.</br>NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is configured, then both the data got from the rule and the MQTT messages that match local_topic will be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to Oracle Database. All MQTT 'PUBLISH' messages with the topic matching the local_topic will be forwarded.<br/>NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is configured, then both the data got from the rule and the MQTT messages that match local_topic will be forwarded.",
       "label": "Local Topic"
     },
     "server": {
@@ -2239,7 +2275,7 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to PostgreSQL. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to PostgreSQL. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "sql_template": {
@@ -2479,7 +2515,7 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to Redis. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to Redis. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     }
   },
@@ -2501,7 +2537,7 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to RocketMQ. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.</br>\nNOTE: if the bridge is used as a rule action, `local_topic` should be left empty otherwise the messages will be duplicated.",
+      "desc": "The MQTT topic filter to be forwarded to RocketMQ. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.<br/>\nNOTE: if the bridge is used as a rule action, `local_topic` should be left empty otherwise the messages will be duplicated.",
       "label": "Local Topic"
     },
     "template": {
@@ -2667,7 +2703,7 @@
       "label": "SQL Server Driver Name"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to Microsoft SQL Server. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to Microsoft SQL Server. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "sql_template": {
@@ -2699,7 +2735,7 @@
       "label": "Bridge Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to TDengine. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.</br>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to TDengine. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "sql_template": {
@@ -2711,6 +2747,86 @@
     "server": {
       "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe TDengine default port 6041 is used if `[:Port]` is not specified.",
       "label": "Server Host"
+    }
+  },
+  "emqx_bridge_v2_api": {
+    "desc_api1": {
+      "desc": "List all created bridges.",
+      "label": "List All Bridges"
+    },
+    "desc_api10": {
+      "desc": "Lists the available action types.",
+      "label": "List action types"
+    },
+    "desc_api2": {
+      "desc": "Create a new bridge by type and name.",
+      "label": "Create Bridge"
+    },
+    "desc_api3": {
+      "desc": "Get a bridge by id.",
+      "label": "Get Bridge"
+    },
+    "desc_api4": {
+      "desc": "Update a bridge by id.",
+      "label": "Update Bridge"
+    },
+    "desc_api5": {
+      "desc": "Delete a bridge by id.",
+      "label": "Delete Bridge"
+    },
+    "desc_api6": {
+      "desc": "Reset a bridge metrics by id.",
+      "label": "Reset Bridge Metrics"
+    },
+    "desc_api7": {
+      "desc": "Start bridge on all nodes in the cluster.",
+      "label": "Cluster Bridge Operation"
+    },
+    "desc_api8": {
+      "desc": "Start bridge on a specific node.",
+      "label": "Node Bridge Operation"
+    },
+    "desc_api9": {
+      "desc": "Test creating a new bridge.",
+      "label": "Test Bridge Creation"
+    },
+    "desc_bridge_metrics": {
+      "desc": "Get bridge metrics by id.",
+      "label": "Get Bridge Metrics"
+    },
+    "desc_enable_bridge": {
+      "desc": "Enable or Disable bridge on all nodes in the cluster.",
+      "label": "Cluster Bridge Enable"
+    },
+    "desc_param_path_enable": {
+      "desc": "Whether to enable this bridge.",
+      "label": "Enable bridge"
+    },
+    "desc_param_path_id": {
+      "desc": "The bridge id. Must be of format {type}:{name}.",
+      "label": "Bridge ID"
+    },
+    "desc_param_path_node": {
+      "desc": "The node name, e.g. 'emqx@127.0.0.1'.",
+      "label": "The node name"
+    },
+    "desc_param_path_operation_cluster": {
+      "desc": "Operation can be one of: 'start'.",
+      "label": "Cluster Operation"
+    },
+    "desc_param_path_operation_on_node": {
+      "desc": "Operation can be one of: 'start'.",
+      "label": "Node Operation "
+    },
+    "desc_qs_also_delete_dep_actions": {
+      "desc": "Whether to cascade delete dependent actions.",
+      "label": "Cascade delete dependent actions?"
+    }
+  },
+  "emqx_bridge_v2_schema": {
+    "desc_bridges_v2": {
+      "desc": "Configuration for bridges.",
+      "label": "Bridge Configuration"
     }
   },
   "emqx_coap_api": {
@@ -2877,7 +2993,7 @@
       "label": "Cluster Name"
     },
     "cluster_proto_dist": {
-      "desc": "The Erlang distribution protocol for the cluster.<br/>\n- inet_tcp: IPv4 TCP <br/>\n- inet_tls: IPv4 TLS, works together with <code>etc/ssl_dist.conf</code>",
+      "desc": "The Erlang distribution protocol for the cluster.<br/>\n- inet_tcp: IPv4 TCP <br/>\n- inet_tls: IPv4 TLS, works together with <code>etc/ssl_dist.conf</code> <br/>\n- inet6_tcp: IPv6 TCP <br/>\n- inet6_tls: IPv6 TLS, works together with <code>etc/ssl_dist.conf</code>",
       "label": "Cluster Protocol Distribution"
     },
     "cluster_static_seeds": {
@@ -3184,9 +3300,17 @@
       "desc": "Enable compatibility with old RPC authentication.",
       "label": "RPC insecure fallback"
     },
+    "rpc_ipv6_only": {
+      "desc": "This setting is effective only when <code>rpc.listen_address</code> is assigned an IPv6 address.\nIf set to <code>true</code>, the RPC client will exclusively use IPv6 for connections.\nOtherwise, the client might opt for IPv4, even if the server is on IPv6.",
+      "label": "Use IPv6 Only"
+    },
     "rpc_keyfile": {
       "desc": "Path to the private key file for the <code>rpc.certfile</code>.<br/>\nNote: contents of this file are secret, so it's necessary to set permissions to 600.",
       "label": "RPC Keyfile"
+    },
+    "rpc_listen_address": {
+      "desc": "Indicates the IP address for the RPC server to listen on. For example, use <code>\"0.0.0.0\"</code> for IPv4 or <code>\"::\"</code> for IPv6.",
+      "label": "RPC Listen IP Address"
     },
     "rpc_mode": {
       "desc": "In <code>sync</code> mode the sending side waits for the ack from the receiving side.",
@@ -3237,10 +3361,80 @@
       "label": "RPC TCP Server Port"
     }
   },
-  "emqx_connector_pgsql": {
-    "server": {
-      "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe PostgreSQL default port 5432 is used if `[:Port]` is not specified.",
-      "label": "Server Host"
+  "emqx_connector_api": {
+    "desc_api1": {
+      "desc": "List all created connectors.",
+      "label": "List All Connectors"
+    },
+    "desc_api2": {
+      "desc": "Create a new connector by type and name.",
+      "label": "Create Connector"
+    },
+    "desc_api3": {
+      "desc": "Get a connector by id.",
+      "label": "Get Connector"
+    },
+    "desc_api4": {
+      "desc": "Update a connector by id.",
+      "label": "Update Connector"
+    },
+    "desc_api5": {
+      "desc": "Delete a connector by id.",
+      "label": "Delete Connector"
+    },
+    "desc_api6": {
+      "desc": "Reset a connector metrics by id.",
+      "label": "Reset Connector Metrics"
+    },
+    "desc_api7": {
+      "desc": "Start connector on all nodes in the cluster.",
+      "label": "Cluster Connector Operate"
+    },
+    "desc_api8": {
+      "desc": "Start connector on a specific node.",
+      "label": "Node Connector Operate"
+    },
+    "desc_api9": {
+      "desc": "Test creating a new connector.",
+      "label": "Test Connector Creation"
+    },
+    "desc_connector_metrics": {
+      "desc": "Get connector metrics by id.",
+      "label": "Get Connector Metrics"
+    },
+    "desc_enable_connector": {
+      "desc": "Enable or Disable connector on all nodes in the cluster.",
+      "label": "Cluster Connector Enable"
+    },
+    "desc_param_path_enable": {
+      "desc": "Whether to enable this connector.",
+      "label": "Enable connector"
+    },
+    "desc_param_path_id": {
+      "desc": "The connector id. Must be of format {type}:{name}.",
+      "label": "Connector ID"
+    },
+    "desc_param_path_node": {
+      "desc": "The node name, e.g. 'emqx@127.0.0.1'.",
+      "label": "The node name"
+    },
+    "desc_param_path_operation_cluster": {
+      "desc": "Operation can be one of: 'start'.",
+      "label": "Cluster Operation"
+    },
+    "desc_param_path_operation_on_node": {
+      "desc": "Operation can be one of: 'start'.",
+      "label": "Node Operation"
+    }
+  },
+  "emqx_connector_schema": {
+    "connector_field": {
+      "desc": "Name of the connector specified by the action, used for external resources selection.",
+      "label": "Connector"
+    },
+    "desc_connectors": {
+      "desc": "Connectors that are used to connect to external systems",
+      "label": "Connectors"
     }
   },
   "emqx_connector_schema_lib": {
@@ -3743,7 +3937,7 @@
       "label": "Server name"
     },
     "status": {
-      "desc": "The status of Exhook server.<br />\nconnected: connection succeeded<br />\nconnecting: connection failed, reconnecting<br />\ndisconnected: failed to connect and didn't reconnect<br />\ndisabled: this server is disabled<br />\nerror: failed to view the status of this server",
+      "desc": "The status of Exhook server.<br/>\nconnected: connection succeeded<br/>\nconnecting: connection failed, reconnecting<br/>\ndisconnected: failed to connect and didn't reconnect<br/>\ndisabled: this server is disabled<br/>\nerror: failed to view the status of this server",
       "label": "Server status"
     },
     "update_server": {
@@ -3759,7 +3953,7 @@
       "desc": "Enable this Exhook server"
     },
     "failed_action": {
-      "desc": "The value that is returned when the request to the gRPC server fails for any reason."
+      "desc": "The value that is returned when the request to the gRPC server fails for any reason"
     },
     "keepalive": {
       "desc": "Enables/disables periodic transmission on a connected socket when no other data is exchanged.\nIf the other end does not respond, the connection is considered broken and an error message is sent to the controlling process."
@@ -3768,7 +3962,7 @@
       "desc": "Name of the exhook server"
     },
     "nodelay": {
-      "desc": "If true, option TCP_NODELAY is turned on for the socket,\nwhich means that also small amounts of data are sent immediately."
+      "desc": "If true, option TCP_NODELAY is turned on for the socket,\nwhich means that also small amounts of data are sent immediately"
     },
     "pool_size": {
       "desc": "The process pool size for gRPC client"
@@ -3840,7 +4034,7 @@
       "desc": "Whether to enable this backend."
     },
     "enable": {
-      "desc": "Enable the File Transfer feature.<br />\nEnabling File Transfer implies reserving special MQTT topics in order to serve the protocol.<br />\nThis toggle also affects the availability of the File Transfer REST API and\nstorage-dependent background activities (e.g. garbage collection)."
+      "desc": "Enable the File Transfer feature.<br/>\nEnabling File Transfer implies reserving special MQTT topics in order to serve the protocol.<br/>\nThis toggle also affects the availability of the File Transfer REST API and\nstorage-dependent background activities (e.g. garbage collection)."
     },
     "init_timeout": {
       "desc": "Timeout for EMQX to initialize the file transfer.<br/>\nAfter reaching the timeout (e.g. due to system is overloaded), the PUBACK message for `init` will contain error code (0x80)."
@@ -3852,7 +4046,7 @@
       "desc": "Exporter to the local file system."
     },
     "local_storage_exporter_backend": {
-      "desc": "Exporter for the local file system storage backend.<br />\nExporter defines where and how fully transferred and assembled files are stored."
+      "desc": "Exporter for the local file system storage backend.<br/>\nExporter defines where and how fully transferred and assembled files are stored."
     },
     "local_storage_exporter_root": {
       "desc": "Directory where the uploaded files are kept."
@@ -3876,10 +4070,10 @@
       "desc": "Interval of periodic garbage collection."
     },
     "storage_gc_max_segments_ttl": {
-      "desc": "Maximum TTL of a segment kept in the local file system.<br />\nThis is a hard limit: no segment will outlive this TTL, even if some file transfer specifies a\nTTL more than that."
+      "desc": "Maximum TTL of a segment kept in the local file system.<br/>\nThis is a hard limit: no segment will outlive this TTL, even if some file transfer specifies a\nTTL more than that."
     },
     "storage_gc_min_segments_ttl": {
-      "desc": "Minimum TTL of a segment kept in the local file system.<br />\nThis is a hard limit: no segment will be garbage collected before reaching this TTL,\neven if some file transfer specifies a TTL less than that."
+      "desc": "Minimum TTL of a segment kept in the local file system.<br/>\nThis is a hard limit: no segment will be garbage collected before reaching this TTL,\neven if some file transfer specifies a TTL less than that."
     },
     "store_segment_timeout": {
       "desc": "Timeout for storing a file segment.<br/>\nAfter reaching the timeout (e.g. due to system overloaded), the PUBACK message will contain error code (0x80)."
@@ -3928,7 +4122,7 @@
       "desc": "Gateway Name"
     },
     "gateway_name_in_qs": {
-      "desc": "Gateway Name.<br />\nIt's enum with `stomp`, `mqttsn`, `coap`, `lwm2m`, `exproto`"
+      "desc": "Gateway Name.<br/>\nIt's enum with `stomp`, `mqttsn`, `coap`, `lwm2m`, `exproto`"
     },
     "gateway_node_status": {
       "desc": "The status of the gateway on each node in the cluster"
@@ -3940,7 +4134,7 @@
       "desc": "Gateway status"
     },
     "gateway_status_in_qs": {
-      "desc": "Filter gateways by status.<br />\nAvailable options: `running`, `stopped`, `unloaded`"
+      "desc": "Filter gateways by status.<br/>\nIt is enum with `running`, `stopped`, `unloaded`"
     },
     "gateway_stopped_at": {
       "desc": "The Gateway stopped datetime"
@@ -3955,12 +4149,12 @@
       "desc": "Node Name"
     },
     "update_gateway": {
-      "desc": "Update the gateway basic configurations and running status.<br />\nNote: The Authentication and Listener configurations should be updated by other special APIs."
+      "desc": "Update the gateway basic configurations and running status.<br/>\nNote: The Authentication and Listener configurations should be updated by other special APIs."
     }
   },
   "emqx_gateway_api_authn": {
     "add_authn": {
-      "desc": "Enables the authenticator for client authentication for the specified gateway. <br />\nWhen the authenticator is not configured or turned off, all client connections are assumed to be allowed. <br />\nNote: Only one authenticator is allowed to be enabled at a time in the gateway, rather than allowing multiple authenticators to be configured to form an authentication chain as in MQTT."
+      "desc": "Enables the authenticator for client authentication for the specified gateway. <br/>\nWhen the authenticator is not configured or turned off, all client connections are assumed to be allowed. <br/>\nNote: Only one authenticator is allowed to be enabled at a time in the gateway, rather than allowing multiple authenticators to be configured to form an authentication chain as in MQTT."
     },
     "add_user": {
       "desc": "Add user for the authenticator (only supports built_in_database)."
@@ -3972,7 +4166,7 @@
       "desc": "Delete the user for the gateway authenticator (only supports built_in_database)"
     },
     "get_authn": {
-      "desc": "Gets the configuration of the specified gateway authenticator.<br />\nReturns 404 when gateway or authentication is not enabled."
+      "desc": "Gets the configuration of the specified gateway authenticator.<br/>\nReturns 404 when gateway or authentication is not enabled."
     },
     "get_user": {
       "desc": "Get user info from the gateway authenticator (only supports built_in_database)"
@@ -4207,10 +4401,10 @@
   },
   "emqx_gateway_api_listeners": {
     "add_listener": {
-      "desc": "Create the gateway listener.<br />\nNote: For listener types not supported by a gateway, this API returns `400: BAD_REQUEST`."
+      "desc": "Create the gateway listener.<br/>\nNote: For listener types not supported by a gateway, this API returns `400: BAD_REQUEST`."
     },
     "add_listener_authn": {
-      "desc": "Enable authenticator for specified listener for client authentication.<br />\nWhen authenticator is enabled for a listener, all clients connecting to that listener will use that authenticator for authentication."
+      "desc": "Enable authenticator for specified listener for client authentication.<br/>\nWhen authenticator is enabled for a listener, all clients connecting to that listener will use that authenticator for authentication."
     },
     "add_user": {
       "desc": "Add user for the authenticator (only supports built_in_database)"
@@ -4275,7 +4469,7 @@
       "desc": "DTLS socket options"
     },
     "gateway_common_authentication": {
-      "desc": "Default authentication configs for all the gateway listeners. For per-listener overrides see <code>authentication</code>\n in listener configs."
+      "desc": "Default authentication configs for all the gateway listeners. For per-listener overrides see <code>authentication</code>\n in listener configs"
     },
     "gateway_common_clientinfo_override": {
       "desc": "ClientInfo override."
@@ -4465,50 +4659,6 @@
       "label": "Server Host"
     }
   },
-  "emqx_ldap_authn": {
-    "is_superuser_attribute": {
-      "desc": "Indicates which attribute is used to represent whether the user is a superuser.",
-      "label": "IsSuperuser Attribute"
-    },
-    "ldap": {
-      "desc": "Configuration of authenticator using LDAP as authentication data source."
-    },
-    "password_attribute": {
-      "desc": "Indicates which attribute is used to represent the user's password.",
-      "label": "Password Attribute"
-    },
-    "query_timeout": {
-      "desc": "Timeout for the LDAP query.",
-      "label": "Query Timeout"
-    }
-  },
-  "emqx_ldap_authn_bind": {
-    "ldap_bind": {
-      "desc": "Configuration of authenticator using the LDAP bind operation as the authentication method."
-    },
-    "query_timeout": {
-      "desc": "Timeout for the LDAP query.",
-      "label": "Query Timeout"
-    }
-  },
-  "emqx_ldap_authz": {
-    "all_attribute": {
-      "desc": "Indicates which attribute is used to represent the both allowed topics list of  `publish` and `subscribe`.",
-      "label": "All Attribute"
-    },
-    "publish_attribute": {
-      "desc": "Indicates which attribute is used to represent the allowed topics list of the `publish`.",
-      "label": "Publish Attribute"
-    },
-    "query_timeout": {
-      "desc": "Timeout for the LDAP query.",
-      "label": "Query Timeout"
-    },
-    "subscribe_attribute": {
-      "desc": "Indicates which attribute is used to represent the allowed topics list of the `subscribe`.",
-      "label": "Subscribe Attribute"
-    }
-  },
   "emqx_license_http_api": {
     "desc_license_info_api": {
       "desc": "Get license info",
@@ -4550,72 +4700,17 @@
     }
   },
   "emqx_limiter_schema": {
-    "bucket_cfg": {
-      "desc": "Bucket Configs",
-      "label": "Buckets"
-    },
-    "burst": {
-      "desc": "The burst, This value is based on rate.<br />\n This value + rate = the maximum limit that can be achieved when limiter burst.",
-      "label": "Burst"
-    },
-    "bytes": {
-      "desc": "The `bytes` limiter.\nThis is used to limit the inbound bytes rate for this EMQX node.\nOnce the limit is reached, the restricted client will be slow down even be hung for a while.",
-      "label": "Bytes"
-    },
     "bytes_rate": {
-      "desc": "Data publish rate.<br />\nThis is used to limit the inbound bytes rate for this node,\nonce the limit is reached, the restricted client will slow down and even be hung for a while.",
+      "desc": "Data publish rate.<br/>\nThis is used to limit the inbound bytes rate for this node.\nOnce the limit is reached, the restricted client will slow down and even be hung for a while.<br/>\nThe unit of the bytes could be:KB MB GB.<br/>\nFor example:<br/>\n- <code>500KB/s</code> :: Only the first 500 kilobytes are sent per second and other messages are buffered.<br/>\n- <code>500MB/10s</code> :: Only the first 500 megabytes are sent even 10 second and other messages are buffered.",
       "label": "Data Publish Rate"
     },
-    "client": {
-      "desc": "The rate limit for each user of the bucket",
-      "label": "Per Client"
-    },
-    "connection": {
-      "desc": "The connection limiter.\nThis is used to limit the connection rate for this EMQX node.\nOnce the limit is reached, new connections will be refused.",
-      "label": "Connection"
-    },
-    "divisible": {
-      "desc": "Is it possible to split the number of requested tokens?",
-      "label": "Divisible"
-    },
-    "failure_strategy": {
-      "desc": "The strategy when all the retries failed.",
-      "label": "Failure Strategy"
-    },
-    "initial": {
-      "desc": "The initial number of tokens for this bucket.",
-      "label": "Initial"
-    },
-    "internal": {
-      "desc": "Limiter for EMQX internal app."
-    },
-    "low_watermark": {
-      "desc": "If the remaining tokens are lower than this value,\nthe check/consume will succeed, but it will be forced to wait for a short period of time.",
-      "label": "Low Watermark"
-    },
     "max_conn_rate": {
-      "desc": "Maximum connection rate.<br />\nThis is used to limit the connection rate for this node,\nonce the limit is reached, new connections will be deferred or refused",
+      "desc": "Maximum connection rate.<br/>\nThis is used to limit the connection rate for this node.\nOnce the limit is reached, new connections will be deferred or refused.<br/>\nFor example:<br/>\n- <code>1000/s</code> :: Only accepts 1000 connections per second<br/>\n- <code>1000/10s</code> :: Only accepts 1000 connections every 10 seconds.",
       "label": "Maximum Connection Rate"
     },
-    "max_retry_time": {
-      "desc": "The maximum retry time when acquire failed.",
-      "label": "Max Retry Time"
-    },
-    "message_routing": {
-      "desc": "The message routing limiter.\nThis is used to limit the forwarding rate for this EMQX node.\nOnce the limit is reached, new publish will be refused",
-      "label": "Message Routing"
-    },
-    "messages": {
-      "desc": "The `messages` limiter.\nThis is used to limit the inbound message numbers for this EMQX node\nOnce the limit is reached, the restricted client will be slow down even be hung for a while.",
-      "label": "Messages"
-    },
     "messages_rate": {
-      "desc": "Messages publish rate.<br />\nThis is used to limit the inbound message numbers for this node,\nonce the limit is reached, the restricted client will slow down and even be hung for a while.",
+      "desc": "Messages publish rate.<br/>\nThis is used to limit the inbound message numbers for this node.\nOnce the limit is reached, the restricted client will slow down and even be hung for a while.<br/>\nFor example:<br/>\n- <code>500/s</code> :: Only the first 500 messages are sent per second and other messages are buffered.<br/>\n- <code>500/10s</code> :: Only the first 500 messages are sent even 10 second and other messages are buffered.",
       "label": "Messages Publish Rate"
-    },
-    "rate": {
-      "desc": "Rate for this bucket.",
-      "label": "Rate"
     }
   },
   "emqx_lwm2m_api": {
@@ -4664,10 +4759,10 @@
       "desc": "Topic configuration for LwM2M's gateway publishing and subscription."
     },
     "lwm2m_translators_command": {
-      "desc": "The topic for receiving downstream commands.\nFor each new LwM2M client that succeeds in going online, the gateway creates a subscription relationship to receive downstream commands and send it to the LwM2M client."
+      "desc": "The topic for receiving downstream commands.\nFor each new LwM2M client that succeeds in going online, the gateway creates a subscription relationship to receive downstream commands and send it to the LwM2M client"
     },
     "lwm2m_translators_notify": {
-      "desc": "The topic for gateway to publish the notify events from LwM2M client.\nAfter succeed observe a resource of LwM2M client, Gateway will send the notify events via this topic, if the client reports any resource changes."
+      "desc": "The topic for gateway to publish the notify events from LwM2M client.\nAfter succeed observe a resource of LwM2M client, Gateway will send the notify events via this topic, if the client reports any resource changes"
     },
     "lwm2m_translators_register": {
       "desc": "The topic for gateway to publish the register events from LwM2M client."
@@ -4679,7 +4774,7 @@
       "desc": "The topic for gateway to publish the update events from LwM2M client"
     },
     "lwm2m_update_msg_publish_condition": {
-      "desc": "Policy for publishing UPDATE event message.<br />\n  - always: Send update events as long as the UPDATE request is received.<br />\n  - contains_object_list: Send update events only if the UPDATE request carries any Object List."
+      "desc": "Policy for publishing UPDATE event message.<br/>\n  - always: send update events as long as the UPDATE request is received.<br/>\n  - contains_object_list: send update events only if the UPDATE request carries any Object List"
     },
     "lwm2m_xml_dir": {
       "desc": "The Directory for LwM2M Resource definition."
@@ -4891,7 +4986,7 @@
       "label": "Node's name (deprecated)."
     },
     "rest_conf_query": {
-      "desc": "Reset the config entry specified by the query string parameter `conf_path`.<br />\n- For a config entry that has default value, this resets it to the default value;\n- For a config entry that has no default value, an error 400 will be returned",
+      "desc": "Reset the config entry specified by the query string parameter `conf_path`.<br/>\n- For a config entry that has default value, this resets it to the default value;\n- For a config entry that has no default value, an error 400 will be returned",
       "label": "Reset the config entry with query"
     },
     "update_configs": {
@@ -4994,22 +5089,22 @@
       "desc": "The Properties of the PUBLISH message."
     },
     "msg_content_type": {
-      "desc": "Message content type that describes the content of the application message. The server will send the received application message with its content type unchanged to all subscribers."
+      "desc": "The Content Type MUST be a UTF-8 Encoded String."
     },
     "msg_correlation_data": {
-      "desc": "Correlation data that the server sends to all subscribers unchanged when receiving an application message. Correlation data is only meaningful for the sending side of a request message and the receiving side of a response message."
+      "desc": "Identifier of the Correlation Data. The Server MUST send the Correlation Data unaltered to all subscribers receiving the Application Message."
     },
     "msg_message_expiry_interval": {
-      "desc": "Message expiry interval in seconds. When a message expires, the server will remove the message copy for a subscriber if it has not started delivering the message to the matching subscriber. If not set, the message will never expire."
+      "desc": "Identifier of the Message Expiry Interval. If the Message Expiry Interval has passed and the Server has not managed to start onward delivery to a matching subscriber, then it MUST delete the copy of the message for that subscriber."
     },
     "msg_payload_format_indicator": {
-      "desc": "Payload format indicator: 0 means unspecified data format, which is equivalent to not sending a payload format indication; 1 means the payload is UTF-8 encoded character data, and the UTF-8 data in the payload must be encoded according to Unicode specifications and RFC 3629 standards."
+      "desc": "0 (0x00) Byte Indicates that the Payload is unspecified bytes, which is equivalent to not sending a Payload Format Indicator.\n1 (0x01) Byte Indicates that the Payload is UTF-8 Encoded Character Data. The UTF-8 data in the Payload MUST be well-formed UTF-8 as defined by the Unicode specification and restated in RFC 3629."
     },
     "msg_response_topic": {
-      "desc": "Response topic used as the topic name for response messages. The response topic must not contain wildcards or multiple topics, or it will cause a protocol error. When a response topic is present, the message is considered a request message. The server must send the response topic unchanged to all subscribers when receiving an application message."
+      "desc": "Identifier of the Response Topic.The Response Topic MUST be a UTF-8 Encoded, It MUST NOT contain wildcard characters."
     },
     "msg_user_properties": {
-      "desc": "The User-Property key-value pairs. Note: In case there are duplicated keys, only the last one will be used."
+      "desc": "The User-Property key-value pairs. Note: in case there are duplicated keys, only the last one will be used."
     },
     "payload": {
       "desc": "The MQTT message payload."
@@ -5018,18 +5113,18 @@
       "desc": "MQTT Payload Encoding, <code>base64</code> or <code>plain</code>. When set to <code>base64</code>, the message is decoded before it is published."
     },
     "publish_api": {
-      "desc": "Possible HTTP status response codes are:<br />\n<code>200</code>: The message is delivered to at least one subscriber;<br />\n<code>202</code>: No matched subscribers;<br />\n<code>400</code>: Message is invalid. for example bad topic name, or QoS is out of range;<br />\n<code>503</code>: Failed to deliver the message to subscriber(s)",
+      "desc": "Possible HTTP status response codes are:<br/>\n<code>200</code>: The message is delivered to at least one subscriber;<br/>\n<code>202</code>: No matched subscribers;<br/>\n<code>400</code>: Message is invalid. for example bad topic name, or QoS is out of range;<br/>\n<code>503</code>: Failed to deliver the message to subscriber(s)",
       "label": "Publish a message"
     },
     "publish_bulk_api": {
-      "desc": "Possible HTTP response status code are:<br />\n200: All messages are delivered to at least one subscriber;<br />\n202: At least one message was not delivered to any subscriber;<br />\n400: At least one message is invalid. For example bad topic name, or QoS is out of range;<br />\n503: Failed to deliver at least one of the messages;<br />\n\nIn case there is at lest one invalid message in the batch, the HTTP response body\nis the same as for <code>/publish</code> API.<br />\nOtherwise the HTTP response body is an array of JSON objects indicating the publish\nresult of each individual message in the batch.",
+      "desc": "Possible HTTP response status code are:<br/>\n200: All messages are delivered to at least one subscriber;<br/>\n202: At least one message was not delivered to any subscriber;<br/>\n400: At least one message is invalid. For example bad topic name, or QoS is out of range;<br/>\n503: Failed to deliver at least one of the messages;<br/>\n\nIn case there is at lest one invalid message in the batch, the HTTP response body\nis the same as for <code>/publish</code> API.<br/>\nOtherwise the HTTP response body is an array of JSON objects indicating the publish\nresult of each individual message in the batch.",
       "label": "Publish a batch of messages"
     },
     "qos": {
       "desc": "MQTT message QoS"
     },
     "reason_code": {
-      "desc": "The MQTT reason code, as the same ones used in PUBACK packet.<br />\nCurrently supported codes are:<br />\n\n16(0x10): No matching subscribers;<br />\n131(0x81): Error happened when dispatching the message. e.g. during EMQX restart;<br />\n144(0x90): Topic name invalid;<br />\n151(0x97): Publish rate limited, or message size exceeded limit. The global size limit can be configured with <code>mqtt.max_packet_size</code><br />\nNOTE: The message size is estimated with the received topic and payload size, meaning the actual size of serialized bytes (when sent to MQTT subscriber)\nmight be slightly over the limit."
+      "desc": "The MQTT reason code, as the same ones used in PUBACK packet.<br/>\nCurrently supported codes are:<br/>\n\n16(0x10): No matching subscribers;<br/>\n131(0x81): Error happened when dispatching the message. e.g. during EMQX restart;<br/>\n144(0x90): Topic name invalid;<br/>\n151(0x97): Publish rate limited, or message size exceeded limit. The global size limit can be configured with <code>mqtt.max_packet_size</code><br/>\nNOTE: The message size is estimated with the received topic and payload size, meaning the actual size of serialized bytes (when sent to MQTT subscriber)\nmight be slightly over the limit."
     },
     "retain": {
       "desc": "A boolean field to indicate if this message should be retained."
@@ -5053,7 +5148,7 @@
       "desc": "Specify the response format, 'text' (default) to return the HTTP body in free text,\nor 'json' to return the HTTP body with a JSON object."
     },
     "get_status_response200": {
-      "desc": "If 'format' parameter is 'json', then it returns a JSON like below:<br />\n{\n  \"rel_vsn\": \"v5.0.23\",\n  \"node_name\": \"emqx@127.0.0.1\",\n  \"broker_status\": \"started\",\n  \"app_status\": \"running\"\n}\n<br />\nOtherwise it returns free text strings as below:<br />\n\n```\nNode emqx@127.0.0.1 is started\nemqx is running\n```"
+      "desc": "If 'format' parameter is 'json', then it returns a JSON like below:<br/>\n{\n  \"rel_vsn\": \"v5.0.23\",\n  \"node_name\": \"emqx@127.0.0.1\",\n  \"broker_status\": \"started\",\n  \"app_status\": \"running\"\n}\n<br/>\nOtherwise it returns free text strings as below:<br/>\nNode emqx@127.0.0.1 is started\nemqx is running"
     },
     "get_status_response503": {
       "desc": "When EMQX application is temporary not running or being restarted, it may return 'emqx is not_running'.\nIf the 'format' parameter is provided 'json', then the 'app_status' field in the JSON object will be 'not_running'."
@@ -5090,7 +5185,7 @@
     },
     "current_trace_offset": {
       "desc": "Offset from the current trace position.",
-      "label": "Offset from the current trace position"
+      "label": "Offset from the current trace position."
     },
     "delete_trace": {
       "desc": "Delete specified trace",
@@ -5141,20 +5236,20 @@
       "label": "MQTT Topic"
     },
     "time_format": {
-      "desc": "rfc3339 or epoch timestamp format",
-      "label": "Time format"
+      "desc": "rfc3339 timestamp or epoch second",
+      "label": "rfc3339 timestamp or epoch second"
     },
     "trace_log_size": {
       "desc": "trace log size",
-      "label": "Trace log size"
+      "label": "trace log size"
     },
     "trace_name": {
       "desc": "Unique name of the trace. Only ascii letters in a-z, A-Z, 0-9 and underscore '_' are allowed.",
       "label": "Unique name of the trace"
     },
     "trace_status": {
-      "desc": "Trace status",
-      "label": "Trace status"
+      "desc": "trace status",
+      "label": "trace status"
     },
     "trace_zip_file": {
       "desc": "A trace zip file",
@@ -5302,13 +5397,13 @@
       "desc": "Whether to periodically broadcast ADVERTISE messages"
     },
     "mqttsn_enable_qos3": {
-      "desc": "Allows connectionless clients to publish messages with a Qos of -1.\nThis feature is defined for very simple client implementations which do not support any other features except this one. There is no connection setup nor tear down, no registration nor subscription. The client just sends its 'PUBLISH' messages to a GW."
+      "desc": "Allows connectionless clients to publish messages with a Qos of -1.\nThis feature is defined for very simple client implementations which do not support any other features except this one. There is no connection setup nor tear down, no registration nor subscription. The client just sends its 'PUBLISH' messages to a GW"
     },
     "mqttsn_gateway_id": {
-      "desc": "MQTT-SN Gateway ID.\nWhen the <code>broadcast</code> option is enabled, the gateway will broadcast ADVERTISE message with this value."
+      "desc": "MQTT-SN Gateway ID.\nWhen the <code>broadcast</code> option is enabled, the gateway will broadcast ADVERTISE message with this value"
     },
     "mqttsn_predefined": {
-      "desc": "The pre-defined topic IDs and topic names.\nA 'pre-defined' topic ID is a topic ID whose mapping to a topic name is known in advance by both the client's application and the gateway."
+      "desc": "The pre-defined topic IDs and topic names.\nA 'pre-defined' topic ID is a topic ID whose mapping to a topic name is known in advance by both the client's application and the gateway"
     },
     "mqttsn_predefined_id": {
       "desc": "Topic ID. Range: 1-65535"
@@ -5328,7 +5423,7 @@
   },
   "emqx_node_rebalance_api": {
     "abs_conn_threshold": {
-      "desc": "The upper limit of the absolute difference between the number of connections on the current node and the average number of connections on the recipient nodes. The rebalance process stops when the difference is lower than this value.",
+      "desc": "Maximum desired difference between the number of connections on the node and the average number of connections on the recipient nodes. Difference lower than this is the goal of the rebalance process.",
       "label": "Absolute connection threshold"
     },
     "abs_sess_threshold": {
@@ -5348,35 +5443,35 @@
       "label": "Connection eviction rate"
     },
     "coordinator_status_donor_conn_avg": {
-      "desc": "Average number of connections per donor node.",
+      "desc": "Average number of connections per donor node",
       "label": "Donor connections average"
     },
     "coordinator_status_donor_sess_avg": {
-      "desc": "Average number of sessions per donor node.",
+      "desc": "Average number of sessions per donor node",
       "label": "Donor sessions average"
     },
     "coordinator_status_donors": {
-      "desc": "List of nodes from which connections/sessions are being evacuated.",
+      "desc": "List of nodes from which connections/sessions are being evacuated",
       "label": "Donors"
     },
     "coordinator_status_node": {
-      "desc": "The node that is coordinating the evacuation/rebalance process.",
+      "desc": "The node that is coordinating the evacuation/rebalance process",
       "label": "Coordinator node"
     },
     "empty_response": {
-      "desc": "The response is empty.",
+      "desc": "The response is empty",
       "label": "Empty response"
     },
     "evacuation_status_node": {
-      "desc": "The node that is being evacuated.",
+      "desc": "The node that is being evacuated",
       "label": "Evacuated node"
     },
     "global_status_evacuations": {
-      "desc": "List of nodes that are being evacuated.",
+      "desc": "List of nodes that are being evacuated",
       "label": "Evacuations"
     },
     "global_status_rebalances": {
-      "desc": "List of nodes that coordinate a rebalance.",
+      "desc": "List of nodes that coordinate a rebalance",
       "label": "Rebalances"
     },
     "load_rebalance_availability_check": {
@@ -5408,11 +5503,11 @@
       "label": "Stop rebalance"
     },
     "local_status_connection_eviction_rate": {
-      "desc": "The rate of evicting connections, in connections per second.",
+      "desc": "The rate of evicting connections, in connections per second",
       "label": "Connection eviction rate"
     },
     "local_status_connection_goal": {
-      "desc": "The number of connections that the node should have after the rebalance/evacuation process.",
+      "desc": "The number of connections that the node should have after the rebalance/evacuation process",
       "label": "Connection goal"
     },
     "local_status_coordinator_node": {
@@ -5420,7 +5515,7 @@
       "label": "Coordinator node"
     },
     "local_status_disconnected_session_goal": {
-      "desc": "The number of disconnected sessions that the node should have after the rebalance process.",
+      "desc": "The number of disconnected sessions that the node should have after the rebalance process",
       "label": "Disconnected session goal"
     },
     "local_status_enabled": {
@@ -5428,7 +5523,7 @@
       "label": "Local evacuation status"
     },
     "local_status_process": {
-      "desc": "The type of the task that is being performed on the node: 'evacuation' or 'rebalance'.",
+      "desc": "The type of the task that is being performed on the node: 'evacuation' or 'rebalance'",
       "label": "Task Type"
     },
     "local_status_purge_rate": {
@@ -5436,27 +5531,27 @@
       "label": "Session purge rate"
     },
     "local_status_recipients": {
-      "desc": "List of nodes to which connections/sessions are being evacuated during rebalance.",
+      "desc": "List of nodes to which connections/sessions are being evacuated during rebalance",
       "label": "Recipients"
     },
     "local_status_session_eviction_rate": {
-      "desc": "The rate of evicting sessions, in sessions per second.",
+      "desc": "The rate of evicting sessions, in sessions per second",
       "label": "Session eviction rate"
     },
     "local_status_session_goal": {
-      "desc": "The number of sessions that the node should have after the evacuation process.",
+      "desc": "The number of sessions that the node should have after the evacuation process",
       "label": "Session goal"
     },
     "local_status_session_recipients": {
-      "desc": "List of nodes to which sessions are being evacuated.",
+      "desc": "List of nodes to which sessions are being evacuated",
       "label": "Session recipients"
     },
     "local_status_state": {
-      "desc": "The state of the process that is being performed on the node.",
+      "desc": "The state of the process that is being performed on the node",
       "label": "Rebalance/evacuation current state"
     },
     "local_status_stats": {
-      "desc": "Statistics of the evacuation/rebalance process.",
+      "desc": "Statistics of the evacuation/rebalance process",
       "label": "Statistics"
     },
     "migrate_to": {
@@ -5472,15 +5567,15 @@
       "label": "Rebalance nodes"
     },
     "redirect_to": {
-      "desc": "Server reference to which the client should be redirected (MQTTv5 server redirect).",
+      "desc": "Server reference to redirect clients to (MQTTv5 Server redirection)",
       "label": "Redirect to"
     },
     "rel_conn_threshold": {
-      "desc": "The upper limit of the relative difference (as a ratio) between the number of connections on the current node and the average number of connections on the recipient nodes. The rebalance process stops when the ratio is lower than this value.",
+      "desc": "Maximum desired fraction between the number of connections on the node and the average number of connections on the recipient nodes. Fraction lower than this is the goal of the rebalance process.",
       "label": "Relative connection threshold"
     },
     "rel_sess_threshold": {
-      "desc": "The maximum allowed absolute difference between the number of sessions on the current node and the average number of sessions on the recipient nodes. The session migration process will stop when the absolute difference is lower than this threshold.",
+      "desc": "Maximum desired fraction between the number of sessions on the node and the average number of sessions on the recipient nodes. Fraction lower than this is the goal of the evacuation process",
       "label": "Relative session threshold"
     },
     "sess_evict_rate": {
@@ -5488,23 +5583,23 @@
       "label": "Session eviction rate"
     },
     "status_stats_current_connected": {
-      "desc": "Current number of connections on the node.",
+      "desc": "Current number of connections on the node",
       "label": "Current connections"
     },
     "status_stats_current_disconnected_sessions": {
-      "desc": "Current number of disconnected sessions on the node.",
+      "desc": "Current number of disconnected sessions on the node",
       "label": "Current disconnected sessions"
     },
     "status_stats_current_sessions": {
-      "desc": "Current number of sessions on the node.",
+      "desc": "Current number of sessions on the node",
       "label": "Current sessions"
     },
     "status_stats_initial_connected": {
-      "desc": "The number of connections on the node before the evacuation/rebalance process.",
+      "desc": "The number of connections on the node before the evacuation/rebalance process",
       "label": "Initial connected"
     },
     "status_stats_initial_sessions": {
-      "desc": "The number of sessions on the node before the evacuation/rebalance process.",
+      "desc": "The number of sessions on the node before the evacuation/rebalance process",
       "label": "Initial sessions"
     },
     "wait_health_check": {
@@ -5512,13 +5607,13 @@
       "label": "Wait health check"
     },
     "wait_takeover": {
-      "desc": "Waiting time in seconds before starting the session takeover process.",
-      "label": "Wait for takeover"
+      "desc": "Time to wait before starting session evacuation process, in seconds",
+      "label": "Wait takeover"
     }
   },
   "emqx_oracle": {
     "server": {
-      "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br />A host entry has the following form: `Host[:Port]`.<br />The Oracle Database default port 1521 is used if `[:Port]` is not specified.",
+      "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>A host entry has the following form: `Host[:Port]`.<br/>The Oracle Database default port 1521 is used if `[:Port]` is not specified.",
       "label": "Server Host"
     },
     "service_name": {
@@ -5552,22 +5647,22 @@
   },
   "emqx_plugins_schema": {
     "check_interval": {
-      "desc": "Check interval: check if the status of the plugins in the cluster is consistent, <br />If the results of 3 consecutive checks are not consistent, then alarm."
+      "desc": "Check interval: check if the status of the plugins in the cluster is consistent, <br/>\nif the results of 3 consecutive checks are not consistent, then alarm."
     },
     "enable": {
-      "desc": "Set to 'true' to enable this plugin.",
+      "desc": "Set to 'true' to enable this plugin",
       "label": "Enable"
     },
     "install_dir": {
-      "desc": "The installation directory for the external plugins.\nThe plugin beam files and configuration files should reside in\nthe subdirectory named as <code>emqx_foo_bar-0.1.0</code>.\n<br />\nNOTE: For security reasons, this directory should **NOT** be writable\nby anyone except <code>emqx</code> (or any user which runs EMQX).",
+      "desc": "The installation directory for the external plugins.\nThe plugin beam files and configuration files should reside in\nthe subdirectory named as <code>emqx_foo_bar-0.1.0</code>.\n<br/>\nNOTE: For security reasons, this directory should **NOT** be writable\nby anyone except <code>emqx</code> (or any user which runs EMQX).",
       "label": "Install Directory"
     },
     "name_vsn": {
-      "desc": "The {name}-{version} of the plugin.<br />\nIt should match the plugin application name-version as the for the plugin release package name.<br />\nFor example: my_plugin-0.1.0.",
+      "desc": "The {name}-{version} of the plugin.<br/>\nIt should match the plugin application name-version as the for the plugin release package name<br/>\nFor example: my_plugin-0.1.0.",
       "label": "Name-Version"
     },
     "plugins": {
-      "desc": "Manage EMQX plugins.<br />\nPlugins can be pre-built as a part of EMQX package,\nor installed as a standalone package in a location specified by\n<code>install_dir</code> config key.<br />\nThe standalone-installed plugins are referred to as 'external' plugins.",
+      "desc": "Manage EMQX plugins.<br/>\nPlugins can be pre-built as a part of EMQX package,\nor installed as a standalone package in a location specified by\n<code>install_dir</code> config key<br/>\nThe standalone-installed plugins are referred to as 'external' plugins.",
       "label": "Plugins"
     },
     "state": {
@@ -5575,8 +5670,14 @@
       "label": "State"
     },
     "states": {
-      "desc": "An array of plugins in the desired states.<br />\nThe plugins are started in the defined order",
+      "desc": "An array of plugins in the desired states.<br/>\nThe plugins are started in the defined order",
       "label": "States"
+    }
+  },
+  "emqx_postgresql": {
+    "server": {
+      "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe PostgreSQL default port 5432 is used if `[:Port]` is not specified.",
+      "label": "Server Host"
     }
   },
   "emqx_prometheus_api": {
@@ -5604,7 +5705,7 @@
       "desc": "Data reporting interval"
     },
     "job_name": {
-      "desc": "Job name that is pushed to the Push Gateway. Available variables:<br />\n\n- ${name}: Name of EMQX node.<br />\n- ${host}: Host name of EMQX node.<br />\nFor example, when the EMQX node name is <code>emqx@127.0.0.1</code> then the <code>name</code> variable takes value <code>emqx</code> and the <code>host</code> variable takes value <code>127.0.0.1</code>.<br />\nDefault value is: <code>${name}/instance/${name}~${host}</code>"
+      "desc": "Job Name that is pushed to the Push Gateway. Available variables:<br/>\n- ${name}: Name of EMQX node.<br/>\n- ${host}: Host name of EMQX node.<br/>\nFor example, when the EMQX node name is <code>emqx@127.0.0.1</code> then the <code>name</code> variable takes value <code>emqx</code> and the <code>host</code> variable takes value <code>127.0.0.1</code>.<br/>\nDefault value is: <code>${name}/instance/${name}~${host}</code>"
     },
     "mnesia_collector": {
       "desc": "Enable or disable Mnesia metrics collector"
@@ -5617,7 +5718,7 @@
       "desc": "URL of Prometheus server. Pushgateway is optional, should not be configured if prometheus is to scrape EMQX."
     },
     "vm_dist_collector": {
-      "desc": "Enable or disable VM distribution collector that collects information about the sockets and processes involved in the Erlang distribution mechanism."
+      "desc": "Enable or disable VM distribution collector, collects information about the sockets and processes involved in the Erlang distribution mechanism."
     },
     "vm_memory_collector": {
       "desc": "Enable or disable VM memory metrics collector."
@@ -5634,19 +5735,19 @@
   },
   "emqx_psk_schema": {
     "chunk_size": {
-      "desc": "The size of each chunk used to import to the built-in database from PSK file."
+      "desc": "The size of each chunk used to import to the built-in database from PSK file"
     },
     "enable": {
-      "desc": "Whether to enable TLS PSK support."
+      "desc": "Whether to enable TLS PSK support"
     },
     "init_file": {
       "desc": "If init_file is specified, EMQX will import PSKs from the file into the built-in database at startup for use by the runtime.\nThe file has to be structured line-by-line, each line must be in the format of <code>PSKIdentity:SharedSecret</code>.\nFor example: <code>mydevice1:c2VjcmV0</code>"
     },
     "psk_authentication": {
-      "desc": "PSK stands for 'Pre-Shared Keys'.\nThis configuation is to enable TLS-PSK authentication.\n\nImportant! Make sure the SSL listener with only <code>tlsv1.2</code> enabled, and also PSK cipher suites\nconfigured, such as <code>RSA-PSK-AES256-GCM-SHA384</code>.\n\nSee listener SSL options config for more details.\n\nThe IDs and secrets can be provided from a file which is configurable by the <code>init_file</code> field."
+      "desc": "PSK stands for 'Pre-Shared Keys'.\nThis config to enable TLS-PSK authentication.\n\nImportant! Make sure the SSL listener with only <code>tlsv1.2</code> enabled, and also PSK cipher suites\nconfigured, such as <code>RSA-PSK-AES256-GCM-SHA384</code>.\n\nSee listener SSL options config for more details.\n\nThe IDs and secrets can be provided from a file which is configurable by the <code>init_file</code> field."
     },
     "separator": {
-      "desc": "The separator between <code>PSKIdentity</code> and <code>SharedSecret</code> in the PSK file."
+      "desc": "The separator between <code>PSKIdentity</code> and <code>SharedSecret</code> in the PSK file"
     }
   },
   "emqx_redis": {
@@ -5689,7 +5790,7 @@
       "label": "Max batch wait time"
     },
     "buffer_mode": {
-      "desc": "Buffer operation mode.\n<code>memory_only</code>: Buffer all messages in memory. <code>volatile_offload</code>: Buffer message in memory first, when up to certain limit (see <code>buffer_seg_bytes</code> config for more information), then start offloading messages to disk",
+      "desc": "Buffer operation mode.\n<code>memory_only</code>: Buffer all messages in memory.<code>volatile_offload</code>: Buffer message in memory first, when up to certain limit (see <code>buffer_seg_bytes</code> config for more information), then start offloading messages to disk",
       "label": "Buffer Mode"
     },
     "buffer_seg_bytes": {
@@ -5857,7 +5958,7 @@
       "desc": "Message retention time. This config is only applicable for messages without the Message Expiry Interval message property.\n0 means message will never expire."
     },
     "stop_publish_clear_msg": {
-      "desc": "Controls whether to stop sending clean-up messages for retained messages with empty payloads. In MQTT 5.0, if a retained message's payload is empty, it will clear the corresponding previously stored retained message. This setting determines whether to stop sending clean-up messages."
+      "desc": "When the retained flag of the `PUBLISH` message is set and Payload is empty,\nwhether to continue to publish the message.\nSee:\nhttp://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc398718038"
     }
   },
   "emqx_rewrite_api": {
@@ -6028,7 +6129,7 @@
       "label": "SQL Failed"
     },
     "metrics_sql_failed_exception": {
-      "desc": "How many times the SQL is failed due to exceptions. This may because of a crash when calling a SQL function, or trying to do arithmetic operation on undefined variables.",
+      "desc": "How many times the SQL is failed due to exceptions. This may because of a crash when calling a SQL function, or trying to do arithmetic operation on undefined variables",
       "label": "SQL Exception"
     },
     "metrics_sql_failed_unknown": {
@@ -6323,10 +6424,10 @@
       "desc": "Whether to probe for IPv6 support."
     },
     "max_part_size": {
-      "desc": "The maximum part size for multipart uploads.<br />\nS3 uploader won't try to upload parts larger than this size."
+      "desc": "The maximum part size for multipart uploads.<br/>\nS3 uploader won't try to upload parts larger than this size."
     },
     "min_part_size": {
-      "desc": "The minimum part size for multipart uploads.<br />\nUploaded data will be accumulated in memory until this size is reached."
+      "desc": "The minimum part size for multipart uploads.<br/>\nUploaded data will be accumulated in memory until this size is reached."
     },
     "port": {
       "desc": "The port of the S3 endpoint."
@@ -6343,11 +6444,11 @@
   },
   "emqx_schema": {
     "alarm_actions": {
-      "desc": "The actions triggered when the alarm is activated.<br />Currently, the following actions are supported: <code>log</code> and <code>publish</code>.\n<code>log</code> is to write the alarm to log (console or file).\n<code>publish</code> is to publish the alarm as an MQTT message to the system topics:\n<code>$SYS/brokers/emqx@xx.xx.xx.x/alarms/activate</code> and\n<code>$SYS/brokers/emqx@xx.xx.xx.x/alarms/deactivate</code>",
+      "desc": "The actions triggered when the alarm is activated.<br/>Currently, the following actions are supported: <code>log</code> and <code>publish</code>.\n<code>log</code> is to write the alarm to log (console or file).\n<code>publish</code> is to publish the alarm as an MQTT message to the system topics:\n<code>$SYS/brokers/emqx@xx.xx.xx.x/alarms/activate</code> and\n<code>$SYS/brokers/emqx@xx.xx.xx.x/alarms/deactivate</code>",
       "label": "Alarm Actions"
     },
     "alarm_size_limit": {
-      "desc": "The maximum total number of deactivated alarms to keep as history.<br />When this limit is exceeded, the oldest deactivated alarms are deleted to cap the total number.",
+      "desc": "The maximum total number of deactivated alarms to keep as history.<br/>When this limit is exceeded, the oldest deactivated alarms are deleted to cap the total number.",
       "label": "Alarm size limit"
     },
     "alarm_validity_period": {
@@ -6375,7 +6476,7 @@
       "label": "Max connections"
     },
     "base_listener_mountpoint": {
-      "desc": "When publishing or subscribing, prefix all topics with a mountpoint string.\nThe prefixed string will be removed from the topic name when the message\nis delivered to the subscriber. The mountpoint is a way that users can use\nto implement isolation of message routing between different listeners.\nFor example if a client A subscribes to `t` with `listeners.tcp.\\<name>.mountpoint`\nset to `some_tenant`, then the client actually subscribes to the topic\n`some_tenant/t`. Similarly, if another client B (connected to the same listener\nas the client A) sends a message to topic `t`, the message is routed\nto all the clients subscribed `some_tenant/t`, so client A will receive the\nmessage, with topic name `t`.<br />\nSet to `\"\"` to disable the feature.<br />\n\nVariables in mountpoint string:\n  - <code>${clientid}</code>: clientid\n  - <code>${username}</code>: username",
+      "desc": "When publishing or subscribing, prefix all topics with a mountpoint string.\nThe prefixed string will be removed from the topic name when the message\nis delivered to the subscriber. The mountpoint is a way that users can use\nto implement isolation of message routing between different listeners.\nFor example if a client A subscribes to `t` with `listeners.tcp.\\<name>.mountpoint`\nset to `some_tenant`, then the client actually subscribes to the topic\n`some_tenant/t`. Similarly, if another client B (connected to the same listener\nas the client A) sends a message to topic `t`, the message is routed\nto all the clients subscribed `some_tenant/t`, so client A will receive the\nmessage, with topic name `t`.<br/>\nSet to `\"\"` to disable the feature.<br/>\n\nVariables in mountpoint string:\n  - <code>${clientid}</code>: clientid\n  - <code>${username}</code>: username",
       "label": "mountpoint"
     },
     "base_listener_zone": {
@@ -6389,7 +6490,7 @@
       "desc": "Enable session registry"
     },
     "broker_perf_route_lock_type": {
-      "desc": "Performance tuning for subscribing/unsubscribing a wildcard topic.\nChange this parameter only when there are many wildcard topics.\n\nNOTE: When changing from/to `global` lock, it requires all nodes in the cluster to be stopped before the change.\n  - `key`: Mnesia transactional updates with per-key locks. Recommended for a single-node setup.\n  - `tab`: Mnesia transactional updates with table lock. Recommended for a cluster setup.\n  - `global`: Updates are protected with a global lock. Recommended for large clusters."
+      "desc": "Performance tuning for subscribing/unsubscribing a wildcard topic.\nChange this parameter only when there are many wildcard topics.\n\nNOTE: when changing from/to `global` lock, it requires all nodes in the cluster to be stopped before the change.\n  - `key`: mnesia transactional updates with per-key locks. Recommended for a single-node setup.\n  - `tab`: mnesia transactional updates with table lock. Recommended for a cluster setup.\n  - `global`: updates are protected with a global lock. Recommended for large clusters."
     },
     "broker_perf_trie_compaction": {
       "desc": "Enable trie path compaction.\nEnabling it significantly improves wildcard topic subscribe rate, if wildcard topics have unique prefixes like: 'sensor/{{id}}/+/', where ID is unique per subscriber.\nTopic match performance (when publishing) may degrade if messages are mostly published to topics with large number of levels.\n\nNOTE: This is a cluster-wide configuration. It requires all nodes to be stopped before changing it."
@@ -6398,24 +6499,20 @@
       "desc": "Routing storage schema.\nSet <code>v1</code> to leave the default.\n<code>v2</code> is introduced in 5.2. It enables routing through 2 separate tables, one for topic filter and one for regular topic subscriptions. This schema should increase both subscription and routing performance at the cost of slight increase in memory consumption per subscription.\nNOTE: Schema <code>v2</code> is still experimental.\nNOTE: Full non-rolling cluster restart is needed after altering this option for it to take any effect."
     },
     "broker_session_locking_strategy": {
-      "desc": "Session locking strategy in a cluster.\n  - `local`: Only lock the session on the current node.\n  - `one`: Select only one remote node to lock the session.\n  - `quorum`: Select some nodes to lock the session.\n  - `all`: Lock the session on all the nodes in the cluster."
+      "desc": "Session locking strategy in a cluster.\n  - `local`: only lock the session on the current node\n  - `one`: select only one remote node to lock the session\n  - `quorum`: select some nodes to lock the session\n  - `all`: lock the session on all the nodes in the cluster"
     },
     "broker_shared_dispatch_ack_enabled": {
       "desc": "Deprecated.\nThis was designed to avoid dispatching messages to a shared-subscription session which has the client disconnected.\nHowever it's no longer useful because the shared-subscrption messages in a expired session will be redispatched to other sessions in the group."
     },
     "broker_shared_subscription_strategy": {
-      "desc": "Dispatch strategy for shared subscription.\n  - `random`: Dispatch the message to a random selected subscriber.\n  - `round_robin`: Select the subscribers in a round-robin manner.\n  - `round_robin_per_group`: Select the subscribers in round-robin fashion within each shared subscriber group.\n  - `local`: Select random local subscriber otherwise select random cluster-wide.\n  - `sticky`: Always use the last selected subscriber to dispatch, until the subscriber disconnects.\n  - `hash_clientid`: Select the subscribers by hashing the `clientIds`.\n  - `hash_topic`: Select the subscribers by hashing the source topic."
-    },
-    "bytes_rate": {
-      "desc": "Data publish rate.<br />\nThis is used to limit the inbound bytes rate for each client connected to this listener,\nonce the limit is reached, the restricted client will slow down and even be hung for a while.",
-      "label": "Data Publish Rate"
+      "desc": "Dispatch strategy for shared subscription.\n  - `random`: Randomly select a subscriber for dispatch;\n  - `round_robin`: Messages from a single publisher are dispatched to subscribers in turn;\n  - `round_robin_per_group`: All messages are dispatched to subscribers in turn;\n  - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n  - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends;\n  - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n  - `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "ciphers_schema_common": {
-      "desc": "This config holds TLS cipher suite names separated by comma,\nor as an array of strings. e.g.\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code> or\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>.\n<br />\nCiphers (and their ordering) define the way in which the\nclient and server encrypts information over the network connection.\nSelecting a good cipher suite is critical for the\napplication's data security, confidentiality and performance.\n\nThe names should be in OpenSSL string format (not RFC format).\nAll default values and examples provided by EMQX config\ndocumentation are all in OpenSSL format.<br />\n\nNOTE: Certain cipher suites are only compatible with\nspecific TLS <code>versions</code> ('tlsv1.1', 'tlsv1.2' or 'tlsv1.3')\nincompatible cipher suites will be silently dropped.\nFor instance, if only 'tlsv1.3' is given in the <code>versions</code>,\nconfiguring cipher suites for other versions will have no effect.\n<br />\n\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config.<br />\nIf PSK cipher suites are intended, 'tlsv1.3' should be disabled from <code>versions</code>.<br />\nPSK cipher suites: <code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code>",
+      "desc": "This config holds TLS cipher suite names separated by comma,\nor as an array of strings. e.g.\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code> or\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>.\n<br/>\nCiphers (and their ordering) define the way in which the\nclient and server encrypts information over the network connection.\nSelecting a good cipher suite is critical for the\napplication's data security, confidentiality and performance.\n\nThe names should be in OpenSSL string format (not RFC format).\nAll default values and examples provided by EMQX config\ndocumentation are all in OpenSSL format.<br/>\n\nNOTE: Certain cipher suites are only compatible with\nspecific TLS <code>versions</code> ('tlsv1.1', 'tlsv1.2' or 'tlsv1.3')\nincompatible cipher suites will be silently dropped.\nFor instance, if only 'tlsv1.3' is given in the <code>versions</code>,\nconfiguring cipher suites for other versions will have no effect.\n<br/>\n\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config<br/>\nIf PSK cipher suites are intended, 'tlsv1.3' should be disabled from <code>versions</code>.<br/>\nPSK cipher suites: <code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code>",
       "label": ""
     },
     "ciphers_schema_quic": {
-      "desc": "This config holds TLS cipher suite names separated by comma,\nor as an array of strings. e.g.\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code> or\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>.\n<br />\nCiphers (and their ordering) define the way in which the\nclient and server encrypts information over the network connection.\nSelecting a good cipher suite is critical for the\napplication's data security, confidentiality and performance.\n\nThe names should be in OpenSSL string format (not RFC format).\nAll default values and examples provided by EMQX config\ndocumentation are all in OpenSSL format.<br />\n\nNOTE: Certain cipher suites are only compatible with\nspecific TLS <code>versions</code> ('tlsv1.1', 'tlsv1.2' or 'tlsv1.3')\nincompatible cipher suites will be silently dropped.\nFor instance, if only 'tlsv1.3' is given in the <code>versions</code>,\nconfiguring cipher suites for other versions will have no effect.\n<br />\n\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config.<br />\nIf PSK cipher suites are intended, 'tlsv1.3' should be disabled from <code>ssl.versions</code>.<br />\nPSK cipher suites: <code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code><br />\n\nNOTE: QUIC listener supports only 'tlsv1.3' ciphers.",
+      "desc": "This config holds TLS cipher suite names separated by comma,\nor as an array of strings. e.g.\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code> or\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>.\n<br/>\nCiphers (and their ordering) define the way in which the\nclient and server encrypts information over the network connection.\nSelecting a good cipher suite is critical for the\napplication's data security, confidentiality and performance.\n\nThe names should be in OpenSSL string format (not RFC format).\nAll default values and examples provided by EMQX config\ndocumentation are all in OpenSSL format.<br/>\n\nNOTE: Certain cipher suites are only compatible with\nspecific TLS <code>versions</code> ('tlsv1.1', 'tlsv1.2' or 'tlsv1.3')\nincompatible cipher suites will be silently dropped.\nFor instance, if only 'tlsv1.3' is given in the <code>versions</code>,\nconfiguring cipher suites for other versions will have no effect.\n<br/>\n\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config<br/>\nIf PSK cipher suites are intended, 'tlsv1.3' should be disabled from <code>versions</code>.<br/>\nPSK cipher suites: <code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code><br/>\n\nNOTE: QUIC listener supports only 'tlsv1.3' ciphers",
       "label": ""
     },
     "client_ssl_opts_schema_enable": {
@@ -6423,11 +6520,11 @@
       "label": "Enable TLS."
     },
     "client_ssl_opts_schema_server_name_indication": {
-      "desc": "Specify the host name to be used in TLS Server Name Indication extension.<br />\nFor instance, when connecting to \"server.example.net\", the genuine server\nwhich accepts the connection and performs TLS handshake may differ from the\nhost the TLS client initially connects to, e.g. when connecting to an IP address\nor when the host has multiple resolvable DNS records <br />\nIf not specified, it will default to the host name string which is used\nto establish the connection, unless it is IP addressed used.<br />\nThe host name is then also used in the host name verification of the peer\ncertificate.<br /> The special value 'disable' prevents the Server Name\nIndication extension from being sent and disables the hostname\nverification check.",
+      "desc": "Specify the host name to be used in TLS Server Name Indication extension.<br/>\nFor instance, when connecting to \"server.example.net\", the genuine server\nwhich accepts the connection and performs TLS handshake may differ from the\nhost the TLS client initially connects to, e.g. when connecting to an IP address\nor when the host has multiple resolvable DNS records <br/>\nIf not specified, it will default to the host name string which is used\nto establish the connection, unless it is IP address used.<br/>\nThe host name is then also used in the host name verification of the peer\ncertificate.<br/> The special value 'disable' prevents the Server Name\nIndication extension from being sent and disables the hostname\nverification check.",
       "label": "Server Name Indication"
     },
     "common_ssl_opts_schema_cacertfile": {
-      "desc": "Trusted PEM format CA certificates bundle file.<br />\nThe certificates in this file are used to verify the TLS peer's certificates.\nAppend new certificates to the file if new CAs are to be trusted.\nThere is no need to restart EMQX to have the updated file loaded, because\nthe system regularly checks if file has been updated (and reload).<br />\nNOTE: Invalidating (deleting) a certificate from the file will not affect\nalready established connections.",
+      "desc": "Trusted PEM format CA certificates bundle file.<br/>\nThe certificates in this file are used to verify the TLS peer's certificates.\nAppend new certificates to the file if new CAs are to be trusted.\nThere is no need to restart EMQX to have the updated file loaded, because\nthe system regularly checks if file has been updated (and reload).<br/>\nNOTE: invalidating (deleting) a certificate from the file will not affect\nalready established connections.",
       "label": "CACertfile"
     },
     "common_ssl_opts_schema_cacerts": {
@@ -6435,16 +6532,16 @@
       "label": "Use System CA Certificates"
     },
     "common_ssl_opts_schema_certfile": {
-      "desc": "PEM format certificates chain file.<br />\nThe certificates in this file should be in reversed order of the certificate\nissue chain. That is, the host's certificate should be placed in the beginning\nof the file, followed by the immediate issuer certificate and so on.\nAlthough the root CA certificate is optional, it should be placed at the end of\nthe file if it is to be added.",
+      "desc": "PEM format certificates chain file.<br/>\nThe certificates in this file should be in reversed order of the certificate\nissue chain. That is, the host's certificate should be placed in the beginning\nof the file, followed by the immediate issuer certificate and so on.\nAlthough the root CA certificate is optional, it should be placed at the end of\nthe file if it is to be added.",
       "label": "Certfile"
     },
     "common_ssl_opts_schema_depth": {
-      "desc": "Maximum number of non-self-issued intermediate certificates that can follow the peer certificate in a valid certification path.\nSo, if depth is 0 the PEER must be signed by the trusted ROOT-CA directly;<br />\nif 1, the path can be PEER, Intermediate-CA, ROOT-CA;<br />\nif 2, the path can be PEER, Intermediate-CA1, Intermediate-CA2, ROOT-CA.",
+      "desc": "Maximum number of non-self-issued intermediate certificates that can follow the peer certificate in a valid certification path.\nSo, if depth is 0 the PEER must be signed by the trusted ROOT-CA directly;<br/>\nif 1 the path can be PEER, Intermediate-CA, ROOT-CA;<br/>\nif 2 the path can be PEER, Intermediate-CA1, Intermediate-CA2, ROOT-CA.",
       "label": "CACert Depth"
     },
     "common_ssl_opts_schema_hibernate_after": {
       "desc": "Hibernate the SSL process after idling for amount of time reducing its memory footprint.",
-      "label": "Hibernate after"
+      "label": "hibernate after"
     },
     "common_ssl_opts_schema_keyfile": {
       "desc": "PEM format private key file.",
@@ -6459,15 +6556,15 @@
       "label": "Keyfile passphrase"
     },
     "common_ssl_opts_schema_reuse_sessions": {
-      "desc": "Enable TLS session reuse.</br>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
+      "desc": "Enable TLS session reuse.<br/>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
       "label": "TLS session reuse"
     },
     "common_ssl_opts_schema_secure_renegotiate": {
-      "desc": "SSL parameter renegotiation is a feature that allows a client and a server\nto renegotiate the parameters of the SSL connection on the fly.\nRFC 5746 defines a more secure way of doing this. By enabling secure renegotiation,\nyou drop support for the insecure renegotiation, prone to MitM attacks.</br>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
+      "desc": "SSL parameter renegotiation is a feature that allows a client and a server\nto renegotiate the parameters of the SSL connection on the fly.\nRFC 5746 defines a more secure way of doing this. By enabling secure renegotiation,\nyou drop support for the insecure renegotiation, prone to MitM attacks.<br/>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
       "label": "SSL renegotiate"
     },
     "common_ssl_opts_schema_user_lookup_fun": {
-      "desc": "EMQX-internal callback that is used to lookup pre-shared key (PSK) identity.</br>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
+      "desc": "EMQX-internal callback that is used to lookup pre-shared key (PSK) identity.<br/>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
       "label": "SSL PSK user lookup fun"
     },
     "common_ssl_opts_schema_verify": {
@@ -6475,7 +6572,7 @@
       "label": "Verify peer"
     },
     "common_ssl_opts_schema_versions": {
-      "desc": "All TLS/DTLS versions to be supported.<br />\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config.<br />\nIn case PSK cipher suites are intended, make sure to configure\n<code>['tlsv1.2', 'tlsv1.1']</code> here.",
+      "desc": "All TLS/DTLS versions to be supported.<br/>\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config.<br/>\nIn case PSK cipher suites are intended, make sure to configure\n<code>['tlsv1.2', 'tlsv1.1']</code> here.",
       "label": "SSL versions"
     },
     "conn_congestion_enable_alarm": {
@@ -6483,7 +6580,7 @@
       "label": "Enable/disable congestion alarm"
     },
     "conn_congestion_min_alarm_sustain_duration": {
-      "desc": "Minimal time before clearing the alarm.<br />The alarm will only be cleared when there is no pending data in the queue, and at least <code>min_alarm_sustain_duration</code> milliseconds have passed since the last time the connection was considered 'congested'.<br />This is to avoid clearing and raising the alarm again too frequently.",
+      "desc": "Minimal time before clearing the alarm.<br/>The alarm is cleared only when there's no pending data in<br/>the queue, and at least <code>min_alarm_sustain_duration</code>milliseconds passed since the last time we considered the connection 'congested'.<br/>This is to avoid clearing and raising the alarm again too often.",
       "label": "Sustain duration"
     },
     "crl_cache_capacity": {
@@ -6497,6 +6594,10 @@
     "crl_cache_refresh_interval": {
       "desc": "The period to refresh the CRLs from the servers.  This is a global setting for all URLs and listeners.",
       "label": "CRL Cache Refresh Interval"
+    },
+    "description": {
+      "desc": "Descriptive text.",
+      "label": "Description"
     },
     "fields_authorization_deny_action": {
       "desc": "The action when the authorization check rejects an operation.",
@@ -6531,7 +6632,7 @@
       "label": "Compression level"
     },
     "fields_deflate_opts_mem_level": {
-      "desc": "Specifies the size of the compression state.<br />\nLower values decrease memory usage per connection.",
+      "desc": "Specifies the size of the compression state.<br/>\nLower values decrease memory usage per connection.",
       "label": "Size of the compression state"
     },
     "fields_deflate_opts_server_context_takeover": {
@@ -6599,7 +6700,7 @@
       "label": "Idle Timeout"
     },
     "fields_mqtt_quic_listener_idle_timeout_ms": {
-      "desc": "How long a connection can go idle before it is gracefully shut down. 0 to disable timeout.",
+      "desc": "How long a connection can go idle before it is gracefully shut down. 0 to disable timeout",
       "label": "Idle timeout ms"
     },
     "fields_mqtt_quic_listener_initial_rtt_ms": {
@@ -6612,7 +6713,7 @@
     },
     "fields_mqtt_quic_listener_keep_alive_interval": {
       "desc": "How often to send PING frames to keep a connection alive. 0 means disabled.",
-      "label": "PING Keep Alive Interval"
+      "label": "Keep Alive Interval"
     },
     "fields_mqtt_quic_listener_keep_alive_interval_ms": {
       "desc": "How often to send PING frames to keep a connection alive.",
@@ -6727,7 +6828,7 @@
       "label": "Max connection rate"
     },
     "fields_tcp_opts_active_n": {
-      "desc": "Specify the {active, N} option for this Socket.<br />\nSee: https://erlang.org/doc/man/inet.html#setopts-2",
+      "desc": "Specify the {active, N} option for this Socket.<br/>\nSee: https://erlang.org/doc/man/inet.html#setopts-2",
       "label": "active_n"
     },
     "fields_tcp_opts_backlog": {
@@ -6771,7 +6872,7 @@
       "label": "TCP send buffer"
     },
     "fields_trace_payload_encode": {
-      "desc": "Determine the format of the payload format in the trace file.<br />\n`text`: Text-based protocol or plain text protocol.\n It is recommended when payload is JSON encoded.<br />\n`hex`: Binary hexadecimal encode. It is recommended when payload is a custom binary protocol.<br />\n`hidden`: payload is obfuscated as `******`",
+      "desc": "Determine the format of the payload format in the trace file.<br/>\n`text`: Text-based protocol or plain text protocol.\n It is recommended when payload is JSON encoded.<br/>\n`hex`: Binary hexadecimal encode. It is recommended when payload is a custom binary protocol.<br/>\n`hidden`: payload is obfuscated as `******`",
       "label": "Payload encode"
     },
     "fields_ws_opts_allow_origin_absence": {
@@ -6783,15 +6884,15 @@
       "label": "Check origin"
     },
     "fields_ws_opts_check_origins": {
-      "desc": "List of allowed origins.<br />See <code>check_origin_enable</code>.",
+      "desc": "List of allowed origins.<br/>See <code>check_origin_enable</code>.",
       "label": "Allowed origins"
     },
     "fields_ws_opts_compress": {
-      "desc": "If <code>true</code>, compress WebSocket messages using <code>zlib</code>.<br />\nThe configuration items under <code>deflate_opts</code> belong to the compression-related parameter configuration.",
+      "desc": "If <code>true</code>, compress WebSocket messages using <code>zlib</code>.<br/>\nThe configuration items under <code>deflate_opts</code> belong to the compression-related parameter configuration.",
       "label": "Ws compress"
     },
     "fields_ws_opts_fail_if_no_subprotocol": {
-      "desc": "If <code>true</code>, the server will return an error when\n the client does not carry the <code>Sec-WebSocket-Protocol</code> field.\n <br />Note: WeChat applet needs to disable this verification.",
+      "desc": "If <code>true</code>, the server will return an error when\n the client does not carry the <code>Sec-WebSocket-Protocol</code> field.\n <br/>Note: WeChat applet needs to disable this verification.",
       "label": "Fail if no subprotocol"
     },
     "fields_ws_opts_idle_timeout": {
@@ -6831,7 +6932,7 @@
       "label": "Enable flapping detection"
     },
     "flapping_detect_max_count": {
-      "desc": "The maximum number of disconnects allowed for a MQTT Client in `window_time`.",
+      "desc": "The maximum number of disconnects allowed for a MQTT Client in `window_time`",
       "label": "Max count"
     },
     "flapping_detect_window_time": {
@@ -6862,16 +6963,8 @@
       "desc": "In EMQX, each online client corresponds to an individual Erlang process. The configuration value establishes a mailbox size limit for these processes. If the mailbox size surpasses this limit, the client will be automatically terminated.",
       "label": "Maximum mailbox size."
     },
-    "max_conn_rate": {
-      "desc": "Maximum connection rate.<br />\nThis is used to limit the connection rate for this listener,\nonce the limit is reached, new connections will be deferred or refused",
-      "label": "Maximum Connection Rate"
-    },
-    "messages_rate": {
-      "desc": "Messages publish rate.<br />\nThis is used to limit the inbound message numbers for each client connected to this listener,\nonce the limit is reached, the restricted client will slow down and even be hung for a while.",
-      "label": "Messages Publish Rate"
-    },
     "mqtt": {
-      "desc": "Global MQTT configuration.\nThe configs here work as default values which can be overridden in <code>zone</code> configs."
+      "desc": "Global MQTT configuration.\nThe configs here work as default values which can be overridden in <code>zone</code> configs"
     },
     "mqtt_await_rel_timeout": {
       "desc": "For client to broker QoS 2 message, the time limit for the broker to wait before the `PUBREL` message is received. The wait is aborted after timed out, meaning the packet ID is freed for new `PUBLISH` requests. Receiving a stale `PUBREL` causes a warning level log. Note, the message is delivered to subscribers before entering the wait for PUBREL.",
@@ -6890,15 +6983,15 @@
       "label": "Ignore Loop Deliver"
     },
     "mqtt_keepalive_multiplier": {
-      "desc": "The Keep-Alive multiplier used by EMQX to determines client's Keep-Alive timeout. Keep-Alive timeout = Keep-Alive interval × Keep-Alive multiplier.\nThe default value 1.5 is following the MQTT 5.0 specification. This multiplier is adjustable, providing system administrators flexibility for tailoring to their specific needs. For instance, if a client's 10-second Keep-Alive interval PINGREQ gets delayed by an extra 10 seconds, changing the multiplier to 2 lets EMQX tolerate this delay.",
+      "desc": "Keep-Alive Timeout = Keep-Alive interval × Keep-Alive Multiplier.\nThe default value 1.5 is following the MQTT 5.0 specification. This multiplier is adjustable, providing system administrators flexibility for tailoring to their specific needs. For instance, if a client's 10-second Keep-Alive interval PINGREQ gets delayed by an extra 10 seconds, changing the multiplier to 2 lets EMQX tolerate this delay.",
       "label": "Keep Alive Multiplier"
     },
     "mqtt_listener_access_rules": {
-      "desc": "The access control rules for this listener.<br />See: https://github.com/emqtt/esockd#allowdeny",
+      "desc": "The access control rules for this listener.<br/>See: https://github.com/emqtt/esockd#allowdeny",
       "label": "Access rules"
     },
     "mqtt_listener_proxy_protocol": {
-      "desc": "Enable the Proxy Protocol V1/2 if the EMQX cluster is deployed behind HAProxy or Nginx.<br />\nSee: https://www.haproxy.com/blog/haproxy/proxy-protocol/",
+      "desc": "Enable the Proxy Protocol V1/2 if the EMQX cluster is deployed behind HAProxy or Nginx.<br/>\nSee: https://www.haproxy.com/blog/haproxy/proxy-protocol/",
       "label": "Proxy protocol"
     },
     "mqtt_listener_proxy_protocol_timeout": {
@@ -6946,7 +7039,7 @@
       "label": "Default Topic Priorities"
     },
     "mqtt_mqueue_priorities": {
-      "desc": "Topic priorities. Priority number [1-255].\nThere's no priority table by default, hence all messages are treated equal.\n\nNOTE: Comma and equal signs are not allowed for priority topic names.\nNOTE: Messages for topics not in the priority table are treated as either highest or lowest priority depending on the configured value for <code>mqtt.mqueue_default_priority</code>.\n\nExamples:\nTo configure <code>\"topic/1\" > \"topic/2\"</code>:\n<code>mqueue_priorities: {\"topic/1\": 10, \"topic/2\": 8}</code>",
+      "desc": "Topic priorities. Priority number [1-255]\nThere's no priority table by default, hence all messages are treated equal.\n\n**NOTE**: Comma and equal signs are not allowed for priority topic names.\n**NOTE**: Messages for topics not in the priority table are treated as either highest or lowest priority depending on the configured value for <code>mqtt.mqueue_default_priority</code>.\n\n**Examples**:\nTo configure <code>\"topic/1\" > \"topic/2\"</code>:\n<code>mqueue_priorities: {\"topic/1\": 10, \"topic/2\": 8}</code>",
       "label": "Topic Priorities"
     },
     "mqtt_mqueue_store_qos0": {
@@ -7062,11 +7155,11 @@
       "label": "RAM cache"
     },
     "server_ssl_opts_schema_client_renegotiation": {
-      "desc": "In protocols that support client-initiated renegotiation,\nthe cost of resources of such an operation is higher for the server than the client.\nThis can act as a vector for denial of service attacks.\nThe SSL application already takes measures to counter-act such attempts,\nbut client-initiated renegotiation can be strictly disabled by setting this option to false.\nThe default value is true. Note that disabling renegotiation can result in\nlong-lived connections becoming unusable due to limits on\nthe number of messages the underlying cipher suite can encipher.</br>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
+      "desc": "In protocols that support client-initiated renegotiation,\nthe cost of resources of such an operation is higher for the server than the client.\nThis can act as a vector for denial of service attacks.\nThe SSL application already takes measures to counter-act such attempts,\nbut client-initiated renegotiation can be strictly disabled by setting this option to false.\nThe default value is true. Note that disabling renegotiation can result in\nlong-lived connections becoming unusable due to limits on\nthe number of messages the underlying cipher suite can encipher.<br/>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
       "label": "SSL client renegotiation"
     },
     "server_ssl_opts_schema_dhfile": {
-      "desc": "Path to a file containing PEM-encoded Diffie-Hellman parameters\nto be used by the server if a cipher suite using Diffie-Hellman\nkey exchange is negotiated. If not specified, default parameters\nare used.<br />\nNOTE: The <code>dhfile</code> option is not supported by TLS 1.3.",
+      "desc": "Path to a file containing PEM-encoded Diffie-Hellman parameters\nto be used by the server if a cipher suite using Diffie-Hellman\nkey exchange is negotiated. If not specified, default parameters\nare used.<br/>\nNOTE: The <code>dhfile</code> option is not supported by TLS 1.3.",
       "label": "SSL dhfile"
     },
     "server_ssl_opts_schema_enable_crl_check": {
@@ -7082,7 +7175,7 @@
       "label": "SSL fail if no peer cert"
     },
     "server_ssl_opts_schema_gc_after_handshake": {
-      "desc": "Memory usage tuning. If enabled, garbage collection will be performed immediately after the TLS/SSL handshake is completed.",
+      "desc": "Memory usage tuning. If enabled, will immediately perform a garbage collection after the TLS/SSL handshake.",
       "label": "Perform GC after handshake"
     },
     "server_ssl_opts_schema_handshake_timeout": {
@@ -7090,7 +7183,7 @@
       "label": "Handshake timeout"
     },
     "server_ssl_opts_schema_honor_cipher_order": {
-      "desc": "An important security setting that enforces the cipher order based on the server's specified order, rather than the client's order. This ensures that the security ordering set by the server administrator, which is usually more properly configured, is followed.",
+      "desc": "An important security setting. It forces the cipher to be set based\n on the server-specified order instead of the client-specified order,\n hence enforcing the (usually more properly configured) security\n ordering of the server administrator.",
       "label": "SSL honor cipher order"
     },
     "server_ssl_opts_schema_ocsp_issuer_pem": {
@@ -7110,10 +7203,10 @@
       "label": "OCSP Responder URL"
     },
     "shared_subscription_group_strategy": {
-      "desc": "Per group dispatch strategy for shared subscription.\nThis configuration is a map from shared subscription group name to the strategy\nname. The group name should be of format `[A-Za-z0-9]`. i.e. no\nspecial characters are allowed."
+      "desc": "Per group dispatch strategy for shared subscription.\nThis config is a map from shared subscription group name to the strategy\nname. The group name should be of format `[A-Za-z0-9]`. i.e. no\nspecial characters are allowed."
     },
     "shared_subscription_strategy_enum": {
-      "desc": "Dispatch strategy for shared subscription.\n- `random`: Dispatch the message to a random selected subscriber.\n- `round_robin`: Select the subscribers in a round-robin manner.\n- `round_robin_per_group`: Select the subscribers in round-robin fashion within each shared subscriber group\n- `sticky`: Always use the last selected subscriber to dispatch,\nuntil the subscriber disconnects.\n- `hash`: Select the subscribers by the hash of `clientIds`.\n- `local`: Send to a random local subscriber. If local\nsubscriber was not found, send to a random subscriber cluster-wide."
+      "desc": "Dispatch strategy for shared subscription.\n- `random`: dispatch the message to a random selected subscriber\n- `round_robin`: select the subscribers in a round-robin manner\n- `round_robin_per_group`: select the subscribers in round-robin fashion within each shared subscriber group\n- `sticky`: always use the last selected subscriber to dispatch,\nuntil the subscriber disconnects.\n- `hash`: select the subscribers by the hash of `clientIds`\n- `local`: send to a random local subscriber. If local\nsubscriber was not found, send to a random subscriber cluster-wide"
     },
     "stats_enable": {
       "desc": "Enable/disable statistic data collection.",
@@ -7181,7 +7274,7 @@
     },
     "sysmon_top_db_port": {
       "desc": "Port of the PostgreSQL database that collects the data points.",
-      "label": "Database Port"
+      "label": "DB Port"
     },
     "sysmon_top_db_username": {
       "desc": "Username of the PostgreSQL database",
@@ -7193,7 +7286,7 @@
     },
     "sysmon_top_num_items": {
       "desc": "The number of top processes per monitoring group",
-      "label": "Top process number"
+      "label": "Top num items"
     },
     "sysmon_top_sample_interval": {
       "desc": "Specifies how often process top should be collected",
@@ -7425,7 +7518,7 @@
   },
   "emqx_topic_metrics_api": {
     "action": {
-      "desc": "Action. Only support reset.",
+      "desc": "Action. Only support reset",
       "label": "Action"
     },
     "create_time": {
@@ -7545,7 +7638,7 @@
       "label": "Raw topic string"
     },
     "topic_in_path": {
-      "desc": "The topic string. Note: The topic string must be URL encoded to avoid conflicts between topic delimiters and URL path delimiters (\"/\").",
+      "desc": "Topic string. Notice: Topic string in url path must be encoded",
       "label": "Topic string"
     },
     "topic_metrics_api_response400": {
