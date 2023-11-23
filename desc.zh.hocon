@@ -994,7 +994,6 @@
       "desc": "启用 Azure Event Hub 桥接连接的 TCP keepalive 功能。\n该值由三个以逗号分隔的数字组成，格式为 'Idle,Interval,Probes'\n - Idle: 连接在服务器开始发送 keepalive 探测之前必须处于空闲状态的秒数（Linux 默认值为 7200 秒）。\n - Interval: TCP keepalive 探测之间的秒数（Linux 默认值为 75 秒）。\n - Probes: 在放弃并终止连接之前，从另一端未获得响应时要发送的 TCP keepalive 探测的最大数量（Linux 默认值为 9 次）。\n例如 \"240,30,5\" 表示：在连接空闲 240 秒后发送 TCP 保活探测，每隔 30 秒发送一次，直到收到响应，如果连续丢失 5 个响应，连接应该被关闭。\n默认值： 'none'",
       "label": "TCP keepalive 选项"
     }
-  },
   "ssl_client_opts": {
     "desc": "用于 Azure Event Hub 客户端的 TLS/SSL 选项。",
     "label": "TLS/SSL 选项"
@@ -1002,6 +1001,7 @@
   "sync_query_timeout": {
     "desc": "此参数定义同步查询的超时限制。仅当桥接查询模式配置为 'sync' 时适用。",
     "label": "同步查询超时"
+  }
   },
   "emqx_bridge_cassandra": {
     "config_enable": {
