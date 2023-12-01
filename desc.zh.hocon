@@ -923,7 +923,7 @@
       "label": "动作配置"
     },
     "auth_sasl_password": {
-      "desc": "用于连接 Azure Event Hub 的连接字符串。应为命名空间共享访问策略的 \"连接字符串-主键\"。",
+      "desc": "用于连接 Azure Event Hubs 的连接字符串。应为命名空间共享访问策略的 \"连接字符串-主键\"。",
       "label": "连接字符串"
     },
     "auth_username_password": {
@@ -955,32 +955,32 @@
       "label": "消息时间戳"
     },
     "kafka_producer": {
-      "desc": "Azure Event Hub 生产者配置。",
-      "label": "Azure Event Hub 生产者"
+      "desc": "Azure Event Hubs 生产者配置。",
+      "label": "Azure Event Hubs 生产者"
     },
     "kafka_topic": {
       "desc": "----",
-      "label": "Event Hub 名称"
+      "label": "Event Hubs 名称"
     },
     "min_metadata_refresh_interval": {
-      "desc": "客户端在刷新 Azure Event Hub Kafka 代理和主题元数据之前必须等待的最小时间间隔。设置太小的值可能会给 Azure Event Hub 增加额外的负载。",
+      "desc": "客户端在刷新 Azure Event Hubs Kafka 代理和主题元数据之前必须等待的最小时间间隔。设置太小的值可能会给 Azure Event Hubs 增加额外的负载。",
       "label": "元数据刷新的最小时间间隔"
     },
     "producer_buffer": {
-      "desc": "配置生产者消息缓冲区。\n\n告诉 Azure Event Hub 生产者，在 EMQX 需要发送的消息多于 Azure Event Hub 能够处理的消息时，或者 Azure Event Hub 宕机时，如何缓冲消息。",
+      "desc": "配置生产者消息缓冲区。\n\n告诉 Azure Event Hubs 生产者，在 EMQX 需要发送的消息多于 Azure Event Hubs 能够处理的消息时，或者 Azure Event Hubs 宕机时，如何缓冲消息。",
       "label": "消息缓冲区"
     },
     "producer_kafka_ext_headers": {
-      "desc": "请提供更多的 Azure Event Hub 标头键值对<br/>这里的键值对将与<code>kafka_headers</code>字段的值合并，然后发送到 Azure Event Hub。",
-      "label": "额外的 Azure Event Hub 标头"
+      "desc": "请提供更多的 Azure Event Hubs 标头键值对<br/>这里的键值对将与<code>kafka_headers</code>字段的值合并，然后发送到 Azure Event Hubs。",
+      "label": "额外的 Azure Event Hubs 标头"
     },
     "producer_kafka_opts": {
-      "desc": "Azure Event Hub 生产者配置",
-      "label": "Azure Event Hub 生产者"
+      "desc": "Azure Event Hubs 生产者配置",
+      "label": "Azure Event Hubs 生产者"
     },
     "producer_opts": {
-      "desc": "本地的 MQTT 数据源和 Azure Event Hub 的桥接配置。",
-      "label": "MQTT 桥接至 Azure Event Hub"
+      "desc": "本地的 MQTT 数据源和 Azure Event Hubs 的桥接配置。",
+      "label": "MQTT 桥接至 Azure Event Hubs"
     },
     "socket_receive_buffer": {
       "desc": "对套接字接收缓冲区进行微调。默认值已经优化以提高吞吐量。",
@@ -991,11 +991,11 @@
       "label": "Socket Send Buffer Size"
     },
     "socket_tcp_keepalive": {
-      "desc": "启用 Azure Event Hub 桥接连接的 TCP keepalive 功能。\n该值由三个以逗号分隔的数字组成，格式为 'Idle,Interval,Probes'\n - Idle: 连接在服务器开始发送 keepalive 探测之前必须处于空闲状态的秒数（Linux 默认值为 7200 秒）。\n - Interval: TCP keepalive 探测之间的秒数（Linux 默认值为 75 秒）。\n - Probes: 在放弃并终止连接之前，从另一端未获得响应时要发送的 TCP keepalive 探测的最大数量（Linux 默认值为 9 次）。\n例如 \"240,30,5\" 表示：在连接空闲 240 秒后发送 TCP 保活探测，每隔 30 秒发送一次，直到收到响应，如果连续丢失 5 个响应，连接应该被关闭。\n默认值： 'none'",
+      "desc": "启用 Azure Event Hubs 桥接连接的 TCP keepalive 功能。\n该值由三个以逗号分隔的数字组成，格式为 'Idle,Interval,Probes'\n - Idle: 连接在服务器开始发送 keepalive 探测之前必须处于空闲状态的秒数（Linux 默认值为 7200 秒）。\n - Interval: TCP keepalive 探测之间的秒数（Linux 默认值为 75 秒）。\n - Probes: 在放弃并终止连接之前，从另一端未获得响应时要发送的 TCP keepalive 探测的最大数量（Linux 默认值为 9 次）。\n例如 \"240,30,5\" 表示：在连接空闲 240 秒后发送 TCP 保活探测，每隔 30 秒发送一次，直到收到响应，如果连续丢失 5 个响应，连接应该被关闭。\n默认值： 'none'",
       "label": "TCP keepalive 选项"
     }
   "ssl_client_opts": {
-    "desc": "用于 Azure Event Hub 客户端的 TLS/SSL 选项。",
+    "desc": "用于 Azure Event Hubs 客户端的 TLS/SSL 选项。",
     "label": "TLS/SSL 选项"
   },
   "sync_query_timeout": {
