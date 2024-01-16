@@ -878,7 +878,7 @@
       "label": "Auto Subscribe"
     },
     "nl": {
-      "desc": "Default value 0.\nMQTT v3.1.1ï¼ if you subscribe to the topic published by yourself, you will receive all messages that you published.\nMQTT v5: if you set this option as 1 when subscribing, the server will not forward the message you published to you.",
+      "desc": "Default value 0.\nMQTT v3.1.1: you subscribe to the topic published by yourself, you will receive all messages that you published.\nMQTT v5: if you set this option as 1 when subscribing, the server will not forward the message you published to you.",
       "label": "No Local"
     },
     "qos": {
