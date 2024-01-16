@@ -9,6 +9,40 @@ This repository contains multi-language translations for EMQX document generatio
 
 - EMQX dashboard current builds their own dictionary, but will consider taking this repo as the source of truth in the future.
 
+## Workflow
+
+Assuming the content of `desc.en.hocon` is the most complete, two operations need to be performed:
+
+1. Find the newly added fields in `desc.en.hocon`:
+
+  ```bash
+  ./scripts/tools.py diff > diff.json
+  ```
+
+2. Find the content to be translated. Some proper nouns that do not need to be translated are recorded in the `./scripts/no-translate-dict.txt` file:
+
+  ```bash
+  ./scripts/tools.py UT > diff.json
+  ```
+
+3. Manually modify the `diff.json` file and translate the file into English.
+
+4. Merge the translated fields with `desc.zh.hocon` and output to `desc.zh.hocon.new.json`:
+
+  ```bash
+  ./scripts/tools.py merge desc.zh.hocon diff.json > desc.zh.hocon.new.json
+  ```
+
+5. After checking for errors, copy the contents of `desc.zh.hocon.new.json` into `desc.zh.hocon`.
+
+When necessary, also check whether there are untranslated fields in `desc.zh.hocon`:
+
+  ```bash
+  ./scripts/tools.py UT > diff.json
+  ```
+
+Manually translate the fields in `diff.json` and merge the translated fields with `desc.zh.hocon` according to step 4.
+
 ## Why named hocon while they are JSON
 
 !!! DO NOT ATTEMPT to change naming convention of the files for below reasons:
