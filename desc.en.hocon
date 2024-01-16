@@ -1,4 +1,49 @@
 {
+  "emqx_audit_api": {
+    "audit_get": {
+      "desc": "Get audit logs based on filter API, empowers users to efficiently\naccess the desired audit trail data and facilitates auditing, compliance,\ntroubleshooting, and security analysis",
+      "label": "List audit logs"
+    },
+    "filter_from": {
+      "desc": "Filter logs based on source type, valid values include:\n`dashboard`: Dashboard request logs, requiring the use of a jwt_token.\n`rest_api`: API KEY request logs.\n`cli`: The emqx command line logs.\n`erlang_console`: The emqx remote_console run function logs."
+    },
+    "filter_gte_created_at": {
+      "desc": "Filter logs with a creation time greater than or equal to the given timestamp, rfc3339 or timestamp(millisecond)"
+    },
+    "filter_gte_duration_ms": {
+      "desc": "Filter logs with a duration greater than or equal to given microseconds."
+    },
+    "filter_http_method": {
+      "desc": "Filter The HTTP API Request with method when logs are generated from dashboard and REST API."
+    },
+    "filter_http_status_code": {
+      "desc": "Filter The HTTP API with response code when logs are generated from dashboard and REST API."
+    },
+    "filter_lte_created_at": {
+      "desc": "Filter logs with a creation time less than or equal to the given timestamp, rfc3339 or timestamp(millisecond)"
+    },
+    "filter_lte_duration_ms": {
+      "desc": "Filter logs with a duration less than or equal to given microseconds."
+    },
+    "filter_node": {
+      "desc": "Filter logs based on the node name to which the logs are created."
+    },
+    "filter_operation_id": {
+      "desc": "Filter log with swagger's operation_id when logs are generated from dashboard and REST API."
+    },
+    "filter_operation_result": {
+      "desc": "Filter logs with operation result."
+    },
+    "filter_operation_type": {
+      "desc": "Filter logs with operation type."
+    },
+    "filter_source": {
+      "desc": "Filter logs based on source, Possible values are:\nThe login username when logs are generated from the dashboard.\nThe API Keys when logs are generated from the REST API.\nempty string when logs are generated from CLI, Erlang console."
+    },
+    "filter_source_ip": {
+      "desc": "Filter logs based on source ip when logs are generated from dashboard and REST API."
+    }
+  },
   "emqx_authn_api": {
     "authentication_get": {
       "desc": "List authenticators for global authentication.",
@@ -232,22 +277,28 @@
       "label": "Verify Claims"
     }
   },
-  "emqx_authn_ldap_bind_schema": {
-    "ldap_bind": {
-      "desc": "Configuration of authenticator using the LDAP bind operation as the authentication method."
-    },
-    "query_timeout": {
-      "desc": "Timeout for the LDAP query.",
-      "label": "Query Timeout"
-    }
-  },
   "emqx_authn_ldap_schema": {
+    "bind_method": {
+      "desc": "Authenticate by the LDAP bind operation."
+    },
+    "hash_method": {
+      "desc": "Authenticate by comparing the hashed password which was provided by the `password attribute`."
+    },
     "is_superuser_attribute": {
       "desc": "Indicates which attribute is used to represent whether the user is a superuser.",
       "label": "IsSuperuser Attribute"
     },
     "ldap": {
       "desc": "Configuration of authenticator using LDAP as authentication data source."
+    },
+    "ldap_deprecated": {
+      "desc": "This is a deprecated form, you should avoid using it."
+    },
+    "method": {
+      "desc": "Authentication method."
+    },
+    "method_type": {
+      "desc": "Authentication method type."
     },
     "password_attribute": {
       "desc": "Indicates which attribute is used to represent the user's password.",
@@ -827,7 +878,7 @@
       "label": "Auto Subscribe"
     },
     "nl": {
-      "desc": "Default value 0.\nMQTT v3.1.1： if you subscribe to the topic published by yourself, you will receive all messages that you published.\nMQTT v5: if you set this option as 1 when subscribing, the server will not forward the message you published to you.",
+      "desc": "Default value 0.\nMQTT v3.1.1: you subscribe to the topic published by yourself, you will receive all messages that you published.\nMQTT v5: if you set this option as 1 when subscribing, the server will not forward the message you published to you.",
       "label": "No Local"
     },
     "qos": {
@@ -1187,6 +1238,208 @@
       "label": "Clickhouse Timeout"
     }
   },
+  "emqx_bridge_confluent_producer": {
+    "actions": {
+      "desc": "The configuration for an action.",
+      "label": "Action Config"
+    },
+    "auth_sasl_mechanism": {
+      "desc": "SASL authentication mechanism.",
+      "label": "Mechanism"
+    },
+    "auth_sasl_password": {
+      "desc": "Confluent Secret.",
+      "label": "Secret"
+    },
+    "auth_sasl_username": {
+      "desc": "Confluent Key.",
+      "label": "Key"
+    },
+    "auth_username_password": {
+      "desc": "Username/password based authentication.",
+      "label": "Username/password Auth"
+    },
+    "authentication": {
+      "desc": "Authentication configs.",
+      "label": "Authentication"
+    },
+    "bootstrap_hosts": {
+      "desc": "A comma separated list of Confluent Kafka <code>host[:port]</code> namespace endpoints to bootstrap the client.  Default port number is 9092.",
+      "label": "Bootstrap Server"
+    },
+    "bridge_v2_type": {
+      "desc": "The type of the action.",
+      "label": "Action Type"
+    },
+    "buffer_memory_overload_protection": {
+      "desc": "Applicable when buffer mode is set to <code>memory</code>\nEMQX will drop old buffered messages under high memory pressure. The high memory threshold is defined in config <code>sysmon.os.sysmem_high_watermark</code>. NOTE: This config only works on Linux.",
+      "label": "Memory Overload Protection"
+    },
+    "buffer_mode": {
+      "desc": "Message buffer mode.\n\n<code>memory</code>: Buffer all messages in memory. The messages will be lost in case of EMQX node restart\n<code>disk</code>: Buffer all messages on disk. The messages on disk are able to survive EMQX node restart.\n<code>hybrid</code>: Buffer message in memory first, when up to certain limit (see <code>segment_bytes</code> config for more information), then start offloading messages to disk, Like <code>memory</code> mode, the messages will be lost in case of EMQX node restart.",
+      "label": "Buffer Mode"
+    },
+    "buffer_per_partition_limit": {
+      "desc": "Number of bytes allowed to buffer for each Confluent partition. When this limit is exceeded, old messages will be dropped in a trade for credits for new messages to be buffered.",
+      "label": "Per-partition Buffer Limit"
+    },
+    "buffer_segment_bytes": {
+      "desc": "Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.\nThis value is to specify the size of each on-disk buffer file.",
+      "label": "Segment File Bytes"
+    },
+    "compression": {
+      "desc": "Compression method.",
+      "label": "Compression"
+    },
+    "config_enable": {
+      "desc": "Enable (true) or disable (false) this action.",
+      "label": "Enable or Disable"
+    },
+    "connect_timeout": {
+      "desc": "Maximum wait time for TCP connection establishment (including authentication time if enabled).",
+      "label": "Connect Timeout"
+    },
+    "connector_type": {
+      "desc": "The type of the connector.",
+      "label": "Connector Type"
+    },
+    "desc_config": {
+      "desc": "Configuration for a Confluent action.",
+      "label": "Confluent Action Configuration"
+    },
+    "desc_name": {
+      "desc": "Action name, used as a human-readable description of the action.",
+      "label": "Action Name"
+    },
+    "desc_type": {
+      "desc": "The Action Type",
+      "label": "Action Type"
+    },
+    "kafka_header_value_encode_mode": {
+      "desc": "Confluent headers value encode mode<br/>\n - NONE: only add binary values to Confluent headers;<br/>\n - JSON: only add JSON values to Confluent headers,\nand encode it to JSON strings before sending.",
+      "label": "Confluent headers value encode mode"
+    },
+    "kafka_headers": {
+      "desc": "Please provide a placeholder to be used as Confluent Headers<br/>\ne.g. <code>${pub_props}</code><br/>\nNotice that the value of the placeholder must either be an object:\n<code>{\"foo\": \"bar\"}</code>\nor an array of key-value pairs:\n<code>[{\"key\": \"foo\", \"value\": \"bar\"}]</code>",
+      "label": "Confluent Headers"
+    },
+    "kafka_message": {
+      "desc": "Template to render a Confluent message.",
+      "label": "Confluent Message Template"
+    },
+    "kafka_message_key": {
+      "desc": "Template to render Confluent message key. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Confluent's <code>NULL</code> (but not empty string) is used.",
+      "label": "Message Key"
+    },
+    "kafka_message_timestamp": {
+      "desc": "Which timestamp to use. The timestamp is expected to be a millisecond precision Unix epoch which can be in string format, e.g. <code>1661326462115</code> or <code>'1661326462115'</code>. When the desired data field for this template is not found, or if the found data is not a valid integer, the current system timestamp will be used.",
+      "label": "Message Timestamp"
+    },
+    "kafka_message_value": {
+      "desc": "Template to render Confluent message value. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Confluent's <code>NULL</code> (but not empty string) is used.",
+      "label": "Message Value"
+    },
+    "kafka_producer": {
+      "desc": "Confluent Producer configuration.",
+      "label": "Confluent Producer"
+    },
+    "kafka_topic": {
+      "desc": "Event Hub name",
+      "label": "Event Hub Name"
+    },
+    "max_batch_bytes": {
+      "desc": "Maximum bytes to collect in a Confluent message batch. Most of the Kafka brokers default to a limit of 1 MB batch size. EMQX's default value is less than 1 MB in order to compensate Kafka message encoding overheads (especially when each individual message is very small). When a single message is over the limit, it is still sent (as a single element batch).",
+      "label": "Max Batch Bytes"
+    },
+    "max_inflight": {
+      "desc": "Maximum number of batches allowed for Confluent producer (per-partition) to send before receiving acknowledgement from Confluent. Greater value typically means better throughput. However, there can be a risk of message reordering when this value is greater than 1.",
+      "label": "Max Inflight"
+    },
+    "metadata_request_timeout": {
+      "desc": "Maximum wait time when fetching metadata from Confluent.",
+      "label": "Metadata Request Timeout"
+    },
+    "min_metadata_refresh_interval": {
+      "desc": "Minimum time interval the client has to wait before refreshing Confluent Kafka broker and topic metadata. Setting too small value may add extra load on Confluent.",
+      "label": "Min Metadata Refresh Interval"
+    },
+    "mqtt_topic": {
+      "desc": "MQTT topic or topic filter as data source (action input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Confluent.",
+      "label": "Source MQTT Topic"
+    },
+    "partition_count_refresh_interval": {
+      "desc": "The time interval for Confluent producer to discover increased number of partitions.\nAfter the number of partitions is increased in Confluent, EMQX will start taking the\ndiscovered partitions into account when dispatching messages per <code>partition_strategy</code>.",
+      "label": "Partition Count Refresh Interval"
+    },
+    "partition_strategy": {
+      "desc": "Partition strategy is to tell the producer how to dispatch messages to Confluent partitions.\n\n<code>random</code>: Randomly pick a partition for each message\n<code>key_dispatch</code>: Hash Confluent message key to a partition number",
+      "label": "Partition Strategy"
+    },
+    "producer_buffer": {
+      "desc": "Configure producer message buffer.\n\nTell Confluent producer how to buffer messages when EMQX has more messages to send than Confluent can keep up, or when Confluent is down.",
+      "label": "Message Buffer"
+    },
+    "producer_kafka_ext_header_key": {
+      "desc": "Key of the Confluent header. Placeholders in format of ${var} are supported.",
+      "label": "Confluent extra header key."
+    },
+    "producer_kafka_ext_header_value": {
+      "desc": "Value of the Confluent header. Placeholders in format of ${var} are supported.",
+      "label": "Value"
+    },
+    "producer_kafka_ext_headers": {
+      "desc": "Please provide more key-value pairs for Confluent headers<br/>\nThe key-value pairs here will be combined with the\nvalue of <code>kafka_headers</code> field before sending to Confluent.",
+      "label": "Extra Confluent headers"
+    },
+    "producer_kafka_opts": {
+      "desc": "Confluent producer configs.",
+      "label": "Confluent Producer"
+    },
+    "producer_opts": {
+      "desc": "Local MQTT data source and Confluent bridge configs.",
+      "label": "MQTT to Confluent"
+    },
+    "query_mode": {
+      "desc": "Query mode. Optional 'sync/async', default 'async'.",
+      "label": "Query mode"
+    },
+    "required_acks": {
+      "desc": "Required acknowledgements for Confluent partition leader to wait for its followers before it sends back the acknowledgement to EMQX Confluent producer\n\n<code>all_isr</code>: Require all in-sync replicas to acknowledge.\n<code>leader_only</code>: Require only the partition-leader's acknowledgement.",
+      "label": "Required Acks"
+    },
+    "server_name_indication": {
+      "desc": "Server Name Indication (SNI) setting for TLS handshake.<br/>\n- <code>auto</code>: The client will use <code>\"servicebus.windows.net\"</code> as SNI.<br/>\n- <code>disable</code>: If you wish to prevent the client from sending the SNI.<br/>\n- Other string values it will be sent as-is.",
+      "label": "SNI"
+    },
+    "socket_nodelay": {
+      "desc": "When set to 'true', TCP buffer is sent as soon as possible. Otherwise, the OS kernel may buffer small TCP packets for a while (40 ms by default).",
+      "label": "No Delay"
+    },
+    "socket_opts": {
+      "desc": "Extra socket options.",
+      "label": "Socket Options"
+    },
+    "socket_receive_buffer": {
+      "desc": "Fine tune the socket receive buffer. The default value is tuned for high throughput.",
+      "label": "Socket Receive Buffer Size"
+    },
+    "socket_send_buffer": {
+      "desc": "Fine tune the socket send buffer. The default value is tuned for high throughput.",
+      "label": "Socket Send Buffer Size"
+    },
+    "socket_tcp_keepalive": {
+      "desc": "Enable TCP keepalive for Confluent bridge connections.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
+      "label": "TCP keepalive options"
+    },
+    "ssl_client_opts": {
+      "desc": "TLS/SSL options for Confluent client.",
+      "label": "TLS/SSL options"
+    },
+    "sync_query_timeout": {
+      "desc": "This parameter defines the timeout limit for synchronous queries. It applies only when the action query mode is configured to 'sync'.",
+      "label": "Synchronous Query Timeout"
+    }
+  },
   "emqx_bridge_dynamo": {
     "config_enable": {
       "desc": "Enable or disable this bridge",
@@ -1335,6 +1588,20 @@
     "service_account_json": {
       "desc": "JSON containing the GCP Service Account credentials to be used with PubSub.\nWhen a GCP Service Account is created (as described in https://developers.google.com/identity/protocols/oauth2/service-account#creatinganaccount), you have the option of downloading the credentials in JSON form.  That's the file needed.",
       "label": "GCP Service Account Credentials"
+    }
+  },
+  "emqx_bridge_gcp_pubsub_producer_schema": {
+    "action_parameters": {
+      "desc": "Action specific configs.",
+      "label": "Action"
+    },
+    "config_connector": {
+      "desc": "Configuration for a GCP PubSub Producer Client.",
+      "label": "GCP PubSub Producer Client Configuration"
+    },
+    "producer_action": {
+      "desc": "Action configs.",
+      "label": "Action"
     }
   },
   "emqx_bridge_greptimedb": {
@@ -2004,6 +2271,10 @@
     }
   },
   "emqx_bridge_mongodb": {
+    "action_parameters": {
+      "desc": "Additional parameters specific to this action type",
+      "label": "Action Parameters"
+    },
     "batch_size": {
       "desc": "There is no batching support for MongoDB at the moment, so this config field has no effect. Internally the value is overridden to 1.",
       "label": "Batch Size"
@@ -2028,6 +2299,14 @@
       "desc": "Enable or disable this MongoDB Bridge",
       "label": "Enable or disable"
     },
+    "mongodb_action": {
+      "desc": "Action to interact with a MongoDB connector",
+      "label": "MongoDB Action"
+    },
+    "mongodb_parameters": {
+      "desc": "Set of parameters specific for the given type of this MongoDB connector, `mongo_type` can be one of `single` (Standalone), `sharded` (Sharded) or `rs` (Replica Set).",
+      "label": "MongoDB Type Specific Parameters"
+    },
     "mongodb_rs_conf": {
       "desc": "MongoDB (Replica Set) configuration",
       "label": "MongoDB (Replica Set) Configuration"
@@ -2039,6 +2318,10 @@
     "mongodb_single_conf": {
       "desc": "MongoDB (Standalone) configuration",
       "label": "MongoDB (Standalone) Configuration"
+    },
+    "mqtt_topic": {
+      "desc": "MQTT topic or topic filter as data source (bridge input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in MongoDB.",
+      "label": "Source MQTT Topic"
     },
     "payload_template": {
       "desc": "The template for formatting the outgoing messages.  If undefined, rule engine will use JSON format to serialize all visible inputs, such as clientid, topic, payload etc.",
@@ -2170,6 +2453,10 @@
     }
   },
   "emqx_bridge_mysql": {
+    "action_parameters": {
+      "desc": "Additional parameters specific to this action type",
+      "label": "Action Parameters"
+    },
     "config_enable": {
       "desc": "Enable or disable this bridge",
       "label": "Enable Or Disable Bridge"
@@ -2189,6 +2476,10 @@
     "local_topic": {
       "desc": "The MQTT topic filter to be forwarded to MySQL. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
+    },
+    "mysql_action": {
+      "desc": "Action to interact with a MySQL connector",
+      "label": "MySQL Action"
     },
     "sql_template": {
       "desc": "SQL Template",
@@ -2266,6 +2557,10 @@
     }
   },
   "emqx_bridge_pgsql": {
+    "action_parameters": {
+      "desc": "Configuration Parameters Specific to the PostgreSQL Action",
+      "label": "Action Parameters"
+    },
     "config_enable": {
       "desc": "Enable or disable this bridge",
       "label": "Enable Or Disable Bridge"
@@ -2285,6 +2580,10 @@
     "local_topic": {
       "desc": "The MQTT topic filter to be forwarded to PostgreSQL. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
+    },
+    "pgsql_action": {
+      "desc": "Configuration for PostgreSQL Action",
+      "label": "PostgreSQL Action Configuration"
     },
     "sql_template": {
       "desc": "SQL Template",
@@ -2510,9 +2809,17 @@
       "desc": "Enable or disable this bridge",
       "label": "Enable Or Disable Bridge"
     },
+    "desc_action_parameters": {
+      "desc": "The parameters of the action.",
+      "label": "Action Parameters"
+    },
     "desc_config": {
       "desc": "Configuration for a Redis bridge.",
       "label": "Redis Bridge Configuration"
+    },
+    "desc_local_topic": {
+      "desc": "The MQTT topic filter to be forwarded to Redis. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "label": "Local Topic"
     },
     "desc_name": {
       "desc": "Bridge name, used as a human-readable description of the bridge.",
@@ -2522,9 +2829,31 @@
       "desc": "The Bridge Type",
       "label": "Bridge Type"
     },
-    "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to Redis. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
-      "label": "Local Topic"
+    "redis_type": {
+      "desc": "Single mode. Must be set to 'single' when Redis server is running in single mode.\nSentinel mode. Must be set to 'sentinel' when Redis server is running in sentinel mode.\nCluster mode. Must be set to 'cluster' when Redis server is running in clustered mode.",
+      "label": "Redis Type"
+    }
+  },
+  "emqx_bridge_redis_schema": {
+    "batch_size": {
+      "desc": "This parameter defines the upper limit of the batch count.\nSetting this value to 1 effectively disables batching, as it indicates that only one item will be processed per batch.\nNote on Redis Cluster Mode:\nIn the context of Redis Cluster Mode, it is important to note that batching is not supported.\nConsequently, the batch_size is always set to 1,\nreflecting the mode inherent limitation in handling batch operations.",
+      "label": "Batch Size"
+    },
+    "batch_time": {
+      "desc": "Maximum waiting interval when accumulating a batch at a low message rates for more efficient resource usage.",
+      "label": "Max batch wait time, disable when in Redis Cluster Mode."
+    },
+    "producer_action": {
+      "desc": "The parameters of the action.",
+      "label": "Action Parameters"
+    },
+    "redis_action": {
+      "desc": "Action to interact with a Redis connector.",
+      "label": "Redis Action"
+    },
+    "redis_parameters": {
+      "desc": "Set of parameters specific for the given type of this Redis connector, `redis_type` can be one of `single`, `cluster` or `sentinel`.",
+      "label": "Redis Type Specific Parameters"
     }
   },
   "emqx_bridge_rocketmq": {
@@ -2725,6 +3054,96 @@
       "label": "Server Host"
     }
   },
+  "emqx_bridge_syskeeper": {
+    "config_enable": {
+      "desc": "Enable or disable this bridge",
+      "label": "Enable Or Disable Bridge"
+    },
+    "desc_config": {
+      "desc": "Configuration for a Syskeeper bridge",
+      "label": "Syskeeper Bridge Configuration"
+    },
+    "desc_name": {
+      "desc": "Bridge name.",
+      "label": "Bridge Name"
+    },
+    "desc_type": {
+      "desc": "The Bridge Type",
+      "label": "Bridge Type"
+    },
+    "mqtt_topic": {
+      "desc": "MQTT topic or topic filter as data source (bridge input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Syskeeper.",
+      "label": "Source MQTT Topic"
+    },
+    "parameters": {
+      "desc": "Syskeeper data bridge parameters",
+      "label": "Parameters"
+    },
+    "target_qos": {
+      "desc": "The QoS for the forwarded message, -1 is for the original topic",
+      "label": "Target QoS"
+    },
+    "target_topic": {
+      "desc": "The topic for the forwarded message",
+      "label": "Target Topic"
+    },
+    "template": {
+      "desc": "Template",
+      "label": "Template"
+    }
+  },
+  "emqx_bridge_syskeeper_connector": {
+    "ack_mode": {
+      "desc": "Specify whether the proxy server should reply with an acknowledgement for the message forwarding, can be:<br>- need_ack <br>- no_ack <br>",
+      "label": "Acknowledgement Mode"
+    },
+    "ack_timeout": {
+      "desc": "The maximum time to wait for an acknowledgement from the proxy server",
+      "label": "Acknowledgement Timeout"
+    },
+    "config_enable": {
+      "desc": "Enable or disable this connector",
+      "label": "Enable Or Disable connector"
+    },
+    "desc_config": {
+      "desc": "Configuration for a Syskeeper forwarder connector",
+      "label": "Syskeeper Forwarder Connector Configuration"
+    },
+    "server": {
+      "desc": "The address of the Syskeeper proxy server",
+      "label": "Server"
+    }
+  },
+  "emqx_bridge_syskeeper_proxy": {
+    "acceptors": {
+      "desc": "The number of the acceptors",
+      "label": "Acceptors"
+    },
+    "config_enable": {
+      "desc": "Enable or disable this connector",
+      "label": "Enable Or Disable Connector"
+    },
+    "desc_config": {
+      "desc": "Configuration for a Syskeeper proxy connector",
+      "label": "Syskeeper Proxy Connector Configuration"
+    },
+    "desc_name": {
+      "desc": "Bridge name",
+      "label": "Bridge Name"
+    },
+    "desc_type": {
+      "desc": "The Bridge Type",
+      "label": "Bridge Type"
+    },
+    "handshake_timeout": {
+      "desc": "The maximum to wait for the handshake when a connection is created",
+      "label": "Handshake Timeout"
+    },
+    "listen": {
+      "desc": "The listening address for this Syskeeper proxy server",
+      "label": "Listen Address"
+    }
+  },
   "emqx_bridge_tdengine": {
     "config_enable": {
       "desc": "Enable or disable this bridge",
@@ -2832,9 +3251,17 @@
     }
   },
   "emqx_bridge_v2_schema": {
+    "config_enable": {
+      "desc": "Enable (true) or disable (false) this action.",
+      "label": "Enable or Disable"
+    },
     "desc_bridges_v2": {
       "desc": "Configuration for bridges.",
       "label": "Bridge Configuration"
+    },
+    "mqtt_topic": {
+      "desc": "MQTT topic or topic filter as data source (action input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in the remote system.",
+      "label": "Source MQTT Topic"
     }
   },
   "emqx_coap_api": {
@@ -2892,6 +3319,14 @@
       "desc": "The log level for the audit log handler.<br/>\n- Requests that take longer than 3 seconds to process are logged as <code>warning</code> logs.<br/>\n- GET requests with HTTP status codes between 200-300 are logged as <code>debug</code> logs.<br/>\n- Non-GET Requests with HTTP status codes between 200-300 are logged as <code>info</code> logs.<br/>\n- Requests with HTTP status codes between 300-400 are logged as <code>warning</code> logs.<br/>\n- Requests with HTTP status codes between 400-500 are logged as <code>error</code> logs.<br/>\n- Defaults to info.",
       "label": "Log Level"
     },
+    "audit_log_ignore_high_frequency_request": {
+      "desc": "Ignore high frequency requests to avoid flooding the audit log,\nsuch as publish/subscribe kick out http api requests are ignored.",
+      "label": "Ignore High Frequency Request"
+    },
+    "audit_log_max_filter_limit": {
+      "desc": "Store the latest N log entries in a database for allow `/audit` HTTP API to filter and retrieval of log data.\nThe interval for purging redundant log records is maintained within a range of 10~20 seconds.",
+      "label": "Max Filter Limit"
+    },
     "authorization": {
       "desc": "Authorization a.k.a. ACL.<br/>\nIn EMQX, MQTT client access control is extremely flexible.<br/>\nAn out-of-the-box set of authorization data sources are supported.\nFor example,<br/>\n'file' source is to support concise and yet generic ACL rules in a file;<br/>\n'built_in_database' source can be used to store per-client customizable rule sets,\nnatively in the EMQX node;<br/>\n'http' source to make EMQX call an external HTTP API to make the decision;<br/>\n'PostgreSQL' etc. to look up clients or rules from external databases",
       "label": "Authorization"
@@ -2917,7 +3352,7 @@
       "label": "Cluster Call Retry Interval"
     },
     "cluster_discovery_strategy": {
-      "desc": "Service discovery method for the cluster nodes. Possible values are:\n- manual: Use <code>emqx ctl cluster</code> command to manage cluster.<br/>\n- static: Configure static nodes list by setting <code>seeds</code> in config file.<br/>\n- dns: Use DNS A record to discover peer nodes.<br/>\n- etcd: Use etcd to discover peer nodes.<br/>\n- k8s: Use Kubernetes API to discover peer pods.\n- mcast: Deprecated since 5.1, will be removed in 5.2.\n  This supports discovery via UDP multicast.",
+      "desc": "Service discovery method for the cluster nodes. Possible values are:\n- manual: Use <code>emqx ctl cluster</code> command to manage cluster.<br/>\n- static: Configure static nodes list by setting <code>seeds</code> in config file.<br/>\n- dns: Use DNS A record to discover peer nodes.<br/>\n- etcd: Use etcd to discover peer nodes.<br/>\n- k8s: Use Kubernetes API to discover peer pods.",
       "label": "Cluster Discovery Strategy"
     },
     "cluster_dns_name": {
@@ -2963,38 +3398,6 @@
     "cluster_k8s_suffix": {
       "desc": "Node name suffix.<br/>\nNote: this parameter is only relevant when <code>address_type</code> is <code>dns</code>\nor <code>hostname</code>.",
       "label": "K8s Suffix"
-    },
-    "cluster_mcast_addr": {
-      "desc": "Multicast IPv4 address.",
-      "label": "Cluster Multicast Address"
-    },
-    "cluster_mcast_buffer": {
-      "desc": "Size of the user-level buffer.",
-      "label": "Cluster Muticast Buffer"
-    },
-    "cluster_mcast_iface": {
-      "desc": "Local IP address the node discovery service needs to bind to.",
-      "label": "Cluster Multicast Interface"
-    },
-    "cluster_mcast_loop": {
-      "desc": "If <code>true</code>, loop UDP datagrams back to the local socket.",
-      "label": "Cluster Multicast Loop"
-    },
-    "cluster_mcast_ports": {
-      "desc": "List of UDP ports used for service discovery.<br/>\nNote: probe messages are broadcast to all the specified ports.",
-      "label": "Cluster Multicast Ports"
-    },
-    "cluster_mcast_recbuf": {
-      "desc": "Size of the kernel-level buffer for incoming datagrams.",
-      "label": "Cluster Muticast Sendbuf"
-    },
-    "cluster_mcast_sndbuf": {
-      "desc": "Size of the kernel-level buffer for outgoing datagrams.",
-      "label": "Cluster Muticast Sendbuf"
-    },
-    "cluster_mcast_ttl": {
-      "desc": "Time-to-live (TTL) for the outgoing UDP datagrams.",
-      "label": "Cluster Multicast TTL"
     },
     "cluster_name": {
       "desc": "Human-friendly name of the EMQX cluster.",
@@ -3107,10 +3510,6 @@
     "desc_cluster_k8s": {
       "desc": "Service discovery via Kubernetes API server.",
       "label": "Cluster Kubernetes"
-    },
-    "desc_cluster_mcast": {
-      "desc": "Service discovery via UDP multicast.",
-      "label": "Cluster Multicast"
     },
     "desc_cluster_static": {
       "desc": "Service discovery via static nodes.\nThe new node joins the cluster by connecting to one of the bootstrap nodes.",
@@ -3369,6 +3768,17 @@
       "label": "RPC TCP Server Port"
     }
   },
+  "emqx_conf_schema_types": {
+    "bytesize": {
+      "desc": "A string that represents a number of bytes, for example: <code>10B</code>, <code>640kb</code>, <code>4MB</code>, <code>1GB</code>. Units are interpreted as powers of 1024, and the unit part is case-insensitive."
+    },
+    "duration": {
+      "desc": "A string that represents a time duration, for example: <code>10s</code>, <code>2.5m</code>, <code>1h30m</code>, <code>1W2D</code>, or <code>2345ms</code>, which is the smallest unit. When precision is specified, finer portions of the duration may be ignored: writing <code>1200ms</code> for <code>Duration(s)</code> is equivalent to writing <code>1s</code>. The unit part is case-insensitive."
+    },
+    "secret": {
+      "desc": "A string holding some sensitive information, such as a password. When secret starts with <code>file://</code>, the rest of the string is interpreted as a path to a file containing the secret itself: whole content of the file except any trailing whitespace characters is considered a secret value. Note: when clustered, all EMQX nodes should have the same file present before using <code>file://</code> secrets."
+    }
+  },
   "emqx_connector_api": {
     "desc_api1": {
       "desc": "List all created connectors.",
@@ -3436,6 +3846,14 @@
     }
   },
   "emqx_connector_schema": {
+    "config_enable": {
+      "desc": "Enable (true) or disable (false) this connector.",
+      "label": "Enable or Disable"
+    },
+    "connector_actions": {
+      "desc": "List of actions added to this connector.",
+      "label": "Actions"
+    },
     "connector_field": {
       "desc": "Name of the connector specified by the action, used for external resource selection.",
       "label": "Connector"
@@ -3443,6 +3861,30 @@
     "desc_connectors": {
       "desc": "Connectors that are used to connect to external systems",
       "label": "Connectors"
+    },
+    "desc_name": {
+      "desc": "The name of the connector.",
+      "label": "Connector Name"
+    },
+    "desc_node_name": {
+      "desc": "The node name.",
+      "label": "Node Name"
+    },
+    "desc_node_status": {
+      "desc": "Node status.",
+      "label": "Node Status"
+    },
+    "desc_status": {
+      "desc": "The status of the connector<br/>\n- <code>connecting</code>: the initial state before any health probes were made.<br/>\n- <code>connected</code>: when the connector passes the health probes.<br/>\n- <code>disconnected</code>: when the connector can not pass health probes.<br/>\n- <code>inconsistent</code>: When not all the nodes are at the same status.",
+      "label": "Connector Status"
+    },
+    "desc_status_reason": {
+      "desc": "This is the reason given in case a connector is failing to connect.",
+      "label": "Failure reason"
+    },
+    "desc_type": {
+      "desc": "The type of the connector.",
+      "label": "Connector Type"
     }
   },
   "emqx_connector_schema_lib": {
@@ -4130,7 +4572,7 @@
       "desc": "Gateway Name"
     },
     "gateway_name_in_qs": {
-      "desc": "Gateway Name.<br/>\nIt's enum with `stomp`, `mqttsn`, `coap`, `lwm2m`, `exproto`"
+      "desc": "Gateway Name"
     },
     "gateway_node_status": {
       "desc": "The status of the gateway on each node in the cluster"
@@ -4476,6 +4918,54 @@
     "dtls_listener_dtls_opts": {
       "desc": "DTLS socket options"
     },
+    "fields_ws_opts_allow_origin_absence": {
+      "desc": "If <code>false</code> and <code>check_origin_enable</code> is\n <code>true</code>, the server will reject requests that don't have <code>origin</code>\n HTTP header.",
+      "label": "Allow origin absence"
+    },
+    "fields_ws_opts_check_origin_enable": {
+      "desc": "If <code>true</code>, <code>origin</code> HTTP header will be\n validated against the list of allowed origins configured in <code>check_origins</code>\n parameter.",
+      "label": "Check origin"
+    },
+    "fields_ws_opts_check_origins": {
+      "desc": "List of allowed origins.<br/>See <code>check_origin_enable</code>.",
+      "label": "Allowed origins"
+    },
+    "fields_ws_opts_compress": {
+      "desc": "If <code>true</code>, compress WebSocket messages using <code>zlib</code>.<br/>\nThe configuration items under <code>deflate_opts</code> belong to the compression-related parameter configuration.",
+      "label": "Ws compress"
+    },
+    "fields_ws_opts_fail_if_no_subprotocol": {
+      "desc": "If <code>true</code>, the server will return an error when\n the client does not carry the <code>Sec-WebSocket-Protocol</code> field.\n <br/>Note: WeChat applet needs to disable this verification.",
+      "label": "Fail if no subprotocol"
+    },
+    "fields_ws_opts_idle_timeout": {
+      "desc": "Close transport-layer connections from the clients that have not sent MQTT CONNECT message within this interval.",
+      "label": "WS idle timeout"
+    },
+    "fields_ws_opts_max_frame_size": {
+      "desc": "The maximum length of a single MQTT packet.",
+      "label": "Max frame size"
+    },
+    "fields_ws_opts_path": {
+      "desc": "WebSocket's MQTT protocol path. So the address of EMQX Broker's WebSocket is:\n<code>ws://{ip}:{port}/mqtt</code>",
+      "label": "WS MQTT Path"
+    },
+    "fields_ws_opts_piggyback": {
+      "desc": "Whether a WebSocket message is allowed to contain multiple MQTT packets.",
+      "label": "MQTT Piggyback"
+    },
+    "fields_ws_opts_proxy_address_header": {
+      "desc": "HTTP header used to pass information about the client IP address.\nRelevant when the EMQX cluster is deployed behind a load-balancer.",
+      "label": "Proxy address header"
+    },
+    "fields_ws_opts_proxy_port_header": {
+      "desc": "HTTP header used to pass information about the client port. Relevant when the EMQX cluster is deployed behind a load-balancer.",
+      "label": "Proxy port header"
+    },
+    "fields_ws_opts_supported_subprotocols": {
+      "desc": "Comma-separated list of supported subprotocols.",
+      "label": "Supported subprotocols"
+    },
     "gateway_common_authentication": {
       "desc": "Default authentication configs for all the gateway listeners. For per-listener overrides see <code>authentication</code>\n in listener configs"
     },
@@ -4510,7 +5000,7 @@
       "desc": "Enable the listener."
     },
     "gateway_common_listener_enable_authn": {
-      "desc": "Set <code>true</code> (default) to enable client authentication on this listener. \nWhen set to <code>false</code> clients will be allowed to connect without authentication."
+      "desc": "Set <code>true</code> (default) to enable client authentication on this listener.\nWhen set to <code>false</code> clients will be allowed to connect without authentication."
     },
     "gateway_common_listener_max_conn_rate": {
       "desc": "Maximum connections per second."
@@ -4519,7 +5009,7 @@
       "desc": "Maximum number of concurrent connections."
     },
     "gateway_mountpoint": {
-      "desc": "When publishing or subscribing, prefix all topics with a mountpoint string.\nThe prefixed string will be removed from the topic name when the message is delivered to the subscriber.\nThe mountpoint is a way that users can use to implement isolation of message routing between different listeners.\nFor example if a client A subscribes to `t` with `listeners.tcp.\\<name>.mountpoint` set to `some_tenant`,\nthen the client actually subscribes to the topic `some_tenant/t`.\nSimilarly, if another client B (connected to the same listener as the client A) sends a message to topic `t`,\nthe message is routed to all the clients subscribed `some_tenant/t`,\nso client A will receive the message, with topic name `t`. Set to `\"\"` to disable the feature.\nVariables in mountpoint string:<br/>\n  - <code>${clientid}</code>: clientid<br/>\n  - <code>${username}</code>: username"
+      "desc": "When publishing or subscribing, prefix all topics with a mountpoint string.\nThe prefixed string will be removed from the topic name when the message is delivered to the subscriber.\nThe mountpoint is a way that users can use to implement isolation of message routing between different listeners.\nFor example if a client A subscribes to `t` with `listeners.tcp.\\<name>.mountpoint` set to `some_tenant`,\nthen the client actually subscribes to the topic `some_tenant/t`.\nSimilarly, if another client B (connected to the same listener as the client A) sends a message to topic `t`,\nthe message is routed to all the clients subscribed `some_tenant/t`,\nso client A will receive the message, with topic name `t`. Set to `\"\"` to disable the feature.\nSupported placeholders in mountpoint string:<br/>\n  - <code>${clientid}</code>: clientid<br/>\n  - <code>${username}</code>: username<br/>\n  - <code>${endpoint_name}</code>: endpoint name"
     },
     "listener_name_to_settings_map": {
       "desc": "A map from listener names to listener settings."
@@ -4565,6 +5055,17 @@
     },
     "udp_listeners": {
       "desc": "Settings for the UDP listeners."
+    }
+  },
+  "emqx_gbt32960_schema": {
+    "max_retry_times": {
+      "desc": "Re-send max times"
+    },
+    "message_queue_len": {
+      "desc": "Max message queue length"
+    },
+    "retry_interval": {
+      "desc": "Re-send time interval"
     }
   },
   "emqx_gcp_device_api": {
@@ -4645,6 +5146,23 @@
       "label": "Registry"
     }
   },
+  "emqx_jt808_schema": {
+    "jt808_allow_anonymous": {
+      "desc": "Allow anonymous access to the JT/T 808 Gateway.registry_url.descThe JT/T 808 device registry central URL.authentication_url.descThe JT/T 808 device authentication central URL.jt808_up_topic.descThe topic of the JT/T 808 protocol upstream message.jt808_dn_topic.descThe topic of the JT/T 808 protocol downstream message."
+    },
+    "jt808_frame_max_length": {
+      "desc": "The maximum length of the JT/T 808 frame."
+    },
+    "max_retry_times": {
+      "desc": "Re-send max times"
+    },
+    "message_queue_len": {
+      "desc": "Max message queue length"
+    },
+    "retry_interval": {
+      "desc": "Re-send time interval"
+    }
+  },
   "emqx_ldap": {
     "base_dn": {
       "desc": "The name of the base object entry (or possibly the root) relative to\nwhich the Search is to be performed.",
@@ -4699,11 +5217,11 @@
       "label": "deprecated use /license/setting instead"
     },
     "key_field": {
-      "desc": "License string",
+      "desc": "This configuration parameter is designated for the license key and supports below input formats:\n\n- Direct Key: Enter the secret key directly as a string value.\n- File Path: Specify the path to a file that contains the secret key. Ensure the path starts with <code>file://</code>.\n- \"default\": Use string value <code>\"default\"</code> to apply the default trial license.\n\nNote: An invalid license key or an incorrect file path may prevent EMQX from starting successfully.\nIf a file path is used, EMQX attempts to reload the license key from the file every 2 minutes.\nAny failure in reloading the license file will be recorded as an error level log message,\nand EMQX continues to apply the license loaded previously.",
       "label": "License string"
     },
     "license_root": {
-      "desc": "Defines the EMQX Enterprise license.\n\n\nThe default license has 100 connections limit, it is issued on 2023-01-09 and valid for 5 years (1825 days).\n\nEMQX comes with a default trial license.  For production use, please\nvisit https://www.emqx.com/apply-licenses/emqx to apply.",
+      "desc": "Defines the EMQX Enterprise license.\n\nEMQX Enterprise is initially provided with a default trial license.\nThis license, issued in December 2023, is valid for a period of 5 years.\nIt supports up to 25 concurrent connections, catering to early-stage development and testing needs.\n\nFor deploying EMQX Enterprise in a production environment, a different license is required. You can apply for a production license by visiting https://www.emqx.com/apply-licenses/emqx?version=5",
       "label": "License"
     }
   },
@@ -4854,6 +5372,9 @@
     "get_api_key": {
       "desc": "Return the specific api_key",
       "label": "Return the specific api_key"
+    },
+    "role": {
+      "desc": "Role for this API"
     },
     "update_api_key": {
       "desc": "Update the specific api_key",
@@ -5016,7 +5537,7 @@
       "label": "API Key"
     },
     "bootstrap_file": {
-      "desc": "The bootstrap file provides API keys for EMQX.\nEMQX will load these keys on startup to authorize API requests.\nIt contains key-value pairs in the format:`api_key:api_secret`.\nEach line specifies an API key and its associated secret.",
+      "desc": "The bootstrap file provides API keys for EMQX.\nEMQX will load these keys on startup to authorize API requests.\nIt contains colon-separated values in the format: `api_key:api_secret:role`.\nEach line specifies an API key and its associated secret, and the role of this key.\nThe 'role' part should be the pre-defined access scope group name,\nfor example, `administrator` or `viewer`.\nThe 'role' is introduced in 5.4, to be backward compatible, if it is missing, the key is implicitly granted `administrator` role.",
       "label": "Initialize api_key file."
     }
   },
@@ -5619,6 +6140,47 @@
       "label": "Wait takeover"
     }
   },
+  "emqx_ocpp_schema": {
+    "default_heartbeat_interval": {
+      "desc": "The default Heartbeat time interval"
+    },
+    "dnstream_max_mqueue_len": {
+      "desc": "The maximum message queue length for download stream message delivery."
+    },
+    "dnstream_topic": {
+      "desc": "Download stream topic to receive request/control messages from third-party system.\nThis value is a wildcard topic name that subscribed by every connected Charge Point."
+    },
+    "heartbeat_checking_times_backoff": {
+      "desc": "The backoff for heartbeat checking times"
+    },
+    "json_schema_dir": {
+      "desc": "JSON Schema directory for OCPP message definitions.\nDefault: ${application}/priv/schemas"
+    },
+    "json_schema_id_prefix": {
+      "desc": "The ID prefix for the OCPP message schemas."
+    },
+    "message_format_checking": {
+      "desc": "Whether to enable message format legality checking.\nEMQX checks the message format of the upload stream and download stream against the\nformat defined in json-schema.\nWhen the check fails, emqx will reply with a corresponding answer message.\n\nThe checking strategy can be one of the following values:\n- <code>all</code>: check all messages\n- <code>upstream_only</code>: check upload stream messages only\n- <code>dnstream_only</code>: check download stream messages only\n- <code>disable</code>: don't check any messages"
+    },
+    "upstream_error_topic": {
+      "desc": "The topic for Upload stream error topic."
+    },
+    "upstream_reply_topic": {
+      "desc": "The topic for Upload stream Reply messages."
+    },
+    "upstream_topic": {
+      "desc": "The topic for Upload stream Call Request messages."
+    },
+    "upstream_topic_override_mapping": {
+      "desc": "Upload stream topic override mapping by Message Name."
+    },
+    "ws": {
+      "desc": "Websocket listener."
+    },
+    "wss": {
+      "desc": "Websocket over TLS listener."
+    }
+  },
   "emqx_oracle": {
     "server": {
       "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>A host entry has the following form: `Host[:Port]`.<br/>The Oracle Database default port 1521 is used if `[:Port]` is not specified.",
@@ -5635,22 +6197,64 @@
   },
   "emqx_otel_schema": {
     "enable": {
-      "desc": "Enable or disable open telemetry metrics"
+      "desc": "Enable or disable Open Telemetry signal.",
+      "label": "Enable."
     },
-    "endpoint": {
-      "desc": "Open Telemetry Exporter Endpoint"
+    "exporter_endpoint": {
+      "desc": "The target URL to which the exporter is going to send Open Telemetry signal data.",
+      "label": "Exporter Endpoint"
     },
-    "exporter": {
-      "desc": "Open Telemetry Exporter"
+    "exporter_protocol": {
+      "desc": "The transport protocol of Open Telemetry Exporter",
+      "label": "Exporter Protocol"
     },
-    "interval": {
-      "desc": "The interval of sending metrics to Open Telemetry Endpoint"
+    "exporter_ssl": {
+      "desc": "SSL configuration for the Open Telemetry exporter",
+      "label": "SSL Options"
+    },
+    "exporting_timeout": {
+      "desc": "The time Open Telemetry signal export can run before it is cancelled.",
+      "label": "Exporting Timeout"
+    },
+    "max_queue_size": {
+      "desc": "The maximum queue size. After the size is reached Open Telemetry signals are dropped.",
+      "label": "Max Queue Size"
     },
     "opentelemetry": {
-      "desc": "Open Telemetry Toolkit configuration"
+      "desc": "Open Telemetry Toolkit configuration",
+      "label": "Open Telemetry"
     },
-    "protocol": {
-      "desc": "Open Telemetry Exporter Protocol"
+    "otel_exporter": {
+      "desc": "Open Telemetry Exporter",
+      "label": "Exporter"
+    },
+    "otel_log_handler_level": {
+      "desc": "The log level of the Open Telemetry log handler.",
+      "label": "Log Level"
+    },
+    "otel_logs": {
+      "desc": "Open Telemetry Logs configuration. If enabled, EMQX installs a log handler that formats events according to Open Telemetry log data model and\nexports them to the configured Open Telemetry collector or backend.",
+      "label": "Open Telemetry Logs"
+    },
+    "otel_metrics": {
+      "desc": "Open Telemetry Metrics configuration.",
+      "label": "Open Telemetry Metrics"
+    },
+    "otel_traces": {
+      "desc": "Open Telemetry Traces configuration.",
+      "label": "Open Telemetry Traces"
+    },
+    "scheduled_delay": {
+      "desc": "The delay interval between two consecutive exports of Open Telemetry signals.",
+      "label": "Scheduled Delay Interval"
+    },
+    "trace_all": {
+      "desc": "If enabled, all published messages are traced, a new trace ID is generated if it can't be extracted from the message.\nOtherwise, only messages published with trace context are traced. Disabled by default.",
+      "label": "Trace All"
+    },
+    "trace_filter": {
+      "desc": "Open Telemetry Trace Filter configuration",
+      "label": "Trace Filter"
     }
   },
   "emqx_plugins_schema": {
@@ -5683,6 +6287,20 @@
     }
   },
   "emqx_postgresql": {
+    "config_connector": {
+      "desc": "The configuration for the PostgreSQL connector.",
+      "label": "PostgreSQL Connector Config"
+    },
+    "server": {
+      "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe PostgreSQL default port 5432 is used if `[:Port]` is not specified.",
+      "label": "Server Host"
+    }
+  },
+  "emqx_postgresql_connector_schema": {
+    "config_connector": {
+      "desc": "The configuration for the PostgreSQL connector.",
+      "label": "PostgreSQL Connector Config"
+    },
     "server": {
       "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe PostgreSQL default port 5432 is used if `[:Port]` is not specified.",
       "label": "Server Host"
@@ -5694,8 +6312,8 @@
       "label": "Get Prometheus config info"
     },
     "get_prom_data": {
-      "desc": "Get Prometheus Data",
-      "label": "Get Prometheus Data"
+      "desc": "Get Prometheus Metrics",
+      "label": "Prometheus Metrics"
     },
     "update_prom_conf_info": {
       "desc": "Update Prometheus config",
@@ -5703,8 +6321,11 @@
     }
   },
   "emqx_prometheus_schema": {
-    "enable": {
-      "desc": "Turn Prometheus data pushing on or off"
+    "collectors": {
+      "desc": "The internal advanced metrics of the virtual machine are initially disabled\nand are usually only enabled during performance testing.\nEnabling them will increase the CPU load."
+    },
+    "enable_basic_auth": {
+      "desc": "Enable or disable basic authentication for prometheus scrape api, not for Push Gateway"
     },
     "headers": {
       "desc": "An HTTP Headers when pushing to Push Gateway.<br/>\nFor example, <code> { Authorization = \"some-authz-tokens\"}</code>"
@@ -5713,23 +6334,68 @@
       "desc": "Data reporting interval"
     },
     "job_name": {
-      "desc": "Job Name that is pushed to the Push Gateway. Available variables:<br/>\n- ${name}: Name of EMQX node.<br/>\n- ${host}: Host name of EMQX node.<br/>\nFor example, when the EMQX node name is <code>emqx@127.0.0.1</code> then the <code>name</code> variable takes value <code>emqx</code> and the <code>host</code> variable takes value <code>127.0.0.1</code>.<br/>\nDefault value is: <code>${name}/instance/${name}~${host}</code>"
+      "desc": "Job Name that is pushed to the Push Gateway. Available variables:<br/>\n- ${name}: Name of EMQX node.<br/>\n- ${host}: Host name of EMQX node.<br/>\nFor example, when the EMQX node name is <code>emqx@127.0.0.1</code> then the <code>name</code>\nvariable takes value <code>emqx</code> and the <code>host</code> variable takes value <code>127.0.0.1</code>.\nDefault value is: <code>${name}/instance/${name}~${host}</code>"
+    },
+    "legacy_deprecated_setting": {
+      "desc": "Deprecated since 5.4.0"
+    },
+    "legacy_enable": {
+      "desc": "Deprecated since 5.4.0, use `prometheus.push_gateway.url` instead"
+    },
+    "legacy_headers": {
+      "desc": "Deprecated since 5.4.0, use `prometheus.push_gateway.headers` instead"
+    },
+    "legacy_interval": {
+      "desc": "Deprecated since 5.4.0, use `prometheus.push_gateway.interval` instead"
+    },
+    "legacy_job_name": {
+      "desc": "Deprecated since 5.4.0, use `prometheus.push_gateway.job_name` instead"
+    },
+    "legacy_mnesia_collector": {
+      "desc": "Deprecated since 5.4.0, use `prometheus.collectors.mnesia` instead"
+    },
+    "legacy_push_gateway_server": {
+      "desc": "Deprecated since 5.4.0, use `prometheus.push_gateway.url` instead"
+    },
+    "legacy_vm_dist_collector": {
+      "desc": "Deprecated since 5.4.0, use `prometheus.collectors.vm_dist` instead"
+    },
+    "legacy_vm_memory_collector": {
+      "desc": "Deprecated since 5.4.0, use `prometheus.collectors.vm_memory` instead"
+    },
+    "legacy_vm_msacc_collector": {
+      "desc": "Deprecated since 5.4.0, use `prometheus.collectors.vm_msacc` instead"
+    },
+    "legacy_vm_statistics_collector": {
+      "desc": "Deprecated since 5.4.0, use `prometheus.collectors.vm_statistics` instead"
+    },
+    "legacy_vm_system_info_collector": {
+      "desc": "Deprecated, use `prometheus.collectors.vm_system_info` instead"
     },
     "mnesia_collector": {
-      "desc": "Enable or disable Mnesia metrics collector"
+      "desc": "Collects Mnesia metrics mainly using <code> mnesia:system_info/1 </code>"
     },
     "prometheus": {
-      "desc": "EMQX's Prometheus scraping endpoint is enabled by default without authentication.\nYou can inspect it with a `curl` command like this: `curl -f \"127.0.0.1:18083/api/v5/prometheus/stats\"`<br/>\nThe 'enable' flag is used to turn on and off for the push-gateway integration.",
+      "desc": "EMQX's Prometheus scraping endpoint is enabled by default without authentication.\nYou can inspect it with a `curl` command like this: `curl -f \"127.0.0.1:18083/api/v5/prometheus/stats\"`",
       "label": "Prometheus"
     },
-    "push_gateway_server": {
-      "desc": "URL of Prometheus server. Pushgateway is optional, should not be configured if prometheus is to scrape EMQX."
+    "push_gateway": {
+      "desc": "Push Gateway is optional, should not be configured if prometheus is to scrape EMQX."
+    },
+    "push_gateway_enable": {
+      "desc": "Enable or disable Pushgateway"
+    },
+    "push_gateway_url": {
+      "desc": "URL of Pushgateway server. Pushgateway is optional, should not be configured if prometheus is to scrape EMQX."
+    },
+    "recommend_setting": {
+      "desc": "Recommended setting"
     },
     "vm_dist_collector": {
-      "desc": "Enable or disable VM distribution collector, collects information about the sockets and processes involved in the Erlang distribution mechanism."
+      "desc": "Enable or disable VM distribution collector,\ncollects information about the sockets and processes involved in the Erlang distribution mechanism."
     },
     "vm_memory_collector": {
-      "desc": "Enable or disable VM memory metrics collector."
+      "desc": "Collects information about memory dynamically allocated by the Erlang emulator using\n<code> erlang:memory/0 </code>."
     },
     "vm_msacc_collector": {
       "desc": "Enable or disable VM microstate accounting metrics collector."
@@ -5766,6 +6432,18 @@
     "database": {
       "desc": "Redis database ID.",
       "label": "Database ID"
+    },
+    "redis_cluster_connector": {
+      "desc": "Redis connector in cluster mode",
+      "label": "Redis Cluster Connector"
+    },
+    "redis_sentinel_connector": {
+      "desc": "Redis connector in sentinel mode",
+      "label": "Redis Sentinel Connector"
+    },
+    "redis_single_connector": {
+      "desc": "Redis connector in sentinel mode",
+      "label": "Redis Single Connector"
     },
     "sentinel": {
       "desc": "Sentinel mode. Must be set to 'sentinel' when Redis server is running in sentinel mode.",
@@ -6146,7 +6824,7 @@
     },
     "metrics_sql_matched_rate": {
       "desc": "The rate of matched, times/second",
-      "label": "命中速率"
+      "label": "å½ä¸­éç"
     },
     "metrics_sql_matched_rate_last5m": {
       "desc": "The average rate of matched in last 5 minutes, times/second",
@@ -6468,7 +7146,7 @@
       "label": "IP address and port"
     },
     "base_listener_enable_authn": {
-      "desc": "Set <code>true</code> (default) to enable client authentication on this listener, the authentication\nprocess goes through the configured authentication chain.\nWhen set to <code>false</code> to allow any clients with or without authentication information such as username or password to log in.\nWhen set to <code>quick_deny_anonymous</code>, it behaves like when set to <code>true</code>, but clients will be\ndenied immediately without going through any authenticators if <code>username</code> is not provided. This is useful to fence off\nanonymous clients early.",
+      "desc": "Set <code>true</code> (default) to enable client authentication on this listener, the authentication\nprocess goes through the configured authentication chain.\nWhen set to <code>false</code>, any client (with or without username/password) is allowed to connect.\nWhen set to <code>quick_deny_anonymous</code>, it behaves like when set to <code>true</code>, but clients will be\ndenied immediately without going through any authenticators if <code>username</code> is not provided. This is useful to fence off\nanonymous clients early.",
       "label": "Enable authentication"
     },
     "base_listener_limiter": {
@@ -6500,7 +7178,7 @@
       "desc": "Enable trie path compaction.\nEnabling it significantly improves wildcard topic subscribe rate, if wildcard topics have unique prefixes like: 'sensor/{{id}}/+/', where ID is unique per subscriber.\nTopic match performance (when publishing) may degrade if messages are mostly published to topics with large number of levels.\n\nNOTE: This is a cluster-wide configuration. It requires all nodes to be stopped before changing it."
     },
     "broker_routing_storage_schema": {
-      "desc": "Routing storage schema.\nSet <code>v1</code> to leave the default.\n<code>v2</code> is introduced in 5.2. It enables routing through 2 separate tables, one for topic filter and one for regular topic subscriptions. This schema should increase both subscription and routing performance at the cost of slight increase in memory consumption per subscription.\nNOTE: Schema <code>v2</code> is still experimental.\nNOTE: Full non-rolling cluster restart is needed after altering this option for it to take any effect."
+      "desc": "Routing storage schema.\nSet <code>v1</code> to use the former schema.\n<code>v2</code> is introduced in 5.2. It enables routing through 2 separate tables, one for topic filter and one for regular topic subscriptions. This schema should increase both subscription and routing performance at the cost of slight increase in memory consumption per subscription.\nNOTE: Schema <code>v2</code> is still experimental.\nNOTE: Full non-rolling cluster restart is needed after altering this option for it to take any effect."
     },
     "broker_session_locking_strategy": {
       "desc": "Session locking strategy in a cluster.\n  - `local`: only lock the session on the current node\n  - `one`: select only one remote node to lock the session\n  - `quorum`: select some nodes to lock the session\n  - `all`: lock the session on all the nodes in the cluster"
@@ -6509,7 +7187,7 @@
       "desc": "Deprecated.\nThis was designed to avoid dispatching messages to a shared-subscription session which has the client disconnected.\nHowever it's no longer useful because the shared-subscrption messages in a expired session will be redispatched to other sessions in the group."
     },
     "broker_shared_subscription_strategy": {
-      "desc": "Dispatch strategy for shared subscription.\n  - `random`: Randomly select a subscriber for dispatch;\n  - `round_robin`: Messages from a single publisher are dispatched to subscribers in turn;\n  - `round_robin_per_group`: All messages are dispatched to subscribers in turn;\n  - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n  - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends;\n  - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n  - `hash_topic`: Hash the publishing topic to select a subscriber."
+      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Messages from a single publisher are dispatched to subscribers in turn;\n - `round_robin_per_group`: All messages are dispatched to subscribers in turn;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "ciphers_schema_common": {
       "desc": "This config holds TLS cipher suite names separated by comma,\nor as an array of strings. e.g.\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code> or\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>.\n<br/>\nCiphers (and their ordering) define the way in which the\nclient and server encrypts information over the network connection.\nSelecting a good cipher suite is critical for the\napplication's data security, confidentiality and performance.\n\nThe names should be in OpenSSL string format (not RFC format).\nAll default values and examples provided by EMQX config\ndocumentation are all in OpenSSL format.<br/>\n\nNOTE: Certain cipher suites are only compatible with\nspecific TLS <code>versions</code> ('tlsv1.1', 'tlsv1.2' or 'tlsv1.3')\nincompatible cipher suites will be silently dropped.\nFor instance, if only 'tlsv1.3' is given in the <code>versions</code>,\nconfiguring cipher suites for other versions will have no effect.\n<br/>\n\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config<br/>\nIf PSK cipher suites are intended, 'tlsv1.3' should be disabled from <code>versions</code>.<br/>\nPSK cipher suites: <code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code>",
@@ -6987,7 +7665,7 @@
       "label": "Ignore Loop Deliver"
     },
     "mqtt_keepalive_multiplier": {
-      "desc": "Keep-Alive Timeout = Keep-Alive interval × Keep-Alive Multiplier.\nThe default value 1.5 is following the MQTT 5.0 specification. This multiplier is adjustable, providing system administrators flexibility for tailoring to their specific needs. For instance, if a client's 10-second Keep-Alive interval PINGREQ gets delayed by an extra 10 seconds, changing the multiplier to 2 lets EMQX tolerate this delay.",
+      "desc": "Keep-Alive Timeout = Keep-Alive interval Ã Keep-Alive Multiplier.\nThe default value 1.5 is following the MQTT 5.0 specification. This multiplier is adjustable, providing system administrators flexibility for tailoring to their specific needs. For instance, if a client's 10-second Keep-Alive interval PINGREQ gets delayed by an extra 10 seconds, changing the multiplier to 2 lets EMQX tolerate this delay.",
       "label": "Keep Alive Multiplier"
     },
     "mqtt_listener_access_rules": {
@@ -7205,6 +7883,33 @@
     "server_ssl_opts_schema_ocsp_responder_url": {
       "desc": "URL for the OCSP responder to check the server certificate against.",
       "label": "OCSP Responder URL"
+    },
+    "session_builtin_n_shards": {
+      "desc": "Number of shards used for storing the messages."
+    },
+    "session_ds_max_batch_size": {
+      "desc": "This value affects the flow control for the persistent sessions.\nThe session queries the DB for the new messages in batches.\nSize of the batch doesn't exceed this value or `ReceiveMaximum`, whichever is smaller."
+    },
+    "session_ds_min_batch_size": {
+      "desc": "This value affects the flow control for the persistent sessions.\nThe session will query the DB for the new messages when the value of `FreeSpace` variable is larger than this value or `ReceiveMaximum` / 2, whichever is smaller.\n\n`FreeSpace` is calculated as `ReceiveMaximum` for the session - number of inflight messages."
+    },
+    "session_ds_session_gc_batch_size": {
+      "desc": "The size of each batch of expired persistent sessions to be garbage collected per iteration."
+    },
+    "session_ds_session_gc_interval": {
+      "desc": "The interval at which session garbage collection is executed for persistent sessions."
+    },
+    "session_persistence_enable": {
+      "desc": "Use durable storage for client sessions persistence.\nIf enabled, sessions configured to outlive client connections, along with their corresponding messages, will be durably stored and survive broker downtime."
+    },
+    "session_persistence_storage": {
+      "desc": "Durable storage backend to use for session persistence."
+    },
+    "session_storage_backend_builtin": {
+      "desc": "Builtin session storage backend utilizing embedded RocksDB key-value store."
+    },
+    "session_storage_backend_enable": {
+      "desc": "Enable this backend."
     },
     "shared_subscription_group_strategy": {
       "desc": "Per group dispatch strategy for shared subscription.\nThis config is a map from shared subscription group name to the strategy\nname. The group name should be of format `[A-Za-z0-9]`. i.e. no\nspecial characters are allowed."
@@ -7443,14 +8148,14 @@
     }
   },
   "emqx_stomp_schema": {
-    "stom_frame_max_body_length": {
-      "desc": "Maximum number of bytes of Body allowed per Stomp packet"
-    },
-    "stom_frame_max_headers": {
-      "desc": "The maximum number of Header"
-    },
     "stomp": {
       "desc": "The Stomp Gateway configuration.\nThis gateway supports v1.2/1.1/1.0"
+    },
+    "stomp_frame_max_body_length": {
+      "desc": "Maximum number of bytes of Body allowed per Stomp packet"
+    },
+    "stomp_frame_max_headers": {
+      "desc": "The maximum number of Header"
     },
     "stomp_frame_max_headers_length": {
       "desc": "The maximum string length of the Header Value"
