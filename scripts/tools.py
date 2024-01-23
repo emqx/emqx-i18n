@@ -59,7 +59,7 @@ def find_diff(source, target):
     obj_a = load_json(source)
     obj_b = load_json(target)
     result = dfs([], obj_a, obj_b, {})
-    print(json.dumps(result, indent=2))
+    print(json.dumps(result, indent=2, ensure_ascii=False))
 
 # Function to check if a string contains Chinese characters
 
