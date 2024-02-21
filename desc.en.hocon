@@ -1,47 +1,47 @@
 {
   "emqx_audit_api": {
     "audit_get": {
-      "desc": "Get audit logs based on filter API, empowers users to efficiently\naccess the desired audit trail data and facilitates auditing, compliance,\ntroubleshooting, and security analysis",
+      "desc": "Get audit logs with filtering parameters. This feature enables users to efficiently\naccess the desired audit trail data and facilitates auditing, compliance,\ntroubleshooting, and security analysis.",
       "label": "List audit logs"
     },
     "filter_from": {
-      "desc": "Filter logs based on source type, valid values include:\n`dashboard`: Dashboard request logs, requiring the use of a jwt_token.\n`rest_api`: API KEY request logs.\n`cli`: The emqx command line logs.\n`erlang_console`: The emqx remote_console run function logs."
+      "desc": "Filter logs by source type. Possible values are:\n\n- `dashboard`: Dashboard request logs.\n- `rest_api`: API KEY request logs.\n- `cli`: The emqx command line logs.\n- `erlang_console`: The emqx remote_console run function logs."
     },
     "filter_gte_created_at": {
-      "desc": "Filter logs with a creation time greater than or equal to the given timestamp, rfc3339 or timestamp(millisecond)"
+      "desc": "Filter logs by creation time, selecting logs created no earlier than the given timestamp.\nThe timestamp can be provided either in rfc3339 string format or as a millisecond epoch timestamp."
     },
     "filter_gte_duration_ms": {
-      "desc": "Filter logs with a duration greater than or equal to given microseconds."
+      "desc": "Filter logs by age duration, selecting those created no earlier than then given duration time ago."
     },
     "filter_http_method": {
-      "desc": "Filter The HTTP API Request with method when logs are generated from dashboard and REST API."
+      "desc": "Filter The HTTP API logs by method, applicable for logs generated from Dashboard or REST API operations."
     },
     "filter_http_status_code": {
-      "desc": "Filter The HTTP API with response code when logs are generated from dashboard and REST API."
+      "desc": "Filter The HTTP API logs by response code, applicable for logs generated from Dashboard or REST API operations."
     },
     "filter_lte_created_at": {
-      "desc": "Filter logs with a creation time less than or equal to the given timestamp, rfc3339 or timestamp(millisecond)"
+      "desc": "Filter logs by creation time, selecting logs created no later than the given timestamp.\nThe timestamp can be provided either in rfc3339 string format or as a millisecond epoch timestamp."
     },
     "filter_lte_duration_ms": {
-      "desc": "Filter logs with a duration less than or equal to given microseconds."
+      "desc": "Filter logs by age duration, selecting those created no later than then given duration time ago."
     },
     "filter_node": {
-      "desc": "Filter logs based on the node name to which the logs are created."
+      "desc": "Filter logs by the node name where the logs were generated."
     },
     "filter_operation_id": {
-      "desc": "Filter log with swagger's operation_id when logs are generated from dashboard and REST API."
+      "desc": "Filter logs by swagger's operation_id, applicable for logs generated from Dashboard or REST API operations."
     },
     "filter_operation_result": {
-      "desc": "Filter logs with operation result."
+      "desc": "Filter logs by operation result."
     },
     "filter_operation_type": {
-      "desc": "Filter logs with operation type."
+      "desc": "Filter logs by operation type."
     },
     "filter_source": {
-      "desc": "Filter logs based on source, Possible values are:\nThe login username when logs are generated from the dashboard.\nThe API Keys when logs are generated from the REST API.\nempty string when logs are generated from CLI, Erlang console."
+      "desc": "Filter logs by source. Possible values are:\n\n- The login username to filter logs generated from Dashboard for this specific user.\n- The API Key to filter logs generated from the REST API for this specific API key.\n- An empty string to filter logs generated from CLI or Erlang console."
     },
     "filter_source_ip": {
-      "desc": "Filter logs based on source ip when logs are generated from dashboard and REST API."
+      "desc": "Filter logs by source IP when logs, applicable for logs generated from Dashboard or REST API operations."
     }
   },
   "emqx_authn_api": {
@@ -292,7 +292,7 @@
       "desc": "Configuration of authenticator using LDAP as authentication data source."
     },
     "ldap_deprecated": {
-      "desc": "This is a deprecated form, you should avoid using it."
+      "desc": "This is a deprecated form, and you should avoid using it."
     },
     "method": {
       "desc": "Authentication method."
@@ -1002,19 +1002,19 @@
       "label": "Buffer Mode"
     },
     "buffer_per_partition_limit": {
-      "desc": "Number of bytes allowed to buffer for each Azure Event Hubs partition. When this limit is exceeded, old messages will be dropped in a trade for credits for new messages to be buffered.",
+      "desc": "Number of bytes allowed to buffer for each partition. When this limit is exceeded, older messages will be discarded to make room for new messages to be buffered.",
       "label": "Per-partition Buffer Limit"
     },
     "buffer_segment_bytes": {
-      "desc": "Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.\nThis value is to specify the size of each on-disk buffer file.",
+      "desc": "Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.\nThis setting specifies the size of each buffer segment file stored on disk.",
       "label": "Segment File Bytes"
     },
     "compression": {
-      "desc": "Compression method.",
+      "desc": "Specify the method of compression.",
       "label": "Compression"
     },
     "config_enable": {
-      "desc": "Enable (true) or disable (false) this bridge.",
+      "desc": "Enable (true) or disable (false) this config.",
       "label": "Enable or Disable"
     },
     "connect_timeout": {
@@ -1034,23 +1034,23 @@
       "label": "Bridge Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type",
-      "label": "Bridge Type"
+      "desc": "The action type.",
+      "label": "Action Type"
     },
     "kafka_header_value_encode_mode": {
-      "desc": "Azure Event Hubs headers value encode mode<br/>\n - NONE: only add binary values to Azure Event Hubs headers;<br/>\n - JSON: only add JSON values to Azure Event Hubs headers,\nand encode it to JSON strings before sending.",
-      "label": "Azure Event Hubs headers value encode mode"
+      "desc": "The encoding mode for headers.\n\n - `none`: Add only strings are added as header values\n - `json`: Encode header values as JSON string",
+      "label": "Headers value encode mode"
     },
     "kafka_headers": {
-      "desc": "Please provide a placeholder to be used as Azure Event Hubs Headers<br/>\ne.g. <code>${pub_props}</code><br/>\nNotice that the value of the placeholder must either be an object:\n<code>{\"foo\": \"bar\"}</code>\nor an array of key-value pairs:\n<code>[{\"key\": \"foo\", \"value\": \"bar\"}]</code>",
-      "label": "Azure Event Hubs Headers"
+      "desc": "Provide a placeholder for message headers<br/>\ne.g. <code>${pub_props}</code><br/>\nNote that the value of the placeholder must be either an object:\n<code>{\"foo\": \"bar\"}</code>\nor an array of key-value pairs:\n<code>[{\"key\": \"foo\", \"value\": \"bar\"}]</code>",
+      "label": "Message Headers"
     },
     "kafka_message": {
-      "desc": "Template to render an Azure Event Hubs message.",
+      "desc": "Template for rendering a message.",
       "label": "Azure Event Hubs Message Template"
     },
     "kafka_message_key": {
-      "desc": "Template to render Azure Event Hubs message key. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Azure Event Hubs's <code>NULL</code> (but not empty string) is used.",
+      "desc": "Template for rendering message key. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then <code>NULL</code> (but not empty string) is used.",
       "label": "Message Key"
     },
     "kafka_message_timestamp": {
@@ -1074,7 +1074,7 @@
       "label": "Max Batch Bytes"
     },
     "max_inflight": {
-      "desc": "Maximum number of batches allowed for Azure Event Hubs producer (per-partition) to send before receiving acknowledgement from Azure Event Hubs. Greater value typically means better throughput. However, there can be a risk of message reordering when this value is greater than 1.",
+      "desc": "The maximum number of message batches that the producer can send to each partition before it must wait for an acknowledgement.\nSetting a higher number can enhance throughput. However, value above 1 may lead to potential message reordering risks.",
       "label": "Max Inflight"
     },
     "metadata_request_timeout": {
@@ -1086,7 +1086,7 @@
       "label": "Min Metadata Refresh Interval"
     },
     "mqtt_topic": {
-      "desc": "MQTT topic or topic filter as data source (bridge input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Azure Event Hubs.",
+      "desc": "MQTT topic or topic filter as data source (action input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Azure Event Hubs.",
       "label": "Source MQTT Topic"
     },
     "partition_count_refresh_interval": {
@@ -1094,7 +1094,7 @@
       "label": "Partition Count Refresh Interval"
     },
     "partition_strategy": {
-      "desc": "Partition strategy is to tell the producer how to dispatch messages to Azure Event Hubs partitions.\n\n<code>random</code>: Randomly pick a partition for each message\n<code>key_dispatch</code>: Hash Azure Event Hubs message key to a partition number",
+      "desc": "Partition strategy is to tell the producer how to dispatch messages to partitions.\n\n<code>random</code>: Randomly pick a partition for each message.\n<code>key_dispatch</code>: Assigns messages to partitions based on a hash of the message key,\nensuring consistent partition for messages with the same key.",
       "label": "Partition Strategy"
     },
     "producer_buffer": {
@@ -1106,8 +1106,8 @@
       "label": "Azure Event Hubs extra header key."
     },
     "producer_kafka_ext_header_value": {
-      "desc": "Value of the Azure Event Hubs header. Placeholders in format of ${var} are supported.",
-      "label": "Value"
+      "desc": "Value of the header. Placeholders in format of ${var} are supported.",
+      "label": "Extra Headers Value"
     },
     "producer_kafka_ext_headers": {
       "desc": "Please provide more key-value pairs for Azure Event Hubs headers<br/>\nThe key-value pairs here will be combined with the\nvalue of <code>kafka_headers</code> field before sending to Azure Event Hubs.",
@@ -1126,7 +1126,7 @@
       "label": "Query mode"
     },
     "required_acks": {
-      "desc": "Required acknowledgements for Azure Event Hubs partition leader to wait for its followers before it sends back the acknowledgement to EMQX Azure Event Hubs producer\n\n<code>all_isr</code>: Require all in-sync replicas to acknowledge.\n<code>leader_only</code>: Require only the partition-leader's acknowledgement.",
+      "desc": "The acknowledgement criteria for the partition leader. It determines the level of confirmation required from partition replicas before sending an acknowledgement back to the producer.\n\n<code>all_isr</code>: Require all in-sync replicas to acknowledge.\n<code>leader_only</code>: Require only the partition-leader's acknowledgement.\n<code>none</code>: No need for Kafka to acknowledge at all.",
       "label": "Required Acks"
     },
     "server_name_indication": {
@@ -1150,7 +1150,7 @@
       "label": "Socket Send Buffer Size"
     },
     "socket_tcp_keepalive": {
-      "desc": "Enable TCP keepalive for Azure Event Hubs bridge connections.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
+      "desc": "Enable TCP keepalive.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
       "label": "TCP keepalive options"
     },
     "ssl_client_opts": {
@@ -1280,19 +1280,19 @@
       "label": "Buffer Mode"
     },
     "buffer_per_partition_limit": {
-      "desc": "Number of bytes allowed to buffer for each Confluent partition. When this limit is exceeded, old messages will be dropped in a trade for credits for new messages to be buffered.",
+      "desc": "Number of bytes allowed to buffer for each partition. When this limit is exceeded, older messages will be discarded to make room for new messages to be buffered.",
       "label": "Per-partition Buffer Limit"
     },
     "buffer_segment_bytes": {
-      "desc": "Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.\nThis value is to specify the size of each on-disk buffer file.",
+      "desc": "Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.\nThis setting specifies the size of each buffer file stored on disk.",
       "label": "Segment File Bytes"
     },
     "compression": {
-      "desc": "Compression method.",
+      "desc": "Specify the method of compression.",
       "label": "Compression"
     },
     "config_enable": {
-      "desc": "Enable (true) or disable (false) this action.",
+      "desc": "Enable (true) or disable (false) this config.",
       "label": "Enable or Disable"
     },
     "connect_timeout": {
@@ -1312,23 +1312,23 @@
       "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Action Type",
+      "desc": "The action type.",
       "label": "Action Type"
     },
     "kafka_header_value_encode_mode": {
-      "desc": "Confluent headers value encode mode<br/>\n - NONE: only add binary values to Confluent headers;<br/>\n - JSON: only add JSON values to Confluent headers,\nand encode it to JSON strings before sending.",
-      "label": "Confluent headers value encode mode"
+      "desc": "The encoding mode for headers.\n\n - `none`: Add only strings are added as header values\n - `json`: Encode header values as JSON string",
+      "label": "Headers value encode mode"
     },
     "kafka_headers": {
-      "desc": "Please provide a placeholder to be used as Confluent Headers<br/>\ne.g. <code>${pub_props}</code><br/>\nNotice that the value of the placeholder must either be an object:\n<code>{\"foo\": \"bar\"}</code>\nor an array of key-value pairs:\n<code>[{\"key\": \"foo\", \"value\": \"bar\"}]</code>",
-      "label": "Confluent Headers"
+      "desc": "Provide a placeholder for message headers<br/>\ne.g. <code>${pub_props}</code><br/>\nNote that the value of the placeholder must be either an object:\n<code>{\"foo\": \"bar\"}</code>\nor an array of key-value pairs:\n<code>[{\"key\": \"foo\", \"value\": \"bar\"}]</code>",
+      "label": "Message Headers"
     },
     "kafka_message": {
-      "desc": "Template to render a Confluent message.",
+      "desc": "Template for rendering a message.",
       "label": "Confluent Message Template"
     },
     "kafka_message_key": {
-      "desc": "Template to render Confluent message key. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Confluent's <code>NULL</code> (but not empty string) is used.",
+      "desc": "Template for rendering message key. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then <code>NULL</code> (but not empty string) is used.",
       "label": "Message Key"
     },
     "kafka_message_timestamp": {
@@ -1352,7 +1352,7 @@
       "label": "Max Batch Bytes"
     },
     "max_inflight": {
-      "desc": "Maximum number of batches allowed for Confluent producer (per-partition) to send before receiving acknowledgement from Confluent. Greater value typically means better throughput. However, there can be a risk of message reordering when this value is greater than 1.",
+      "desc": "The maximum number of message batches that the producer can send to each partition before it must wait for an acknowledgement.\nSetting a higher number can enhance throughput. However, value above 1 may lead to potential message reordering risks.",
       "label": "Max Inflight"
     },
     "metadata_request_timeout": {
@@ -1372,7 +1372,7 @@
       "label": "Partition Count Refresh Interval"
     },
     "partition_strategy": {
-      "desc": "Partition strategy is to tell the producer how to dispatch messages to Confluent partitions.\n\n<code>random</code>: Randomly pick a partition for each message\n<code>key_dispatch</code>: Hash Confluent message key to a partition number",
+      "desc": "Partition strategy is to tell the producer how to dispatch messages to partitions.\n\n<code>random</code>: Randomly pick a partition for each message.\n<code>key_dispatch</code>: Assigns messages to partitions based on a hash of the message key,\nensuring consistent partition for messages with the same key.",
       "label": "Partition Strategy"
     },
     "producer_buffer": {
@@ -1384,8 +1384,8 @@
       "label": "Confluent extra header key."
     },
     "producer_kafka_ext_header_value": {
-      "desc": "Value of the Confluent header. Placeholders in format of ${var} are supported.",
-      "label": "Value"
+      "desc": "Value of the header. Placeholders in format of ${var} are supported.",
+      "label": "Extra Headers Value"
     },
     "producer_kafka_ext_headers": {
       "desc": "Please provide more key-value pairs for Confluent headers<br/>\nThe key-value pairs here will be combined with the\nvalue of <code>kafka_headers</code> field before sending to Confluent.",
@@ -1404,7 +1404,7 @@
       "label": "Query mode"
     },
     "required_acks": {
-      "desc": "Required acknowledgements for Confluent partition leader to wait for its followers before it sends back the acknowledgement to EMQX Confluent producer\n\n<code>all_isr</code>: Require all in-sync replicas to acknowledge.\n<code>leader_only</code>: Require only the partition-leader's acknowledgement.",
+      "desc": "The acknowledgement criteria for the partition leader. It determines the level of confirmation required from partition replicas before sending an acknowledgement back to the producer.\n\n<code>all_isr</code>: Require all in-sync replicas to acknowledge.\n<code>leader_only</code>: Require only the partition-leader's acknowledgement.\n<code>none</code>: No need for Kafka to acknowledge at all.",
       "label": "Required Acks"
     },
     "server_name_indication": {
@@ -1428,7 +1428,7 @@
       "label": "Socket Send Buffer Size"
     },
     "socket_tcp_keepalive": {
-      "desc": "Enable TCP keepalive for Confluent bridge connections.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
+      "desc": "Enable TCP keepalive.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
       "label": "TCP keepalive options"
     },
     "ssl_client_opts": {
@@ -1514,11 +1514,11 @@
       "label": "Basic auth params"
     },
     "config_auth_basic_password": {
-      "desc": "The password as configured at the IoTDB REST interface",
+      "desc": "The password to authenticate against Elastic Search.",
       "label": "HTTP Basic Auth Password"
     },
     "config_auth_basic_username": {
-      "desc": "The username as configured at the IoTDB REST interface",
+      "desc": "The username to authenticate against Elastic Search.",
       "label": "HTTP Basic Auth Username"
     },
     "config_authentication": {
@@ -1530,8 +1530,8 @@
       "label": "doc_as_upsert"
     },
     "config_enable": {
-      "desc": "Enable or disable this bridge",
-      "label": "Enable Or Disable Bridge"
+      "desc": "Enable or disable this action.",
+      "label": "Enable Or Disable Action"
     },
     "config_max_retries": {
       "desc": "HTTP request max retry times if failed.",
@@ -1573,12 +1573,12 @@
       "desc": "The number of shard copies that must be active before proceeding with the operation.\nSet to all or any positive integer up to the total number of shards in the index (number_of_replicas+1).\nDefault: 1, the primary shard"
     },
     "desc_config": {
-      "desc": "Configuration for Apache IoTDB bridge.",
-      "label": "IoTDB Bridge Configuration"
+      "desc": "Configuration for Elastic Search.",
+      "label": "Elastic Search Action Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name, used as a human-readable description of the bridge.",
-      "label": "Bridge Name"
+      "desc": "A human-readable identifier.",
+      "label": "Action Name"
     },
     "elasticsearch": {
       "desc": "Elasticsearch Bridge",
@@ -1633,7 +1633,7 @@
       "label": "Payload Template"
     },
     "consumer_mqtt_qos": {
-      "desc": "MQTT QoS used to publish messages consumed from GCP PubSub.",
+      "desc": "MQTT QoS level applied when publishing messages that are consumed from GCP PubSub.",
       "label": "QoS"
     },
     "consumer_mqtt_topic": {
@@ -1658,15 +1658,15 @@
     },
     "desc_config": {
       "desc": "Configuration for a GCP PubSub bridge.",
-      "label": "GCP PubSub Bridge Configuration"
+      "label": "GCP PubSub Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name, used as a human-readable description of the bridge.",
-      "label": "Bridge Name"
+      "desc": "Action name, used as a human-readable identifier.",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type",
-      "label": "Bridge Type"
+      "desc": "The action type.",
+      "label": "Action Type"
     },
     "kv_pair_desc": {
       "desc": "Key-value pair.",
@@ -1698,7 +1698,7 @@
     },
     "pipelining": {
       "desc": "A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request.",
-      "label": "HTTP Pipelineing"
+      "label": "HTTP Pipelining"
     },
     "pool_size": {
       "desc": "The pool size.",
@@ -1737,23 +1737,23 @@
   },
   "emqx_bridge_greptimedb": {
     "config_enable": {
-      "desc": "Enable or disable this bridge.",
-      "label": "Enable Or Disable Bridge"
+      "desc": "Enable or disable this action.",
+      "label": "Enable Or Disable Action"
     },
     "desc_config": {
-      "desc": "Configuration for an GreptimeDB bridge.",
-      "label": "GreptimeDB Bridge Configuration"
+      "desc": "Configuration for an GreptimeDB action.",
+      "label": "GreptimeDB Action Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name.",
-      "label": "Bridge Name"
+      "desc": "The name of the action.",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type.",
-      "label": "Bridge Type"
+      "desc": "The type of the action.",
+      "label": "Action Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to the GreptimeDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to the GreptimeDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: If this Sink is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "write_syntax": {
@@ -1797,23 +1797,23 @@
       "label": "Bridge Direction"
     },
     "desc_config": {
-      "desc": "Configuration for an HStreamDB bridge.",
-      "label": "HStreamDB Bridge Configuration"
+      "desc": "Configuration for an HStreamDB action.",
+      "label": "HStreamDB Action Configuration"
     },
     "desc_connector": {
       "desc": "Generic configuration for the connector.",
       "label": "Connector Generic Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name, used as a human-readable description of the bridge.",
-      "label": "Bridge Name"
+      "desc": "Action name, a human-readable identifier.",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type",
-      "label": "Bridge Type"
+      "desc": "The type of the action.",
+      "label": "Action Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to the HStreamDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to the HStreamDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: If this action is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "record_template": {
@@ -1831,7 +1831,7 @@
       "label": "HStreamDB gRPC Timeout"
     },
     "name": {
-      "desc": "Connector name, used as a human-readable description of the connector.",
+      "desc": "A human-readable identifier for the connector.",
       "label": "Connector Name"
     },
     "partition_key": {
@@ -1866,7 +1866,7 @@
     },
     "enable_pipelining": {
       "desc": "A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request.",
-      "label": "HTTP Pipelineing"
+      "label": "HTTP Pipelining"
     },
     "headers": {
       "desc": "List of HTTP headers.",
@@ -1906,12 +1906,8 @@
       "desc": "The body of the HTTP request.<br/>\nIf not provided, the body will be a JSON object of all the available fields.<br/>\nThere, 'all the available fields' means the context of a MQTT message when\nthis webhook is triggered by receiving a MQTT message (the `local_topic` is set),\nor the context of the event when this webhook is triggered by a rule (i.e. this\nwebhook is used as an action of a rule).<br/>\nTemplate with variables is allowed.",
       "label": "HTTP Body"
     },
-    "config_direction": {
-      "desc": "Deprecated, The direction of this bridge, MUST be 'egress'",
-      "label": "Bridge Direction"
-    },
     "config_enable_bridge": {
-      "desc": "Enable or disable this bridge",
+      "desc": "Enable or disable this action.",
       "label": "Enable Or Disable Bridge"
     },
     "config_headers": {
@@ -1919,7 +1915,7 @@
       "label": "HTTP Header"
     },
     "config_local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to the HTTP server. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to the HTTP server. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: If this action is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "config_max_retries": {
@@ -1943,20 +1939,20 @@
       "label": "HTTP Request Timeout"
     },
     "config_url": {
-      "desc": "The URL of the HTTP Bridge.<br/>\nTemplate with variables is allowed in the path, but variables cannot be used in the scheme, host,\nor port part.<br/>\nFor example, <code> http://localhost:9901/${topic} </code> is allowed, but\n<code> http://${host}:9901/message </code> or <code> http://localhost:${port}/message </code>\nis not allowed.",
-      "label": "HTTP Bridge"
+      "desc": "The URL of the HTTP action.<br/>\nTemplate with variables is allowed in the path, but variables cannot be used in the scheme, host,\nor port part.<br/>\nFor example, <code> http://localhost:9901/${topic} </code> is allowed, but\n<code> http://${host}:9901/message </code> or <code> http://localhost:${port}/message </code>\nis not allowed.",
+      "label": "URL"
     },
     "desc_config": {
-      "desc": "Configuration for an HTTP bridge.",
-      "label": "HTTP Bridge Configuration"
+      "desc": "Configuration for an HTTP action.",
+      "label": "HTTP Action Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name, used as a human-readable description of the bridge.",
-      "label": "Bridge Name"
+      "desc": "Action name, used as a human-readable identifier.",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type",
-      "label": "Bridge Type"
+      "desc": "The action type.",
+      "label": "Action Type"
     }
   },
   "emqx_bridge_influxdb": {
@@ -2117,8 +2113,8 @@
       "label": "IoTDB Bridge Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name, used as a human-readable description of the bridge.",
-      "label": "Bridge Name"
+      "desc": "Action name, a human-readable identifier.",
+      "label": "Action Name"
     }
   },
   "emqx_bridge_iotdb_connector": {
@@ -2185,7 +2181,7 @@
       "label": "Authentication"
     },
     "bootstrap_hosts": {
-      "desc": "A comma separated list of Kafka <code>host[:port]</code> endpoints to bootstrap the client. Default port number is 9092.",
+      "desc": "A comma separated list of Kafka <code>host:port</code> endpoints to bootstrap the client.",
       "label": "Bootstrap Hosts"
     },
     "buffer_memory_overload_protection": {
@@ -2197,19 +2193,19 @@
       "label": "Buffer Mode"
     },
     "buffer_per_partition_limit": {
-      "desc": "Number of bytes allowed to buffer for each Kafka partition. When this limit is exceeded, old messages will be dropped in a trade for credits for new messages to be buffered.",
+      "desc": "Number of bytes allowed to buffer for each partition. When this limit is exceeded, older messages will be discarded to make room for new messages to be buffered.",
       "label": "Per-partition Buffer Limit"
     },
     "buffer_segment_bytes": {
-      "desc": "Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.\nThis value is to specify the size of each on-disk buffer file.",
+      "desc": "Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.\nThis setting specifies the size of each buffer file stored on disk.",
       "label": "Segment File Bytes"
     },
     "compression": {
-      "desc": "Compression method.",
+      "desc": "Specify the method of compression.",
       "label": "Compression"
     },
     "config_enable": {
-      "desc": "Enable (true) or disable (false) this Kafka bridge.",
+      "desc": "Enable (true) or disable (false) config.",
       "label": "Enable or Disable"
     },
     "connect_timeout": {
@@ -2277,31 +2273,31 @@
       "label": "Kafka Producer Client Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name, used as a human-readable description of the bridge.",
-      "label": "Bridge Name"
+      "desc": "Action name, used as a human-readable identifier.",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type",
-      "label": "Bridge Type"
+      "desc": "The Action Type",
+      "label": "Action Type"
     },
     "kafka_consumer": {
       "desc": "Kafka Consumer configuration.",
       "label": "Kafka Consumer"
     },
     "kafka_header_value_encode_mode": {
-      "desc": "Kafka headers value encode mode<br/>\n - NONE: only add binary values to Kafka headers;<br/>\n - JSON: only add JSON values to Kafka headers,\nand encode it to JSON strings before sending.",
-      "label": "Kafka headers value encode mode"
+      "desc": "The encoding mode for headers.\n\n - `none`: Add only strings are added as header values\n - `json`: Encode header values as JSON string",
+      "label": "Headers value encode mode"
     },
     "kafka_headers": {
-      "desc": "Please provide a placeholder to be used as Kafka Headers<br/>\ne.g. <code>${pub_props}</code><br/>\nNotice that the value of the placeholder must either be an object:\n<code>{\"foo\": \"bar\"}</code>\nor an array of key-value pairs:\n<code>[{\"key\": \"foo\", \"value\": \"bar\"}]</code>",
-      "label": "Kafka Headers"
+      "desc": "Provide a placeholder for message headers<br/>\ne.g. <code>${pub_props}</code><br/>\nNote that the value of the placeholder must be either an object:\n<code>{\"foo\": \"bar\"}</code>\nor an array of key-value pairs:\n<code>[{\"key\": \"foo\", \"value\": \"bar\"}]</code>",
+      "label": "Message Headers"
     },
     "kafka_message": {
-      "desc": "Template to render a Kafka message.",
-      "label": "Kafka Message Template"
+      "desc": "Template for rendering a message.",
+      "label": "Message Template"
     },
     "kafka_message_key": {
-      "desc": "Template to render Kafka message key. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Kafka's <code>NULL</code> (but not empty string) is used.",
+      "desc": "Template for rendering message key. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then <code>NULL</code> (but not empty string) is used.",
       "label": "Message Key"
     },
     "kafka_message_timestamp": {
@@ -2309,7 +2305,7 @@
       "label": "Message Timestamp"
     },
     "kafka_message_value": {
-      "desc": "Template to render Kafka message value. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Kafka's <code>NULL</code> (but not empty string) is used.",
+      "desc": "Template for rendering Kafka message value. If the template is rendered into a NULL value (i.e. there is no such data field in Rule Engine context) then Kafka's <code>NULL</code> (but not empty string) is used.",
       "label": "Message Value"
     },
     "kafka_producer": {
@@ -2317,8 +2313,8 @@
       "label": "Kafka Producer"
     },
     "kafka_producer_action": {
-      "desc": "Kafka Producer Action",
-      "label": "Kafka Producer Action"
+      "desc": "Producer Action",
+      "label": "Producer Action"
     },
     "kafka_topic": {
       "desc": "Kafka topic name",
@@ -2329,11 +2325,11 @@
       "label": "Max Batch Bytes"
     },
     "max_inflight": {
-      "desc": "Maximum number of batches allowed for Kafka producer (per-partition) to send before receiving acknowledgement from Kafka. Greater value typically means better throughput. However, there can be a risk of message reordering when this value is greater than 1.",
+      "desc": "The maximum number of message batches that the producer can send to each partition before it must wait for an acknowledgement.\nSetting a higher number can enhance throughput. However, value above 1 may lead to potential message reordering risks.",
       "label": "Max Inflight"
     },
     "metadata_request_timeout": {
-      "desc": "Maximum wait time when fetching metadata from Kafka.",
+      "desc": "Maximum wait time when fetching topic metadata.",
       "label": "Metadata Request Timeout"
     },
     "min_metadata_refresh_interval": {
@@ -2341,7 +2337,7 @@
       "label": "Min Metadata Refresh Interval"
     },
     "mqtt_topic": {
-      "desc": "MQTT topic or topic filter as data source (bridge input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Kafka.",
+      "desc": "MQTT topic or topic filter as data source (action input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Kafka.",
       "label": "Source MQTT Topic"
     },
     "partition_count_refresh_interval": {
@@ -2349,7 +2345,7 @@
       "label": "Partition Count Refresh Interval"
     },
     "partition_strategy": {
-      "desc": "Partition strategy is to tell the producer how to dispatch messages to Kafka partitions.\n\n<code>random</code>: Randomly pick a partition for each message\n<code>key_dispatch</code>: Hash Kafka message key to a partition number",
+      "desc": "Partition strategy is to tell the producer how to dispatch messages to partitions.\n\n<code>random</code>: Randomly pick a partition for each message.\n<code>key_dispatch</code>: Assigns messages to partitions based on a hash of the message key,\nensuring consistent partition for messages with the same key.",
       "label": "Partition Strategy"
     },
     "producer_buffer": {
@@ -2357,31 +2353,27 @@
       "label": "Message Buffer"
     },
     "producer_kafka_ext_header_key": {
-      "desc": "Key of the Kafka header. Placeholders in format of ${var} are supported.",
-      "label": "Kafka extra header key."
+      "desc": "Key of the header. Placeholders in format of ${var} are supported.",
+      "label": "Extra Headers Key"
     },
     "producer_kafka_ext_header_value": {
-      "desc": "Value of the Kafka header. Placeholders in format of ${var} are supported.",
-      "label": "Value"
+      "desc": "Value of the header. Placeholders in format of ${var} are supported.",
+      "label": "Extra Headers Value"
     },
     "producer_kafka_ext_headers": {
-      "desc": "Please provide more key-value pairs for Kafka headers<br/>\nThe key-value pairs here will be combined with the\nvalue of <code>kafka_headers</code> field before sending to Kafka.",
-      "label": "Extra Kafka headers"
+      "desc": "Provide more key-value pairs for message headers<br/>\nThe key-value pairs here will be combined with the\nvalue of <code>kafka_headers</code> field before sending producing.",
+      "label": "Extra Headers"
     },
     "producer_kafka_opts": {
       "desc": "Kafka producer configs.",
       "label": "Kafka Producer"
-    },
-    "producer_opts": {
-      "desc": "Local MQTT data source and Kafka bridge configs.",
-      "label": "MQTT to Kafka"
     },
     "query_mode": {
       "desc": "Query mode. Optional 'sync/async', default 'async'.",
       "label": "Query mode"
     },
     "required_acks": {
-      "desc": "Required acknowledgements for Kafka partition leader to wait for its followers before it sends back the acknowledgement to EMQX Kafka producer\n\n<code>all_isr</code>: Require all in-sync replicas to acknowledge.\n<code>leader_only</code>: Require only the partition-leader's acknowledgement.\n<code>none</code>: No need for Kafka to acknowledge at all.",
+      "desc": "The acknowledgement criteria for the partition leader. It determines the level of confirmation required from partition replicas before sending an acknowledgement back to the producer.\n\n<code>all_isr</code>: Require all in-sync replicas to acknowledge.\n<code>leader_only</code>: Require only the partition-leader's acknowledgement.\n<code>none</code>: No need for Kafka to acknowledge at all.",
       "label": "Required Acks"
     },
     "server_name_indication": {
@@ -2405,15 +2397,15 @@
       "label": "Socket Send Buffer Size"
     },
     "socket_tcp_keepalive": {
-      "desc": "Enable TCP keepalive for Kafka bridge connections.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
+      "desc": "Enable TCP keepalive.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
       "label": "TCP keepalive options"
     },
     "ssl_client_opts": {
-      "desc": "TLS/SSL options for Kafka client.",
+      "desc": "TLS/SSL options for client.",
       "label": "TLS/SSL options"
     },
     "sync_query_timeout": {
-      "desc": "This parameter defines the timeout limit for synchronous queries. It applies only when the bridge query mode is configured to 'sync'.",
+      "desc": "This parameter defines the timeout limit for synchronous queries. It applies only when the query mode is configured to 'sync'.",
       "label": "Synchronous Query Timeout"
     }
   },
@@ -2427,27 +2419,27 @@
       "label": "AWS Secret Access Key"
     },
     "config_enable": {
-      "desc": "Enable or disable this bridge",
-      "label": "Enable Or Disable Bridge"
+      "desc": "Enable or disable this action",
+      "label": "Enable Or Disable Action"
     },
     "desc_config": {
-      "desc": "Configuration for an Amazon Kinesis bridge.",
-      "label": "Amazon Kinesis Bridge Configuration"
+      "desc": "Configuration for an Amazon Kinesis action.",
+      "label": "Amazon Kinesis Action Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name.",
-      "label": "Bridge Name"
+      "desc": "Action name.",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type",
-      "label": "Bridge Type"
+      "desc": "The action type.",
+      "label": "Action Type"
     },
     "endpoint": {
       "desc": "The url of Amazon Kinesis endpoint.",
       "label": "Amazon Kinesis Endpoint"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to Amazon Kinesis. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also `local_topic` is\nconfigured, then both the data got from the rule and the MQTT messages that match `local_topic`\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to Amazon Kinesis. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.<br/>\nNOTE: If this action is used as the action of a rule (EMQX rule engine), and also `local_topic` is\nconfigured, then both the data got from the rule and the MQTT messages that match `local_topic`\nwill be forwarded.",
       "label": "Local Topic"
     },
     "max_retries": {
@@ -2485,19 +2477,19 @@
       "label": "Collection to be used"
     },
     "desc_config": {
-      "desc": "Configuration for MongoDB Bridge",
-      "label": "MongoDB Bridge Configuration"
+      "desc": "Configuration for MongoDB action",
+      "label": "MongoDB Action Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name.",
-      "label": "Bridge Name"
+      "desc": "Action name.",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type.",
-      "label": "Bridge Type"
+      "desc": "The action type.",
+      "label": "Action Type"
     },
     "enable": {
-      "desc": "Enable or disable this MongoDB Bridge",
+      "desc": "Enable or disable this MongoDB Action",
       "label": "Enable or disable"
     },
     "mongodb_action": {
@@ -2521,7 +2513,7 @@
       "label": "MongoDB (Standalone) Configuration"
     },
     "mqtt_topic": {
-      "desc": "MQTT topic or topic filter as data source (bridge input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in MongoDB.",
+      "desc": "MQTT topic or topic filter as data source (action input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in MongoDB.",
       "label": "Source MQTT Topic"
     },
     "payload_template": {
@@ -2667,7 +2659,7 @@
       "label": "Config"
     },
     "desc_name": {
-      "desc": "Bridge name, used as a human-readable description of the bridge.",
+      "desc": "Bridge name, used as a human-readable identifier.",
       "label": "Bridge Name"
     },
     "desc_type": {
@@ -2681,23 +2673,23 @@
       "label": "Action Parameters"
     },
     "config_enable": {
-      "desc": "Enable or disable this bridge",
-      "label": "Enable Or Disable Bridge"
+      "desc": "Enable or disable this action",
+      "label": "Enable Or Disable Action"
     },
     "desc_config": {
-      "desc": "Configuration for an HStreamDB bridge.",
-      "label": "HStreamDB Bridge Configuration"
+      "desc": "Configuration for a MySQL action.",
+      "label": "MySQL Action Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name, used as a human-readable description of the bridge.",
-      "label": "Bridge Name"
+      "desc": "Action name, used as a human-readable identifier of the action.",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type",
-      "label": "Bridge Type"
+      "desc": "The action type",
+      "label": "Action Type"
     },
     "local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to MySQL. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to MySQL. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: If this action is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "mysql_action": {
@@ -2863,8 +2855,8 @@
       "label": "Connect Timeout"
     },
     "desc_name": {
-      "desc": "Bridge name, used as a human-readable description of the bridge.",
-      "label": "Bridge Name"
+      "desc": "Action name, a human-readable identifier.",
+      "label": "Action Name"
     },
     "desc_type": {
       "desc": "The Bridge Type",
@@ -3029,28 +3021,28 @@
       "label": "Redis Command Template"
     },
     "config_enable": {
-      "desc": "Enable or disable this bridge",
-      "label": "Enable Or Disable Bridge"
+      "desc": "Enable or disable this action .",
+      "label": "Enable Or Disable Action"
     },
     "desc_action_parameters": {
       "desc": "The parameters of the action.",
       "label": "Action Parameters"
     },
     "desc_config": {
-      "desc": "Configuration for a Redis bridge.",
-      "label": "Redis Bridge Configuration"
+      "desc": "Configuration for a Redis action.",
+      "label": "Redis Action Configuration"
     },
     "desc_local_topic": {
-      "desc": "The MQTT topic filter to be forwarded to Redis. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
+      "desc": "The MQTT topic filter to be forwarded to Redis. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: If this action is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
     "desc_name": {
-      "desc": "Bridge name, used as a human-readable description of the bridge.",
-      "label": "Bridge Name"
+      "desc": "Action name, used as a human-readable identifier.",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type",
-      "label": "Bridge Type"
+      "desc": "The Action Type",
+      "label": "Action Type"
     },
     "redis_type": {
       "desc": "Single mode. Must be set to 'single' when Redis server is running in single mode.\nSentinel mode. Must be set to 'sentinel' when Redis server is running in sentinel mode.\nCluster mode. Must be set to 'cluster' when Redis server is running in clustered mode.",
@@ -3279,27 +3271,27 @@
   },
   "emqx_bridge_syskeeper": {
     "config_enable": {
-      "desc": "Enable or disable this bridge",
-      "label": "Enable Or Disable Bridge"
+      "desc": "Enable or disable this action.",
+      "label": "Enable Or Disable Action"
     },
     "desc_config": {
-      "desc": "Configuration for a Syskeeper bridge",
-      "label": "Syskeeper Bridge Configuration"
+      "desc": "Configuration for a Syskeeper action.",
+      "label": "Syskeeper Action Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name.",
-      "label": "Bridge Name"
+      "desc": "Action name.",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type",
-      "label": "Bridge Type"
+      "desc": "The action type.",
+      "label": "Action Type"
     },
     "mqtt_topic": {
-      "desc": "MQTT topic or topic filter as data source (bridge input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Syskeeper.",
+      "desc": "MQTT topic or topic filter as data source (action input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Syskeeper.",
       "label": "Source MQTT Topic"
     },
     "parameters": {
-      "desc": "Syskeeper data bridge parameters",
+      "desc": "Syskeeper action parameters",
       "label": "Parameters"
     },
     "target_qos": {
@@ -3351,12 +3343,12 @@
       "label": "Syskeeper Proxy Connector Configuration"
     },
     "desc_name": {
-      "desc": "Bridge name",
-      "label": "Bridge Name"
+      "desc": "Action name",
+      "label": "Action Name"
     },
     "desc_type": {
-      "desc": "The Bridge Type",
-      "label": "Bridge Type"
+      "desc": "The action type.",
+      "label": "Action Type"
     },
     "handshake_timeout": {
       "desc": "The maximum to wait for the handshake when a connection is created",
@@ -7452,11 +7444,11 @@
     },
     "ciphers_schema_common": {
       "desc": "This config holds TLS cipher suite names separated by comma,\nor as an array of strings. e.g.\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code> or\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>.\n<br/>\nCiphers (and their ordering) define the way in which the\nclient and server encrypts information over the network connection.\nSelecting a good cipher suite is critical for the\napplication's data security, confidentiality and performance.\n\nThe names should be in OpenSSL string format (not RFC format).\nAll default values and examples provided by EMQX config\ndocumentation are all in OpenSSL format.<br/>\n\nNOTE: Certain cipher suites are only compatible with\nspecific TLS <code>versions</code> ('tlsv1.1', 'tlsv1.2' or 'tlsv1.3')\nincompatible cipher suites will be silently dropped.\nFor instance, if only 'tlsv1.3' is given in the <code>versions</code>,\nconfiguring cipher suites for other versions will have no effect.\n<br/>\n\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config<br/>\nIf PSK cipher suites are intended, 'tlsv1.3' should be disabled from <code>versions</code>.<br/>\nPSK cipher suites: <code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code>",
-      "label": ""
+      "label": "TLS cipher suites"
     },
     "ciphers_schema_quic": {
       "desc": "This config holds TLS cipher suite names separated by comma,\nor as an array of strings. e.g.\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code> or\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>.\n<br/>\nCiphers (and their ordering) define the way in which the\nclient and server encrypts information over the network connection.\nSelecting a good cipher suite is critical for the\napplication's data security, confidentiality and performance.\n\nThe names should be in OpenSSL string format (not RFC format).\nAll default values and examples provided by EMQX config\ndocumentation are all in OpenSSL format.<br/>\n\nNOTE: Certain cipher suites are only compatible with\nspecific TLS <code>versions</code> ('tlsv1.1', 'tlsv1.2' or 'tlsv1.3')\nincompatible cipher suites will be silently dropped.\nFor instance, if only 'tlsv1.3' is given in the <code>versions</code>,\nconfiguring cipher suites for other versions will have no effect.\n<br/>\n\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config<br/>\nIf PSK cipher suites are intended, 'tlsv1.3' should be disabled from <code>versions</code>.<br/>\nPSK cipher suites: <code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code><br/>\n\nNOTE: QUIC listener supports only 'tlsv1.3' ciphers",
-      "label": ""
+      "label": "QUIC TLS cipher suites"
     },
     "client_ssl_opts_schema_enable": {
       "desc": "Enable TLS.",
