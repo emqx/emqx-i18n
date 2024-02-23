@@ -3005,7 +3005,7 @@
     },
     "rpc_socket_keepalive_idle": {
       "desc": "broker 之间的连接在最后一条消息发送后保持打开的时间。",
-      "label": "RPC Socket 保持空闲"
+      "label": "RPC Socket Keepalive 空闲时间"
     },
     "rpc_socket_keepalive_interval": {
       "desc": "keepalive 消息的间隔。",
@@ -4997,7 +4997,7 @@
     },
     "key_field": {
       "desc": "申请或购买 License 时获得的密钥字符串",
-      "label": "许可证密钥"
+      "label": "License 密钥"
     },
     "license_root": {
       "desc": "EMQX 企业版 License 。\nEMQX 自带一个默认的试用 License，允许最多接入 100 个连接，签发时间是 2023 年 1 月 9 日，有效期是 5 年（1825 天）。若需要在生产环境部署，\n请购买 License 或访问 https://www.emqx.com/apply-licenses/emqx 申请。",
