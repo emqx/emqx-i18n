@@ -49,11 +49,17 @@ def dfs(path, obj_a, obj_b, result):
         for key in obj_a:
             if obj_b is None or key not in obj_b:  # If key is not in obj_b, add it to result
                 # Convert list to string to avoid TypeError
-                result[".".join(path + [key])] = obj_a[key]
+                nested_result = result
+                for sub_key in path:
+                    if sub_key not in nested_result:
+                        nested_result[sub_key] = {}
+                    nested_result = nested_result[sub_key]
+                nested_result[key] = obj_a[key]
             else:
                 # Recursively check for nested fields
                 dfs(path + [key], obj_a[key], obj_b[key], result)
     return result
+
 
 # Function to find fields that are in source but not in target
 
@@ -84,10 +90,20 @@ def dfs_content_diff(path, obj_a, obj_b, result):
                     new_result = {}
                     dfs_content_diff(path + [key], obj_a[key], obj_b[key], new_result)
                     if new_result:
-                        result[key] = new_result
+                        nested_result = result
+                        for sub_key in path:
+                            if sub_key not in nested_result:
+                                nested_result[sub_key] = {}
+                            nested_result = nested_result[sub_key]
+                        nested_result[key] = new_result
                 elif obj_a[key] != obj_b[key]:  # If the values are not equal, add it to result
-                    result[key] = obj_a[key]
-                    result[f"{key}_new"] = obj_b[key]
+                    nested_result = result
+                    for sub_key in path:
+                        if sub_key not in nested_result:
+                            nested_result[sub_key] = {}
+                        nested_result = nested_result[sub_key]
+                    nested_result[key] = obj_a[key]
+                    nested_result[f"{key}_new"] = obj_b[key]
     return result
 
 # Function to find content differences between source and target
@@ -146,7 +162,7 @@ if __name__ == "__main__":
     # Make target optional
     parser.add_argument("target", nargs='?', default=None)
     parser.add_argument(
-        "--dict", default='scripts/ut_dict.txt', help="The path to the dictionary file (optional).")
+        "--dict", default='scripts/no-translate-dict.txt', help="The path to the dictionary file (optional).")
     args = parser.parse_args()
 
     if args.command == 'diff':
