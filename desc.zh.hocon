@@ -1384,6 +1384,18 @@
     "write_syntax": {
       "desc": "使用 InfluxDB API Line Protocol 写入 InfluxDB 的数据，支持占位符<br/>\n参考 [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) 及\n[InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) <br/>\nTLDR: <br/>\n\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\n注意，整形数值占位符后需要添加一个字符 `i` 类型标识。例如 `${payload.int_value}i`",
       "label": "写语句"
+    },
+    "action_parameters": {
+      "desc": "此动作类型特定的额外参数",
+      "label": "动作参数"
+    },
+    "connector": {
+      "desc": "InfluxDB 连接器配置",
+      "label": "InfluxDB 连接器"
+    },
+    "influxdb_action": {
+      "desc": "与 InfluxDB 连接器交互的动作",
+      "label": "InfluxDB 动作"
     }
   },
   "emqx_bridge_influxdb_connector": {
@@ -1430,6 +1442,10 @@
     "username": {
       "desc": "InfluxDB 用户名。",
       "label": "用户名"
+    },
+    "influxdb_parameters": {
+      "desc": "给定版本的 InfluxDB 连接器的参数集，`influxdb_type` 可以是 `influxdb_api_v1` 或 `influxdb_api_v2`。",
+      "label": "InfluxDB 特定参数"
     }
   },
   "emqx_bridge_iotdb": {
@@ -1484,6 +1500,30 @@
     "desc_name": {
       "desc": "IoTDB 数据桥接名称。",
       "label": "桥接名称"
+    },
+    "action_parameters": {
+      "desc": "IoTDB 动作参数",
+      "label": "参数"
+    },
+    "action_parameters_data": {
+      "desc": "IoTDB 动作参数数据",
+      "label": "参数数据"
+    },
+    "config_parameters_data_type": {
+      "desc": "数据类型，可以是枚举或字符串。</br>支持格式为 ${var} 的字符串占位符，最终值可以是：</br>\n- TEXT\n- BOOLEAN\n- INT32\n- INT64\n- FLOAT\n- DOUBLE",
+      "label": "数据类型"
+    },
+    "config_parameters_measurement": {
+      "desc": "也称 Measurement，支持使用 ${var} 格式的占位符。",
+      "label": "字段"
+    },
+    "config_parameters_timestamp": {
+      "desc": "时间戳。支持格式为 ${var} 的占位符，最终值可以是：</br>\n- now: 使用载荷中包含的 `now_ms` 作为时间戳\n- now_ms: 同上\n- now_us: 使用载荷中包含的 `now_us` 作为时间戳\n- now_ns: 使用载荷中包含的 `now_ns` 作为时间戳\n- 其他: 直接使用值作为时间戳。",
+      "label": "时间戳"
+    },
+    "config_parameters_value": {
+      "desc": "值。支持格式为 ${var} 的占位符",
+      "label": "值"
     }
   },
   "emqx_bridge_kafka": {
@@ -2400,6 +2440,10 @@
     "mqtt_topic": {
       "desc": "MQTT 主题或主题过滤器作为数据源（动作输入）。 如果规则动作用作数据源，则应将此配置留空，否则消息将在远程系统中重复。",
       "label": "源 MQTT 主题"
+    },
+    "desc_sources": {
+      "desc": "Source 的配置。",
+      "label": "Source 配置"
     }
   },
   "emqx_bridge_webhook_schema": {
@@ -3834,6 +3878,14 @@
     "view_status_api": {
       "desc": "查看慢订阅状态",
       "label": "查看慢订阅状态"
+    },
+    "bad_topic_name": {
+      "desc": "错误的主题名称",
+      "label": "错误的主题名称"
+    },
+    "no_delayed_message": {
+      "desc": "此主题下没有找到延迟消息",
+      "label": "未找到延迟消息"
     }
   },
   "emqx_ee_bridge_hstreamdb": {
@@ -5222,6 +5274,14 @@
     "invite_node": {
       "desc": "邀请节点加入集群",
       "label": "邀请节点加入集群"
+    },
+    "get_invitation_status": {
+      "desc": "获取每个节点所有异步邀请状态的执行状态",
+      "label": "获取邀请状态"
+    },
+    "invite_node_async": {
+      "desc": "向一个节点发送加入集群的邀请，但不等待加入结果。加入状态可以通过 `GET api/<version>/invitation` 获取。",
+      "label": "异步邀请"
     }
   },
   "emqx_mgmt_api_configs": {
@@ -6016,6 +6076,14 @@
     "update_prom_conf_info": {
       "desc": "Update Prometheus config",
       "label": "Update Prometheus config"
+    },
+    "get_prom_auth_data": {
+      "desc": "获取 AuthN、AuthZ 和 Banned 的 Prometheus 指标",
+      "label": "Auth 的 Prometheus 指标"
+    },
+    "get_prom_data_integration_data": {
+      "desc": "获取数据集成的 Prometheus 指标",
+      "label": "数据集成的 Prometheus 指标"
     }
   },
   "emqx_prometheus_schema": {
@@ -6271,6 +6339,13 @@
     "update_retainer_api": {
       "desc": "更新配置",
       "label": "更新配置"
+    },
+    "delete_messages": {
+      "desc": "删除所有保留消息",
+      "label": "删除保留消息"
+    },
+    "query_match_topic": {
+      "desc": "主题过滤器，支持通配符，省略此项以匹配所有消息。"
     }
   },
   "emqx_retainer_schema": {
@@ -7720,6 +7795,17 @@
     },
     "session_storage_backend_enable": {
       "desc": "启用此后端。"
+    },
+    "broker_routing_batch_sync_enable_on": {
+      "desc": "启用一个专门的进程池，能够批量地将订阅信息与全局路由表同步。\n特别适用于减少可能由于网络延迟导致的跨节点通信的减慢，还可能在其他场景下减轻代理池的负载，从而最大限度地减少了过载的风险。\n选定的值决定哪些节点在集群中将启用此功能。\n- <code>all</code>: 在每个节点上无条件启用，\n- <code>replicant</code>: 仅在复制节点上启用（例如那些<code>node.role = replicant</code>的节点），\n- <code>core</code>: 仅在核心节点上启用，\n- <code>none</code>: 完全禁用此功能。"
+    },
+    "fields_authz_cache_excludes": {
+      "desc": "排除主题列表，列表内的主题将不会生成授权缓存。",
+      "label": "排除主题列表"
+    },
+    "resource_tags": {
+      "desc": "连接器的标签",
+      "label": "标签"
     }
   },
   "emqx_slow_subs_api": {
@@ -8699,6 +8785,10 @@
     "username": {
       "desc": "MQTT 协议的用户名",
       "label": "用户名"
+    },
+    "config_connector": {
+      "desc": "MQTT connector 的配置。",
+      "label": "MQTT 连接器"
     }
   },
   "emqx_bridge_mysql": {
@@ -9077,6 +9167,184 @@
     "schema_type": {
       "desc": "Schema 类型。",
       "label": "Schema 类型"
+    }
+  },
+  "emqx_bridge_es": {
+    "action_config": {
+      "desc": "ElasticSearch 动作配置项",
+      "label": "ElasticSearch 动作配置"
+    },
+    "action_create": {
+      "desc": "将一个 JSON 文件添加到指定的索引中，并使其可搜索。\n如果目标是一个索引并且文件已经存在，\n请求会更新该文件并增加其版本。",
+      "label": "创建文件"
+    },
+    "action_delete": {
+      "desc": "从指定的索引中删除一个 JSON 文件。",
+      "label": "删除文件"
+    },
+    "action_parameters": {
+      "desc": "ElasticSearch 动作参数",
+      "label": "参数"
+    },
+    "action_resource_opts": {
+      "desc": "资源选项。",
+      "label": "资源选项"
+    },
+    "action_update": {
+      "desc": "使用指定的文件更新一个文件。",
+      "label": "更新文件"
+    },
+    "auth_basic": {
+      "desc": "基本认证的参数。",
+      "label": "基本认证参数"
+    },
+    "config_auth_basic_password": {
+      "desc": "ElasticSearch REST 连接密码",
+      "label": "密码"
+    },
+    "config_auth_basic_username": {
+      "desc": "ElasticSearch REST 连接用户名",
+      "label": "用户名"
+    },
+    "config_authentication": {
+      "desc": "认证配置",
+      "label": "认证"
+    },
+    "config_doc_as_upsert": {
+      "desc": "你可以将 doc_as_upsert 设置为 true，使用 doc 的内容作为 upsert 值，而不是发送一个不完整的文件加上一个 upsert 文件。",
+      "label": "doc_as_upsert"
+    },
+    "config_enable": {
+      "desc": "启用或停用此动作",
+      "label": "启用或停用动作"
+    },
+    "config_max_retries": {
+      "desc": "当 HTTP 请求失败时的最大重试次数。",
+      "label": "HTTP 请求最大重试次数"
+    },
+    "config_overwrite": {
+      "desc": "如果指定 _id 的文档已经存在（冲突），将设置为 false，操作将失败。",
+      "label": "是否覆盖"
+    },
+    "config_parameters_doc": {
+      "desc": "JSON 文档模板，如果留空则为包含所有可用字段的 JSON 文本，如 clientid、topic、payload 等。",
+      "label": "文档模板"
+    },
+    "config_parameters_id": {
+      "desc": "文档 ID。如果没有指定 ID，将自动生成。",
+      "label": "文档 ID"
+    },
+    "config_parameters_index": {
+      "desc": "执行操作的索引名称或索引别名。\n此参数是必需的。",
+      "label": "索引"
+    },
+    "config_parameters_require_alias": {
+      "desc": "如果为 true，则操作必须针对一个索引别名。默认为 false。",
+      "label": "启用别名"
+    },
+    "config_require_alias": {
+      "desc": "如果为 true, 则请求的操作必须针对一个索引别名。默认为 false。",
+      "label": "启用别名"
+    },
+    "config_routing": {
+      "desc": "用于将操作路由到特定分片的自定义值。",
+      "label": "路由"
+    },
+    "config_target": {
+      "desc": "执行批量操作的数据流、索引或索引别名的名称。",
+      "label": "目标"
+    },
+    "config_wait_for_active_shards": {
+      "desc": "进行操作前必须活跃的分片副本数。\n设置为 all 或任何正整数直至索引中的分片总数（number_of_replicas+1）。\n默认：1，即主分片。"
+    },
+    "desc_config": {
+      "desc": "动作的配置项。",
+      "label": "动作配置"
+    },
+    "desc_name": {
+      "desc": "动作的名称，作为对动作的用户可读描述。",
+      "label": "动作名称"
+    },
+    "elasticsearch": {
+      "desc": "Elasticsearch 动作",
+      "label": "ElasticSearch"
+    }
+  },
+  "emqx_bridge_es_connector": {
+    "auth_basic": {
+      "label": "认证信息"
+    },
+    "config_auth_basic_password": {
+      "desc": "ElasticSearch REST 连接密码",
+      "label": "密码"
+    },
+    "config_auth_basic_username": {
+      "desc": "IoTDB REST 接口配置的用户名",
+      "label": "用户名"
+    },
+    "config_authentication": {
+      "desc": "认证配置",
+      "label": "认证"
+    },
+    "config_max_retries": {
+      "desc": "当 HTTP 请求失败时的最大重试次数。",
+      "label": "HTTP 请求最大重试次数"
+    },
+    "desc_config": {
+      "desc": "ElasticSearch 动作的配置。",
+      "label": "ElasticSearch 动作配置"
+    },
+    "server": {
+      "desc": "要连接的 IPv4 或 IPv6 地址或主机名。\n一个主机条目有如下形式：`主机[:端口]`。\n如果没有指定 `[:端口]`，则使用 Elasticsearch 默认端口 9200。",
+      "label": "服务器主机"
+    }
+  },
+  "emqx_bridge_iotdb_connector": {
+    "auth_basic": {
+      "desc": "基本认证的参数。",
+      "label": "基本认证参数"
+    },
+    "config_auth_basic_password": {
+      "desc": "IoTDB REST 接口配置的密码",
+      "label": "密码"
+    },
+    "config_auth_basic_username": {
+      "desc": "IoTDB REST 接口配置的用户名",
+      "label": "用户名"
+    },
+    "config_authentication": {
+      "desc": "认证配置",
+      "label": "认证"
+    },
+    "config_base_url": {
+      "desc": "外部 IoTDB 服务的 REST 接口的基础 URL。",
+      "label": "服务器地址"
+    },
+    "config_max_retries": {
+      "desc": "当 HTTP 请求失败时的最大重试次数。",
+      "label": "HTTP 请求最大重试次数"
+    },
+    "desc_config": {
+      "desc": "Apache IoTDB 连接器的配置。",
+      "label": "IoTDB 连接器配置"
+    }
+  },
+  "emqx_bridge_mqtt_pubsub_schema": {
+    "action_parameters": {
+      "desc": "动作的具体配置。",
+      "label": "动作"
+    },
+    "ingress_parameters": {
+      "desc": "Source 的具体配置",
+      "label": "Source"
+    },
+    "mqtt_publisher_action": {
+      "desc": "发布动作的配置。",
+      "label": "动作"
+    },
+    "mqtt_subscriber_source": {
+      "desc": "订阅 Source 的配置。",
+      "label": "Source"
     }
   }
 }
