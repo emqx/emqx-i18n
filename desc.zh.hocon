@@ -176,7 +176,7 @@
     },
     "endpoint": {
       "desc": "JWKS 端点， 它是一个以 JWKS 格式返回服务端的公钥集的只读端点。",
-      "label": "JWKS Endpoint"
+      "label": "JWKS 端点"
     },
     "from": {
       "desc": "指定客户端连接请求中 JWT 的位置。",
@@ -225,7 +225,7 @@
     },
     "verify": {
       "desc": "指定握手过程中是否校验对端证书。",
-      "label": "Verify"
+      "label": "验证"
     },
     "verify_claims": {
       "desc": "需要验证的自定义声明列表，是一个由名称/值对组成的列表。指定一个键(Key)来查找 JWT 中对应的声明(Claim)，并提供一个预期值(Expected Value)来与声明的实际值进行比较，以确保只有满足特定条件的 JWT 才能被接受和使用。\n例如要求 JWT 中的特定声明(如 clientid)的值必须与当前连接的客户端 ID 相匹配。\n预期值可以使用以下占位符：\n- <code>${username}</code>: 将在运行时被替换为客户端连接时使用的用户名\n- <code>${clientid}</code>: 将在运行时被替换为客户端连接时使用的客户端 ID\n身份认证将确认 JWT 中的声明值（从密码字段中获取）与 <code>verify_claims</code> 中要求的内容是否匹配。",
@@ -823,7 +823,7 @@
     },
     "type": {
       "desc": "数据后端类型",
-      "label": "type"
+      "label": "类型"
     }
   },
   "emqx_auto_subscribe_api": {
@@ -1003,7 +1003,7 @@
     },
     "socket_send_buffer": {
       "desc": "微调套接字发送缓冲区。默认值已调整为实现高吞吐量。",
-      "label": "Socket Send Buffer Size"
+      "label": "Socket 发送缓冲区大小"
     },
     "socket_tcp_keepalive": {
       "desc": "启用 Azure Event Hubs 桥接连接的 TCP keepalive 功能。\n该值由三个以逗号分隔的数字组成，格式为 'Idle,Interval,Probes'\n - Idle: 连接在服务器开始发送 keepalive 探测之前必须处于空闲状态的秒数（Linux 默认值为 7200 秒）。\n - Interval: TCP keepalive 探测之间的秒数（Linux 默认值为 75 秒）。\n - Probes: 在放弃并终止连接之前，从另一端未获得响应时要发送的 TCP keepalive 探测的最大数量（Linux 默认值为 9 次）。\n例如 \"240,30,5\" 表示：在连接空闲 240 秒后发送 TCP 保活探测，每隔 30 秒发送一次，直到收到响应，如果连续丢失 5 个响应，连接应该被关闭。\n默认值： 'none'",
@@ -1075,7 +1075,7 @@
     },
     "kafka_message_value": {
       "desc": "用于呈现 Azure Event Hubs 消息值的模版。如果模板呈现为空值（即在规则引擎上下文中没有此类数据字段），则使用 Azure Event Hubs 的 NULL（而不是空字符串）。",
-      "label": "Message Value"
+      "label": "消息值"
     },
     "max_batch_bytes": {
       "desc": "在 Azure Event Hubs 消息批次中收集的最大字节数。",
@@ -1159,7 +1159,7 @@
   "emqx_bridge_cassandra_connector": {
     "keyspace": {
       "desc": "要连接到的 Keyspace 名称。",
-      "label": "Keyspace"
+      "label": "键空间"
     },
     "servers": {
       "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>\n主机名具有以下形式：`Host[:Port][,Host2:Port]`。<br/>\n如果未指定 `[:Port]`，则使用 Cassandra 默认端口 9042。",
@@ -1384,6 +1384,18 @@
     "write_syntax": {
       "desc": "使用 InfluxDB API Line Protocol 写入 InfluxDB 的数据，支持占位符<br/>\n参考 [InfluxDB 2.3 Line Protocol](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) 及\n[InfluxDB 1.8 Line Protocol](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) <br/>\nTLDR: <br/>\n\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\n注意，整形数值占位符后需要添加一个字符 `i` 类型标识。例如 `${payload.int_value}i`",
       "label": "写语句"
+    },
+    "action_parameters": {
+      "desc": "此动作类型特定的额外参数",
+      "label": "动作参数"
+    },
+    "connector": {
+      "desc": "InfluxDB 连接器配置",
+      "label": "InfluxDB 连接器"
+    },
+    "influxdb_action": {
+      "desc": "与 InfluxDB 连接器交互的动作",
+      "label": "InfluxDB 动作"
     }
   },
   "emqx_bridge_influxdb_connector": {
@@ -1424,12 +1436,16 @@
       "label": "服务器地址"
     },
     "token": {
-      "desc": "InfluxDB token。",
+      "desc": "InfluxDB 令牌。",
       "label": "Token"
     },
     "username": {
       "desc": "InfluxDB 用户名。",
       "label": "用户名"
+    },
+    "influxdb_parameters": {
+      "desc": "给定版本的 InfluxDB 连接器的参数集，`influxdb_type` 可以是 `influxdb_api_v1` 或 `influxdb_api_v2`。",
+      "label": "InfluxDB 特定参数"
     }
   },
   "emqx_bridge_iotdb": {
@@ -1484,6 +1500,30 @@
     "desc_name": {
       "desc": "IoTDB 数据桥接名称。",
       "label": "桥接名称"
+    },
+    "action_parameters": {
+      "desc": "IoTDB 动作参数",
+      "label": "参数"
+    },
+    "action_parameters_data": {
+      "desc": "IoTDB 动作参数数据",
+      "label": "参数数据"
+    },
+    "config_parameters_data_type": {
+      "desc": "数据类型，可以是枚举或字符串。</br>支持格式为 ${var} 的字符串占位符，最终值可以是：</br>\n- TEXT\n- BOOLEAN\n- INT32\n- INT64\n- FLOAT\n- DOUBLE",
+      "label": "数据类型"
+    },
+    "config_parameters_measurement": {
+      "desc": "也称 Measurement，支持使用 ${var} 格式的占位符。",
+      "label": "字段"
+    },
+    "config_parameters_timestamp": {
+      "desc": "时间戳。支持格式为 ${var} 的占位符，最终值可以是：</br>\n- now: 使用载荷中包含的 `now_ms` 作为时间戳\n- now_ms: 同上\n- now_us: 使用载荷中包含的 `now_us` 作为时间戳\n- now_ns: 使用载荷中包含的 `now_ns` 作为时间戳\n- 其他: 直接使用值作为时间戳。",
+      "label": "时间戳"
+    },
+    "config_parameters_value": {
+      "desc": "值。支持格式为 ${var} 的占位符",
+      "label": "值"
     }
   },
   "emqx_bridge_kafka": {
@@ -1581,7 +1621,7 @@
     },
     "consumer_mqtt_payload": {
       "desc": "用于转换收到的 Kafka 消息的模板。 默认情况下，它将使用 JSON 格式来序列化来自 Kafka 的所有字段。 这些字段包括：<code>headers</code>：一个包含字符串键值对的 JSON 对象。\n<code>key</code>：Kafka 消息的键（使用选择的编码方式编码）。\n<code>offset</code>：消息的偏移量。\n<code>topic</code>：Kafka 主题。\n<code>ts</code>: 消息的时间戳。\n<code>ts_type</code>：消息的时间戳类型，值可能是： <code>create</code>， <code>append</code> 或 <code>undefined</code>。\n<code>value</code>: Kafka 消息值（使用选择的编码方式编码）。",
-      "label": "MQTT Payload Template"
+      "label": "MQTT 载荷模板"
     },
     "consumer_mqtt_qos": {
       "desc": "转发 MQTT 消息时使用的 QoS。",
@@ -1828,12 +1868,12 @@
       "label": "服务器地址"
     },
     "service_name": {
-      "desc": "Oracle Database 服务名称。",
-      "label": "Oracle Database 服务名称"
+      "desc": "Oracle 数据库服务名称。",
+      "label": "Oracle 数据库服务名称"
     },
     "sid": {
-      "desc": "Oracle Database Sid 名称",
-      "label": "Oracle Database Sid"
+      "desc": "Oracle 数据库系统标识符名称",
+      "label": "Oracle 数据库系统标识符"
     },
     "sql_template": {
       "desc": "SQL 模板。模板字符串可以包含消息元数据和有效载荷字段的占位符。占位符的插入不需要任何检查和特殊格式化，因此必须确保插入的数值格式化和转义正确。模板字符串可以包含占位符模板字符串可以包含消息元数据和有效载荷字段的占位符。这些占位符被插入所以必须确保插入的值的格式正确。因此，确保插入的值格式化和转义正确是非常重要的。模板字符串可以包含占位符模板字符串可以包含消息元数据和有效载荷字段的占位符。这些占位符被插入所以必须确保插入的值的格式正确。确保插入的值被正确地格式化和转义。",
@@ -1889,7 +1929,7 @@
     },
     "auth_token": {
       "desc": "令牌认证的参数。",
-      "label": "Token auth params"
+      "label": "Token 认证参数"
     },
     "auth_token_jwt": {
       "desc": "JWT 认证令牌。",
@@ -2029,7 +2069,7 @@
     },
     "exchange": {
       "desc": " RabbitMQ Exchange 名称。",
-      "label": "Exchange"
+      "label": "交换机"
     },
     "exchange_type": {
       "desc": "RabbitMQ Exchange 的类型（例如 direct，fanout，或 topic）。",
@@ -2061,7 +2101,7 @@
     },
     "routing_key": {
       "desc": "用于路由消息的 Routing Key。",
-      "label": "Routing Key"
+      "label": "路由键"
     },
     "server": {
       "desc": "RabbitMQ 服务器的主机名或 IP 地址（例如 localhost）。",
@@ -2400,6 +2440,10 @@
     "mqtt_topic": {
       "desc": "MQTT 主题或主题过滤器作为数据源（动作输入）。 如果规则动作用作数据源，则应将此配置留空，否则消息将在远程系统中重复。",
       "label": "源 MQTT 主题"
+    },
+    "desc_sources": {
+      "desc": "Source 的配置。",
+      "label": "Source 配置"
     }
   },
   "emqx_bridge_webhook_schema": {
@@ -2737,7 +2781,7 @@
     },
     "desc_console_handler": {
       "desc": "日志处理进程将日志事件打印到 EMQX 控制台。",
-      "label": "Console Handler"
+      "label": "控制台处理进程"
     },
     "desc_db": {
       "desc": "内置数据库的配置。",
@@ -2789,7 +2833,7 @@
     },
     "log_burst_limit_window_time": {
       "desc": "参考 <code>max_count</code>。",
-      "label": "Window Time"
+      "label": "窗口时间"
     },
     "log_file_handler_file": {
       "desc": "日志文件路径及名字。",
@@ -2801,7 +2845,7 @@
     },
     "log_file_handlers": {
       "desc": "输出到文件的日志处理进程列表",
-      "label": "File Handler"
+      "label": "文件日志处理进程"
     },
     "log_overload_kill_enable": {
       "desc": "日志处理进程过载时为保护自己节点其它的业务能正常，强制杀死日志处理进程。",
@@ -2961,7 +3005,7 @@
     },
     "rpc_socket_keepalive_idle": {
       "desc": "broker 之间的连接在最后一条消息发送后保持打开的时间。",
-      "label": "RPC Socket Keepalive Idle"
+      "label": "RPC Socket Keepalive 空闲时间"
     },
     "rpc_socket_keepalive_interval": {
       "desc": "keepalive 消息的间隔。",
@@ -3153,7 +3197,7 @@
   "emqx_connector_ldap": {
     "bind_dn": {
       "desc": "LDAP 绑定的 DN 的值",
-      "label": "Bind DN"
+      "label": "绑定 DN"
     },
     "port": {
       "desc": "LDAP 端口",
@@ -3834,6 +3878,14 @@
     "view_status_api": {
       "desc": "查看慢订阅状态",
       "label": "查看慢订阅状态"
+    },
+    "bad_topic_name": {
+      "desc": "错误的主题名称",
+      "label": "错误的主题名称"
+    },
+    "no_delayed_message": {
+      "desc": "此主题下没有找到延迟消息",
+      "label": "未找到延迟消息"
     }
   },
   "emqx_ee_bridge_hstreamdb": {
@@ -4893,7 +4945,7 @@
   "emqx_ldap": {
     "base_dn": {
       "desc": "与基本对象条目（或根）相关的名称。\n搜索用户的起点。",
-      "label": "Base DN"
+      "label": "基本 DN"
     },
     "bind_password": {
       "desc": "绑定密码的模版",
@@ -4945,7 +4997,7 @@
     },
     "key_field": {
       "desc": "申请或购买 License 时获得的密钥字符串",
-      "label": "License Key"
+      "label": "License 密钥"
     },
     "license_root": {
       "desc": "EMQX 企业版 License 。\nEMQX 自带一个默认的试用 License，允许最多接入 100 个连接，签发时间是 2023 年 1 月 9 日，有效期是 5 年（1825 天）。若需要在生产环境部署，\n请购买 License 或访问 https://www.emqx.com/apply-licenses/emqx 申请。",
@@ -5222,6 +5274,14 @@
     "invite_node": {
       "desc": "邀请节点加入集群",
       "label": "邀请节点加入集群"
+    },
+    "get_invitation_status": {
+      "desc": "获取每个节点所有异步邀请状态的执行状态",
+      "label": "获取邀请状态"
+    },
+    "invite_node_async": {
+      "desc": "向一个节点发送加入集群的邀请，但不等待加入结果。加入状态可以通过 `GET api/<version>/invitation` 获取。",
+      "label": "异步邀请"
     }
   },
   "emqx_mgmt_api_configs": {
@@ -5888,7 +5948,7 @@
     },
     "sid": {
       "desc": "Oracle Database Sid 名称",
-      "label": "Oracle Database Sid"
+      "label": "Oracle 数据库 Sid"
     }
   },
   "emqx_otel_schema": {
@@ -5930,7 +5990,7 @@
     },
     "max_queue_size": {
       "desc": "最大队列大小。达到此大小后，Open Telemetry 信号将被丢弃。",
-      "label": "Max Queue Size"
+      "label": "最大队列大小"
     },
     "otel_exporter": {
       "desc": "Open Telemetry 导出器",
@@ -6006,16 +6066,24 @@
   },
   "emqx_prometheus_api": {
     "get_prom_conf_info": {
-      "desc": "Get Prometheus config info",
-      "label": "Get Prometheus config info"
+      "desc": "获取 Prometheus 配置信息",
+      "label": "获取 Prometheus 配置信息"
     },
     "get_prom_data": {
-      "desc": "Get Prometheus Data",
-      "label": "Get Prometheus Data"
+      "desc": "获取 Prometheus 数据",
+      "label": "获取 Prometheus 数据"
     },
     "update_prom_conf_info": {
-      "desc": "Update Prometheus config",
-      "label": "Update Prometheus config"
+      "desc": "更新 Prometheus 配置",
+      "label": "更新 Prometheus 配置"
+    },
+    "get_prom_auth_data": {
+      "desc": "获取 AuthN、AuthZ 和 Banned 的 Prometheus 指标",
+      "label": "Auth 的 Prometheus 指标"
+    },
+    "get_prom_data_integration_data": {
+      "desc": "获取数据集成的 Prometheus 指标",
+      "label": "数据集成的 Prometheus 指标"
     }
   },
   "emqx_prometheus_schema": {
@@ -6271,6 +6339,13 @@
     "update_retainer_api": {
       "desc": "更新配置",
       "label": "更新配置"
+    },
+    "delete_messages": {
+      "desc": "删除所有保留消息",
+      "label": "删除保留消息"
+    },
+    "query_match_topic": {
+      "desc": "主题过滤器，支持通配符，省略此项以匹配所有消息。"
     }
   },
   "emqx_retainer_schema": {
@@ -6498,7 +6573,7 @@
     },
     "metrics_sql_matched_rate": {
       "desc": "命中速率，次/秒",
-      "label": "Matched Rate"
+      "label": "匹配率"
     },
     "metrics_sql_matched_rate_last5m": {
       "desc": "5 分钟平均命中速率，次/秒",
@@ -6765,37 +6840,37 @@
   },
   "emqx_s3_schema": {
     "access_key_id": {
-      "desc": "The access key ID of the S3 bucket."
+      "desc": "S3 桶的访问密钥 ID。"
     },
     "acl": {
-      "desc": "The ACL to use for the uploaded objects."
+      "desc": "上传对象使用的 ACL。"
     },
     "bucket": {
-      "desc": "The name of the S3 bucket."
+      "desc": "S3 桶的名称。"
     },
     "host": {
-      "desc": "The host of the S3 endpoint."
+      "desc": "S3 端点的主机。"
     },
     "ipv6_probe": {
-      "desc": "Whether to probe for IPv6 support."
+      "desc": "是否探测 IPv6 支持。"
     },
     "max_part_size": {
-      "desc": "The maximum part size for multipart uploads.<br/>\nS3 uploader won't try to upload parts larger than this size."
+      "desc": "多部分上传的最大部分大小。<br/>\nS3 上传器不会尝试上传超过此大小的部分。"
     },
     "min_part_size": {
-      "desc": "The minimum part size for multipart uploads.<br/>\nUploaded data will be accumulated in memory until this size is reached."
+      "desc": "多部分上传的最小部分大小。<br/>\n上传的数据将在内存中累积，直到达到此大小。"
     },
     "port": {
-      "desc": "The port of the S3 endpoint."
+      "desc": "S3 端点的端口。"
     },
     "secret_access_key": {
-      "desc": "The secret access key of the S3 bucket."
+      "desc": "S3 桶的密钥访问密钥。"
     },
     "transport_options": {
-      "desc": "Options for the HTTP transport layer used by the S3 client."
+      "desc": "S3 客户端使用的 HTTP 传输层选项。"
     },
     "url_expire_time": {
-      "desc": "The time in seconds for which the signed URLs to the S3 objects are valid."
+      "desc": "S3 对象的签名 URL 有效时间（秒）。"
     }
   },
   "emqx_schema": {
@@ -7720,6 +7795,17 @@
     },
     "session_storage_backend_enable": {
       "desc": "启用此后端。"
+    },
+    "broker_routing_batch_sync_enable_on": {
+      "desc": "启用一个专门的进程池，能够批量地将订阅信息与全局路由表同步。\n特别适用于减少可能由于网络延迟导致的跨节点通信的减慢，还可能在其他场景下减轻代理池的负载，从而最大限度地减少了过载的风险。\n选定的值决定哪些节点在集群中将启用此功能。\n- <code>all</code>: 在每个节点上无条件启用，\n- <code>replicant</code>: 仅在复制节点上启用（例如那些<code>node.role = replicant</code>的节点），\n- <code>core</code>: 仅在核心节点上启用，\n- <code>none</code>: 完全禁用此功能。"
+    },
+    "fields_authz_cache_excludes": {
+      "desc": "排除主题列表，列表内的主题将不会生成授权缓存。",
+      "label": "排除主题列表"
+    },
+    "resource_tags": {
+      "desc": "连接器的标签",
+      "label": "标签"
     }
   },
   "emqx_slow_subs_api": {
@@ -8274,7 +8360,7 @@
     },
     "local_topic": {
       "desc": "要转发到 GreptimeDB 的 MQTT 主题过滤器。所有 MQTT 'PUBLISH' 消息中与 local_topic 匹配的主题都将被转发。<br/>\n注意：如果此动作用作规则引擎 (EMQX 规则引擎) 的动作，并且配置了 local_topic，那么将会转发规则获取的数据以及与 local_topic 匹配的 MQTT 消息。",
-      "label": "Local Topic"
+      "label": "本地主题"
     },
     "write_syntax": {
       "desc": "GreptimeDB gRPC 协议写入数据点的配置。写入语法是一种文本格式，提供了数据点的测量、标签集、字段集和时间戳，并支持占位符，与 InfluxDB 行协议相同。\n参见 [InfluxDB 2.3 行协议](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) 和\n[GreptimeDB 1.8 行协议](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) <br/>\n简而言之:<br/>\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\n请注意，整数值的占位符必须用后缀 `i` 注释。例如 `${payload.int_value}i`。",
@@ -8334,7 +8420,7 @@
     },
     "local_topic": {
       "desc": "要转发到 HStreamDB 的 MQTT 主题过滤器。所有与 local_topic 匹配的 MQTT 'PUBLISH' 消息都将被转发。<br/>\n注意：如果此动作用作规则的操作（EMQX 规则引擎），并且还配置了 local_topic，则将同时转发从规则获取的数据和与 local_topic 匹配的 MQTT 消息。",
-      "label": "Local Topic"
+      "label": "本地主题"
     },
     "record_template": {
       "desc": "要转发到 HStreamDB 的 HStream 记录模板。支持占位符。<br>\n注意：当您使用'原始记录'模板（这意味着数据不是有效的 JSON）时，您应该在 HStream 中使用 'read' 或 'subscription' 来获取数据。",
@@ -8699,6 +8785,10 @@
     "username": {
       "desc": "MQTT 协议的用户名",
       "label": "用户名"
+    },
+    "config_connector": {
+      "desc": "MQTT connector 的配置。",
+      "label": "MQTT 连接器"
     }
   },
   "emqx_bridge_mysql": {
@@ -9068,7 +9158,7 @@
     },
     "schema_registry_schemas": {
       "desc": "已注册的 schema。",
-      "label": "Registered schemas"
+      "label": "已注册的 schema"
     },
     "schema_source": {
       "desc": "Schema 的源文本。",
@@ -9077,6 +9167,184 @@
     "schema_type": {
       "desc": "Schema 类型。",
       "label": "Schema 类型"
+    }
+  },
+  "emqx_bridge_es": {
+    "action_config": {
+      "desc": "ElasticSearch 动作配置项",
+      "label": "ElasticSearch 动作配置"
+    },
+    "action_create": {
+      "desc": "将一个 JSON 文件添加到指定的索引中，并使其可搜索。\n如果目标是一个索引并且文件已经存在，\n请求会更新该文件并增加其版本。",
+      "label": "创建文件"
+    },
+    "action_delete": {
+      "desc": "从指定的索引中删除一个 JSON 文件。",
+      "label": "删除文件"
+    },
+    "action_parameters": {
+      "desc": "ElasticSearch 动作参数",
+      "label": "参数"
+    },
+    "action_resource_opts": {
+      "desc": "资源选项。",
+      "label": "资源选项"
+    },
+    "action_update": {
+      "desc": "使用指定的文件更新一个文件。",
+      "label": "更新文件"
+    },
+    "auth_basic": {
+      "desc": "基本认证的参数。",
+      "label": "基本认证参数"
+    },
+    "config_auth_basic_password": {
+      "desc": "ElasticSearch REST 连接密码",
+      "label": "密码"
+    },
+    "config_auth_basic_username": {
+      "desc": "ElasticSearch REST 连接用户名",
+      "label": "用户名"
+    },
+    "config_authentication": {
+      "desc": "认证配置",
+      "label": "认证"
+    },
+    "config_doc_as_upsert": {
+      "desc": "你可以将 doc_as_upsert 设置为 true，使用 doc 的内容作为 upsert 值，而不是发送一个不完整的文件加上一个 upsert 文件。",
+      "label": "doc_as_upsert"
+    },
+    "config_enable": {
+      "desc": "启用或停用此动作",
+      "label": "启用或停用动作"
+    },
+    "config_max_retries": {
+      "desc": "当 HTTP 请求失败时的最大重试次数。",
+      "label": "HTTP 请求最大重试次数"
+    },
+    "config_overwrite": {
+      "desc": "如果指定 _id 的文档已经存在（冲突），将设置为 false，操作将失败。",
+      "label": "是否覆盖"
+    },
+    "config_parameters_doc": {
+      "desc": "JSON 文档模板，如果留空则为包含所有可用字段的 JSON 文本，如 clientid、topic、payload 等。",
+      "label": "文档模板"
+    },
+    "config_parameters_id": {
+      "desc": "文档 ID。如果没有指定 ID，将自动生成。",
+      "label": "文档 ID"
+    },
+    "config_parameters_index": {
+      "desc": "执行操作的索引名称或索引别名。\n此参数是必需的。",
+      "label": "索引"
+    },
+    "config_parameters_require_alias": {
+      "desc": "如果为 true，则操作必须针对一个索引别名。默认为 false。",
+      "label": "启用别名"
+    },
+    "config_require_alias": {
+      "desc": "如果为 true, 则请求的操作必须针对一个索引别名。默认为 false。",
+      "label": "启用别名"
+    },
+    "config_routing": {
+      "desc": "用于将操作路由到特定分片的自定义值。",
+      "label": "路由"
+    },
+    "config_target": {
+      "desc": "执行批量操作的数据流、索引或索引别名的名称。",
+      "label": "目标"
+    },
+    "config_wait_for_active_shards": {
+      "desc": "进行操作前必须活跃的分片副本数。\n设置为 all 或任何正整数直至索引中的分片总数（number_of_replicas+1）。\n默认：1，即主分片。"
+    },
+    "desc_config": {
+      "desc": "动作的配置项。",
+      "label": "动作配置"
+    },
+    "desc_name": {
+      "desc": "动作的名称，作为对动作的用户可读描述。",
+      "label": "动作名称"
+    },
+    "elasticsearch": {
+      "desc": "Elasticsearch 动作",
+      "label": "ElasticSearch"
+    }
+  },
+  "emqx_bridge_es_connector": {
+    "auth_basic": {
+      "label": "认证信息"
+    },
+    "config_auth_basic_password": {
+      "desc": "ElasticSearch REST 连接密码",
+      "label": "密码"
+    },
+    "config_auth_basic_username": {
+      "desc": "IoTDB REST 接口配置的用户名",
+      "label": "用户名"
+    },
+    "config_authentication": {
+      "desc": "认证配置",
+      "label": "认证"
+    },
+    "config_max_retries": {
+      "desc": "当 HTTP 请求失败时的最大重试次数。",
+      "label": "HTTP 请求最大重试次数"
+    },
+    "desc_config": {
+      "desc": "ElasticSearch 动作的配置。",
+      "label": "ElasticSearch 动作配置"
+    },
+    "server": {
+      "desc": "要连接的 IPv4 或 IPv6 地址或主机名。\n一个主机条目有如下形式：`主机[:端口]`。\n如果没有指定 `[:端口]`，则使用 Elasticsearch 默认端口 9200。",
+      "label": "服务器主机"
+    }
+  },
+  "emqx_bridge_iotdb_connector": {
+    "auth_basic": {
+      "desc": "基本认证的参数。",
+      "label": "基本认证参数"
+    },
+    "config_auth_basic_password": {
+      "desc": "IoTDB REST 接口配置的密码",
+      "label": "密码"
+    },
+    "config_auth_basic_username": {
+      "desc": "IoTDB REST 接口配置的用户名",
+      "label": "用户名"
+    },
+    "config_authentication": {
+      "desc": "认证配置",
+      "label": "认证"
+    },
+    "config_base_url": {
+      "desc": "外部 IoTDB 服务的 REST 接口的基础 URL。",
+      "label": "服务器地址"
+    },
+    "config_max_retries": {
+      "desc": "当 HTTP 请求失败时的最大重试次数。",
+      "label": "HTTP 请求最大重试次数"
+    },
+    "desc_config": {
+      "desc": "Apache IoTDB 连接器的配置。",
+      "label": "IoTDB 连接器配置"
+    }
+  },
+  "emqx_bridge_mqtt_pubsub_schema": {
+    "action_parameters": {
+      "desc": "动作的具体配置。",
+      "label": "动作"
+    },
+    "ingress_parameters": {
+      "desc": "Source 的具体配置",
+      "label": "Source"
+    },
+    "mqtt_publisher_action": {
+      "desc": "发布动作的配置。",
+      "label": "动作"
+    },
+    "mqtt_subscriber_source": {
+      "desc": "订阅 Source 的配置。",
+      "label": "Source"
     }
   }
 }
