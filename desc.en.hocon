@@ -89,6 +89,10 @@
       "desc": "Update user in authenticator in global authentication chain.",
       "label": "Update user in authenticator"
     },
+    "authentication_order_put": {
+      "desc": "Reorder all authenticators in global authentication chain.",
+      "label": "Reorder Authenticators"
+    },
     "authentication_post": {
       "desc": "Create authenticator for global authentication.",
       "label": "Create authenticator"
@@ -607,6 +611,10 @@
       "desc": "List all authorization sources",
       "label": "List all authorization sources"
     },
+    "authorization_sources_order_put": {
+      "desc": "Reorder all authorization sources.",
+      "label": "Reorder Authorization Sources"
+    },
     "authorization_sources_post": {
       "desc": "Add a new source",
       "label": "Add a new source"
@@ -1097,6 +1105,10 @@
       "desc": "Partition strategy is to tell the producer how to dispatch messages to partitions.\n\n<code>random</code>: Randomly pick a partition for each message.\n<code>key_dispatch</code>: Assigns messages to partitions based on a hash of the message key,\nensuring consistent partition for messages with the same key.",
       "label": "Partition Strategy"
     },
+    "partitions_limit": {
+      "desc": "Limit the number of partitions to produce data for the given topic.\nThe special value `all_partitions` is to utilize all partitions for the topic.\nSetting this to a value which is greater than the total number of partitions in has no effect.",
+      "label": "Max Partitions"
+    },
     "producer_buffer": {
       "desc": "Configure producer message buffer.\n\nTell Azure Event Hubs producer how to buffer messages when EMQX has more messages to send than Azure Event Hubs can keep up, or when Azure Event Hubs is down.",
       "label": "Message Buffer"
@@ -1163,6 +1175,14 @@
     }
   },
   "emqx_bridge_cassandra": {
+    "action_parameters": {
+      "desc": "Action specific configs.",
+      "label": "Action"
+    },
+    "cassandra_action": {
+      "desc": "Action configs.",
+      "label": "Action"
+    },
     "config_enable": {
       "desc": "Enable or disable this bridge",
       "label": "Enable Or Disable Bridge"
@@ -1189,6 +1209,10 @@
     }
   },
   "emqx_bridge_cassandra_connector": {
+    "config": {
+      "desc": "Cassandra connection config",
+      "label": "Connection config"
+    },
     "keyspace": {
       "desc": "Keyspace name to connect to.",
       "label": "Keyspace"
@@ -1199,9 +1223,17 @@
     }
   },
   "emqx_bridge_clickhouse": {
+    "action_parameters": {
+      "desc": "Action specific configs.",
+      "label": "Action"
+    },
     "batch_value_separator": {
       "desc": "The default value ',' works for the VALUES format. You can also use other separator if other format is specified. See [INSERT INTO Statement](https://clickhouse.com/docs/en/sql-reference/statements/insert-into).",
       "label": "Batch Value Separator"
+    },
+    "clickhouse_action": {
+      "desc": "Action configs.",
+      "label": "Action"
     },
     "config_enable": {
       "desc": "Enable or disable this bridge",
@@ -1375,6 +1407,10 @@
       "desc": "Partition strategy is to tell the producer how to dispatch messages to partitions.\n\n<code>random</code>: Randomly pick a partition for each message.\n<code>key_dispatch</code>: Assigns messages to partitions based on a hash of the message key,\nensuring consistent partition for messages with the same key.",
       "label": "Partition Strategy"
     },
+    "partitions_limit": {
+      "desc": "Limit the number of partitions to produce data for the given topic.\nThe special value `all_partitions` is to utilize all partitions for the topic.\nSetting this to a value which is greater than the total number of partitions in has no effect.",
+      "label": "Max Partitions"
+    },
     "producer_buffer": {
       "desc": "Configure producer message buffer.\n\nTell Confluent producer how to buffer messages when EMQX has more messages to send than Confluent can keep up, or when Confluent is down.",
       "label": "Message Buffer"
@@ -1441,6 +1477,14 @@
     }
   },
   "emqx_bridge_dynamo": {
+    "action_parameters": {
+      "desc": "Action specific configuration.",
+      "label": "Action"
+    },
+    "config_connector": {
+      "desc": "Configuration for an DynamoDB connector.",
+      "label": "DynamoDB Connector Configuration"
+    },
     "config_enable": {
       "desc": "Enable or disable this bridge",
       "label": "Enable Or Disable Bridge"
@@ -1456,6 +1500,10 @@
     "desc_type": {
       "desc": "The Bridge Type",
       "label": "Bridge Type"
+    },
+    "dynamo_action": {
+      "desc": "Configuration for DynamoDB action.",
+      "label": "DynamoDB Action Configuration"
     },
     "local_topic": {
       "desc": "The MQTT topic filter to be forwarded to DynamoDB. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also `local_topic` is\nconfigured, then both the data got from the rule and the MQTT messages that match `local_topic`\nwill be forwarded.",
@@ -1721,6 +1769,20 @@
       "label": "GCP Service Account Credentials"
     }
   },
+  "emqx_bridge_gcp_pubsub_consumer_schema": {
+    "config_connector": {
+      "desc": "Configuration for a GCP PubSub Consumer Client.",
+      "label": "GCP PubSub Consumer Client Configuration"
+    },
+    "consumer_source": {
+      "desc": "Source configs.",
+      "label": "Source"
+    },
+    "source_parameters": {
+      "desc": "Source specific configs.",
+      "label": "Source Specific Configs"
+    }
+  },
   "emqx_bridge_gcp_pubsub_producer_schema": {
     "action_parameters": {
       "desc": "Action specific configs.",
@@ -1736,9 +1798,17 @@
     }
   },
   "emqx_bridge_greptimedb": {
+    "action_parameters": {
+      "desc": "Additional parameters specific to this action type",
+      "label": "Action Parameters"
+    },
     "config_enable": {
       "desc": "Enable or disable this action.",
       "label": "Enable Or Disable Action"
+    },
+    "connector": {
+      "desc": "GreptimeDB Connector Configs",
+      "label": "GreptimeDB Connector"
     },
     "desc_config": {
       "desc": "Configuration for an GreptimeDB action.",
@@ -1751,6 +1821,10 @@
     "desc_type": {
       "desc": "The type of the action.",
       "label": "Action Type"
+    },
+    "greptimedb_action": {
+      "desc": "Action to interact with a GreptimeDB connector",
+      "label": "GreptimeDB Action"
     },
     "local_topic": {
       "desc": "The MQTT topic filter to be forwarded to the GreptimeDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: If this Sink is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
@@ -1792,6 +1866,26 @@
     }
   },
   "emqx_bridge_hstreamdb": {
+    "action_parameters": {
+      "desc": "Action specific configuration.",
+      "label": "Action"
+    },
+    "aggregation_pool_size": {
+      "desc": "The size of the record aggregation pool. A larger aggregation pool size can lead to enhanced parallelization but may also result in reduced efficiency due to smaller batch sizes.",
+      "label": "Aggregation Pool Size"
+    },
+    "batch_interval": {
+      "desc": "Maximum interval that is allowed between two successive (batch) request.",
+      "label": "Max Batch Interval"
+    },
+    "batch_size": {
+      "desc": "Maximum number of insert data clauses that can be sent in a single request.",
+      "label": "Max Batch Append Count"
+    },
+    "config_connector": {
+      "desc": "Configuration for an HStreamDB connector.",
+      "label": "HStreamDB Connector Configuration"
+    },
     "config_direction": {
       "desc": "The direction of this bridge, MUST be 'egress'",
       "label": "Bridge Direction"
@@ -1812,13 +1906,29 @@
       "desc": "The type of the action.",
       "label": "Action Type"
     },
+    "grpc_flush_timeout": {
+      "desc": "Time interval for flushing gRPC calls to the HStreamDB server.",
+      "label": "gRPC Flush Interval"
+    },
+    "hstreamdb_action": {
+      "desc": "Configuration for HStreamDB action.",
+      "label": "HStreamDB Action Configuration"
+    },
     "local_topic": {
       "desc": "The MQTT topic filter to be forwarded to the HStreamDB. All MQTT 'PUBLISH' messages with the topic\nmatching the local_topic will be forwarded.<br/>\nNOTE: If this action is used as the action of a rule (EMQX rule engine), and also local_topic is\nconfigured, then both the data got from the rule and the MQTT messages that match local_topic\nwill be forwarded.",
       "label": "Local Topic"
     },
+    "max_batches": {
+      "desc": "Maximum number of unconfirmed batches in the flush queue.",
+      "label": "Max Batches"
+    },
     "record_template": {
       "desc": "The HStream Record template to be forwarded to the HStreamDB. Placeholders supported.<br>\nNOTE: When you use `raw record` template (which means the data is not a valid JSON), you should use `read` or `subscription` in HStream to get the data.",
       "label": "HStream Record"
+    },
+    "writer_pool_size": {
+      "desc": "The size of the writer pool. A larger pool may increase parallelization and concurrent write operations, potentially boosting throughput. Trade-offs include greater memory consumption and possible resource contention.",
+      "label": "Writer Pool Size"
     }
   },
   "emqx_bridge_hstreamdb_connector": {
@@ -1827,7 +1937,7 @@
       "label": "Connection config"
     },
     "grpc_timeout": {
-      "desc": "HStreamDB gRPC Timeout.",
+      "desc": "The timeout for HStreamDB gRPC requests.",
       "label": "HStreamDB gRPC Timeout"
     },
     "name": {
@@ -1839,7 +1949,7 @@
       "label": "HStreamDB Partition Key"
     },
     "pool_size": {
-      "desc": "HStreamDB Pool Size.",
+      "desc": "The size of the aggregation pool and the writer pool (see the description of the HStreamDB action for more information about these pools). Larger pool sizes can enhance parallelization but may also reduce efficiency due to smaller batch sizes.",
       "label": "HStreamDB Pool Size"
     },
     "stream_name": {
@@ -1851,7 +1961,7 @@
       "label": "Connector Type"
     },
     "url": {
-      "desc": "HStreamDB Server URL. Using gRPC http server address.",
+      "desc": "HStreamDB Server URL. This URL will be used as the gRPC HTTP server address.",
       "label": "HStreamDB Server URL"
     }
   },
@@ -2348,6 +2458,10 @@
       "desc": "Partition strategy is to tell the producer how to dispatch messages to partitions.\n\n<code>random</code>: Randomly pick a partition for each message.\n<code>key_dispatch</code>: Assigns messages to partitions based on a hash of the message key,\nensuring consistent partition for messages with the same key.",
       "label": "Partition Strategy"
     },
+    "partitions_limit": {
+      "desc": "Limit the number of partitions to produce data for the given topic.\nThe special value `all_partitions` is to utilize all partitions for the topic.\nSetting this to a value which is greater than the total number of partitions in has no effect.",
+      "label": "Max Partitions"
+    },
     "producer_buffer": {
       "desc": "Configure producer message buffer.\n\nTell Kafka producer how to buffer messages when EMQX has more messages to send than Kafka can keep up, or when Kafka is down.",
       "label": "Message Buffer"
@@ -2409,7 +2523,25 @@
       "label": "Synchronous Query Timeout"
     }
   },
+  "emqx_bridge_kafka_consumer_schema": {
+    "config_connector": {
+      "desc": "Configuration for a Kafka Consumer Client.",
+      "label": "Kafka Consumer Client Configuration"
+    },
+    "consumer_source": {
+      "desc": "Source configs.",
+      "label": "Source"
+    },
+    "source_parameters": {
+      "desc": "Source specific configs.",
+      "label": "Source Specific Configs"
+    }
+  },
   "emqx_bridge_kinesis": {
+    "action_parameters": {
+      "desc": "Action specific configuration.",
+      "label": "Action"
+    },
     "aws_access_key_id": {
       "desc": "Access Key ID for connecting to Amazon Kinesis.",
       "label": "AWS Access Key ID"
@@ -2417,6 +2549,10 @@
     "aws_secret_access_key": {
       "desc": "AWS Secret Access Key for connecting to Amazon Kinesis.",
       "label": "AWS Secret Access Key"
+    },
+    "config_connector": {
+      "desc": "Configuration for a Kinesis Client.",
+      "label": "Kinesis Client Configuration"
     },
     "config_enable": {
       "desc": "Enable or disable this action",
@@ -2437,6 +2573,10 @@
     "endpoint": {
       "desc": "The url of Amazon Kinesis endpoint.",
       "label": "Amazon Kinesis Endpoint"
+    },
+    "kinesis_action": {
+      "desc": "Configuration for Kinesis Action",
+      "label": "Kinesis Action Configuration"
     },
     "local_topic": {
       "desc": "The MQTT topic filter to be forwarded to Amazon Kinesis. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.<br/>\nNOTE: If this action is used as the action of a rule (EMQX rule engine), and also `local_topic` is\nconfigured, then both the data got from the rule and the MQTT messages that match `local_topic`\nwill be forwarded.",
@@ -2702,9 +2842,33 @@
     }
   },
   "emqx_bridge_opents": {
+    "action_parameters": {
+      "desc": "OpenTSDB action parameters",
+      "label": "Parameters"
+    },
+    "action_parameters_data": {
+      "desc": "OpenTSDB action parameter data",
+      "label": "Parameter Data"
+    },
     "config_enable": {
       "desc": "Enable or disable this bridge",
       "label": "Enable Or Disable Bridge"
+    },
+    "config_parameters_metric": {
+      "desc": "Metric. Placeholders in the format of ${var} are supported",
+      "label": "Metric"
+    },
+    "config_parameters_tags": {
+      "desc": "Tags. Only supports with placeholder to extract tags from a variable or a tags map",
+      "label": "Tags"
+    },
+    "config_parameters_timestamp": {
+      "desc": "Timestamp. Placeholders in the format of ${var} are supported",
+      "label": "Timestamp"
+    },
+    "config_parameters_value": {
+      "desc": "Value. Placeholders in the format of ${var} are supported",
+      "label": "Value"
     },
     "desc_config": {
       "desc": "Configuration for an OpenTSDB bridge.",
@@ -2720,6 +2884,10 @@
     }
   },
   "emqx_bridge_opents_connector": {
+    "desc_config": {
+      "desc": "Configuration for OpenTSDB Connector.",
+      "label": "OpenTSDB Connector Configuration"
+    },
     "details": {
       "desc": "Whether to return detailed information.",
       "label": "Details"
@@ -2734,6 +2902,14 @@
     }
   },
   "emqx_bridge_oracle": {
+    "action_parameters": {
+      "desc": "Action specific configuration.",
+      "label": "Action"
+    },
+    "config_connector": {
+      "desc": "Configuration for an Oracle Client.",
+      "label": "Oracle Client Configuration"
+    },
     "config_enable": {
       "desc": "Enable or disable this bridge",
       "label": "Enable Or Disable Bridge"
@@ -2753,6 +2929,10 @@
     "local_topic": {
       "desc": "The MQTT topic filter to be forwarded to Oracle Database. All MQTT 'PUBLISH' messages with the topic matching the local_topic will be forwarded.<br/>NOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also local_topic is configured, then both the data got from the rule and the MQTT messages that match local_topic will be forwarded.",
       "label": "Local Topic"
+    },
+    "oracle_action": {
+      "desc": "Configuration for Oracle Action",
+      "label": "Oracle Action Configuration"
     },
     "server": {
       "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>A host entry has the following form: `Host[:Port]`.<br/>The Oracle Database default port 1521 is used if `[:Port]` is not specified.",
@@ -2831,20 +3011,24 @@
       "label": "Authentication"
     },
     "buffer_memory_overload_protection": {
-      "desc": "Applicable when buffer mode is set to <code>memory</code>\nEMQX will drop old buffered messages under high memory pressure. The high memory threshold is defined in config <code>sysmon.os.sysmem_high_watermark</code>. NOTE: This config only works on Linux.",
+      "desc": "Applicable when buffer mode is set to <code>memory</code>\nEMQX will drop old buffered messages under high memory pressure.\nThe high memory threshold is defined in config <code>sysmon.os.sysmem_high_watermark</code>.\n NOTE: This config only works on Linux.",
       "label": "Memory Overload Protection"
     },
     "buffer_mode": {
-      "desc": "Message buffer mode.\n<code>memory</code>: Buffer all messages in memory. The messages will be lost in case of EMQX node restart\n<code>disk</code>: Buffer all messages on disk. The messages on disk are able to survive EMQX node restart.\n<code>hybrid</code>: Buffer message in memory first, when up to certain limit (see <code>segment_bytes</code> config for more information), then start offloading messages to disk, Like <code>memory</code> mode, the messages will be lost in case of EMQX node restart.",
+      "desc": "Message buffer mode.\n<code>memory</code>: Buffer all messages in memory. The messages will be lost\n in case of EMQX node restart\\n<code>disk</code>: Buffer all messages on disk.\n The messages on disk are able to survive EMQX node restart.\n<code>hybrid</code>: Buffer message in memory first, when up to certain limit\n (see <code>segment_bytes</code> config for more information), then start offloading\n messages to disk, Like <code>memory</code> mode, the messages will be lost in\n case of EMQX node restart.",
       "label": "Buffer Mode"
     },
     "buffer_per_partition_limit": {
-      "desc": "Number of bytes allowed to buffer for each Pulsar partition. When this limit is exceeded, old messages will be dropped in a trade for credits for new messages to be buffered.",
+      "desc": "Number of bytes allowed to buffer for each Pulsar partition.\n When this limit is exceeded, old messages will be dropped in a trade for credits\n for new messages to be buffered.",
       "label": "Per-partition Buffer Limit"
     },
     "buffer_segment_bytes": {
       "desc": "Applicable when buffer mode is set to <code>disk</code> or <code>hybrid</code>.\nThis value is to specify the size of each on-disk buffer file.",
       "label": "Segment File Bytes"
+    },
+    "config_connector": {
+      "desc": "Pulsar connector config",
+      "label": "Pulsar Connector"
     },
     "config_enable": {
       "desc": "Enable (true) or disable (false) this Pulsar bridge.",
@@ -2854,9 +3038,13 @@
       "desc": "Maximum wait time for TCP connection establishment (including authentication time if enabled).",
       "label": "Connect Timeout"
     },
+    "connector_resource_opts": {
+      "desc": "Pulsar connector resource options",
+      "label": "Resource Options"
+    },
     "desc_name": {
-      "desc": "Action name, a human-readable identifier.",
-      "label": "Action Name"
+      "desc": "Bridge name, used as a human-readable description of the bridge.",
+      "label": "Bridge Name"
     },
     "desc_type": {
       "desc": "The Bridge Type",
@@ -2867,24 +3055,54 @@
       "label": "Batch size"
     },
     "producer_buffer": {
-      "desc": "Configure producer message buffer.\n\nTell Pulsar producer how to buffer messages when EMQX has more messages to send than Pulsar can keep up, or when Pulsar is down.",
+      "desc": "Configure producer message buffer.\"\nTell Pulsar producer how to buffer messages when EMQX has more messages to\"\n send than Pulsar can keep up, or when Pulsar is down.",
       "label": "Message Buffer"
     },
     "producer_compression": {
       "desc": "Compression method.",
       "label": "Compression"
     },
-    "producer_key_template": {
-      "desc": "Template to render Pulsar message key.",
-      "label": "Message Key"
-    },
     "producer_local_topic": {
-      "desc": "MQTT topic or topic filter as data source (bridge input). If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in Pulsar.",
+      "desc": "MQTT topic or topic filter as data source (bridge input)\n If rule action is used as data source, this config should be left empty,\n otherwise messages will be duplicated in Pulsar.",
       "label": "Source MQTT Topic"
     },
     "producer_max_batch_bytes": {
-      "desc": "Maximum bytes to collect in a Pulsar message batch. Most of the Pulsar brokers default to a limit of 5 MB batch size. EMQX's default value is less than 5 MB in order to compensate Pulsar message encoding overheads (especially when each individual message is very small). When a single message is over the limit, it is still sent (as a single element batch).",
+      "desc": "Maximum bytes to collect in a Pulsar message batch. Most of the Pulsar brokers\n default to a limit of 5 MB batch size. EMQX's default value is less than 5 MB in\n order to compensate Pulsar message encoding overheads (especially when each individual\n message is very small). When a single message is over the limit, it is still\n sent (as a single element batch).",
       "label": "Max Batch Bytes"
+    },
+    "producer_pulsar_topic": {
+      "desc": "Pulsar topic name",
+      "label": "Pulsar topic name"
+    },
+    "producer_retention_period": {
+      "desc": "The amount of time messages will be buffered while there is no connection to\n the Pulsar broker.  Longer times mean that more memory/disk will be used",
+      "label": "Retention Period"
+    },
+    "producer_send_buffer": {
+      "desc": "Fine tune the socket send buffer. The default value is tuned for high throughput.",
+      "label": "Socket Send Buffer Size"
+    },
+    "producer_strategy": {
+      "desc": "Partition strategy is to tell the producer how to dispatch messages to Pulsar partitions.\n\n<code>random</code>: Randomly pick a partition for each message.\n<code>roundrobin</code>: Pick each available producer in turn for each message.\n<code>key_dispatch</code>: Hash Pulsar message key of the first message in a batch\n to a partition number.",
+      "label": "Partition Strategy"
+    },
+    "pulsar_producer_struct": {
+      "desc": "Configuration for a Pulsar bridge.",
+      "label": "Pulsar Bridge Configuration"
+    },
+    "servers": {
+      "desc": "A comma separated list of Pulsar URLs in the form <code>scheme://host[:port]</code>\n for the client to connect to. The supported schemes are <code>pulsar://</code> (default)\n and <code>pulsar+ssl://</code>. The default port is 6650.",
+      "label": "Servers"
+    }
+  },
+  "emqx_bridge_pulsar_pubsub_schema": {
+    "action_parameters": {
+      "desc": "Action specific configs.",
+      "label": "Action"
+    },
+    "producer_key_template": {
+      "desc": "Template to render Pulsar message key.",
+      "label": "Message Key"
     },
     "producer_message_opts": {
       "desc": "Template to render a Pulsar message.",
@@ -2894,22 +3112,6 @@
       "desc": "Template to render a Pulsar message.",
       "label": "Pulsar Message Template"
     },
-    "producer_pulsar_topic": {
-      "desc": "Pulsar topic name",
-      "label": "Pulsar topic name"
-    },
-    "producer_retention_period": {
-      "desc": "The amount of time messages will be buffered while there is no connection to the Pulsar broker.  Longer times mean that more memory/disk will be used",
-      "label": "Retention Period"
-    },
-    "producer_send_buffer": {
-      "desc": "Fine tune the socket send buffer. The default value is tuned for high throughput.",
-      "label": "Socket Send Buffer Size"
-    },
-    "producer_strategy": {
-      "desc": "Partition strategy is to tell the producer how to dispatch messages to Pulsar partitions.\n\n<code>random</code>: Randomly pick a partition for each message.\n<code>roundrobin</code>: Pick each available producer in turn for each message.\n<code>key_dispatch</code>: Hash Pulsar message key of the first message in a batch to a partition number.",
-      "label": "Partition Strategy"
-    },
     "producer_sync_timeout": {
       "desc": "Maximum wait time for receiving a receipt from Pulsar when publishing synchronously.",
       "label": "Sync publish timeout"
@@ -2918,13 +3120,9 @@
       "desc": "Template to render Pulsar message value.",
       "label": "Message Value"
     },
-    "pulsar_producer_struct": {
-      "desc": "Configuration for a Pulsar bridge.",
-      "label": "Pulsar Bridge Configuration"
-    },
-    "servers": {
-      "desc": "A comma separated list of Pulsar URLs in the form <code>scheme://host[:port]</code> for the client to connect to. The supported schemes are <code>pulsar://</code> (default) and <code>pulsar+ssl://</code>. The default port is 6650.",
-      "label": "Servers"
+    "publisher_action": {
+      "desc": "Publish message to Pulsar topic",
+      "label": "Publish Action "
     }
   },
   "emqx_bridge_rabbitmq": {
@@ -2949,10 +3147,18 @@
       "label": "Local Topic"
     }
   },
-  "emqx_bridge_rabbitmq_connector": {
+  "emqx_bridge_rabbitmq_connector_schema": {
     "auto_reconnect": {
       "desc": "The interval for attempting to reconnect to the RabbitMQ server if the connection is lost.",
       "label": "Auto Reconnect"
+    },
+    "config_connector": {
+      "desc": "The configuration for the RabbitMQ connector.",
+      "label": "RabbitMQ Connector Configuration"
+    },
+    "connector_resource_opts": {
+      "desc": "Connector resource options.",
+      "label": "Connector Resource Options"
     },
     "delivery_mode": {
       "desc": "The delivery mode for messages published to RabbitMQ. Delivery mode non_persistent (1) is suitable for messages that don't require persistence across RabbitMQ restarts, whereas delivery mode persistent (2) is designed for messages that must survive RabbitMQ restarts.",
@@ -3015,6 +3221,32 @@
       "label": "Wait for Publish Confirmations"
     }
   },
+  "emqx_bridge_rabbitmq_pubsub_schema": {
+    "action_parameters": {
+      "desc": "The action config defines how this bridge send messages to the remote RabbitMQ broker",
+      "label": "Action Parameters"
+    },
+    "publisher_action": {
+      "desc": "Action configs.",
+      "label": "Action"
+    },
+    "source_no_ack": {
+      "desc": "Whether to use no_ack mode when consuming messages from the RabbitMQ broker.",
+      "label": "Source No Ack"
+    },
+    "source_parameters": {
+      "desc": "The source config defines how this bridge receive messages from the remote RabbitMQ broker",
+      "label": "Source Parameters"
+    },
+    "source_queue": {
+      "desc": "The queue name of the RabbitMQ broker.",
+      "label": "Source Queue"
+    },
+    "subscriber_source": {
+      "desc": "Source configs.",
+      "label": "Source"
+    }
+  },
   "emqx_bridge_redis": {
     "command_template": {
       "desc": "Redis command template used to export messages. Each list element stands for a command name or its argument.\nFor example, to push payloads in a Redis list by key `msgs`, the elements should be the following:\n`rpush`, `msgs`, `${payload}`.",
@@ -3072,6 +3304,14 @@
     }
   },
   "emqx_bridge_rocketmq": {
+    "action_parameters": {
+      "desc": "Action specific configuration.",
+      "label": "Action"
+    },
+    "config_connector": {
+      "desc": "Configuration for an RocketMQ Client.",
+      "label": "RocketMQ Client Configuration"
+    },
     "config_enable": {
       "desc": "Enable or disable this bridge",
       "label": "Enable Or Disable Bridge"
@@ -3091,6 +3331,10 @@
     "local_topic": {
       "desc": "The MQTT topic filter to be forwarded to RocketMQ. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.<br/>\nNOTE: if the bridge is used as a rule action, `local_topic` should be left empty otherwise the messages will be duplicated.",
       "label": "Local Topic"
+    },
+    "rocketmq_action": {
+      "desc": "Configuration for RocketMQ Action",
+      "label": "RocketMQ Action Configuration"
     },
     "template": {
       "desc": "Template, the default value is empty. When this value is empty the whole message will be stored in the RocketMQ.<br>\n            The template can be any valid string with placeholders, example:<br>\n            - ${id}, ${username}, ${clientid}, ${timestamp}<br>\n            - {\"id\" : ${id}, \"username\" : ${username}}",
@@ -3129,6 +3373,24 @@
     "topic": {
       "desc": "RocketMQ Topic",
       "label": "RocketMQ Topic"
+    }
+  },
+  "emqx_bridge_s3": {
+    "config_connector": {
+      "desc": "Configuration for a connector to S3 API compatible storage service.",
+      "label": "S3 Connector Configuration"
+    },
+    "s3_object_content": {
+      "desc": "Content of the S3 object being uploaded. Supports templates.",
+      "label": "S3 Object Content"
+    },
+    "s3_upload": {
+      "desc": "Action to upload a single object to the S3 service.",
+      "label": "S3 Simple Upload"
+    },
+    "s3_upload_parameters": {
+      "desc": "Set of parameters for the upload action. Action supports templates in S3 bucket name, object key and object content.",
+      "label": "S3 Upload action parameters"
     }
   },
   "emqx_bridge_schema": {
@@ -3234,6 +3496,14 @@
     }
   },
   "emqx_bridge_sqlserver": {
+    "action_parameters": {
+      "desc": "Action specific configuration.",
+      "label": "Action"
+    },
+    "config_connector": {
+      "desc": "Configuration for a Microsoft SOL Server connector.",
+      "label": "Microsoft SOL Server Connector Configuration"
+    },
     "config_enable": {
       "desc": "Enable or disable this bridge",
       "label": "Enable Or Disable Bridge"
@@ -3261,6 +3531,10 @@
     "sql_template": {
       "desc": "SQL Template",
       "label": "SQL Template"
+    },
+    "sqlserver_action": {
+      "desc": "Configuration for Microsoft SOL Server action.",
+      "label": "Microsoft SOL Server Action Configuration"
     }
   },
   "emqx_bridge_sqlserver_connector": {
@@ -3360,6 +3634,10 @@
     }
   },
   "emqx_bridge_tdengine": {
+    "action_parameters": {
+      "desc": "TDengine action parameters",
+      "label": "Parameters"
+    },
     "config_enable": {
       "desc": "Enable or disable this bridge",
       "label": "Enable Or Disable Bridge"
@@ -3386,6 +3664,10 @@
     }
   },
   "emqx_bridge_tdengine_connector": {
+    "desc_config": {
+      "desc": "Configuration for TDengine Connector.",
+      "label": "TDengine Connector Configuration"
+    },
     "server": {
       "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe TDengine default port 6041 is used if `[:Port]` is not specified.",
       "label": "Server Host"
@@ -3762,6 +4044,10 @@
       "desc": "By default, the logs are stored in `./log` directory (for installation from zip file) or in `/var/log/emqx` (for binary installation).<br/>\nThis section of the configuration controls the number of files kept for each log handler.",
       "label": "Log Rotation"
     },
+    "desc_log_throttling": {
+      "desc": "Log throttling feature reduces the number of potentially flooding logged events by\ndropping all but the first event within a configured time window.\nThe throttling is automatically disabled if `console` or `file` log level is set to debug.",
+      "label": "Log Throttling"
+    },
     "desc_node": {
       "desc": "Node name, cookie, config & data directories and the Erlang virtual machine (BEAM) boot parameters.",
       "label": "Node"
@@ -3818,6 +4104,10 @@
       "desc": "The handler restarts automatically after a delay in the event of termination, unless the value `infinity` is set, which blocks any subsequent restarts.",
       "label": "Handler Restart Timer"
     },
+    "log_root": {
+      "desc": "EMQX provides support for two primary log handlers: `file` and `console`, with an additional `audit` handler specifically designed to always direct logs to files.\nThe system's default log handling behavior can be configured via the environment variable `EMQX_DEFAULT_LOG_HANDLER`, which accepts the following settings:\n\n- `file`: Directs log output exclusively to files.\n- `console`: Channels log output solely to the console.\n\nIt's noteworthy that `EMQX_DEFAULT_LOG_HANDLER` is set to `file` when EMQX is initiated via systemd's `emqx.service` file.\nIn scenarios outside systemd initiation, `console` serves as the default log handler.",
+      "label": "log"
+    },
     "log_rotation_count": {
       "desc": "Maximum number of log files.",
       "label": "Max Log Files Number"
@@ -3825,6 +4115,10 @@
     "log_rotation_enable": {
       "desc": "Enable log rotation feature.",
       "label": "Rotation Enable"
+    },
+    "log_throttling_time_window": {
+      "desc": "This configuration setting controls the logging behavior for throttled messages,\nincluding, but not limited to messages like 'authorization_permission_denied'.\nWithin each defined time window, only one instance of a throttled message will be logged to prevent log flooding.\nAt the conclusion of each time window, a summary log will be generated, detailing the occurrence of any throttled messages during that period.\nIt's important to note that the shortest effective time window for this setting is 1 second (`1s`).\nShould a value lower than `1s` be specified, it will automatically be adjusted to `1s`.",
+      "label": "Log Throttling Time Window"
     },
     "max_ets_tables": {
       "desc": "Max number of ETS tables",
@@ -4371,6 +4665,10 @@
       "desc": "SSL/TLS options for the dashboard listener.",
       "label": "SSL options"
     },
+    "swagger_support": {
+      "desc": "Enable or disable support for swagger API documentation.",
+      "label": "Swagger Support"
+    },
     "token_expired_time": {
       "desc": "JWT token expiration time. Default is 60 minutes",
       "label": "Token expired time"
@@ -4520,6 +4818,56 @@
     "view_status_api": {
       "desc": "Get delayed status",
       "label": "Get delayed status"
+    }
+  },
+  "emqx_ds_schema": {
+    "builtin": {
+      "desc": "Builtin session storage backend utilizing embedded RocksDB key-value store.",
+      "label": "Builtin backend"
+    },
+    "builtin_backend": {
+      "desc": "Built-in backend.",
+      "label": "Backend type"
+    },
+    "builtin_data_dir": {
+      "desc": "File system directory where the database is located.\n\nBy default, it is equal to `node.data_dir`.",
+      "label": "Database location"
+    },
+    "builtin_layout": {
+      "desc": "Storage layout is a method of arranging messages from various topics and clients on disc.\n\nDepending on the type of workload and the topic structure, different types of strategies for storing the data can be employed to maximize efficiency of reading messages from the durable storage.",
+      "label": "Storage layout"
+    },
+    "builtin_local_write_buffer": {
+      "desc": "Configuration related to the buffering of messages sent from the local node to the shard leader.\n\nEMQX accumulates PUBLISH messages from the local clients in a write buffer before committing them to the durable storage.\nThis helps to hide network latency between EMQX nodes and improves write throughput.",
+      "label": "Local write buffer"
+    },
+    "builtin_local_write_buffer_flush_interval": {
+      "desc": "Maximum linger time for the buffered messages.\nLocal write buffer will be flushed _at least_ as often as `flush_interval`.\n\nLarger values of `flush_interval` may lead to higher throughput and better overall performance, but may increase end-to-end latency.",
+      "label": "Flush interval"
+    },
+    "builtin_local_write_buffer_max_items": {
+      "desc": "This configuration parameter defines maximum number of messages stored in the local write buffer.",
+      "label": "Max items"
+    },
+    "builtin_n_shards": {
+      "desc": "The built-in durable storage partitions data into shards.\nThis configuration parameter defines the number of shards.\nPlease note that it takes effect only during the initialization of the durable storage database.\nChanging this configuration parameter after the database has been already created won't take any effect.",
+      "label": "Number of shards"
+    },
+    "layout_builtin_wildcard_optimized": {
+      "desc": "_Wildcard-optimized_ layout is designed to maximize the throughput of wildcard subscriptions covering large numbers of topics.\n\nFor example, it can handle scenarios where a very large number of clients publish data to the topics containing their client ID, such as: `sensor/%device-version%/%clientid%/temperature`, `sensor/%device-version%/%clientid%/pressure`, etc.\nThis layout will automatically group such topics into a single stream, so a client subscribing to a topic filter containing wildcards (such as `sensor/+/+/temperature`) will be able to consume messages published by all devices as a single batch.\n\nThis layout is efficient for non-wildcard subscriptions as well.",
+      "label": "Wildcard-optimized storage layout"
+    },
+    "layout_builtin_wildcard_optimized_type": {
+      "desc": "Wildcard-optimized layout type.",
+      "label": "Layout type"
+    },
+    "messages": {
+      "desc": "Configuration related to the durable storage of MQTT messages.",
+      "label": "MQTT message storage"
+    },
+    "wildcard_optimized_epoch_bits": {
+      "desc": "Wildcard-optimized layout partitions messages recorded at different times into \"epochs\".\nReading messages from a single epoch can be done very efficiently, so larger epochs improve the throughput of subscribers, but may increase end-to-end latency.\n\nTime span covered by each epoch grows exponentially with the value of `epoch_bits`:\n\n- `epoch_bits = 1`: epoch time = 1 millisecond\n- `epoch_bits = 2`: 2 milliseconds\n...\n- `epoch_bits = 10`: 1024 milliseconds\n- `epoch_bits = 13`: ~8 seconds\n...",
+      "label": "Epoch bits"
     }
   },
   "emqx_eviction_agent_api": {
@@ -5374,17 +5722,32 @@
     }
   },
   "emqx_jt808_schema": {
+    "authentication_url": {
+      "desc": "The JT/T 808 device authentication central URL."
+    },
     "jt808_allow_anonymous": {
-      "desc": "Allow anonymous access to the JT/T 808 Gateway.registry_url.descThe JT/T 808 device registry central URL.authentication_url.descThe JT/T 808 device authentication central URL.jt808_up_topic.descThe topic of the JT/T 808 protocol upstream message.jt808_dn_topic.descThe topic of the JT/T 808 protocol downstream message."
+      "desc": "Allow anonymous access to the JT/T 808 Gateway."
+    },
+    "jt808_auth": {
+      "desc": "Authentication settings of the JT/T 808 Gateway."
+    },
+    "jt808_dn_topic": {
+      "desc": "The topic of the JT/T 808 protocol downstream message."
     },
     "jt808_frame_max_length": {
       "desc": "The maximum length of the JT/T 808 frame."
+    },
+    "jt808_up_topic": {
+      "desc": "The topic of the JT/T 808 protocol upstream message."
     },
     "max_retry_times": {
       "desc": "Re-send max times"
     },
     "message_queue_len": {
       "desc": "Max message queue length"
+    },
+    "registry_url": {
+      "desc": "The JT/T 808 device registry central URL."
     },
     "retry_interval": {
       "desc": "Re-send time interval"
@@ -5581,15 +5944,15 @@
   },
   "emqx_mgmt_api_api_keys": {
     "api_key_list": {
-      "desc": "Return api_key list",
+      "desc": "Return api_key list. This API can only be requested using a bearer token.",
       "label": "Return api_key list"
     },
     "create_new_api_key": {
-      "desc": "Create new api_key",
+      "desc": "Create new api_key. This API can only be requested using a bearer token.",
       "label": "Create new api_key"
     },
     "delete_api_key": {
-      "desc": "Delete the specific api_key",
+      "desc": "Delete the specific api_key. This API can only be requested using a bearer token.",
       "label": "Delete the specific api_key"
     },
     "format": {
@@ -5597,20 +5960,20 @@
       "label": "Unique and format by [a-zA-Z0-9-_]"
     },
     "get_api_key": {
-      "desc": "Return the specific api_key",
+      "desc": "Return the specific api_key. This API can only be requested using a bearer token.",
       "label": "Return the specific api_key"
     },
     "role": {
       "desc": "Role for this API"
     },
     "update_api_key": {
-      "desc": "Update the specific api_key",
+      "desc": "Update the specific api_key. This API can only be requested using a bearer token.",
       "label": "Update the specific api_key"
     }
   },
   "emqx_mgmt_api_banned": {
     "as": {
-      "desc": "Ban method, which can be client ID, username or IP address.",
+      "desc": "Ban method, which can be exact client ID, client ID regular expression, exact username, username regular expression,\nIP address or an IP address range.",
       "label": "Ban Method"
     },
     "at": {
@@ -5669,9 +6032,25 @@
       "desc": "Get client authz cache in the cluster.",
       "label": "Get client authz cache in the cluster."
     },
+    "get_client_inflight_msgs": {
+      "desc": "Get client inflight messages",
+      "label": "Get client inflight messages"
+    },
+    "get_client_mqueue_msgs": {
+      "desc": "Get client mqueue messages",
+      "label": "Get client mqueue messages"
+    },
     "get_client_subs": {
       "desc": "Get client subscriptions",
       "label": "Get client subscriptions"
+    },
+    "get_sessions_count": {
+      "desc": "Get the total number of sessions in the cluster.\nBy default, it includes only those sessions that have not expired.\nIf the `broker.session_history_retain` config is set to a duration greater than 0s,\nthis count will also include sessions that expired within the specified retain time.\nBy specifying the `since` parameter, it can return the number of sessions that have expired within the specified time.",
+      "label": "Count number of sessions"
+    },
+    "inflight_msgs_list": {
+      "desc": "Client's inflight messages list.\nOrdered by MQTT Packet Id, which may not represent the chronological messages order.",
+      "label": "Client's inflight messages"
     },
     "kick_client_id": {
       "desc": "Kick out client by client ID",
@@ -5684,6 +6063,32 @@
     "list_clients": {
       "desc": "List clients",
       "label": "List clients"
+    },
+    "mqueue_msgs_list": {
+      "desc": "Client's mqueue messages list. The queue (FIFO) ordering is preserved.",
+      "label": "Client's mqueue messages"
+    },
+    "msg_from_clientid": {
+      "desc": "Message publisher's Client ID"
+    },
+    "msg_from_username": {
+      "desc": "Message publisher's username.",
+      "label": "Message Publisher's Username "
+    },
+    "msg_id": {
+      "desc": "Message ID.",
+      "label": "Message ID"
+    },
+    "msg_publish_at": {
+      "desc": "Message publish time, a millisecond precision Unix epoch timestamp.",
+      "label": "Message Publish Time."
+    },
+    "msg_qos": {
+      "desc": "Message QoS."
+    },
+    "msg_topic": {
+      "desc": "Message topic.",
+      "label": "Message Qos"
     },
     "set_keepalive_seconds": {
       "desc": "Set the online client keepalive by seconds",
@@ -6505,7 +6910,7 @@
       "label": "Install Directory"
     },
     "name_vsn": {
-      "desc": "The {name}-{version} of the plugin.<br/>\nIt should match the plugin application name-version as the for the plugin release package name<br/>\nFor example: my_plugin-0.1.0.",
+      "desc": "The `{name}-{version}` of the plugin.<br/>\nIt should match the plugin application name-version as plugin release package name<br/>\nFor example: `my_plugin-0.1.0`.",
       "label": "Name-Version"
     },
     "plugins": {
@@ -6882,6 +7287,9 @@
     },
     "mnesia_config_type": {
       "desc": "Backend type."
+    },
+    "mnesia_enable": {
+      "desc": "Enable built-in Mnesia backend."
     },
     "msg_clear_interval": {
       "desc": "Interval for EMQX to scan expired messages and delete them. Never scan if the value is 0."
@@ -7347,13 +7755,18 @@
       "desc": "The ACL to use for the uploaded objects."
     },
     "bucket": {
-      "desc": "The name of the S3 bucket."
+      "desc": "The name of the S3 bucket.",
+      "label": "Bucket"
     },
     "host": {
       "desc": "The host of the S3 endpoint."
     },
     "ipv6_probe": {
       "desc": "Whether to probe for IPv6 support."
+    },
+    "key": {
+      "desc": "Key of the S3 object.",
+      "label": "Object Key"
     },
     "max_part_size": {
       "desc": "The maximum part size for multipart uploads.<br/>\nS3 uploader won't try to upload parts larger than this size."
@@ -7419,7 +7832,7 @@
       "desc": "Message broker options."
     },
     "broker_enable_session_registry": {
-      "desc": "Enable session registry"
+      "desc": "The Global Session Registry is a cluster-wide mechanism designed to maintain the uniqueness of client IDs within the cluster.\nRecommendations for Use<br/>\n- Default Setting: It is generally advisable to enable. This feature is crucial for session takeover to work properly. For example if a client reconnected to another node in the cluster, the new connection will need to find the old session and take it over.\n- Disabling the Feature: Disabling is an option for scenarios when all sessions expire immediately after client is disconnected (i.e. session expiry interval is zero). This can be relevant in certain specialized use cases.\n\nAdvantages of Disabling<br/>\n- Reduced Memory Usage: Turning off the session registry can lower the overall memory footprint of the system.\n- Improved Performance: Without the overhead of maintaining a global registry, the node can process client connections faster."
     },
     "broker_perf_route_lock_type": {
       "desc": "Performance tuning for subscribing/unsubscribing a wildcard topic.\nChange this parameter only when there are many wildcard topics.\n\nNOTE: when changing from/to `global` lock, it requires all nodes in the cluster to be stopped before the change.\n  - `key`: mnesia transactional updates with per-key locks. Recommended for a single-node setup.\n  - `tab`: mnesia transactional updates with table lock. Recommended for a cluster setup.\n  - `global`: updates are protected with a global lock. Recommended for large clusters."
@@ -7433,14 +7846,14 @@
     "broker_routing_storage_schema": {
       "desc": "Routing storage schema.\nSet <code>v1</code> to use the former schema.\n<code>v2</code> is introduced in 5.2. It enables routing through 2 separate tables, one for topic filter and one for regular topic subscriptions. This schema should increase both subscription and routing performance at the cost of slight increase in memory consumption per subscription.\nNOTE: Schema <code>v2</code> is still experimental.\nNOTE: Full non-rolling cluster restart is needed after altering this option for it to take any effect."
     },
+    "broker_session_history_retain": {
+      "desc": "The duration to retain the session registration history. Setting this to a value greater than `0s` will increase memory usage and impact peformance.\nThis retained history can be used to monitor how many sessions were registered in the past configured duration.\nNote: This config has no effect if `enable_session_registry` is set to `false`.<br/>\nNote: If the clients are using random client IDs, it's not recommended to enable this feature, at least not for a long retention period.<br/>\nNote: When clustered, the lowest (but greater than `0s`) value among the nodes in the cluster will take effect."
+    },
     "broker_session_locking_strategy": {
       "desc": "Session locking strategy in a cluster.\n  - `local`: only lock the session on the current node\n  - `one`: select only one remote node to lock the session\n  - `quorum`: select some nodes to lock the session\n  - `all`: lock the session on all the nodes in the cluster"
     },
     "broker_shared_dispatch_ack_enabled": {
       "desc": "Deprecated.\nThis was designed to avoid dispatching messages to a shared-subscription session which has the client disconnected.\nHowever it's no longer useful because the shared-subscrption messages in a expired session will be redispatched to other sessions in the group."
-    },
-    "broker_shared_subscription_strategy": {
-      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Messages from a single publisher are dispatched to subscribers in turn;\n - `round_robin_per_group`: All messages are dispatched to subscribers in turn;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "ciphers_schema_common": {
       "desc": "This config holds TLS cipher suite names separated by comma,\nor as an array of strings. e.g.\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code> or\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>.\n<br/>\nCiphers (and their ordering) define the way in which the\nclient and server encrypts information over the network connection.\nSelecting a good cipher suite is critical for the\napplication's data security, confidentiality and performance.\n\nThe names should be in OpenSSL string format (not RFC format).\nAll default values and examples provided by EMQX config\ndocumentation are all in OpenSSL format.<br/>\n\nNOTE: Certain cipher suites are only compatible with\nspecific TLS <code>versions</code> ('tlsv1.1', 'tlsv1.2' or 'tlsv1.3')\nincompatible cipher suites will be silently dropped.\nFor instance, if only 'tlsv1.3' is given in the <code>versions</code>,\nconfiguring cipher suites for other versions will have no effect.\n<br/>\n\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config<br/>\nIf PSK cipher suites are intended, 'tlsv1.3' should be disabled from <code>versions</code>.<br/>\nPSK cipher suites: <code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code>",
@@ -7533,6 +7946,10 @@
     "description": {
       "desc": "Descriptive text.",
       "label": "Description"
+    },
+    "durable_storage": {
+      "desc": "Configuration related to the EMQX durable storages.\n\nEMQX uses durable storages to offload various data, such as MQTT messages, to disc.",
+      "label": "Durable storage"
     },
     "fields_authorization_deny_action": {
       "desc": "The action when the authorization check rejects an operation.",
@@ -7862,6 +8279,10 @@
       "desc": "Comma-separated list of supported subprotocols.",
       "label": "Supported subprotocols"
     },
+    "fields_ws_opts_validate_utf8": {
+      "desc": "Set to <code>false</code> to disable WebSocket Frame UTF-8\n  validation for performance",
+      "label": "Enable/Disable WebSocket Frame utf8 validation"
+    },
     "flapping_detect_ban_time": {
       "desc": "How long the flapping clientid will be banned.",
       "label": "Ban time"
@@ -7973,6 +8394,10 @@
       "desc": "Maximum topic levels allowed.",
       "label": "Max Topic Levels"
     },
+    "mqtt_message_expiry_interval": {
+      "desc": "The expiry interval of MQTT messages. For MQTT 5.0 clients, this configuration will only take effect when the Message-Expiry-Interval property is not set in the message; otherwise, the value of the Message-Expiry-Interval property will be used. For MQTT versions older than 5.0, this configuration will always take effect. Please note that setting message_expiry_interval greater than session_expiry_interval is meaningless, as all messages will be cleared when the session expires.",
+      "label": "Message Expiry Interval"
+    },
     "mqtt_mqueue_default_priority": {
       "desc": "Default topic priority, which will be used by topics not in <code>Topic Priorities</code> (<code>mqueue_priorities</code>).",
       "label": "Default Topic Priorities"
@@ -8017,6 +8442,9 @@
       "desc": "Whether to enable support for MQTT shared subscription.",
       "label": "Shared Subscription Available"
     },
+    "mqtt_shared_subscription_strategy": {
+      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Messages from a single publisher are dispatched to subscribers in turn;\n - `round_robin_per_group`: All messages are dispatched to subscribers in turn;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
+    },
     "mqtt_strict_mode": {
       "desc": "Whether to parse MQTT messages in strict mode.\nIn strict mode, invalid utf8 strings in for example client ID, topic name, etc. will cause the client to be disconnected.",
       "label": "Strict Mode"
@@ -8052,46 +8480,6 @@
     "overload_protection_enable": {
       "desc": "React on system overload or not.",
       "label": "React on system overload or not"
-    },
-    "persistent_session_builtin_messages_table": {
-      "desc": "Performance tuning options for built-in messages table.",
-      "label": "Persistent messages"
-    },
-    "persistent_session_builtin_sess_msg_table": {
-      "desc": "Performance tuning options for built-in session messages table.",
-      "label": "Persistent session messages"
-    },
-    "persistent_session_builtin_session_table": {
-      "desc": "Performance tuning options for built-in session table.",
-      "label": "Persistent session"
-    },
-    "persistent_session_store_backend": {
-      "desc": "Database management system used to store information about persistent sessions and messages.\n- `builtin`: Use the embedded database (mria)",
-      "label": "Backend"
-    },
-    "persistent_session_store_enabled": {
-      "desc": "Use the database to store information about persistent sessions.\nThis makes it possible to migrate a client connection to another\ncluster node if a node is stopped.",
-      "label": "Enable persistent session store"
-    },
-    "persistent_session_store_max_retain_undelivered": {
-      "desc": "The time messages that was not delivered to a persistent session\nis stored before being garbage collected if the node the previous\nsession was handled on restarts of is stopped.",
-      "label": "Max retain undelivered"
-    },
-    "persistent_session_store_message_gc_interval": {
-      "desc": "The starting interval for garbage collection of undelivered messages to\na persistent session. This affects how often the \"max_retain_undelivered\"\nis checked for removal.",
-      "label": "Message GC interval"
-    },
-    "persistent_session_store_session_message_gc_interval": {
-      "desc": "The starting interval for garbage collection of transient data for\npersistent session messages. This does not affect the lifetime length\nof persistent session messages.",
-      "label": "Session message GC interval"
-    },
-    "persistent_store_on_disc": {
-      "desc": "Save information about the persistent sessions on disc.\nIf this option is enabled, persistent sessions will survive full restart of the cluster.\nOtherwise, all the data will be stored in RAM, and it will be lost when all the nodes in the cluster are stopped.",
-      "label": "Persist on disc"
-    },
-    "persistent_store_ram_cache": {
-      "desc": "Maintain a copy of the data in RAM for faster access.",
-      "label": "RAM cache"
     },
     "resource_tags": {
       "desc": "Tags to annotate this config entry.",
@@ -8145,32 +8533,21 @@
       "desc": "URL for the OCSP responder to check the server certificate against.",
       "label": "OCSP Responder URL"
     },
-    "session_builtin_n_shards": {
-      "desc": "Number of shards used for storing the messages."
-    },
-    "session_ds_max_batch_size": {
-      "desc": "This value affects the flow control for the persistent sessions.\nThe session queries the DB for the new messages in batches.\nSize of the batch doesn't exceed this value or `ReceiveMaximum`, whichever is smaller."
-    },
-    "session_ds_min_batch_size": {
-      "desc": "This value affects the flow control for the persistent sessions.\nThe session will query the DB for the new messages when the value of `FreeSpace` variable is larger than this value or `ReceiveMaximum` / 2, whichever is smaller.\n\n`FreeSpace` is calculated as `ReceiveMaximum` for the session - number of inflight messages."
+    "session_ds_batch_size": {
+      "desc": "This value affects the flow control for the persistent sessions.\nPersistent session queries the durable message storage in batches.\nThis value specifies size of the batch.\n\nNote: larger batches generally improve the throughput and overall performance of the system, but increase RAM usage per client.",
+      "label": "Batch size"
     },
     "session_ds_session_gc_batch_size": {
-      "desc": "The size of each batch of expired persistent sessions to be garbage collected per iteration."
+      "desc": "The size of each batch of expired persistent sessions to be garbage collected per iteration.",
+      "label": "Session garbage collection batch size"
     },
     "session_ds_session_gc_interval": {
-      "desc": "The interval at which session garbage collection is executed for persistent sessions."
+      "desc": "The interval at which session garbage collection is executed for persistent sessions.",
+      "label": "Session garbage collection interval"
     },
     "session_persistence_enable": {
-      "desc": "Use durable storage for client sessions persistence.\nIf enabled, sessions configured to outlive client connections, along with their corresponding messages, will be durably stored and survive broker downtime."
-    },
-    "session_persistence_storage": {
-      "desc": "Durable storage backend to use for session persistence."
-    },
-    "session_storage_backend_builtin": {
-      "desc": "Builtin session storage backend utilizing embedded RocksDB key-value store."
-    },
-    "session_storage_backend_enable": {
-      "desc": "Enable this backend."
+      "desc": "Use durable storage for client sessions persistence.\nIf enabled, sessions configured to outlive client connections, along with their corresponding messages, will be durably stored and survive broker downtime.\n\n:::warning\nThis feature is currently experimental. Please don't enable it in the production environments that contain valuable data.\n:::",
+      "label": "Enable session persistence"
     },
     "shared_subscription_group_strategy": {
       "desc": "Per group dispatch strategy for shared subscription.\nThis config is a map from shared subscription group name to the strategy\nname. The group name should be of format `[A-Za-z0-9]`. i.e. no\nspecial characters are allowed."
@@ -8329,6 +8706,10 @@
       "desc": "[Apache Avro](https://avro.apache.org/) serialization format.",
       "label": "Apache Avro"
     },
+    "json_type": {
+      "desc": "Supports JSON Schema\n[Draft 03](http://tools.ietf.org/html/draft-zyp-json-schema-03)\n[Draft 04](http://tools.ietf.org/html/draft-zyp-json-schema-04) and\n[Draft 06](https://datatracker.ietf.org/doc/html/draft-wright-json-schema-00).",
+      "label": "JSON Schema"
+    },
     "protobuf_type": {
       "desc": "[Protocol Buffers](https://protobuf.dev/) serialization format.",
       "label": "Protocol Buffers"
@@ -8353,9 +8734,17 @@
       "desc": "Source text for the schema.",
       "label": "Schema source"
     },
-    "schema_type": {
-      "desc": "Schema type.",
-      "label": "Schema type"
+    "schema_type_avro": {
+      "desc": "Must be `avro` for Avro schema.",
+      "label": "Avro Schema"
+    },
+    "schema_type_json": {
+      "desc": "Must be `json` for JSON schema.",
+      "label": "JSON Schema"
+    },
+    "schema_type_protobuf": {
+      "desc": "Must be `protobuf` for protobuf schema.",
+      "label": "Protobuf Schema"
     }
   },
   "emqx_slow_subs_api": {
