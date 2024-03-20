@@ -6088,7 +6088,7 @@
     },
     "msg_topic": {
       "desc": "Message topic.",
-      "label": "Message Qos"
+      "label": "Message Topic"
     },
     "set_keepalive_seconds": {
       "desc": "Set the online client keepalive by seconds",

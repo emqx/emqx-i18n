@@ -119,6 +119,10 @@
     "param_user_id": {
       "desc": "用户 ID，根据设置的账号类型不同，可以是 username 或 clientid",
       "label": "用户 ID"
+    },
+    "authentication_order_put": {
+      "desc": "在全局认证链中重新排序所有认证器。",
+      "label": "重新排序认证器"
     }
   },
   "emqx_authn_http_schema": {
@@ -610,6 +614,10 @@
     "sources": {
       "desc": "授权数据源",
       "label": "数据源"
+    },
+    "authorization_sources_order_put": {
+      "desc": "重新排序所有授权源。",
+      "label": "重新排序授权源"
     }
   },
   "emqx_authz_file_schema": {
@@ -1128,6 +1136,10 @@
     "socket_opts": {
       "desc": "额外的套接字选项。",
       "label": "套接字选项"
+    },
+    "partitions_limit": {
+      "desc": "限制为给定主题产生数据的分区数量。\n特殊值 all_partitions 用于利用主题的所有分区。\n设置的值大于分区总数时无效。",
+      "label": "最大分区数"
     }
   },
   "emqx_bridge_cassandra": {
@@ -1154,6 +1166,14 @@
     "local_topic": {
       "desc": "发送到 'local_topic' 的消息都会转发到 Cassandra。 <br/>\n注意：如果这个数据桥接被用作规则（EMQX 规则引擎）的输出，同时也配置了 'local_topic' ，那么这两部分的消息都会被转发。",
       "label": "本地 Topic"
+    },
+    "action_parameters": {
+      "desc": "动作的具体配置",
+      "label": "动作"
+    },
+    "cassandra_action": {
+      "desc": "动作配置。",
+      "label": "动作"
     }
   },
   "emqx_bridge_cassandra_connector": {
@@ -1164,6 +1184,10 @@
     "servers": {
       "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>\n主机名具有以下形式：`Host[:Port][,Host2:Port]`。<br/>\n如果未指定 `[:Port]`，则使用 Cassandra 默认端口 9042。",
       "label": "Servers"
+    },
+    "config": {
+      "desc": "Cassandra 连接器配置。",
+      "label": "连接器配置"
     }
   },
   "emqx_bridge_clickhouse": {
@@ -1194,6 +1218,14 @@
     "sql_template": {
       "desc": "可以使用 ${field} 占位符来引用消息与客户端上下文中的变量，请确保对应字段存在且数据格式符合预期。此处不支持 [SQL 预处理](https://docs.emqx.com/zh/enterprise/v5.0/data-integration/data-bridges.html#sql-预处理)。",
       "label": "SQL 模板"
+    },
+    "action_parameters": {
+      "desc": "针对动作的详细配置。",
+      "label": "动作"
+    },
+    "clickhouse_action": {
+      "desc": "动作配置。",
+      "label": "动作"
     }
   },
   "emqx_bridge_clickhouse_connector": {
@@ -1230,6 +1262,18 @@
     "template": {
       "desc": "模板, 默认为空，为空时将会将整个消息存入数据库",
       "label": "模板"
+    },
+    "action_parameters": {
+      "desc": "针对动作的详细配置。",
+      "label": "动作"
+    },
+    "config_connector": {
+      "desc": "DynamoDB 连接器的配置。",
+      "label": "DynamoDB 连接器配置"
+    },
+    "dynamo_action": {
+      "desc": "DynamoDB 动作的配置。",
+      "label": "DynamoDB 动作配置"
     }
   },
   "emqx_bridge_dynamo_connector": {
@@ -1794,6 +1838,10 @@
     "query_mode": {
       "desc": "查询模式。可选 'sync/async'，默认 'async'。",
       "label": "查询模式"
+    },
+    "partitions_limit": {
+      "desc": "限制为给定主题生产数据的分区数量。\n特殊值 all_partitions 用于利用该主题的所有分区。\n将此设置为大于分区总数的值将不会产生任何效果。",
+      "label": "最大分区数"
     }
   },
   "emqx_bridge_mqtt_schema": {
@@ -1826,6 +1874,30 @@
     "desc_type": {
       "desc": "Bridge 类型",
       "label": "桥接类型"
+    },
+    "action_parameters": {
+      "desc": "OpenTSDB 动作参数。",
+      "label": "参数"
+    },
+    "action_parameters_data": {
+      "desc": "OpenTSDB 动作参数数据。",
+      "label": "参数数据"
+    },
+    "config_parameters_metric": {
+      "desc": "度量的名称，应为时间序列数据的唯一标识符，支持 ${var} 格式的占位符。",
+      "label": "度量"
+    },
+    "config_parameters_tags": {
+      "desc": "标签。仅支持使用占位符从变量或标签映射中提取标签。",
+      "label": "Tags"
+    },
+    "config_parameters_timestamp": {
+      "desc": "秒级或毫秒级时间戳，支持 ${var} 格式的占位符。",
+      "label": "时间戳"
+    },
+    "config_parameters_value": {
+      "desc": "数据点的值，支持 ${var} 格式的占位符。它代表实际的测量或观察值。",
+      "label": "值"
     }
   },
   "emqx_bridge_opents_connector": {
@@ -1840,6 +1912,10 @@
     "summary": {
       "desc": "是否返回摘要信息。",
       "label": "摘要信息"
+    },
+    "desc_config": {
+      "desc": "OpenTSDB 连接器的配置。",
+      "label": "OpenTSDB 连接器配置"
     }
   },
   "emqx_bridge_oracle": {
@@ -1878,6 +1954,18 @@
     "sql_template": {
       "desc": "SQL 模板。模板字符串可以包含消息元数据和有效载荷字段的占位符。占位符的插入不需要任何检查和特殊格式化，因此必须确保插入的数值格式化和转义正确。模板字符串可以包含占位符模板字符串可以包含消息元数据和有效载荷字段的占位符。这些占位符被插入所以必须确保插入的值的格式正确。因此，确保插入的值格式化和转义正确是非常重要的。模板字符串可以包含占位符模板字符串可以包含消息元数据和有效载荷字段的占位符。这些占位符被插入所以必须确保插入的值的格式正确。确保插入的值被正确地格式化和转义。",
       "label": "SQL 模板"
+    },
+    "action_parameters": {
+      "desc": "针对动作的详细配置。",
+      "label": "动作"
+    },
+    "config_connector": {
+      "desc": "Oracle 客户端的配置。",
+      "label": "Oracle 客户端配置"
+    },
+    "oracle_action": {
+      "desc": "Oracle 动作的配置。",
+      "label": "Oracle 动作配置"
     }
   },
   "emqx_bridge_pgsql": {
@@ -2034,6 +2122,14 @@
     "servers": {
       "desc": "以逗号分隔的 <code>scheme://host[:port]</code> 格式的 Pulsar URL 列表，支持的 scheme 有 <code>pulsar://</code> （默认）和<code>pulsar+ssl://</code>。默认的端口是 6650。",
       "label": "服务员"
+    },
+    "config_connector": {
+      "desc": "Pulsar 连接器配置。",
+      "label": "Pulsar 连接器"
+    },
+    "connector_resource_opts": {
+      "desc": "Pulsar 连接器资源选项。",
+      "label": "资源选项"
     }
   },
   "emqx_bridge_rabbitmq": {
@@ -2148,6 +2244,18 @@
     "template": {
       "desc": "模板, 默认为空，为空时将会将整个消息转发给 RocketMQ。 <br/>\n            模板可以是任意带有占位符的合法字符串, 例如:<br/>            ${id}, ${username}, ${clientid}, ${timestamp}<br/>\n            {\"id\" : ${id}, \"username\" : ${username}}",
       "label": "模板"
+    },
+    "action_parameters": {
+      "desc": "针对动作的详细配置。",
+      "label": "动作"
+    },
+    "config_connector": {
+      "desc": "RocketMQ 客户端的配置。",
+      "label": "RocketMQ 客户端配置"
+    },
+    "rocketmq_action": {
+      "desc": "RocketMQ 动作的配置。",
+      "label": "RocketMQ 动作配置"
     }
   },
   "emqx_bridge_rocketmq_connector": {
@@ -2314,6 +2422,18 @@
     "sql_template": {
       "desc": "SQL 模板",
       "label": "SQL 模板"
+    },
+    "action_parameters": {
+      "desc": "针对动作的详细配置。",
+      "label": "动作"
+    },
+    "config_connector": {
+      "desc": "Microsoft SOL Server 连接器的配置。",
+      "label": "Microsoft SOL Server 连接器配置"
+    },
+    "sqlserver_action": {
+      "desc": "Microsoft SOL Server 动作的配置。",
+      "label": "Microsoft SOL Server 动作配置"
     }
   },
   "emqx_bridge_sqlserver_connector": {
@@ -2346,12 +2466,20 @@
     "sql_template": {
       "desc": "SQL 模板",
       "label": "SQL 模板"
+    },
+    "action_parameters": {
+      "desc": "TDengine 动作的参数。",
+      "label": "参数"
     }
   },
   "emqx_bridge_tdengine_connector": {
     "server": {
       "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>\n主机名具有以下形式：`Host[:Port]`。<br/>\n如果未指定 `[:Port]`，则使用 TDengine 默认端口 6041。",
       "label": "服务器地址"
+    },
+    "desc_config": {
+      "desc": "TDengine 连接器的配置。",
+      "label": "TDengine 连接器配置"
     }
   },
   "emqx_bridge_v2_api": {
@@ -3038,6 +3166,18 @@
     "audit_log_max_filter_limit": {
       "desc": "将最新的 N 条日志条目存储在数据库中，以供 /audit HTTP API 进行日志数据的筛选和检索。\n清除多余的日志记录的间隔保持在 10 到 20 秒之间。",
       "label": "最大筛选限制"
+    },
+    "desc_log_throttling": {
+      "desc": "日志限流功能通过在配置的时间窗口内丢弃除第一个事件外的所有事件，来减少可能泛滥的日志事件数量。\n如果 console 或 file 日志级别设置为调试，则自动禁用限流。",
+      "label": "日志限流"
+    },
+    "log_root": {
+      "desc": "EMQX 支持两种主要的日志处理进程：file 和 console，另有一个专门设计用于始终将日志定向到文件的 audit 处理进程。\n系统的默认日志处理行为可以通过环境变量 EMQX_DEFAULT_LOG_HANDLER 配置，它接受以下设置：\n\n- file：将日志输出仅定向到文件。\n- console：将日志输出仅定向到控制台。\n\n值得注意的是，当通过 systemd 的 emqx.service 文件启动 EMQX 时，EMQX_DEFAULT_LOG_HANDLER 被设置为 file。\n在 systemd 启动之外的场景中，console 作为默认的日志处理进程。",
+      "label": "日志"
+    },
+    "log_throttling_time_window": {
+      "desc": "此配置设置控制限流消息的日志记录行为，包括但不限于像 'authorization_permission_denied' 这样的消息。\n在每个定义的时间窗口内，只有一个限流消息的实例会被记录，以防止日志泛滥。\n在每个时间窗口结束时，将生成一个摘要日志，详细说明该期间内任何限流消息的发生。\n重要的是，此设置的最短有效时间窗口为 1 秒（1s）。\n如果指定的值低于 1s，则会自动调整为 1s。",
+      "label": "日志限流时间窗口"
     }
   },
   "emqx_connector_api": {
@@ -3740,6 +3880,10 @@
     "token_expired_time": {
       "desc": "登录成功返回的 JWT token 过期时间，默认为 60 分钟。",
       "label": "登录过期时间"
+    },
+    "swagger_support": {
+      "desc": "启用或禁用对 swagger API 文档的支持。",
+      "label": "Swagger 支持"
     }
   },
   "emqx_dashboard_sso_ldap": {
@@ -4070,12 +4214,12 @@
   },
   "emqx_ee_schema_registry_schema": {
     "avro_type": {
-      "desc": "[阿帕奇-阿夫罗](https://avro.apache.org/) 序列化格式。",
-      "label": "阿帕奇-阿夫罗"
+      "desc": "[Apache Avro](https://avro.apache.org/) 序列化格式。",
+      "label": "Apache Avro"
     },
     "protobuf_type": {
-      "desc": "[协议缓冲器](https://protobuf.dev/) 序列化格式。",
-      "label": "协议缓冲器"
+      "desc": "[Protobuf](https://protobuf.dev/) 序列化格式。",
+      "label": "Protobuf"
     },
     "schema_description": {
       "desc": "对该模式的描述。",
@@ -5256,6 +5400,48 @@
     "unsubscribe_g": {
       "desc": "批量取消订阅",
       "label": "批量取消订阅"
+    },
+    "get_client_inflight_msgs": {
+      "desc": "获取客户端未确认消息。",
+      "label": "获取客户端未确认消息"
+    },
+    "get_client_mqueue_msgs": {
+      "desc": "获取客户端消息队列中的消息。",
+      "label": "获取客户端消息队列中的消息"
+    },
+    "get_sessions_count": {
+      "desc": "获取集群中的会话总数。\n默认情况下，仅包括那些未过期的会话。\n如果 broker.session_history_retain 配置设置为大于 0 秒的持续时间，\n这个计数也将包括在指定保留时间内过期的会话。\n通过指定 since 参数，它可以返回在指定时间内过期的会话数。",
+      "label": "会话数量统计"
+    },
+    "inflight_msgs_list": {
+      "desc": "客户端未确认消息列表。\n按 MQTT 包 ID 排序，这可能不代表消息的时间顺序。",
+      "label": "客户端未确认消息"
+    },
+    "mqueue_msgs_list": {
+      "desc": "客户端消息队列列表。保留队列（先入先出）的顺序。",
+      "label": "客户端消息队列消息"
+    },
+    "msg_from_clientid": {
+      "desc": "消息发布者的客户端 ID"
+    },
+    "msg_from_username": {
+      "desc": "消息发布者的用户名。",
+      "label": "消息发布者的用户名"
+    },
+    "msg_id": {
+      "desc": "消息 ID。",
+      "label": "消息 ID"
+    },
+    "msg_publish_at": {
+      "desc": "消息发布时间，毫秒级精度的 Unix 纪元时间戳。",
+      "label": "消息发布时间"
+    },
+    "msg_qos": {
+      "desc": "消息 QoS."
+    },
+    "msg_topic": {
+      "desc": "消息主题",
+      "label": "消息主题"
     }
   },
   "emqx_mgmt_api_cluster": {
@@ -6390,6 +6576,9 @@
     },
     "stop_publish_clear_msg": {
       "desc": "当 PUBLISH 消息的保留标志被设置且有效载荷为空时，是否继续发布消息。\n参见：\nhttp://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc398718038"
+    },
+    "mnesia_enable": {
+      "desc": "启用内置的 Mnesia 后端。"
     }
   },
   "emqx_rewrite_api": {
@@ -6846,7 +7035,8 @@
       "desc": "上传对象使用的 ACL。"
     },
     "bucket": {
-      "desc": "S3 桶的名称。"
+      "desc": "S3 桶的名称。",
+      "label": "存储桶"
     },
     "host": {
       "desc": "S3 端点的主机。"
@@ -6871,6 +7061,10 @@
     },
     "url_expire_time": {
       "desc": "S3 对象的签名 URL 有效时间（秒）。"
+    },
+    "key": {
+      "desc": "S3 对象的键。",
+      "label": "对象键"
     }
   },
   "emqx_schema": {
@@ -7779,13 +7973,16 @@
       "desc": "该值影响持久会话的消息流控制。\n当 FreeSpace 变量的值大于此值或 ReceiveMaximum / 2（以较小者为准）时，会话将查询 DB 中的新消息。\n\nFreeSpace 计算为会话的 ReceiveMaximum 减去在途消息数。"
     },
     "session_ds_session_gc_batch_size": {
-      "desc": "每次迭代要垃圾回收的过期持久会话的批量大小。"
+      "desc": "每次迭代要垃圾回收的过期持久会话的批量大小。",
+      "label": "会话垃圾收集批次大小"
     },
     "session_ds_session_gc_interval": {
-      "desc": "执行持久会话垃圾回收的间隔。"
+      "desc": "执行持久会话垃圾回收的间隔。",
+      "label": "会话垃圾收集间隔"
     },
     "session_persistence_enable": {
-      "desc": "使用持久存储来持久化客户端会话。\n如果启用，配置为超出客户端连接的会话及其对应的消息将被持久存储，并在代理停机期间保留。"
+      "desc": "使用持久存储来持久化客户端会话。\n如果启用，配置为超出客户端连接的会话及其对应的消息将被持久存储，并在代理停机期间保留。",
+      "label": "启用会话持久化"
     },
     "session_persistence_storage": {
       "desc": "用于会话持久化的持久存储后端。"
@@ -7806,6 +8003,28 @@
     "resource_tags": {
       "desc": "连接器的标签",
       "label": "标签"
+    },
+    "broker_session_history_retain": {
+      "desc": "保留会话注册历史记录的持续时间。将此值设置为大于 0s 的值会增加内存使用并影响性能。\n这个保留的历史记录可以用来监控过去配置的持续时间内注册了多少会话。\n注意：如果 enable_session_registry 设置为 false，则此配置无效。<br/>\n注意：如果客户端使用随机客户端 ID，则不建议启用此功能，至少不是长时间保留。<br/>\n注意：在集群中，集群内节点中的最低（但大于 0s）值将生效。"
+    },
+    "durable_storage": {
+      "desc": "与 EMQX 持久存储相关的配置。\n\nEMQX 使用持久存储来卸载各种数据到磁盘，如 MQTT 消息。",
+      "label": "持久存储"
+    },
+    "fields_ws_opts_validate_utf8": {
+      "desc": "设置为 <code>false</code> 可以禁用 WebSocket 帧 UTF-8 验证以提高性能。",
+      "label": "启用/禁用 WebSocket 帧 utf8 验证"
+    },
+    "mqtt_message_expiry_interval": {
+      "desc": "MQTT 消息的过期间隔。对于 MQTT 5.0 客户端，此配置仅在消息中未设置 Message-Expiry-Interval 属性时生效；否则，将使用 Message-Expiry-Interval 属性的值。对于 5.0 之前的 MQTT 版本，此配置将始终生效。请注意，将 message_expiry_interval 设置为大于 session_expiry_interval 是没有意义的，因为会话过期时所有消息将被清除。",
+      "label": "消息过期间隔"
+    },
+    "mqtt_shared_subscription_strategy": {
+      "desc": "共享订阅的分发策略。\n - random：随机选择一个订阅者进行分发；\n - round_robin：从单个发布者处的消息依次分发给订阅者；\n - round_robin_per_group：所有消息依次分发给订阅者；\n - local：随机选择当前节点上的一个订阅者，如果当前节点没有订阅者，则在集群内随机选择；\n - sticky：持续将消息分发给最初选择的订阅者，直到他们的会话结束；\n - hash_clientid：哈希发布者的客户端 ID 以选择订阅者；\n - hash_topic：哈希发布主题以选择订阅者。"
+    },
+    "session_ds_batch_size": {
+      "desc": "此值影响持久会话的流量控制。\n持久会话以批次查询持久消息存储。\n此值指定批次的大小。\n\n注意：较大的批次通常提高系统的吞吐量和整体性能，但会增加每个客户端的 RAM 使用量。",
+      "label": "批次大小"
     }
   },
   "emqx_slow_subs_api": {
@@ -8325,6 +8544,10 @@
     "sync_query_timeout": {
       "desc": "此参数定义同步查询的超时限制。仅在动作查询模式配置为'sync'时适用。",
       "label": "同步查询超时"
+    },
+    "partitions_limit": {
+      "desc": "限制为给定主题产生数据的分区数量。\n特殊值 all_partitions 用于利用主题的所有分区。\n设置的值如果大于分区总数则无效。",
+      "label": "最大分区数"
     }
   },
   "emqx_bridge_gcp_pubsub_producer_schema": {
@@ -8365,6 +8588,18 @@
     "write_syntax": {
       "desc": "GreptimeDB gRPC 协议写入数据点的配置。写入语法是一种文本格式，提供了数据点的测量、标签集、字段集和时间戳，并支持占位符，与 InfluxDB 行协议相同。\n参见 [InfluxDB 2.3 行协议](https://docs.influxdata.com/influxdb/v2.3/reference/syntax/line-protocol/) 和\n[GreptimeDB 1.8 行协议](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) <br/>\n简而言之:<br/>\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\n请注意，整数值的占位符必须用后缀 `i` 注释。例如 `${payload.int_value}i`。",
       "label": "写入语法"
+    },
+    "action_parameters": {
+      "desc": "针对这个动作类型的更多参数。",
+      "label": "动作参数"
+    },
+    "connector": {
+      "desc": "GreptimeDB 连接器配置。",
+      "label": "GreptimeDB 连接器"
+    },
+    "greptimedb_action": {
+      "desc": "与一个 GreptimeDB 连接器交互的动作。",
+      "label": "GreptimeDB 动作"
     }
   },
   "emqx_bridge_greptimedb_connector": {
@@ -8425,6 +8660,42 @@
     "record_template": {
       "desc": "要转发到 HStreamDB 的 HStream 记录模板。支持占位符。<br>\n注意：当您使用'原始记录'模板（这意味着数据不是有效的 JSON）时，您应该在 HStream 中使用 'read' 或 'subscription' 来获取数据。",
       "label": "HStream 记录"
+    },
+    "action_parameters": {
+      "desc": "针对动作的详细配置。",
+      "label": "动作"
+    },
+    "aggregation_pool_size": {
+      "desc": "Record 聚合池的大小。更大的聚合池可以提升并行处理能力，但可能会因为批处理变小而导致效率降低。",
+      "label": "聚合池大小"
+    },
+    "batch_interval": {
+      "desc": "两次连续（批处理）请求之间允许的最大间隔。",
+      "label": "最大批处理间隔"
+    },
+    "batch_size": {
+      "desc": "单个请求中可以发送的最大插入数据子句数量。",
+      "label": "最大批量追加计数"
+    },
+    "config_connector": {
+      "desc": "HStreamDB 连接器的配置",
+      "label": "HStreamDB 连接器配置"
+    },
+    "grpc_flush_timeout": {
+      "desc": "将 gRPC 调用刷新到 HStreamDB 服务器的时间间隔。",
+      "label": "gRPC 刷新间隔"
+    },
+    "hstreamdb_action": {
+      "desc": "HStreamDB 动作的配置。",
+      "label": "HStreamDB 动作配置"
+    },
+    "max_batches": {
+      "desc": "刷新队列中未确认批次的最大数量。",
+      "label": "最大批次数"
+    },
+    "writer_pool_size": {
+      "desc": "写入池大小。更大的池规模可能增加并行化和并发写入操作，可能提升吞吐量。但需权衡内存消耗和资源竞争。",
+      "label": "写入池大小"
     }
   },
   "emqx_bridge_hstreamdb_connector": {
@@ -8617,6 +8888,18 @@
     "stream_name": {
       "desc": "消息将要被发布到的 Amazon Kinesis 流。",
       "label": "Amazon Kinesis 流"
+    },
+    "action_parameters": {
+      "desc": "针对动作的详细配置。",
+      "label": "动作"
+    },
+    "config_connector": {
+      "desc": "Kinesis 客户端的配置。",
+      "label": "Kinesis 客户端配置"
+    },
+    "kinesis_action": {
+      "desc": "Kinesis 动作的配置。",
+      "label": "Kinesis 动作配置"
     }
   },
   "emqx_bridge_mongodb": {
@@ -9008,6 +9291,21 @@
     },
     "retry_interval": {
       "desc": "重发时间间隔"
+    },
+    "authentication_url": {
+      "desc": "JT/T 808 设备认证中心的 URL。"
+    },
+    "jt808_auth": {
+      "desc": "JT/T 808 网关的认证设置。"
+    },
+    "jt808_dn_topic": {
+      "desc": "JT/T 808 协议下行消息的主题。"
+    },
+    "jt808_up_topic": {
+      "desc": "JT/T 808 协议上行消息的主题。"
+    },
+    "registry_url": {
+      "desc": "JT/T 808 设备注册中心的 URL。"
     }
   },
   "emqx_mysql": {
@@ -9167,6 +9465,22 @@
     "schema_type": {
       "desc": "Schema 类型。",
       "label": "Schema 类型"
+    },
+    "json_type": {
+      "desc": "支持 JSON Schema\n[Draft 03](http://tools.ietf.org/html/draft-zyp-json-schema-03)\n[Draft 04](http://tools.ietf.org/html/draft-zyp-json-schema-04) 以及\n[Draft 06](https://datatracker.ietf.org/doc/html/draft-wright-json-schema-00).",
+      "label": "JSON Schema"
+    },
+    "schema_type_avro": {
+      "desc": "对于 Avro schema，必须是 avro。",
+      "label": "Avro Schema"
+    },
+    "schema_type_json": {
+      "desc": "对于 JSON schema，必须是 json。",
+      "label": "JSON Schema"
+    },
+    "schema_type_protobuf": {
+      "desc": "对于 protobuf schema，必须是 protobuf。",
+      "label": "Protobuf Schema"
     }
   },
   "emqx_bridge_es": {
@@ -9272,7 +9586,8 @@
   },
   "emqx_bridge_es_connector": {
     "auth_basic": {
-      "label": "认证信息"
+      "label": "认证信息",
+      "desc": "基本认证的参数。"
     },
     "config_auth_basic_password": {
       "desc": "ElasticSearch REST 连接密码",
@@ -9345,6 +9660,232 @@
     "mqtt_subscriber_source": {
       "desc": "订阅 Source 的配置。",
       "label": "Source"
+    }
+  },
+  "emqx_bridge_gcp_pubsub_consumer_schema": {
+    "config_connector": {
+      "desc": "GCP PubSub 消费者客户端的配置。",
+      "label": "GCP PubSub 消费者客户端配置"
+    },
+    "consumer_source": {
+      "desc": "Source 配置。",
+      "label": "Source"
+    },
+    "source_parameters": {
+      "desc": "针对 Source 的详细配置。",
+      "label": "Source 详细配置"
+    }
+  },
+  "emqx_bridge_kafka_consumer_schema": {
+    "config_connector": {
+      "desc": "Kafka 消费者客户端的配置。",
+      "label": "Kafka 消费者客户端配置"
+    },
+    "consumer_source": {
+      "desc": "Source 配置。",
+      "label": "Source"
+    },
+    "source_parameters": {
+      "desc": "针对 Source 的详细配置。",
+      "label": "Source 详细配置"
+    }
+  },
+  "emqx_bridge_pulsar_pubsub_schema": {
+    "action_parameters": {
+      "desc": "针对动作的详细配置。",
+      "label": "动作"
+    },
+    "producer_key_template": {
+      "desc": "渲染 Pulsar 消息键的模板。",
+      "label": "消息的键"
+    },
+    "producer_message_opts": {
+      "desc": "渲染 Pulsar 消息的模版。",
+      "label": "Pulsar 消息模版"
+    },
+    "producer_pulsar_message": {
+      "desc": "渲染 Pulsar 消息的模版。",
+      "label": "Pulsar 消息模版"
+    },
+    "producer_sync_timeout": {
+      "desc": "同步发布时等待从 Pulsar 接收回执的最大等待时间。",
+      "label": "同步发布超时"
+    },
+    "producer_value_template": {
+      "desc": "渲染 Pulsar 消息值的模版。",
+      "label": "消息的值"
+    },
+    "publisher_action": {
+      "desc": "发布消息到 Pulsar 主题。",
+      "label": "发布动作"
+    }
+  },
+  "emqx_bridge_rabbitmq_connector_schema": {
+    "auto_reconnect": {
+      "desc": "如果连接丢失，尝试重新连接到 RabbitMQ 服务器的间隔。",
+      "label": "自动重新连接"
+    },
+    "config_connector": {
+      "desc": "RabbitMQ 连接器的配置。",
+      "label": "RabbitMQ 连接器配置"
+    },
+    "connector_resource_opts": {
+      "desc": "连接器资源选项。",
+      "label": "连接器资源选项"
+    },
+    "delivery_mode": {
+      "desc": "发布到 RabbitMQ 的消息的传递模式。非持久化传递模式（1）适用于不需要在 RabbitMQ 重启后保持的消息，而持久化传递模式（2）用于必须在 RabbitMQ 重启后仍然存在的消息。",
+      "label": "消息传递模式"
+    },
+    "exchange": {
+      "desc": "消息将被发送到的 RabbitMQ 交换机的名称。",
+      "label": "交换机"
+    },
+    "exchange_type": {
+      "desc": "RabbitMQ 交换机类型 (direct, fanout, 或 topic).",
+      "label": "交换机类型"
+    },
+    "heartbeat": {
+      "desc": "向 RabbitMQ 服务器发送心跳消息的间隔。",
+      "label": "心跳"
+    },
+    "password": {
+      "desc": "用于与 RabbitMQ 服务器进行认证的密码。",
+      "label": "密码"
+    },
+    "payload_template": {
+      "desc": "在发送消息到 RabbitMQ 之前格式化消息 payload 的模板。例如 ${field1.sub_field} 的模板占位符将被相应字段的值替换。如果留空，整个输入消息将被用作 payload，格式化为 JSON 文本。这种行为等同于将 ${.} 指定为 payload 模板。",
+      "label": "Payload 模版"
+    },
+    "pool_size": {
+      "desc": "连接池的大小",
+      "label": "连接池大小"
+    },
+    "port": {
+      "desc": "RabbitMQ 服务器监听的端口号（默认为 5672）。",
+      "label": "端口"
+    },
+    "publish_confirmation_timeout": {
+      "desc": "使用发布者确认时，等待 RabbitMQ 确认消息发布的超时时间。",
+      "label": "发布确认超时时间"
+    },
+    "routing_key": {
+      "desc": "用于将消息路由到 RabbitMQ 交换机中正确队列的路由键。",
+      "label": "路由键"
+    },
+    "server": {
+      "desc": "您想要连接的 RabbitMQ 服务器地址（例如，localhost）。",
+      "label": "服务器地址"
+    },
+    "timeout": {
+      "desc": "等待连接建立的超时时间。",
+      "label": "连接超时"
+    },
+    "username": {
+      "desc": "用于与 RabbitMQ 服务器进行认证的用户名。",
+      "label": "用户名"
+    },
+    "virtual_host": {
+      "desc": "连接到 RabbitMQ 服务器时使用的虚拟主机。",
+      "label": "虚拟主机"
+    },
+    "wait_for_publish_confirmations": {
+      "desc": "一个布尔值，指示在使用发布者确认时是否等待 RabbitMQ 确认消息发布。",
+      "label": "等待发布确认"
+    }
+  },
+  "emqx_bridge_rabbitmq_pubsub_schema": {
+    "action_parameters": {
+      "desc": "动作配置定义了此动作输出如何将消息发送到远程 RabbitMQ 代理。",
+      "label": "动作参数"
+    },
+    "publisher_action": {
+      "desc": "动作的配置",
+      "label": "动作"
+    },
+    "source_no_ack": {
+      "desc": "在从 RabbitMQ 代理消费消息时是否使用 no_ack 模式。",
+      "label": "Source No Ack"
+    },
+    "source_parameters": {
+      "desc": "Source 配置定义了此数据输入如何从远程 RabbitMQ 代理接收消息。",
+      "label": "Source 参数"
+    },
+    "source_queue": {
+      "desc": "RabbitMQ 代理的队列名称。",
+      "label": "Source 队列"
+    },
+    "subscriber_source": {
+      "desc": "Source 配置",
+      "label": "Source"
+    }
+  },
+  "emqx_bridge_s3": {
+    "config_connector": {
+      "desc": "配置连接到兼容 S3 API 存储服务的连接器。",
+      "label": "S3 连接器配置"
+    },
+    "s3_object_content": {
+      "desc": "正在上传的 S3 对象的内容。支持模板。",
+      "label": "S3 对象内容"
+    },
+    "s3_upload": {
+      "desc": "上传单个对象到 S3 服务的操作。",
+      "label": "S3 简单上传"
+    },
+    "s3_upload_parameters": {
+      "desc": "上传操作的参数集。操作支持在 S3 桶名称、对象键和对象内容中使用模板。",
+      "label": "S3 上传操作参数"
+    }
+  },
+  "emqx_ds_schema": {
+    "builtin": {
+      "desc": "使用嵌入式 RocksDB 键值存储的内置会话存储后端。",
+      "label": "内置后端"
+    },
+    "builtin_backend": {
+      "desc": "内置后端",
+      "label": "后端"
+    },
+    "builtin_data_dir": {
+      "desc": "数据库所在的文件系统目录。\n\n默认情况下，它等于 node.data_dir。",
+      "label": "数据库位置"
+    },
+    "builtin_layout": {
+      "desc": "存储布局是一种在磁盘上排列来自各种主题和客户端消息的方法。\n\n根据工作负载类型和主题结构的不同，可以采用不同的数据存储策略，以最大化地提高从持久存储中读取消息的效率。",
+      "label": "存储布局"
+    },
+    "builtin_local_write_buffer": {
+      "desc": "与从本地节点发送到分片领导者的消息缓冲相关的配置。\n\nEMQX 在将 PUBLISH 消息提交到持久存储之前，会在写入缓冲区中积累来自本地客户端的消息。\n这有助于隐藏 EMQX 节点之间的网络延迟，并提高写入吞吐量。",
+      "label": "本地写入缓冲"
+    },
+    "builtin_local_write_buffer_flush_interval": {
+      "desc": "缓冲消息的最大停留时间。\n本地写入缓冲区至少会按照 flush_interval 的频率被刷新。\n\nflush_interval 的较大值可能会导致更高的吞吐量和更好的整体性能，但可能增加端到端的延迟。",
+      "label": "刷新间隔"
+    },
+    "builtin_local_write_buffer_max_items": {
+      "desc": "此配置参数定义本地写入缓冲区中存储的消息的最大数量。",
+      "label": "最大项目数"
+    },
+    "builtin_n_shards": {
+      "desc": "内置的持久存储将数据分成多个分片。\n此配置参数定义分片的数量。\n请注意，它仅在持久存储数据库初始化期间生效。\n在数据库已经创建后更改此配置参数将不会产生任何效果。",
+      "label": "分片数量"
+    },
+    "layout_builtin_wildcard_optimized": {
+      "desc": "通配符优化 布局旨在最大化覆盖大量主题的通配符订阅的吞吐量。\n\n例如，它可以处理大量客户端将数据发布到包含其客户端 ID 的主题的场景，如：sensor/%device-version%/%clientid%/temperature、sensor/%device-version%/%clientid%/pressure 等。\n此布局将自动将此类主题分组到单个流中，因此订阅包含通配符的主题过滤器（如 sensor/+/+/temperature）的客户端将能够以单个批次消费所有设备发布的消息。\n\n此布局对非通配符订阅也是有效的。",
+      "label": "通配符优化存储布局"
+    },
+    "layout_builtin_wildcard_optimized_type": {
+      "desc": "通配符优化布局类型。",
+      "label": "布局类型"
+    },
+    "messages": {
+      "desc": "与 MQTT 消息的持久存储相关的配置。",
+      "label": "MQTT 消息存储"
+    },
+    "wildcard_optimized_epoch_bits": {
+      "desc": "通配符优化布局将不同时间记录的消息划分为“纪元”。\n从单个纪元读取消息可以非常高效，因此更大的纪元可以提高订阅者的吞吐量，但可能增加端到端的延迟。\n\n每个纪元覆盖的时间跨度随 epoch_bits 的值呈指数增长：\n\n- epoch_bits = 1：纪元时间 = 1 毫秒\n- epoch_bits = 2：2 毫秒\n...\n- epoch_bits = 10：1024 毫秒\n- epoch_bits = 13：约 8 秒\n...",
+      "label": "纪元位"
     }
   }
 }
