@@ -4666,7 +4666,7 @@
       "label": "SSL options"
     },
     "swagger_support": {
-      "desc": "Enable or disable support for swagger API documentation.",
+      "desc": "Enable or disable support for Swagger API documentation.",
       "label": "Swagger Support"
     },
     "token_expired_time": {

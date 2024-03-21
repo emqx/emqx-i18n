@@ -3168,11 +3168,11 @@
       "label": "最大筛选限制"
     },
     "desc_log_throttling": {
-      "desc": "日志限流功能通过在配置的时间窗口内丢弃除第一个事件外的所有事件，来减少可能泛滥的日志事件数量。\n如果 console 或 file 日志级别设置为调试，则自动禁用限流。",
+      "desc": "日志限流功能通过在配置的时间窗口内丢弃除第一个事件外的所有事件，来减少可能泛滥的日志事件数量。\n如果 `console` 或 `file` 日志级别设置为 debug，则自动禁用限流。",
       "label": "日志限流"
     },
     "log_root": {
-      "desc": "EMQX 支持两种主要的日志处理进程：file 和 console，另有一个专门设计用于始终将日志定向到文件的 audit 处理进程。\n系统的默认日志处理行为可以通过环境变量 EMQX_DEFAULT_LOG_HANDLER 配置，它接受以下设置：\n\n- file：将日志输出仅定向到文件。\n- console：将日志输出仅定向到控制台。\n\n值得注意的是，当通过 systemd 的 emqx.service 文件启动 EMQX 时，EMQX_DEFAULT_LOG_HANDLER 被设置为 file。\n在 systemd 启动之外的场景中，console 作为默认的日志处理进程。",
+      "desc": "EMQX 支持两种主要的日志处理进程：file 和 console，另有一个专门设计用于始终将日志定向到文件的 audit 处理进程。\n系统的默认日志处理行为可以通过环境变量 `EMQX_DEFAULT_LOG_HANDLER` 配置，它接受以下设置：\n\n- file：将日志输出仅定向到文件。\n- console：将日志输出仅定向到控制台。\n\n值得注意的是，当通过 systemd 的 emqx.service 文件启动 EMQX 时，EMQX_DEFAULT_LOG_HANDLER 被设置为 file。\n在 systemd 启动之外的场景中，console 作为默认的日志处理进程。",
       "label": "日志"
     },
     "log_throttling_time_window": {
@@ -3882,7 +3882,7 @@
       "label": "登录过期时间"
     },
     "swagger_support": {
-      "desc": "启用或禁用对 swagger API 文档的支持。",
+      "desc": "启用或禁用对 Swagger API 文档的支持。",
       "label": "Swagger 支持"
     }
   },
