@@ -3682,6 +3682,10 @@
       "desc": "Lists the available action types.",
       "label": "List action types"
     },
+    "desc_api11": {
+      "desc": "Lists the available source types.",
+      "label": "List source types"
+    },
     "desc_api2": {
       "desc": "Create a new bridge by type and name.",
       "label": "Create Bridge"
@@ -3955,6 +3959,10 @@
     "common_handler_time_offset": {
       "desc": "The time offset to be used when formatting the timestamp.\nCan be one of:\n  - <code>system</code>: the time offset used by the local system\n  - <code>utc</code>: the UTC time offset\n  - <code>+-[hh]:[mm]</code>: user specified time offset, such as \"-02:00\" or \"+00:00\"\nDefaults to: <code>system</code>.\nThis config has no effect for when formatter is <code>json</code> as the timestamp in JSON is milliseconds since epoch.",
       "label": "Time Offset"
+    },
+    "common_handler_timestamp_format": {
+      "desc": "Pick a timestamp format:\n- `auto`: automatically choose the best format based on log formatter. `epoch` for JSON and `rfc3339` for text.\n- `epoch`: Unix epoch time in microseconds.\n- `rfc3339`: RFC3339 format.",
+      "label": "Timestamp Format"
     },
     "db_backend": {
       "desc": "Select the backend for the embedded database.<br/>\n<code>rlog</code> is the default backend,\nthat is suitable for very large clusters.<br/>\n<code>mnesia</code> is a backend that offers decent performance in small clusters.",
@@ -4666,7 +4674,7 @@
       "label": "SSL options"
     },
     "swagger_support": {
-      "desc": "Enable or disable support for Swagger API documentation.",
+      "desc": "Enable or disable support for swagger API documentation.",
       "label": "Swagger Support"
     },
     "token_expired_time": {
@@ -6033,8 +6041,8 @@
       "label": "Get client authz cache in the cluster."
     },
     "get_client_inflight_msgs": {
-      "desc": "Get client inflight messages",
-      "label": "Get client inflight messages"
+      "desc": "Get client in-flight messages",
+      "label": "Get client in-flight messages"
     },
     "get_client_mqueue_msgs": {
       "desc": "Get client mqueue messages",
@@ -6049,8 +6057,8 @@
       "label": "Count number of sessions"
     },
     "inflight_msgs_list": {
-      "desc": "Client's inflight messages list.\nOrdered by MQTT Packet Id, which may not represent the chronological messages order.",
-      "label": "Client's inflight messages"
+      "desc": "Client's in-flight messages list.\nMessages are sorted by time at which they were inserted to the In-flight storage (from older to newer messages).",
+      "label": "Client's in-flight messages"
     },
     "kick_client_id": {
       "desc": "Kick out client by client ID",
@@ -6065,7 +6073,7 @@
       "label": "List clients"
     },
     "mqueue_msgs_list": {
-      "desc": "Client's mqueue messages list. The queue (FIFO) ordering is preserved.",
+      "desc": "Client's mqueue messages list.\nMessages are ordered according to their priority and queue (FIFO) order: from higher priority to lower priority.\nBy default, all messages in Mqueue have the same priority of 0.",
       "label": "Client's mqueue messages"
     },
     "msg_from_clientid": {
@@ -6073,18 +6081,27 @@
     },
     "msg_from_username": {
       "desc": "Message publisher's username.",
-      "label": "Message Publisher's Username "
+      "label": "Message Publisher's Username"
     },
     "msg_id": {
       "desc": "Message ID.",
       "label": "Message ID"
     },
+    "msg_inserted_at": {
+      "desc": "A nanosecond precision Unix epoch timestamp at which a message was inserted to In-flight / Mqueue.",
+      "label": "Message Insertion Time"
+    },
+    "msg_mqueue_priority": {
+      "desc": "Message Mqueue Priority.",
+      "label": "Message Mqueue Priority"
+    },
     "msg_publish_at": {
       "desc": "Message publish time, a millisecond precision Unix epoch timestamp.",
-      "label": "Message Publish Time."
+      "label": "Message Publish Time"
     },
     "msg_qos": {
-      "desc": "Message QoS."
+      "desc": "Message QoS.",
+      "label": "Message QoS"
     },
     "msg_topic": {
       "desc": "Message topic.",

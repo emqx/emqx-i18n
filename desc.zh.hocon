@@ -2491,6 +2491,10 @@
       "desc": "列出所有可用的动作类型。",
       "label": "列出动作类型"
     },
+    "desc_api11": {
+      "desc": "列出所有可用的数据源类型。",
+      "label": "列出数据源类型"
+    },
     "desc_api2": {
       "desc": "通过类型和名称创建一个新的数据桥接。",
       "label": "创建数据桥接"
@@ -2838,6 +2842,10 @@
     "common_handler_time_offset": {
       "desc": "日志中的时间戳使用的时间偏移量。\n可选值为：\n  - <code>system</code>: 本地系统使用的时区偏移量\n  - <code>utc</code>: 0 时区的偏移量\n  - <code>+-[hh]:[mm]</code>: 自定义偏移量，比如 \"-02:00\" 或者 \"+00:00\"\n默认值为本地系统的时区偏移量：<code>system</code>。",
       "label": "时间偏移量"
+    },
+    "common_handler_timestamp_format": {
+      "desc": "选择时间戳格式：\n- `auto`：自动选择最佳格式。`epoch` 给 JSON 日志 `rfc3339` 给自由文本格式。\n- `epoch`： 微秒精度的 Unix epoch 整形值。\n- `rfc3339`： 遵从 RFC3339 规范的字符串格式。",
+      "label": "时间戳格式"
     },
     "db_backend": {
       "desc": "配置后端数据库驱动，默认值为 <code>rlog</code> 它适用于大规模的集群。\n<code>mnesia</code> 是备选数据库，适合中小集群。",
@@ -5418,7 +5426,7 @@
       "label": "客户端未确认消息"
     },
     "mqueue_msgs_list": {
-      "desc": "客户端消息队列列表。保留队列（先入先出）的顺序。",
+      "desc": "客户端消息队列列表。保留优先队列（先入先出）的顺序，优先级从高到低。默认情况下所有消息的优先级都为 0。",
       "label": "客户端消息队列消息"
     },
     "msg_from_clientid": {
@@ -5431,6 +5439,14 @@
     "msg_id": {
       "desc": "消息 ID。",
       "label": "消息 ID"
+    },
+    "msg_inserted_at": {
+      "desc": "微秒精度的 Unix epoch 时间戳，用于记录消息进入 待发队列（mqueue ）或者飞行窗口的时间。",
+      "label": "入队时间"
+    },
+    "msg_mqueue_priority": {
+      "desc": "待发队列 (mqueue) 中的优先级。",
+      "label": "消息优先级"
     },
     "msg_publish_at": {
       "desc": "消息发布时间，毫秒级精度的 Unix 纪元时间戳。",
