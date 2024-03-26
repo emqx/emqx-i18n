@@ -2844,7 +2844,7 @@
       "label": "时间偏移量"
     },
     "common_handler_timestamp_format": {
-      "desc": "选择时间戳格式：\n- `auto`：自动选择最佳格式。`epoch` 给 JSON 日志 `rfc3339` 给自由文本格式。\n- `epoch`： 毫秒精度的 Unix epoch 整形值。\n- `rfc3339`： 遵从 RFC3339 规范的字符串格式。",
+      "desc": "选择时间戳格式：\n- `auto`：自动选择最佳格式。`epoch` 给 JSON 日志 `rfc3339` 给自由文本格式。\n- `epoch`： 微秒精度的 Unix epoch 整形值。\n- `rfc3339`： 遵从 RFC3339 规范的字符串格式。",
       "label": "时间戳格式"
     },
     "db_backend": {

@@ -3961,7 +3961,7 @@
       "label": "Time Offset"
     },
     "common_handler_timestamp_format": {
-      "desc": "Pick a timestamp format:\n- `auto`: automatically choose the best format based on log formatter. `epoch` for JSON and `rfc3339` for text.\n- `epoch`: Unix epoch time in milliseconds.\n- `rfc3339`: RFC3339 format.",
+      "desc": "Pick a timestamp format:\n- `auto`: automatically choose the best format based on log formatter. `epoch` for JSON and `rfc3339` for text.\n- `epoch`: Unix epoch time in microseconds.\n- `rfc3339`: RFC3339 format.",
       "label": "Timestamp Format"
     },
     "db_backend": {
