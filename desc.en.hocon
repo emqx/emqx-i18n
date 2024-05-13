@@ -219,6 +219,10 @@
       "desc": "Path to a file containing the user certificate.",
       "label": "Certificate File"
     },
+    "disconnect_after_expire": {
+      "desc": "Disconnect the client after the token expires.",
+      "label": "Disconnect After Expire"
+    },
     "enable": {
       "desc": "Enable/disable SSL.",
       "label": "Enable/disable SSL"
@@ -1505,9 +1509,15 @@
       "desc": "Configuration for DynamoDB action.",
       "label": "DynamoDB Action Configuration"
     },
+    "hash_key": {
+      "desc": "DynamoDB Hash Key"
+    },
     "local_topic": {
       "desc": "The MQTT topic filter to be forwarded to DynamoDB. All MQTT `PUBLISH` messages with the topic\nmatching the `local_topic` will be forwarded.<br/>\nNOTE: if this bridge is used as the action of a rule (EMQX rule engine), and also `local_topic` is\nconfigured, then both the data got from the rule and the MQTT messages that match `local_topic`\nwill be forwarded.",
       "label": "Local Topic"
+    },
+    "range_key": {
+      "desc": "DynamoDB Range Key"
     },
     "template": {
       "desc": "Template, the default value is empty. When this value is empty the whole message will be stored in the database.<br>\nThe template can be any valid JSON with placeholders and make sure all keys for table are here, example:<br>\n  <code>{\"id\" : \"${id}\", \"clientid\" : \"${clientid}\", \"data\" : \"${payload.data}\"}</code>",
@@ -1522,6 +1532,9 @@
     "aws_secret_access_key": {
       "desc": "AWS Secret Access Key for connecting to DynamoDB.",
       "label": "AWS Secret Access Key"
+    },
+    "region": {
+      "desc": "Region of AWS Dynamo"
     },
     "table": {
       "desc": "DynamoDB Table.",
@@ -2988,14 +3001,14 @@
   "emqx_bridge_pulsar": {
     "auth_basic": {
       "desc": "Parameters for basic authentication.",
-      "label": "Basic auth params"
+      "label": "Basic auth parameters"
     },
     "auth_basic_password": {
-      "desc": "Basic authentication password.",
+      "desc": "Basic authentication password. The `password` part of the `username:password` authentication string.",
       "label": "Password"
     },
     "auth_basic_username": {
-      "desc": "Basic authentication username.",
+      "desc": "Basic authentication username. The `username` part of the `username:password` authentication string.",
       "label": "Username"
     },
     "auth_token": {
@@ -3336,6 +3349,9 @@
       "desc": "Configuration for RocketMQ Action",
       "label": "RocketMQ Action Configuration"
     },
+    "strategy": {
+      "desc": "Producer key dispatch strategy, the default is `roundrobin`, also supports placeholders, such as: `clientid`, `messageid`, `username`."
+    },
     "template": {
       "desc": "Template, the default value is empty. When this value is empty the whole message will be stored in the RocketMQ.<br>\n            The template can be any valid string with placeholders, example:<br>\n            - ${id}, ${username}, ${clientid}, ${timestamp}<br>\n            - {\"id\" : ${id}, \"username\" : ${username}}",
       "label": "Template"
@@ -3345,6 +3361,9 @@
     "access_key": {
       "desc": "RocketMQ server `accessKey`.",
       "label": "AccessKey"
+    },
+    "namespace": {
+      "desc": "The namespace field MUST be set if you are using the RocketMQ service in\naliyun cloud and also the namespace is enabled,\nor if you have configured a namespace in your RocketMQ server.\nFor RocketMQ in aliyun cloud, the namespace is the instance ID."
     },
     "refresh_interval": {
       "desc": "RocketMQ Topic Route Refresh Interval.",
@@ -3379,7 +3398,47 @@
     "config_connector": {
       "desc": "Configuration for a connector to S3 API compatible storage service.",
       "label": "S3 Connector Configuration"
+    }
+  },
+  "emqx_bridge_s3_aggreg_upload": {
+    "s3_aggregated_container": {
+      "desc": "Settings governing the file format of an upload containing aggregated events.",
+      "label": "Container for aggregated events"
     },
+    "s3_aggregated_container_csv": {
+      "desc": "Records (events) will be aggregated and uploaded as a CSV file.",
+      "label": "CSV container"
+    },
+    "s3_aggregated_container_csv_column_order": {
+      "desc": "Event fields that will be ordered first as columns in the resulting CSV file.<br/>\nRegardless of this setting, resulting CSV will contain all the fields of aggregated events, but all the columns not explicitly mentioned here will be ordered after the ones listed here in the lexicographical order.",
+      "label": "CSV column order"
+    },
+    "s3_aggregated_upload": {
+      "desc": "Action that enables time-based aggregation of incoming events and uploading them to the S3 service as a single object.",
+      "label": "S3 Aggregated Upload"
+    },
+    "s3_aggregated_upload_key": {
+      "desc": "Template for the S3 object key of an aggregated upload.<br/>\nTemplate may contain placeholders for the following variables:\n<ul>\n<li><code>${action}</code>: name of the action (required).<li/>\n<li><code>${node}</code>: name of the EMQX node conducting the upload (required).<li/>\n<li><code>${datetime.{format}}</code>: date and time when aggregation started, formatted according to the <code>{format}</code> string (required):\n    <ul>\n    <li><code>${datetime.rfc3339utc}</code>: RFC3339-formatted date and time in UTC,<li/>\n    <li><code>${datetime.rfc3339}</code>: RFC3339-formatted date and time in local timezone,<li/>\n    <li><code>${datetime.unix}</code>: Unix timestamp.<li/>\n    </ul>\n<li/>\n<li><code>${datetime_until.{format}}</code>: date and time when aggregation ended, with the same formatting options.<li/>\n<li><code>${sequence}</code>: sequence number of the aggregated upload within the same time interval (required).<li/>\n</ul>\nAll other placeholders are considered invalid. Note that placeholders marked as required will be added as a path suffix to the S3 object key if they are missing from the template.",
+      "label": "S3 object key template"
+    },
+    "s3_aggregated_upload_parameters": {
+      "desc": "Set of parameters for the aggregated upload action.",
+      "label": "S3 Aggregated Upload action parameters"
+    },
+    "s3_aggregation": {
+      "desc": "Set of parameters governing the aggregation process.",
+      "label": "Aggregation parameters"
+    },
+    "s3_aggregation_interval": {
+      "desc": "Amount of time events will be aggregated in a single object before uploading.",
+      "label": "Time interval"
+    },
+    "s3_aggregation_max_records": {
+      "desc": "Number of records (events) allowed per each aggregated object. Each aggregated upload will contain no more than that number of events, but may contain less.<br/>\nIf event rate is high enough, there obviously may be more than one aggregated upload during the same time interval. These uploads will have different, but consecutive sequence numbers, which will be a part of S3 object key.",
+      "label": "Maximum number of records"
+    }
+  },
+  "emqx_bridge_s3_upload": {
     "s3_object_content": {
       "desc": "Content of the S3 object being uploaded. Supports templates.",
       "label": "S3 Object Content"
@@ -4298,6 +4357,9 @@
     },
     "secret": {
       "desc": "A string holding some sensitive information, such as a password. When secret starts with <code>file://</code>, the rest of the string is interpreted as a path to a file containing the secret itself: whole content of the file except any trailing whitespace characters is considered a secret value. Note: when clustered, all EMQX nodes should have the same file present before using <code>file://</code> secrets."
+    },
+    "template": {
+      "desc": "A string for `${.path.to.var}` style value interpolation,\nwhere the leading dot is optional, and `${.}` represents all values as an object."
     }
   },
   "emqx_connector_api": {
@@ -4860,6 +4922,10 @@
     "builtin_n_shards": {
       "desc": "The built-in durable storage partitions data into shards.\nThis configuration parameter defines the number of shards.\nPlease note that it takes effect only during the initialization of the durable storage database.\nChanging this configuration parameter after the database has been already created won't take any effect.",
       "label": "Number of shards"
+    },
+    "builtin_n_sites": {
+      "desc": "Number of storage sites that need to share responsibility over the set of storage shards.\nIn this context, sites are essentially EMQX nodes that have message durability enabled.\nPlease note that it takes effect only during the initialization of the durable storage database.\nDuring this phase at least that many sites should come online to distribute shards between them, otherwise message storage will be unavailable until then.\nAfter the initialization is complete, sites may be offline, which will affect availability depending on the number of offline sites and replication factor.",
+      "label": "Initial number of sites"
     },
     "layout_builtin_wildcard_optimized": {
       "desc": "_Wildcard-optimized_ layout is designed to maximize the throughput of wildcard subscriptions covering large numbers of topics.\n\nFor example, it can handle scenarios where a very large number of clients publish data to the topics containing their client ID, such as: `sensor/%device-version%/%clientid%/temperature`, `sensor/%device-version%/%clientid%/pressure`, etc.\nThis layout will automatically group such topics into a single stream, so a client subscribing to a topic filter containing wildcards (such as `sensor/+/+/temperature`) will be able to consume messages published by all devices as a single batch.\n\nThis layout is efficient for non-wildcard subscriptions as well.",
@@ -5802,24 +5868,20 @@
       "desc": "High watermark limit above which license connection quota usage alarms are activated",
       "label": "Connection high watermark"
     },
-    "connection_high_watermark_field_deprecated": {
-      "desc": "deprecated use /license/setting instead",
-      "label": "deprecated use /license/setting instead"
-    },
     "connection_low_watermark_field": {
       "desc": "Low watermark limit below which license connection quota usage alarms are deactivated",
       "label": "Connection low watermark"
     },
-    "connection_low_watermark_field_deprecated": {
-      "desc": "deprecated use /license/setting instead",
-      "label": "deprecated use /license/setting instead"
+    "dynamic_max_connections": {
+      "desc": "Only applicable for \"Business Critical\" license type. This config sets the current allocation of license for the current cluster.\nThis value cannot exceed the connections limit assigned in the license key.",
+      "label": "Dynamic Connections Limit"
     },
     "key_field": {
       "desc": "This configuration parameter is designated for the license key and supports below input formats:\n\n- Direct Key: Enter the secret key directly as a string value.\n- File Path: Specify the path to a file that contains the secret key. Ensure the path starts with <code>file://</code>.\n- \"default\": Use string value <code>\"default\"</code> to apply the default trial license.\n\nNote: An invalid license key or an incorrect file path may prevent EMQX from starting successfully.\nIf a file path is used, EMQX attempts to reload the license key from the file every 2 minutes.\nAny failure in reloading the license file will be recorded as an error level log message,\nand EMQX continues to apply the license loaded previously.",
       "label": "License string"
     },
     "license_root": {
-      "desc": "Defines the EMQX Enterprise license.\n\nEMQX Enterprise is initially provided with a default trial license.\nThis license, issued in December 2023, is valid for a period of 5 years.\nIt supports up to 25 concurrent connections, catering to early-stage development and testing needs.\n\nFor deploying EMQX Enterprise in a production environment, a different license is required. You can apply for a production license by visiting https://www.emqx.com/apply-licenses/emqx?version=5",
+      "desc": "Defines the EMQX Enterprise license.\n\nEMQX Enterprise is initially provided with a default trial license.\nThis license, issued in April 2024, is valid for a period of 5 years.\nIt supports up to 25 concurrent connections, catering to early-stage development and testing needs.\n\nFor deploying EMQX Enterprise in a production environment, a different license is required. You can apply for a production license by visiting https://www.emqx.com/apply-licenses/emqx?version=5",
       "label": "License"
     }
   },
@@ -5911,6 +5973,101 @@
     },
     "translator_topic": {
       "desc": "Topic Name"
+    }
+  },
+  "emqx_message_validation_http_api": {
+    "append_validation": {
+      "desc": "Append a new validation to the list of validations"
+    },
+    "delete_validation": {
+      "desc": "Delete a validation"
+    },
+    "enable_disable_validation": {
+      "desc": "Enable or disable a particular validation"
+    },
+    "get_validation_metrics": {
+      "desc": "Get metrics for a particular validation"
+    },
+    "list_validations": {
+      "desc": "List validations"
+    },
+    "lookup_validation": {
+      "desc": "Lookup a validation"
+    },
+    "param_path_enable": {
+      "desc": "Enable or disable validation"
+    },
+    "param_path_name": {
+      "desc": "Validation name"
+    },
+    "reorder_validations": {
+      "desc": "Reorder of all validations"
+    },
+    "reset_validation_metrics": {
+      "desc": "Reset metrics for a particular validation"
+    },
+    "update_validation": {
+      "desc": "Update a validation"
+    }
+  },
+  "emqx_message_validation_schema": {
+    "check_avro_schema": {
+      "desc": "Schema name to use during check.",
+      "label": "Schema name"
+    },
+    "check_avro_type": {
+      "desc": "Avro schema check",
+      "label": "Avro schema check"
+    },
+    "check_json_schema": {
+      "desc": "Schema name to use during check.",
+      "label": "Schema name"
+    },
+    "check_json_type": {
+      "desc": "JSON schema check",
+      "label": "JSON schema check"
+    },
+    "check_protobuf_message_type": {
+      "desc": "Message name to use during check.",
+      "label": "Message name"
+    },
+    "check_protobuf_schema": {
+      "desc": "Schema name to use during check.",
+      "label": "Schema name"
+    },
+    "check_protobuf_type": {
+      "desc": "Protobuf schema check",
+      "label": "Protobuf schema check"
+    },
+    "check_sql_schema": {
+      "desc": "Schema name to use during check.",
+      "label": "Schema name"
+    },
+    "check_sql_type": {
+      "desc": "Use rule-engine's SQL to validate the message. SQL here is the same as in rule-engine,\n  just with the different that the `FROM` clause must be omitted.\n  A SQL statement which yields any value is considered successfully validated, otherwise failed.\n  For example <code>SELECT payload.foo + payload.bar as sum WHERE sum > 0</code>\n  validates that the sum of field `foo` and `bar` is a positive value.",
+      "label": "SQL schema check"
+    },
+    "checks": {
+      "desc": "Checks that will be performed during validation.  They are evaluated in the same order as defined.",
+      "label": "Checks"
+    },
+    "failure_action": {
+      "desc": "How to proceed if the validation fails.\n\n  <code>drop</code>: The offending message is simply dropped without further processing.\n  <code>disconnect</code>: The message is not published, and the publishing client is disconnected.\n  <code>ignore</code>: Only the failure is logged and traced.  No other action is taken.",
+      "label": "Failure action"
+    },
+    "log_failure_at": {
+      "desc": "Log level at which failures will be logged.",
+      "label": "Failure log level"
+    },
+    "name": {
+      "desc": "Name"
+    },
+    "strategy": {
+      "desc": "Strategy"
+    },
+    "topics": {
+      "desc": "A single topic filter or list of topic filters that this validation should validate.",
+      "label": "Topic filter(s)"
     }
   },
   "emqx_mgmt_api_alarms": {
@@ -6413,6 +6570,10 @@
       "desc": "Node name",
       "label": "Node name"
     },
+    "ruleid": {
+      "desc": "Specify the Rule ID if the trace type is 'ruleid'.",
+      "label": "Rule ID"
+    },
     "stop_trace": {
       "desc": "Stop trace by name",
       "label": "Stop trace by name"
@@ -6425,12 +6586,16 @@
       "desc": "rfc3339 timestamp or epoch second",
       "label": "rfc3339 timestamp or epoch second"
     },
+    "trace_log_formatter": {
+      "desc": "The formatter that will be used to format the trace log entries. Set this to text to format the log entries as plain text (default). Set it to json to format each log entry as a JSON object.",
+      "label": "Trace Log Entry Formatter"
+    },
     "trace_log_size": {
       "desc": "trace log size",
       "label": "trace log size"
     },
     "trace_name": {
-      "desc": "Unique name of the trace. Only ascii letters in a-z, A-Z, 0-9 and underscore '_' are allowed.",
+      "desc": "Unique name of the trace. Only ASCII letters in a-z, A-Z, 0-9 and underscore '_' are allowed.",
       "label": "Unique name of the trace"
     },
     "trace_status": {
@@ -6979,6 +7144,10 @@
     "get_prom_data_integration_data": {
       "desc": "Get Prometheus Metrics for Data Integration",
       "label": "Prometheus Metrics for Data Integration"
+    },
+    "get_prom_message_validation": {
+      "desc": "Get Prometheus Metrics for Message Validation",
+      "label": "Prometheus Metrics for Message Validation"
     },
     "update_prom_conf_info": {
       "desc": "Update Prometheus config",
@@ -7581,6 +7750,10 @@
       "desc": "The ID of the rule",
       "label": "Rule ID"
     },
+    "stop_action_after_template_render": {
+      "desc": "Set this to true if the action should be stopped after its template has been rendered (default is true).",
+      "label": "Stop Action After Template Rendering"
+    },
     "test_context": {
       "desc": "The context of the event for testing",
       "label": "Event Conetxt"
@@ -7598,6 +7771,10 @@
     "api10": {
       "desc": "Update rule engine configuration.",
       "label": "Update configuration"
+    },
+    "api11": {
+      "desc": "Apply a rule with the given message and environment",
+      "label": "Apply Rule"
     },
     "api1_enable": {
       "desc": "Filter enable/disable rules"
@@ -7800,6 +7977,10 @@
     "transport_options": {
       "desc": "Options for the HTTP transport layer used by the S3 client."
     },
+    "upload_headers": {
+      "desc": "HTTP headers to include in the S3 object upload request.<br/>\nUseful to specify content type, content encoding, etc. of the S3 object.",
+      "label": "S3 object HTTP headers"
+    },
     "url_expire_time": {
       "desc": "The time in seconds for which the signed URLs to the S3 objects are valid."
     }
@@ -7842,7 +8023,7 @@
       "label": "mountpoint"
     },
     "base_listener_zone": {
-      "desc": "The configuration zone to which the listener belongs.",
+      "desc": "The configuration zone to which the listener belongs.\nClients connected to this listener will inherit zone-settings created under this zone name.\n\nA zone can override the configs under below root names:\n- `mqtt`\n- `force_shutdown`\n- `force_gc`\n- `flapping_detect`\n- `session_persistence`",
       "label": "Zone"
     },
     "broker": {
@@ -7879,6 +8060,18 @@
     "ciphers_schema_quic": {
       "desc": "This config holds TLS cipher suite names separated by comma,\nor as an array of strings. e.g.\n<code>\"TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256\"</code> or\n<code>[\"TLS_AES_256_GCM_SHA384\",\"TLS_AES_128_GCM_SHA256\"]</code>.\n<br/>\nCiphers (and their ordering) define the way in which the\nclient and server encrypts information over the network connection.\nSelecting a good cipher suite is critical for the\napplication's data security, confidentiality and performance.\n\nThe names should be in OpenSSL string format (not RFC format).\nAll default values and examples provided by EMQX config\ndocumentation are all in OpenSSL format.<br/>\n\nNOTE: Certain cipher suites are only compatible with\nspecific TLS <code>versions</code> ('tlsv1.1', 'tlsv1.2' or 'tlsv1.3')\nincompatible cipher suites will be silently dropped.\nFor instance, if only 'tlsv1.3' is given in the <code>versions</code>,\nconfiguring cipher suites for other versions will have no effect.\n<br/>\n\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config<br/>\nIf PSK cipher suites are intended, 'tlsv1.3' should be disabled from <code>versions</code>.<br/>\nPSK cipher suites: <code>\"RSA-PSK-AES256-GCM-SHA384,RSA-PSK-AES256-CBC-SHA384,\nRSA-PSK-AES128-GCM-SHA256,RSA-PSK-AES128-CBC-SHA256,\nRSA-PSK-AES256-CBC-SHA,RSA-PSK-AES128-CBC-SHA,\nRSA-PSK-DES-CBC3-SHA,RSA-PSK-RC4-SHA\"</code><br/>\n\nNOTE: QUIC listener supports only 'tlsv1.3' ciphers",
       "label": "QUIC TLS cipher suites"
+    },
+    "client_attrs_init": {
+      "desc": "Specify how to initialize client attributes.\nEach client attribute can be initialized as `client_attrs.{NAME}`,\nwhere `{NAME}` is the name of the attribute specified in the config field `set_as_attr`.\nThe initialized client attribute will be stored in the `client_attrs` property with the specified name,\nand can be used as a placeholder in a template for authentication and authorization.\nFor example, use `${client_attrs.alias}` to render an HTTP POST body when `set_as_attr = alias`,\nor render listener config `moutpoint = devices/${client_attrs.alias}/` to initialize a per-client topic namespace.",
+      "label": "Client Attributes Initialization"
+    },
+    "client_attrs_init_expression": {
+      "desc": "A one line expression to evaluate a set of predefined string functions (like in the rule engine SQL statements).\nThe expression can be a function call with nested calls as its arguments, or direct variable reference.\nSo far, it does not provide user-defined variable binding (like `var a=1`) or user-defined functions.\nAs an example, to extract the prefix of client ID delimited by a dot: `nth(1, tokens(clientid, '.'))`.\n\nThe variables pre-bound variables are:\n- `cn`: Client's TLS certificate common name.\n- `dn`: Client's TLS certificate distinguished name (the subject).\n- `clientid`: MQTT Client ID.\n- `username`: MQTT Client's username.\n- `user_property.{NAME}`: User properties in the CONNECT packet.\n\nYou can read more about variform expressions in EMQX docs.",
+      "label": "Client Attribute Extraction Regular Expression"
+    },
+    "client_attrs_init_set_as_attr": {
+      "desc": "The name of the client attribute extracted from the client data.\nThe extracted attribute will be stored in the `client_attrs` property with this name.",
+      "label": "Name The Extracted Attribute"
     },
     "client_ssl_opts_schema_enable": {
       "desc": "Enable TLS.",
@@ -8277,7 +8470,7 @@
       "label": "Max frame size"
     },
     "fields_ws_opts_mqtt_path": {
-      "desc": "WebSocket's MQTT protocol path. So the address of EMQX Broker's WebSocket is:\n<code>ws://{ip}:{port}/mqtt</code>",
+      "desc": "WebSocket's MQTT protocol path. By default, the full URL for the WebSocket client to connect is:\n`ws://{ip}:{port}/mqtt`.\nAppend `/[...]` to the end of the path to make EMQX accept any subpath.\nFor example, specifying `mqtt/[...]` would allow clients to connect at paths like\n`mqtt/org1` or `mqtt/group2`, etc.\n\nNOTE: An unmatched path will cause the client to be rejected immediately at the HTTP layer,\nmeaning it will not be traceable at the MQTT layer.",
       "label": "WS MQTT Path"
     },
     "fields_ws_opts_mqtt_piggyback": {
