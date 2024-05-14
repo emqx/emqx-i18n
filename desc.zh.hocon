@@ -234,6 +234,10 @@
     "verify_claims": {
       "desc": "需要验证的自定义声明列表，是一个由名称/值对组成的列表。指定一个键(Key)来查找 JWT 中对应的声明(Claim)，并提供一个预期值(Expected Value)来与声明的实际值进行比较，以确保只有满足特定条件的 JWT 才能被接受和使用。\n例如要求 JWT 中的特定声明(如 clientid)的值必须与当前连接的客户端 ID 相匹配。\n预期值可以使用以下占位符：\n- <code>${username}</code>: 将在运行时被替换为客户端连接时使用的用户名\n- <code>${clientid}</code>: 将在运行时被替换为客户端连接时使用的客户端 ID\n身份认证将确认 JWT 中的声明值（从密码字段中获取）与 <code>verify_claims</code> 中要求的内容是否匹配。",
       "label": "自定义声明检查"
+    },
+    "disconnect_after_expire": {
+      "desc": "在 token 过期后断开客户端连接。",
+      "label": "过期后断开链接"
     }
   },
   "emqx_authn_ldap_bind_schema": {
@@ -1274,6 +1278,12 @@
     "dynamo_action": {
       "desc": "DynamoDB 动作的配置。",
       "label": "DynamoDB 动作配置"
+    },
+    "hash_key": {
+      "desc": "DynamoDB 哈希键"
+    },
+    "range_key": {
+      "desc": "DynamoDB 范围健"
     }
   },
   "emqx_bridge_dynamo_connector": {
@@ -1292,6 +1302,9 @@
     "url": {
       "desc": "DynamoDB 的地址。",
       "label": "DynamoDB 地址"
+    },
+    "region": {
+      "desc": "AWS Dynamo 的区域"
     }
   },
   "emqx_bridge_gcp_pubsub": {
@@ -2256,6 +2269,9 @@
     "rocketmq_action": {
       "desc": "RocketMQ 动作的配置。",
       "label": "RocketMQ 动作配置"
+    },
+    "strategy": {
+      "desc": "生产者键派发策略，默认为 `roundrobin`，也支持占位符，如：`clientid`、`messageid`、`username`。"
     }
   },
   "emqx_bridge_rocketmq_connector": {
@@ -2290,6 +2306,9 @@
     "topic": {
       "desc": "RocketMQ 主题",
       "label": "RocketMQ 主题"
+    },
+    "namespace": {
+      "desc": "如果你正在使用阿里云的 RocketMQ 服务并且启用了命名空间，或者您在自己的 RocketMQ 服务器中配置了命名空间，则必须配置命名空间字段。对于阿里云中的 RocketMQ 服务，命名空间就是实例 ID。"
     }
   },
   "emqx_bridge_schema": {
@@ -5154,6 +5173,10 @@
     "license_root": {
       "desc": "EMQX 企业版 License 。\nEMQX 自带一个默认的试用 License，允许最多接入 100 个连接，签发时间是 2023 年 1 月 9 日，有效期是 5 年（1825 天）。若需要在生产环境部署，\n请购买 License 或访问 https://www.emqx.com/apply-licenses/emqx 申请。",
       "label": "License"
+    },
+    "dynamic_max_connections": {
+      "desc": "仅适用于“关键业务” license 类型。此配置设置当前集群的 license 配额。\n此值不能超过 license key 中指定的连接限制。",
+      "label": "动态连接限制"
     }
   },
   "emqx_limiter_schema": {
@@ -5453,7 +5476,8 @@
       "label": "消息发布时间"
     },
     "msg_qos": {
-      "desc": "消息 QoS."
+      "desc": "消息 QoS.",
+      "label": "消息 QoS"
     },
     "msg_topic": {
       "desc": "消息主题",
@@ -5792,6 +5816,14 @@
     "view_trace_log": {
       "desc": "查看 trace",
       "label": "查看 trace"
+    },
+    "ruleid": {
+      "desc": "如果追踪类型为 'ruleid'，请指定规则 ID。",
+      "label": "规则 ID"
+    },
+    "trace_log_formatter": {
+      "desc": "用于格式化追踪日志条目的格式化器。设置为 text 将日志条目格式化为纯文本（默认）。设置为 json 将每个日志条目格式化为 JSON 对象。",
+      "label": "追踪日志条目格式器"
     }
   },
   "emqx_modules_schema": {
@@ -6286,6 +6318,10 @@
     "get_prom_data_integration_data": {
       "desc": "获取数据集成的 Prometheus 指标",
       "label": "数据集成的 Prometheus 指标"
+    },
+    "get_prom_message_validation": {
+      "desc": "获取消息验证的 Prometheus 指标.",
+      "label": "消息验证 Prometheus 指标"
     }
   },
   "emqx_prometheus_schema": {
@@ -6867,6 +6903,10 @@
     "test_sql": {
       "desc": "测试的 SQL",
       "label": "测试 SQL"
+    },
+    "stop_action_after_template_render": {
+      "desc": "如果操作在模板渲染后应该停止，请将此设置为 true（默认为 true）。",
+      "label": "模板渲染后停止操作"
     }
   },
   "emqx_rule_engine_api": {
@@ -6935,6 +6975,10 @@
     "api9": {
       "desc": "获取规则引擎配置。",
       "label": "获取配置"
+    },
+    "api11": {
+      "desc": "依据指定的消息内容和运行环境执行相应的规则。",
+      "label": "执行规则"
     }
   },
   "emqx_rule_engine_schema": {
@@ -7081,6 +7125,10 @@
     "key": {
       "desc": "S3 对象的键。",
       "label": "对象键"
+    },
+    "upload_headers": {
+      "desc": "包含在 S3 对象上传请求中的 HTTP 请求头，用于指定 S3 对象的内容类型、内容编码以及其他属性。",
+      "label": "S3 对象 HTTP 请求头"
     }
   },
   "emqx_schema": {
@@ -8041,6 +8089,18 @@
     "session_ds_batch_size": {
       "desc": "此值影响持久会话的流量控制。\n持久会话以批次查询持久消息存储。\n此值指定批次的大小。\n\n注意：较大的批次通常提高系统的吞吐量和整体性能，但会增加每个客户端的 RAM 使用量。",
       "label": "批次大小"
+    },
+    "client_attrs_init": {
+      "desc": "指定如何初始化客户端属性。每个属性可被初始化为 client_attrs.{NAME} ，其中 {NAME} 是在配置字段 `set_as_attr` 中指定的属性名称。初始化的客户端属性将以指定的名称存储在 `client_attrs` 属性中。然后，它们可以在身份验证和授权过程的模板中用作占位符。例如，当 `set_as_attr = alias` 时，使用 `${client_attrs.alias}` 来渲染 HTTP POST 请求体，或者渲染监听器配置 `moutpoint = devices/${client_attrs.alias}/` 来初始化每个客户端独有的主题命名空间。",
+      "label": "客户端属性初始化"
+    },
+    "client_attrs_init_expression": {
+      "desc": "一行表达式，用于评估一组预定义的字符串函数（如规则引擎 SQL 语句中的函数）。\n表达式可以是带有嵌套调用的函数调用，或直接变量引用。\n目前，它不提供用户定义的变量绑定（如 `var a=1`）或用户定义的函数。\n例如，提取以点分隔的客户端 ID 的前缀：`nth(1, tokens(clientid, '.'))`。\n\n预绑定的变量包括：\n- `cn`: 客户端 TLS 证书的常用名称。\n- `dn`: 客户端 TLS 证书的专有名称（主题）。\n- `clientid`: MQTT 客户端 ID。\n- `username`: MQTT 客户端的用户名。\n- `user_property.{NAME}`: CONNECT 包中的用户属性。\n\n您可以在 EMQX 文档中了解更多关于各种表达式的信息。",
+      "label": "客户端属性提取正则表达式"
+    },
+    "client_attrs_init_set_as_attr": {
+      "desc": "从客户端数据中提取的客户端属性的名称。\n提取的属性将以此名称存储在 `client_attrs` 属性中。",
+      "label": "命名提取的属性"
     }
   },
   "emqx_slow_subs_api": {
@@ -9279,6 +9339,9 @@
     },
     "secret": {
       "desc": "包含一些敏感信息的字符串，例如密码。当密钥以 <code>file://</code> 开头时，字符串的其余部分将被解释为包含密钥本身的文件路径：文件的整个内容（除了任何尾随的空白字符）都被视为密钥值。注意：在集群中，所有 EMQX 节点在使用 <code>file://</code> 密钥之前应该具有相同的文件。"
+    },
+    "template": {
+      "desc": "用于`${.path.to.var}`样式值插值的字符串，其中开头的点是可选的。语法`${.}`表示所有值作为一个对象。"
     }
   },
   "emqx_gbt32960_schema": {
@@ -9902,6 +9965,157 @@
     "wildcard_optimized_epoch_bits": {
       "desc": "通配符优化布局将不同时间记录的消息划分为“纪元”。\n从单个纪元读取消息可以非常高效，因此更大的纪元可以提高订阅者的吞吐量，但可能增加端到端的延迟。\n\n每个纪元覆盖的时间跨度随 epoch_bits 的值呈指数增长：\n\n- epoch_bits = 1：纪元时间 = 1 毫秒\n- epoch_bits = 2：2 毫秒\n...\n- epoch_bits = 10：1024 毫秒\n- epoch_bits = 13：约 8 秒\n...",
       "label": "纪元位"
+    },
+    "builtin_n_sites": {
+      "desc": "负责存储分片的存储站点的数量。在此配置中，‘站点’特指启用了消息持久性功能的 EMQX 节点。此设置仅在持久存储数据库初始化期间有效。在此阶段，必须确保足够的站点在线，以保证分片能够正确分配；如果不满足此条件，消息存储将无法使用。初始化完成后，部分站点可能会离线，离线站点的数量及复制因子 (replication factor) 将影响系统的可用性。",
+      "label": "初始站点数量"
+    }
+  },
+  "emqx_bridge_s3_aggreg_upload": {
+    "s3_aggregated_container": {
+      "desc": "规定包含聚合事件的上传文件格式的设置。",
+      "label": "聚合事件容器"
+    },
+    "s3_aggregated_container_csv": {
+      "desc": "记录（事件）将被聚合并上传为 CSV 文件。",
+      "label": "CSV 容器"
+    },
+    "s3_aggregated_container_csv_column_order": {
+      "desc": "在此指定的事件字段将首先作为列出现在生成的 CSV 文件中。<br/>\nCSV 文件将包含聚合事件的所有字段；然而，未在此设置中明确提到的列将按字典顺序跟在指定的列之后。",
+      "label": "CSV 列顺序"
+    },
+    "s3_aggregated_upload": {
+      "desc": "该操作基于时间对传入事件进行聚合，并将它们作为单一对象上传到 S3 服务。",
+      "label": "S3 聚合上传"
+    },
+    "s3_aggregated_upload_key": {
+      "desc": "聚合上传的 S3 对象键模板。<br/>\n此模板可以包含以下变量的占位符：\n<ul>\n<li><code>${action}</code>: 操作的名称（必须）。<li/>\n<li><code>${node}</code>: 执行上传的 EMQX 节点的名称（必需）。<li/>\n<li><code>${datetime.{format}}</code>: 聚合开始的日期和时间，按照 <code>{format}</code> 字符串格式化（必需），包括：\n    <ul>\n    <li><code>${datetime.rfc3339utc}</code>: 使用 RFC3339 格式化的 UTC 日期和时间。<li/>\n    <li><code>${datetime.rfc3339}</code>: 使用 RFC3339 格式化的本地时区日期和时间。<li/>\n    <li><code>${datetime.unix}</code>: Unix 时间戳。<li/>\n    </ul>\n<li/>\n<li><code>${datetime_until.{format}}</code>: 聚合结束的日期和时间，使用相同的格式化选项。<li/>\n<li><code>${sequence}</code>: 同一时间间隔内聚合上传的序列号（必需）。<li/>\n</ul>\n所有其他占位符均被视为无效。请注意，标记为必需的占位符如果在模板中缺失，将作为路径后缀添加到 S3 对象键中。",
+      "label": "S3 对象健模版"
+    },
+    "s3_aggregated_upload_parameters": {
+      "desc": "聚合上传操作的参数集。",
+      "label": "S3 聚合上传操作参数"
+    },
+    "s3_aggregation": {
+      "desc": "管理聚合过程的参数集。",
+      "label": "聚合参数"
+    },
+    "s3_aggregation_interval": {
+      "desc": "上传前，事件将在单个对象中聚合的时间长度。",
+      "label": "时间间隔"
+    },
+    "s3_aggregation_max_records": {
+      "desc": "每个聚合对象可以包含的最大记录（事件）数量。虽然每次上传不会超过这个限制，但可能包含较少的事件。如果事件发生率很高，在同一时间间隔内可能会有多次聚合上传，这些上传将具有不同但连续的序列号，这些序列号将成为 S3 对象键的一部分。",
+      "label": "最大记录数"
+    }
+  },
+  "emqx_bridge_s3_upload": {
+    "s3_object_content": {
+      "desc": "正在上传的 S3 对象内容。支持模版。",
+      "label": "S3 对象内容"
+    },
+    "s3_upload": {
+      "desc": "将单个对象上传到 S3 服务的操作。",
+      "label": "S3 简单上传"
+    },
+    "s3_upload_parameters": {
+      "desc": "上传操作的参数集。操作支持在 S3 存储桶名、对象键和对象内容中使用模板。",
+      "label": "S3 上传操作参数"
+    }
+  },
+  "emqx_message_validation_http_api": {
+    "append_validation": {
+      "desc": "在验证规则列表中添加新的验证规则。"
+    },
+    "delete_validation": {
+      "desc": "删除一条验证规则。"
+    },
+    "enable_disable_validation": {
+      "desc": "启用或停用某个特定验证规则。"
+    },
+    "get_validation_metrics": {
+      "desc": "获取某个特定验证规则的指标。"
+    },
+    "list_validations": {
+      "desc": "列出验证规则。"
+    },
+    "lookup_validation": {
+      "desc": "查找一条验证规则"
+    },
+    "param_path_enable": {
+      "desc": "启用或停用验证规则。"
+    },
+    "param_path_name": {
+      "desc": "验证规则名称"
+    },
+    "reorder_validations": {
+      "desc": "重新排序所有验证规则"
+    },
+    "reset_validation_metrics": {
+      "desc": "重置某个特定验证规则的指标。"
+    },
+    "update_validation": {
+      "desc": "更新一条验证规则。"
+    }
+  },
+  "emqx_message_validation_schema": {
+    "check_avro_schema": {
+      "desc": "验证时使用的 Schema 的名称。",
+      "label": "Schema 名称"
+    },
+    "check_avro_type": {
+      "desc": "Avro schema 检查。",
+      "label": "Avro schema 检查"
+    },
+    "check_json_schema": {
+      "desc": "检查时使用的 Schema 名称。",
+      "label": "Schema 名称"
+    },
+    "check_json_type": {
+      "desc": "JSON schema 检查。",
+      "label": "JSON schema 检查"
+    },
+    "check_protobuf_message_type": {
+      "desc": "检查时使用的消息名称。",
+      "label": "消息名称"
+    },
+    "check_protobuf_schema": {
+      "desc": "检查时使用的 Schema 名称。",
+      "label": "Schema 名称"
+    },
+    "check_protobuf_type": {
+      "desc": "Protobuf schema 检查。",
+      "label": "Protobuf schema 检查"
+    },
+    "check_sql_schema": {
+      "desc": "检查时使用的 Schema 名称。",
+      "label": "Schema 名称"
+    },
+    "check_sql_type": {
+      "desc": "使用规则引擎的 SQL 语法验证消息，此语法与规则引擎中的语法一致，但需省略 FROM 子句。任何生成值的 SQL 语句表示验证成功；如果没有返回值，则验证失败。例如，语句 <code>SELECT payload.foo + payload.bar as sum WHERE sum > 0</code> 用于验证字段 foo 和 bar 的和为正数。",
+      "label": "SQL schema 检查"
+    },
+    "checks": {
+      "desc": "在验证过程中将执行的检查。它们将按照定义的顺序进行评估。",
+      "label": "检查"
+    },
+    "failure_action": {
+      "desc": "如果验证失败，将如何处理。\n\n  <code>drop</code>：违规消息将被直接丢弃，不进行进一步处理。\n  <code>disconnect</code>：消息不会被发布，发布客户端将被断开连接。\n  <code>ignore</code>：仅记录和追踪失败，不采取其他行动。",
+      "label": "验证失败操作"
+    },
+    "log_failure_at": {
+      "desc": "将以哪种日志级别记录验证失败。",
+      "label": "失败日志级别"
+    },
+    "name": {
+      "desc": "名称"
+    },
+    "strategy": {
+      "desc": "验证策略"
+    },
+    "topics": {
+      "desc": "此验证规则应验证的单个主题过滤器或主题过滤器列表。",
+      "label": "主题（过滤器）"
     }
   }
 }
