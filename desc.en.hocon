@@ -3363,7 +3363,8 @@
       "label": "AccessKey"
     },
     "namespace": {
-      "desc": "The namespace field MUST be set if you are using the RocketMQ service in\naliyun cloud and also the namespace is enabled,\nor if you have configured a namespace in your RocketMQ server.\nFor RocketMQ in aliyun cloud, the namespace is the instance ID."
+      "desc": "The namespace field MUST be set if you are using the RocketMQ service in\naliyun cloud and also the namespace is enabled,\nor if you have configured a namespace in your RocketMQ server.\nFor RocketMQ in aliyun cloud, the namespace is the instance ID.",
+      "label": "Namespace / Instance ID"
     },
     "refresh_interval": {
       "desc": "RocketMQ Topic Route Refresh Interval.",
@@ -3410,15 +3411,15 @@
       "label": "CSV container"
     },
     "s3_aggregated_container_csv_column_order": {
-      "desc": "Event fields specified here will be ordered first as columns in the resulting CSV file.<br/>\nAll fields from the aggregated events will be included in the CSV; however, columns not explicitly mentioned in this setting will follow in lexicographical order after the specified columns.",
+      "desc": "Event fields that will be ordered first as columns in the resulting CSV file.<br/>\nRegardless of this setting, resulting CSV will contain all the fields of aggregated events, but all the columns not explicitly mentioned here will be ordered after the ones listed here in the lexicographical order.",
       "label": "CSV column order"
     },
     "s3_aggregated_upload": {
-      "desc": "Action that aggregates incoming events based on time and uploads them as a single object to the S3 service.",
+      "desc": "Action that enables time-based aggregation of incoming events and uploading them to the S3 service as a single object.",
       "label": "S3 Aggregated Upload"
     },
     "s3_aggregated_upload_key": {
-      "desc": "Template for the S3 object key of an aggregated upload.<br/>\nTemplate may contain placeholders for the following variables:\n<ul>\n<li><code>${action}</code>: The name of the action (required).<li/>\n<li><code>${node}</code>: The name of the EMQX node performing the upload (required).<li/>\n<li><code>${datetime.{format}}</code>: The start date and time of the aggregation, formatted according to the <code>{format}</code> string (required):\n    <ul>\n    <li><code>${datetime.rfc3339utc}</code>: RFC3339-formatted date and time in UTC.<li/>\n    <li><code>${datetime.rfc3339}</code>: RFC3339-formatted date and time in local timezone.<li/>\n    <li><code>${datetime.unix}</code>: Unix timestamp.<li/>\n    </ul>\n<li/>\n<li><code>${datetime_until.{format}}</code>: The end date and time of the aggregation, with the same formatting options.<li/>\n<li><code>${sequence}</code>: The sequence number of the aggregated upload within the same time interval (required).<li/>\n</ul>\nAll other placeholders are considered invalid. Note that placeholders marked as required will be added as a path suffix to the S3 object key if they are missing from the template.",
+      "desc": "Template for the S3 object key of an aggregated upload.<br/>\nTemplate may contain placeholders for the following variables:\n<ul>\n<li><code>${action}</code>: name of the action (required).<li/>\n<li><code>${node}</code>: name of the EMQX node conducting the upload (required).<li/>\n<li><code>${datetime.{format}}</code>: date and time when aggregation started, formatted according to the <code>{format}</code> string (required):\n    <ul>\n    <li><code>${datetime.rfc3339utc}</code>: RFC3339-formatted date and time in UTC,<li/>\n    <li><code>${datetime.rfc3339}</code>: RFC3339-formatted date and time in local timezone,<li/>\n    <li><code>${datetime.unix}</code>: Unix timestamp.<li/>\n    </ul>\n<li/>\n<li><code>${datetime_until.{format}}</code>: date and time when aggregation ended, with the same formatting options.<li/>\n<li><code>${sequence}</code>: sequence number of the aggregated upload within the same time interval (required).<li/>\n</ul>\nAll other placeholders are considered invalid. Note that placeholders marked as required will be added as a path suffix to the S3 object key if they are missing from the template.",
       "label": "S3 object key template"
     },
     "s3_aggregated_upload_parameters": {
@@ -3430,11 +3431,11 @@
       "label": "Aggregation parameters"
     },
     "s3_aggregation_interval": {
-      "desc": "The duration over which events are aggregated into a single object before upload.",
+      "desc": "Amount of time events will be aggregated in a single object before uploading.",
       "label": "Time interval"
     },
     "s3_aggregation_max_records": {
-      "desc": "The maximum number of records (events) that each aggregated object can contain. While each upload will not exceed this limit, it may include fewer events.<br/>\nIf event rate is high enough, there obviously may be more than one aggregated upload during the same time interval. These uploads will have different, but consecutive sequence numbers, which will be a part of S3 object key.",
+      "desc": "Number of records (events) allowed per each aggregated object. Each aggregated upload will contain no more than that number of events, but may contain less.<br/>\nIf event rate is high enough, there obviously may be more than one aggregated upload during the same time interval. These uploads will have different, but consecutive sequence numbers, which will be a part of S3 object key.",
       "label": "Maximum number of records"
     }
   },
@@ -5975,101 +5976,6 @@
       "desc": "Topic Name"
     }
   },
-  "emqx_message_validation_http_api": {
-    "append_validation": {
-      "desc": "Append a new validation rule to the list of validation rules."
-    },
-    "delete_validation": {
-      "desc": "Delete a validation rule."
-    },
-    "enable_disable_validation": {
-      "desc": "Enable or disable a particular validation rule."
-    },
-    "get_validation_metrics": {
-      "desc": "Get metrics for a particular validation rule."
-    },
-    "list_validations": {
-      "desc": "List validation rules."
-    },
-    "lookup_validation": {
-      "desc": "Lookup a validation rule."
-    },
-    "param_path_enable": {
-      "desc": "Enable or disable validation rule."
-    },
-    "param_path_name": {
-      "desc": "Validation rule name."
-    },
-    "reorder_validations": {
-      "desc": "Reorder of all validation rules."
-    },
-    "reset_validation_metrics": {
-      "desc": "Reset metrics for a particular validation rule."
-    },
-    "update_validation": {
-      "desc": "Update a validation rule."
-    }
-  },
-  "emqx_message_validation_schema": {
-    "check_avro_schema": {
-      "desc": "Schema name to use during check.",
-      "label": "Schema name"
-    },
-    "check_avro_type": {
-      "desc": "Avro schema check.",
-      "label": "Avro schema check"
-    },
-    "check_json_schema": {
-      "desc": "Schema name to use during check.",
-      "label": "Schema name"
-    },
-    "check_json_type": {
-      "desc": "JSON schema check.",
-      "label": "JSON schema check"
-    },
-    "check_protobuf_message_type": {
-      "desc": "Message name to use during check.",
-      "label": "Message name"
-    },
-    "check_protobuf_schema": {
-      "desc": "Schema name to use during check.",
-      "label": "Schema name"
-    },
-    "check_protobuf_type": {
-      "desc": "Protobuf schema check.",
-      "label": "Protobuf schema check"
-    },
-    "check_sql_schema": {
-      "desc": "Schema name to use during check.",
-      "label": "Schema name"
-    },
-    "check_sql_type": {
-      "desc": "Use rule-engine's SQL to validate the message. SQL here is the same as in rule-engine,\n  just with the difference that the `FROM` clause must be omitted.\n  A SQL statement which yields any value is considered successfully validated, otherwise failed.\n  For example <code>SELECT payload.foo + payload.bar as sum WHERE sum > 0</code>\n  validates that the sum of field `foo` and `bar` is a positive value.",
-      "label": "SQL schema check"
-    },
-    "checks": {
-      "desc": "Checks that will be performed during validation.  They are evaluated in the same order as defined.",
-      "label": "Checks"
-    },
-    "failure_action": {
-      "desc": "How to proceed if the validation fails.\n\n  <code>drop</code>: The offending message is simply dropped without further processing.\n  <code>disconnect</code>: The message is not published, and the publishing client is disconnected.\n  <code>ignore</code>: Only the failure is logged and traced.  No other action is taken.",
-      "label": "Failure action"
-    },
-    "log_failure_at": {
-      "desc": "Log level at which failures will be logged.",
-      "label": "Failure log level"
-    },
-    "name": {
-      "desc": "Name"
-    },
-    "strategy": {
-      "desc": "Strategy"
-    },
-    "topics": {
-      "desc": "A single topic filter or list of topic filters that this validation should validate.",
-      "label": "Topic filter(s)"
-    }
-  },
   "emqx_mgmt_api_alarms": {
     "activate_at": {
       "desc": "Alarm start time, using rfc3339 standard time format."
@@ -7145,9 +7051,9 @@
       "desc": "Get Prometheus Metrics for Data Integration",
       "label": "Prometheus Metrics for Data Integration"
     },
-    "get_prom_message_validation": {
-      "desc": "Get Prometheus Metrics for Message Validation",
-      "label": "Prometheus Metrics for Message Validation"
+    "get_prom_schema_validation": {
+      "desc": "Get Prometheus Metrics for Schema Validation",
+      "label": "Prometheus Metrics for Schema Validation"
     },
     "update_prom_conf_info": {
       "desc": "Update Prometheus config",
@@ -7629,6 +7535,10 @@
     "event_username": {
       "desc": "Username",
       "label": "Username"
+    },
+    "event_validation": {
+      "desc": "Validation",
+      "label": "Validation"
     },
     "metrics_actions_failed": {
       "desc": "How many times the rule failed to call the actions.",
@@ -8955,6 +8865,101 @@
     "schema_type_protobuf": {
       "desc": "Must be `protobuf` for protobuf schema.",
       "label": "Protobuf Schema"
+    }
+  },
+  "emqx_schema_validation_http_api": {
+    "append_validation": {
+      "desc": "Append a new validation to the list of validations"
+    },
+    "delete_validation": {
+      "desc": "Delete a validation"
+    },
+    "enable_disable_validation": {
+      "desc": "Enable or disable a particular validation"
+    },
+    "get_validation_metrics": {
+      "desc": "Get metrics for a particular validation"
+    },
+    "list_validations": {
+      "desc": "List validations"
+    },
+    "lookup_validation": {
+      "desc": "Lookup a validation"
+    },
+    "param_path_enable": {
+      "desc": "Enable or disable validation"
+    },
+    "param_path_name": {
+      "desc": "Validation name"
+    },
+    "reorder_validations": {
+      "desc": "Reorder of all validations"
+    },
+    "reset_validation_metrics": {
+      "desc": "Reset metrics for a particular validation"
+    },
+    "update_validation": {
+      "desc": "Update a validation"
+    }
+  },
+  "emqx_schema_validation_schema": {
+    "check_avro_schema": {
+      "desc": "Schema name to use during check.",
+      "label": "Schema name"
+    },
+    "check_avro_type": {
+      "desc": "Avro schema check",
+      "label": "Avro schema check"
+    },
+    "check_json_schema": {
+      "desc": "Schema name to use during check.",
+      "label": "Schema name"
+    },
+    "check_json_type": {
+      "desc": "JSON schema check",
+      "label": "JSON schema check"
+    },
+    "check_protobuf_message_type": {
+      "desc": "Message name to use during check.",
+      "label": "Message name"
+    },
+    "check_protobuf_schema": {
+      "desc": "Schema name to use during check.",
+      "label": "Schema name"
+    },
+    "check_protobuf_type": {
+      "desc": "Protobuf schema check",
+      "label": "Protobuf schema check"
+    },
+    "check_sql_schema": {
+      "desc": "Schema name to use during check.",
+      "label": "Schema name"
+    },
+    "check_sql_type": {
+      "desc": "Use rule-engine's SQL to validate the message. SQL here is the same as in rule-engine,\n  just with the different that the `FROM` clause must be omitted.\n  A SQL statement which yields any value is considered successfully validated, otherwise failed.\n  For example <code>SELECT payload.foo + payload.bar as sum WHERE sum > 0</code>\n  validates that the sum of field `foo` and `bar` is a positive value.",
+      "label": "SQL schema check"
+    },
+    "checks": {
+      "desc": "Checks that will be performed during validation.  They are evaluated in the same order as defined.",
+      "label": "Checks"
+    },
+    "failure_action": {
+      "desc": "How to proceed if the validation fails.\n\n  <code>drop</code>: The offending message is simply dropped without further processing.\n  <code>disconnect</code>: The message is not published, and the publishing client is disconnected.\n  <code>ignore</code>: Only the failure is logged and traced.  No other action is taken.",
+      "label": "Failure action"
+    },
+    "log_failure_at": {
+      "desc": "Log level at which failures will be logged.",
+      "label": "Failure log level"
+    },
+    "name": {
+      "desc": "Name"
+    },
+    "strategy": {
+      "desc": "Strategy"
+    },
+    "topics": {
+      "desc": "A single topic filter or list of topic filters that this validation should validate.",
+      "label": "Topic filter(s)"
     }
   },
   "emqx_slow_subs_api": {
