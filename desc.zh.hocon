@@ -8095,7 +8095,7 @@
       "label": "客户端属性初始化"
     },
     "client_attrs_init_expression": {
-      "desc": "单行表达式，用于评估一组预定义的字符串函数（如规则引擎 SQL 语句中的函数）。\n表达式可以是带有嵌套调用的函数调用，或直接变量引用。\n目前，它不提供用户定义的变量绑定（如 `var a=1`）或用户定义的函数。\n例如，提取以点分隔的客户端 ID 的前缀：`nth(1, tokens(clientid, '.'))`。\n\n预绑定的变量包括：\n- `cn`: 客户端 TLS 证书的常用名称。\n- `dn`: 客户端 TLS 证书的专有名称（主题）。\n- `clientid`: MQTT 客户端 ID。\n- `username`: MQTT 客户端的用户名。\n- `user_property.{NAME}`: CONNECT 包中的用户属性。\n\n您可以在 EMQX 文档中了解更多关于各种表达式的信息。",
+      "desc": "单行表达式，用于求值一组预定义的字符串函数（类似规则引擎 SQL 语句中的函数）。\n表达式可以是带有嵌套调用的函数调用，或直接变量引用。\n目前，它不提供用户定义的变量绑定（如 `var a=1`）或用户定义的函数。\n例如，提取以点分隔的客户端 ID 的前缀：`nth(1, tokens(clientid, '.'))`。\n\n预绑定的变量包括：\n- `cn`: 客户端 TLS 证书的常用名称。\n- `dn`: 客户端 TLS 证书的专有名称（主题）。\n- `clientid`: MQTT 客户端 ID。\n- `username`: MQTT 客户端的用户名。\n- `user_property.{NAME}`: CONNECT 包中的用户属性。\n\n您可以在 EMQX 文档中了解更多关于各种表达式的信息。",
       "label": "客户端属性提取正则表达式"
     },
     "client_attrs_init_set_as_attr": {
