@@ -8091,7 +8091,7 @@
       "label": "批次大小"
     },
     "client_attrs_init": {
-      "desc": "指定如何初始化客户端属性。每个属性可被初始化为 client_attrs.{NAME} ，其中 {NAME} 是在配置字段 `set_as_attr` 中指定的属性名称。初始化的客户端属性将以指定的名称存储在 `client_attrs` 属性中。然后，它们可以在身份验证和授权过程的模板中用作占位符。例如，当 `set_as_attr = alias` 时，使用 `${client_attrs.alias}` 来渲染 HTTP POST 请求体，或者渲染监听器配置 `moutpoint = devices/${client_attrs.alias}/` 来初始化每个客户端独有的主题命名空间。",
+      "desc": "指定如何初始化客户端属性。每个属性可被初始化为 `client_attrs.{NAME}` ，其中 `{NAME}` 是在配置字段 `set_as_attr` 中指定的属性名称。初始化的客户端属性将以指定的名称存储在 `client_attrs` 属性中。然后，它们可以在身份验证和授权过程的模板中用作占位符。例如，当 `set_as_attr = alias` 时，使用 `${client_attrs.alias}` 来渲染 HTTP POST 请求体，或者渲染监听器配置 `moutpoint = devices/${client_attrs.alias}/` 来初始化每个客户端独有的主题命名空间。",
       "label": "客户端属性初始化"
     },
     "client_attrs_init_expression": {
