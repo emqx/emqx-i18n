@@ -5175,7 +5175,7 @@
       "label": "License"
     },
     "dynamic_max_connections": {
-      "desc": "仅适用于“关键业务” license 类型。此配置设置当前集群的 license 配额。\n此值不能超过 license key 中指定的连接限制。",
+      "desc": "仅适用于 BC license 类型。此配置设置当前集群的 license 配额。\n此值不能超过 license key 中指定的连接限制。",
       "label": "动态连接限制"
     }
   },
