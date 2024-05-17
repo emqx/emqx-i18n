@@ -6319,9 +6319,9 @@
       "desc": "获取数据集成的 Prometheus 指标",
       "label": "数据集成的 Prometheus 指标"
     },
-    "get_prom_message_validation": {
-      "desc": "获取消息验证的 Prometheus 指标.",
-      "label": "消息验证 Prometheus 指标"
+    "get_prom_schema_validation": {
+      "desc": "获取 Schema 验证的 Prometheus 指标.",
+      "label": "Schema 验证 Prometheus 指标"
     }
   },
   "emqx_prometheus_schema": {
@@ -10023,7 +10023,7 @@
       "label": "S3 上传操作参数"
     }
   },
-  "emqx_message_validation_http_api": {
+  "emqx_schema_validation_http_api": {
     "append_validation": {
       "desc": "在验证规则列表中添加新的验证规则。"
     },
@@ -10058,7 +10058,7 @@
       "desc": "更新一条验证规则。"
     }
   },
-  "emqx_message_validation_schema": {
+  "emqx_schema_validation_schema": {
     "check_avro_schema": {
       "desc": "验证时使用的 Schema 的名称。",
       "label": "Schema 名称"
