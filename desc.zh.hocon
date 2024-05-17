@@ -10011,7 +10011,7 @@
   },
   "emqx_bridge_s3_upload": {
     "s3_object_content": {
-      "desc": "正在上传的 S3 对象内容。支持模版。",
+      "desc": "S3 对象内容。支持模版。",
       "label": "S3 对象内容"
     },
     "s3_upload": {
