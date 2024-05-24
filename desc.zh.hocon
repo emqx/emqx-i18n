@@ -7169,8 +7169,8 @@
       "label": "mountpoint"
     },
     "base_listener_zone": {
-      "desc": "监听器所属的配置组。",
-      "label": "配置组"
+      "desc": "监听器所属的配置 zone。\n连接到此监听器的客户端将继承在此 zone 名称下创建的 zone 设置。\n\n一个 zone 可以覆盖以下根名称下的配置：\n- `mqtt`\n- `force_shutdown`\n- `force_gc`\n- `flapping_detect`\n- `durable_sessions`",
+      "label": "Zone"
     },
     "broker": {
       "desc": "Broker 相关配置项。"
@@ -8044,10 +8044,6 @@
       "desc": "执行持久会话垃圾回收的间隔。",
       "label": "会话垃圾收集间隔"
     },
-    "session_persistence_enable": {
-      "desc": "使用持久存储来持久化客户端会话。\n如果启用，配置为超出客户端连接的会话及其对应的消息将被持久存储，并在代理停机期间保留。",
-      "label": "启用会话持久化"
-    },
     "session_persistence_storage": {
       "desc": "用于会话持久化的持久存储后端。"
     },
@@ -8070,6 +8066,10 @@
     },
     "broker_session_history_retain": {
       "desc": "保留会话注册历史记录的持续时间。将此值设置为大于 0s 的值会增加内存使用并影响性能。\n这个保留的历史记录可以用来监控过去配置的持续时间内注册了多少会话。\n注意：如果 enable_session_registry 设置为 false，则此配置无效。<br/>\n注意：如果客户端使用随机客户端 ID，则不建议启用此功能，至少不是长时间保留。<br/>\n注意：在集群中，集群内节点中的最低（但大于 0s）值将生效。"
+    },
+    "durable_sessions_enable": {
+      "desc": "使用持久存储来持久化客户端会话。\n如果启用，会话和相应的消息将被持久存储，并在服务器停机时保留。\n\n:::warning\n此功能目前处于实验阶段。请不要在包含重要数据的生产环境中启用它。\n:::",
+      "label": "启用会话持久化"
     },
     "durable_storage": {
       "desc": "与 EMQX 持久存储相关的配置。\n\nEMQX 使用持久存储来卸载各种数据到磁盘，如 MQTT 消息。",
@@ -9950,6 +9950,14 @@
       "desc": "内置的持久存储将数据分成多个分片。\n此配置参数定义分片的数量。\n请注意，它仅在持久存储数据库初始化期间生效。\n在数据库已经创建后更改此配置参数将不会产生任何效果。",
       "label": "分片数量"
     },
+     "layout_builtin_reference": {
+      "desc": "一种简单的布局类型，将所有主题的所有消息按时间顺序存储在一个流中。\n\n不推荐用于生产环境。",
+      "label": "参考布局"
+    },
+    "layout_builtin_reference_type": {
+      "desc": "参考布局类型",
+      "label": "布局类型"
+    },
     "layout_builtin_wildcard_optimized": {
       "desc": "通配符优化 布局旨在最大化覆盖大量主题的通配符订阅的吞吐量。\n\n例如，它可以处理大量客户端将数据发布到包含其客户端 ID 的主题的场景，如：sensor/%device-version%/%clientid%/temperature、sensor/%device-version%/%clientid%/pressure 等。\n此布局将自动将此类主题分组到单个流中，因此订阅包含通配符的主题过滤器（如 sensor/+/+/temperature）的客户端将能够以单个批次消费所有设备发布的消息。\n\n此布局对非通配符订阅也是有效的。",
       "label": "通配符优化存储布局"
@@ -9963,7 +9971,7 @@
       "label": "MQTT 消息存储"
     },
     "wildcard_optimized_epoch_bits": {
-      "desc": "通配符优化布局将不同时间记录的消息划分为“纪元”。\n从单个纪元读取消息可以非常高效，因此更大的纪元可以提高订阅者的吞吐量，但可能增加端到端的延迟。\n\n每个纪元覆盖的时间跨度随 epoch_bits 的值呈指数增长：\n\n- epoch_bits = 1：纪元时间 = 1 毫秒\n- epoch_bits = 2：2 毫秒\n...\n- epoch_bits = 10：1024 毫秒\n- epoch_bits = 13：约 8 秒\n...",
+      "desc": "通配符优化布局将不同时间记录的消息划分为“纪元”。\n从单个纪元读取消息可以非常高效，因此更大的纪元可以提高订阅者的吞吐量，但可能增加端到端的延迟。\n\n每个纪元覆盖的时间跨度随 epoch_bits 的值呈指数增长：\n\n- epoch_bits = 1：纪元时间 = 2 毫秒\n- epoch_bits = 2：4 毫秒\n...\n- epoch_bits = 20：1 秒\n...",
       "label": "纪元位"
     },
     "builtin_n_sites": {
@@ -9971,7 +9979,7 @@
       "label": "初始站点数量"
     }
   },
-  "emqx_bridge_s3_aggreg_upload": {
+  "emqx_bridge_s3_upload": {
     "s3_aggregated_container": {
       "desc": "规定包含聚合事件的上传文件格式的设置。",
       "label": "聚合事件容器"
@@ -9984,17 +9992,17 @@
       "desc": "在此指定的事件字段将首先作为列出现在生成的 CSV 文件中。<br/>\nCSV 文件将包含聚合事件的所有字段；然而，未在此设置中明确提到的列将按字典顺序跟在指定的列之后。",
       "label": "CSV 列顺序"
     },
-    "s3_aggregated_upload": {
-      "desc": "该操作基于时间对传入事件进行聚合，并将它们作为单一对象上传到 S3 服务。",
-      "label": "S3 聚合上传"
-    },
     "s3_aggregated_upload_key": {
       "desc": "聚合上传的 S3 对象键模板。<br/>\n此模板可以包含以下变量的占位符：\n<ul>\n<li><code>${action}</code>: 操作的名称（必须）。<li/>\n<li><code>${node}</code>: 执行上传的 EMQX 节点的名称（必需）。<li/>\n<li><code>${datetime.{format}}</code>: 聚合开始的日期和时间，按照 <code>{format}</code> 字符串格式化（必需），包括：\n    <ul>\n    <li><code>${datetime.rfc3339utc}</code>: 使用 RFC3339 格式化的 UTC 日期和时间。<li/>\n    <li><code>${datetime.rfc3339}</code>: 使用 RFC3339 格式化的本地时区日期和时间。<li/>\n    <li><code>${datetime.unix}</code>: Unix 时间戳。<li/>\n    </ul>\n<li/>\n<li><code>${datetime_until.{format}}</code>: 聚合结束的日期和时间，使用相同的格式化选项。<li/>\n<li><code>${sequence}</code>: 同一时间间隔内聚合上传的序列号（必需）。<li/>\n</ul>\n所有其他占位符均被视为无效。请注意，标记为必需的占位符如果在模板中缺失，将作为路径后缀添加到 S3 对象键中。",
       "label": "S3 对象健模版"
     },
+    "s3_aggregated_upload_mode": {
+      "desc": "启用基于时间的传入事件聚合，并将它们作为一个单独的对象上传到 S3 服务。",
+      "label": "聚合 S3 上传"
+    },
     "s3_aggregated_upload_parameters": {
       "desc": "聚合上传操作的参数集。",
-      "label": "S3 聚合上传操作参数"
+      "label": "聚合 S3 上传操作参数"
     },
     "s3_aggregation": {
       "desc": "管理聚合过程的参数集。",
@@ -10007,20 +10015,26 @@
     "s3_aggregation_max_records": {
       "desc": "每个聚合对象可以包含的最大记录（事件）数量。虽然每次上传不会超过这个限制，但可能包含较少的事件。如果事件发生率很高，在同一时间间隔内可能会有多次聚合上传，这些上传将具有不同但连续的序列号，这些序列号将成为 S3 对象键的一部分。",
       "label": "最大记录数"
-    }
-  },
-  "emqx_bridge_s3_upload": {
+    },
+    "s3_direct_upload_mode": {
+      "desc": "启用将事件作为单独的对象上传到 S3 服务。",
+      "label": "直接 S3 上传"
+    },
+    "s3_direct_upload_parameters": {
+      "desc": "上传操作的一组参数。操作支持在 S3 存储桶名称、对象键和对象内容中使用模板。",
+      "label": "直接 S3 上传操作参数"
+    },
     "s3_object_content": {
-      "desc": "S3 对象内容。支持模版。",
+      "desc": "S3 对象的内容。支持模板。",
       "label": "S3 对象内容"
     },
-    "s3_upload": {
-      "desc": "将单个对象上传到 S3 服务的操作。",
-      "label": "S3 简单上传"
+    "s3_parameters": {
+      "desc": "上传操作的一组参数。",
+      "label": "S3 上传参数"
     },
-    "s3_upload_parameters": {
-      "desc": "上传操作的参数集。操作支持在 S3 存储桶名、对象键和对象内容中使用模板。",
-      "label": "S3 上传操作参数"
+    "s3_upload": {
+      "desc": "将传入事件上传到 S3 API 兼容服务的操作。",
+      "label": "上传到 S3"
     }
   },
   "emqx_schema_validation_http_api": {
