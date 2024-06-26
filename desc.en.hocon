@@ -44,6 +44,16 @@
       "desc": "Filter logs by source IP when logs, applicable for logs generated from Dashboard or REST API operations."
     }
   },
+  "emqx_auth_ext_schema": {
+    "common_ssl_opts_schema_partial_chain": {
+      "desc": "Enable or disable peer verification with partial_chain.\nWhen local verifies a peer certificate during the x509 path validation\nprocess, it constructs a certificate chain that starts with the peer\ncertificate and ends with a trust anchor.\nBy default, if it is set to `false`, the trust anchor is the\nRoot CA, and the certificate chain must be complete.\nHowever, if the setting is set to `true` or `cacert_from_cacertfile`,\nthe last certificate in `cacertfile` will be used as the trust anchor\ncertificate (intermediate CA). This creates a partial chain\nin the path validation.\nAlternatively, if it is configured with `two_cacerts_from_cacertfile`,\none of the last two certificates in `cacertfile` will be used as the\ntrust anchor certificate, forming a partial chain. This option is\nparticularly useful for intermediate CA certificate rotation.\nHowever, please note that it incurs some additional overhead, so it\nshould only be used for certificate rotation purposes.",
+      "label": "Partial chain"
+    },
+    "common_ssl_opts_verify_peer_ext_key_usage": {
+      "desc": "Verify extended key usage in peer's certificate\nFor additional peer certificate validation, the value defined here must present in the\n'Extended Key Usage' of peer certificate defined in\n[rfc5280](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.12).\n\nAllowed values are\n- `clientAuth`\n- `serverAuth`\n- `codeSigning`\n- `emailProtection`\n- `timeStamping`\n- `ocspSigning`\n- raw OID, for example: \"OID:1.3.6.1.5.5.7.3.2\" means `id-pk 2` which is equivalent to `clientAuth`\n\nComma-separated string is also supported for validating more than one key usages.\n\nFor example, `\"serverAuth,OID:1.3.6.1.5.5.7.3.2\"`",
+      "label": "Verify KeyUsage in cert"
+    }
+  },
   "emqx_authn_api": {
     "authentication_get": {
       "desc": "List authenticators for global authentication.",
@@ -5990,6 +6000,44 @@
       "desc": "Topic Name"
     }
   },
+  "emqx_message_transformation_http_api": {
+    "append_transformation": {
+      "desc": "Append a new transformation to the list of transformations"
+    },
+    "delete_transformation": {
+      "desc": "Delete a transformation"
+    },
+    "dryrun_transformation": {
+      "desc": "Test an input against a transformation"
+    },
+    "enable_disable_transformation": {
+      "desc": "Enable or disable a particular transformation"
+    },
+    "get_transformation_metrics": {
+      "desc": "Get metrics for a particular transformation"
+    },
+    "list_transformations": {
+      "desc": "List transformations"
+    },
+    "lookup_transformation": {
+      "desc": "Lookup a transformation"
+    },
+    "param_path_enable": {
+      "desc": "Enable or disable transformation"
+    },
+    "param_path_name": {
+      "desc": "Transformation name"
+    },
+    "reorder_transformations": {
+      "desc": "Reorder of all transformations"
+    },
+    "reset_transformation_metrics": {
+      "desc": "Reset metrics for a particular transformation"
+    },
+    "update_transformation": {
+      "desc": "Update a transformation"
+    }
+  },
   "emqx_mgmt_api_alarms": {
     "activate_at": {
       "desc": "Alarm start time, using rfc3339 standard time format."
@@ -7033,6 +7081,10 @@
       "desc": "The configuration for the PostgreSQL connector.",
       "label": "PostgreSQL Connector Config"
     },
+    "disable_prepared_statements": {
+      "desc": "Disables the usage of prepared statements in the connections.\nSome endpoints, like PGBouncer or Supabase in Transaction mode, do not\nsupport session features such as prepared statements.  For such connections,\nthis option should be enabled.",
+      "label": "Disable Prepared Statements"
+    },
     "server": {
       "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe PostgreSQL default port 5432 is used if `[:Port]` is not specified.",
       "label": "Server Host"
@@ -7064,6 +7116,10 @@
     "get_prom_data_integration_data": {
       "desc": "Get Prometheus Metrics for Data Integration",
       "label": "Prometheus Metrics for Data Integration"
+    },
+    "get_prom_message_transformation": {
+      "desc": "Get Prometheus Metrics for Message Validation",
+      "label": "Prometheus Metrics for Message Validation"
     },
     "get_prom_schema_validation": {
       "desc": "Get Prometheus Metrics for Schema Validation",
@@ -7446,6 +7502,9 @@
       "desc": "The Time that this Client is Connected",
       "label": "Connected Time"
     },
+    "event_ctx_authn_reason_code": {
+      "desc": "The reason code"
+    },
     "event_ctx_connack_reason_code": {
       "desc": "The reason code",
       "label": "Reason Code"
@@ -7486,9 +7545,15 @@
       "desc": "Message ID",
       "label": "Message ID"
     },
+    "event_is_anonymous": {
+      "desc": "True if this user is anonymous."
+    },
     "event_is_bridge": {
       "desc": "Is Bridge",
       "label": "Is Bridge"
+    },
+    "event_is_superuser": {
+      "desc": "True if this is a super user."
     },
     "event_keepalive": {
       "desc": "KeepAlive",
@@ -8082,7 +8147,7 @@
       "label": "Description"
     },
     "durable_sessions_enable": {
-      "desc": "Use durable storage for client sessions persistence.\nIf enabled, sessions configured to outlive client connections, along with their corresponding messages, will be durably stored and survive broker downtime.",
+      "desc": "Use durable storage for client sessions persistence.\nIf enabled, sessions configured to outlive client connections, along with their corresponding messages, will be durably stored and survive broker downtime.\n\n:::warning\nThis feature is currently experimental. Please don't enable it in the production environments that contain valuable data.\n:::",
       "label": "Enable session persistence"
     },
     "durable_storage": {
