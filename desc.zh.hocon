@@ -3156,7 +3156,7 @@
       "label": "RPC 套接字缓冲区大小"
     },
     "rpc_socket_keepalive_count": {
-      "desc": "对应 TCP_KEEPCNT 套接字选项，用于指定在没有从对端获得响应时，TCP 在断开连接之前应发送的保活探测的最大数量",
+      "desc": "对应 TCP_KEEPCNT 套接字选项，用于指定在没有从对端获得响应时，TCP 在断开连接之前应发送的保活探测的最大数量。",
       "label": "RPC Socket Keepalive 次数"
     },
     "rpc_socket_keepalive_idle": {
@@ -3164,7 +3164,7 @@
       "label": "RPC Socket Keepalive 空闲时间"
     },
     "rpc_socket_keepalive_interval": {
-      "desc": "对应 TCP_KEEPINTVL 套接字选项，用于指定各个保活探测之前的时间",
+      "desc": "对应 TCP_KEEPINTVL 套接字选项，用于指定各个保活探测之前的时间。",
       "label": "RPC Socket Keepalive 间隔"
     },
     "rpc_socket_recbuf": {
@@ -4922,7 +4922,7 @@
       "desc": "客户端连接过程的空闲时间。该配置用于：\n  1. 一个新创建的客户端进程如果在该时间间隔内没有收到任何客户端请求，将被直接关闭。\n  2. 一个正在运行的客户进程如果在这段时间后没有收到任何客户请求，将进入休眠状态以节省资源。"
     },
     "gateway_common_listener_access_rules": {
-      "desc": "由字符串规则组成的访问规则列表，以限制或允许某些地址的访问，规则之间存在前后顺序，格式为 'allow | deny <address> | <CIDR> | all'。<br/>\n例如：<br/>\n'[\"deny 192.168.1.1\", \"allow 192.168.1.0/24\", \"deny, all\"]'"
+      "desc": "由字符串规则组成的访问规则列表，以限制或允许某些地址的访问。规则之间存在前后顺序。规则的格式为 `allow | deny <address> | <CIDR> | all`。<br/>例如：<br/>`[\"deny 192.168.1.1\", \"allow 192.168.1.0/24\", \"deny, all\"]`"
     },
     "gateway_common_listener_bind": {
       "desc": "监听器绑定的 IP 地址或端口。"
@@ -5024,11 +5024,11 @@
       "label": "MQTT 搭载"
     },
     "fields_ws_opts_proxy_address_header": {
-      "desc": "携带了客户端真实 IP 地址的 HTTP 请求标头，EMQX 将该标头中最左侧的 IP 视为客户端的真实 IP。此选项通常在为 EMQX 部署了 WebSocket 代理时使用。",
+      "desc": "携带了客户端真实 IP 地址的 HTTP 请求标头，EMQX 将取该标头中最左侧的 IP 作为客户端的真实 IP。此选项通常在为 EMQX 部署了 WebSocket 代理时使用。",
       "label": "代理地址请求头"
     },
     "fields_ws_opts_proxy_port_header": {
-      "desc": "携带了客户端源端口的 HTTP 请求标头，EMQX 将该标头中最左侧的端口视为客户端的源端口。此选项通常在为 EMQX 部署了 WebSocket 代理时使用。",
+      "desc": "携带了客户端源端口的 HTTP 请求标头，EMQX 将取该标头中最左侧的端口作为客户端的源端口。此选项通常在为 EMQX 部署了 WebSocket 代理时使用。",
       "label": "代理端口请求头"
     },
     "fields_ws_opts_supported_subprotocols": {
@@ -5182,15 +5182,15 @@
   },
   "emqx_limiter_schema": {
     "bytes_rate": {
-      "desc": "数据发布速率。<br/>\n这用于限制该节点的入站字节速率。\n一旦达到限制，受限制的客户端将减速甚至暂时挂起。<br/>\n字节的单位可以是：KB MB GB。<br/>\n例如：<br/>\n- <code>500KB/s</code>：每秒只发送 500 千字节，其他消息被缓冲。<br/>\n- <code>500MB/10s</code>：每 10 秒只发送 500 兆字节，其他消息被缓冲。",
+      "desc": "用于限制单个客户端每秒可以向 EMQX 发送的字节数。一旦达到限制，EMQX 将暂停从接收缓冲区读取数据，从而使发送方减速甚至暂时挂起。<br/>字节的单位可以是：KB、MB、GB。<br/>例如：<br/>- <code>500KB/s</code>：每秒只接收 500 千字节，剩余的字节将被推迟。<br/>\n- <code>500MB/10s</code>：每 10 秒只接收 500 兆字节，剩余的字节将被推迟。",
       "label": "数据发布速率"
     },
     "max_conn_rate": {
-      "desc": "最大连接速率。<br/>\n这用于限制该节点的连接速率。\n一旦达到限制，EMQX 将暂停从 Accept 队列获取连接，从而推迟或拒绝新的连接。<br/>\n例如：<br/>\n- <code>1000/s</code>：每秒只接受1000个连接<br/>\n- <code>1000/10s</code>：每10秒只接受1000个连接。",
+      "desc": "用于限制当前监听器接受连接的速率。一旦达到限制，EMQX 将暂停从 Accept 队列获取连接，从而推迟或拒绝新的连接。<br/>例如：<br/>- <code>1000/s</code>：每秒只接受 1000 个连接。<br/>- <code>1000/10s</code>：每 10 秒只接受 1000 个连接。",
       "label": "最大连接速率"
     },
     "messages_rate": {
-      "desc": "消息发布速率。<br/>\n这用于限制该节点的入站消息数量。\n一旦达到限制，EMQX 将暂停从接收缓冲区读取数据，从而使发送方减速甚至暂时挂起。<br/>\n例如：<br/>\n- <code>500/s</code>：每秒只发送 500 条消息，其他消息被缓冲。<br/>\n- <code>500/10s</code>：每 10 秒只发送 500 条消息，其他消息被缓冲。",
+      "desc": "用于限制单个客户端每秒可以向 EMQX 发送的消息数。一旦达到限制，EMQX 将暂停从接收缓冲区读取数据，从而使发送方减速甚至暂时挂起。<br/>例如：<br/>- <code>500/s</code>：每秒只接收 500 条消息，剩余的消息消息将被推迟。<br/>- <code>500/10s</code>：每 10 秒只接收 500 条消息，剩余的消息消息将被推迟。",
       "label": "消息发布速率"
     }
   },
@@ -6633,7 +6633,7 @@
       "desc": "检查并清除过期保留消息的时间间隔。这可以避免已经过期的保留消息仍然被长时间地存储。<br/>如果 `msg_clear_interval` 设置为 0，即不主动定期检查过期的保留消息，EMQX 将只在准备投递时检查并删除已经过期的保留消息。"
     },
     "msg_expiry_interval": {
-      "desc": "如果 MQTT 消息中指定了 `Message-Expiry-Interval` 属性，则以该属性的值为准。0 表示保留消息永不过期。过期的保留消息不会再被投递。"
+      "desc": "过期的保留消息将不会再被投递，设置为 0 则表示保留消息永不过期。但如果 MQTT 消息中指定了 `Message-Expiry-Interval` 属性，则以该属性的值为准。"
     },
     "stop_publish_clear_msg": {
       "desc": "当 PUBLISH 消息的保留标志被设置且有效载荷为空时，是否继续发布消息。\n参见：\nhttp://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc398718038"
@@ -7163,7 +7163,7 @@
       "label": "历史告警数量限制"
     },
     "alarm_validity_period": {
-      "desc": "历史告警的有效期。从告警的激活时间开始计算，如果其存在时间超过了有效期，该告警将被删除。",
+      "desc": "历史告警的有效期。从历史告警的激活时间而非取消时间开始计算，如果其存在时间超过了有效期，该告警将被删除。",
       "label": "历史告警有效期"
     },
     "base_listener_acceptors": {
@@ -7275,7 +7275,7 @@
       "label": "TLS 会话重用"
     },
     "common_ssl_opts_schema_secure_renegotiate": {
-      "desc": "指定是否拒绝不符合 [RFC 5746](http://www.ietf.org/rfc/rfc5746.txt) 的 TLS 重新协商尝试。默认情况下，<code>secure_renegotiate</code> 被设置为 <code>true</code>，即强制执行安全重新协商。<br/>如果设置为 <code>false</code>，则仍然会使用安全重协商，但如果对端不支持 [RFC 5746](http://www.ietf.org/rfc/rfc5746.txt)，则会退回到不安全重协商，这将增加遭受 MITM 攻击的风险。",
+      "desc": "指定是否拒绝不符合 [RFC 5746](http://www.ietf.org/rfc/rfc5746.txt) 的 TLS 重新协商尝试。默认情况下，<code>secure_renegotiate</code> 被设置为 <code>true</code>，即强制执行安全重新协商。<br/>如果设置为 <code>false</code>，则仍然会使用安全重协商，但如果对端不支持 [RFC 5746](http://www.ietf.org/rfc/rfc5746.txt)，则会退回到不安全重协商，这将增加遭受 MITM 攻击的风险。<br/>当 TLS 版本配置（或协商）为 1.3 时此选项将不会生效。",
       "label": "SSL 安全重协商"
     },
     "common_ssl_opts_schema_user_lookup_fun": {
@@ -7675,7 +7675,7 @@
       "label": "进程堆大小上限"
     },
     "force_shutdown_max_mailbox_size": {
-      "desc": "EMQX 会为每个客户端连接创建至少一个轻量级的进程，每个进程都有自己的消息队列（又称邮箱）存放来自其他进程的消息（例如 MQTT 消息），以便进程在任一时间从消息队列（邮箱）中读取消息。如果系统繁忙或进程因套接字繁忙（见 high_watermark）挂起，消息队列可能堆积大量消息。为了避免占用过多内存，当进程消息队列的长度等于 `max_mailbox_size` 时，EMQX 将强制关闭该进程。",
+      "desc": "EMQX 会为每个客户端连接创建至少一个轻量级的进程，每个进程都有自己的消息队列（又称邮箱）存放来自其他进程的消息（例如 MQTT 消息），以便进程在任一时间从消息队列（邮箱）中读取消息。如果系统繁忙或进程因套接字繁忙（见 high_watermark）挂起，消息队列可能堆积大量消息。为了避免占用过多内存，当进程消息队列的长度超过 `max_mailbox_size` 时，EMQX 将强制关闭该进程。",
       "label": "进程邮箱消息数量上限"
     },
     "global_authentication": {
@@ -7709,7 +7709,7 @@
       "label": "Keep Alive 倍数"
     },
     "mqtt_listener_access_rules": {
-      "desc": "由字符串规则组成的访问规则列表，以限制或允许某些地址的访问，规则之间存在前后顺序，格式为 'allow | deny <address> | <CIDR> | all'。<br/>\n例如：<br/>\n'[\"deny 192.168.1.1\", \"allow 192.168.1.0/24\", \"deny, all\"]'",
+      "desc": "由字符串规则组成的访问规则列表，以限制或允许某些地址的访问，规则之间存在前后顺序，格式为 `allow | deny <address> | <CIDR> | all`。<br/>例如：<br/>`[\"deny 192.168.1.1\", \"allow 192.168.1.0/24\", \"deny, all\"]`",
       "label": "访问控制规则"
     },
     "mqtt_listener_proxy_protocol": {
@@ -7893,7 +7893,7 @@
       "label": "启用 OCSP Stapling"
     },
     "server_ssl_opts_schema_fail_if_no_peer_cert": {
-      "desc": "此选项仅在 <code>verify</code> 设置为 <code>verify_peer</code> 时有效。 如果设置为 true，那么 EMQX 将在客户端未能提供证书时拒绝该连接。 如果设置为 false，则仅当客户端发送无效证书（空证书被视为有效证书）时 EMQX 才会拒绝该连接。",
+      "desc": "此选项仅在 <code>verify</code> 设置为 <code>verify_peer</code> 时有效。 如果设置为 true，那么 EMQX 将在客户端未能提供证书时拒绝该连接。 如果设置为 false，则 EMQX 将接受未提供证书的客户端。",
       "label": "没有证书则握手失败"
     },
     "server_ssl_opts_schema_gc_after_handshake": {
@@ -8253,7 +8253,7 @@
   },
   "emqx_telemetry_schema": {
     "enable": {
-      "desc": "是否启用遥测允许 EMQX 收集相关使用信息，并将这些信息分享给 EMQ 用于增强您的产品体验，在任何情况下，EMQX 都不会收集您的个人信息，例如您的 MAC 地址、IP 地址、发送的消息内容"
+      "desc": "是否启用遥测允许 EMQX 收集相关使用信息，并将这些信息分享给 EMQ 用于增强您的产品体验，在任何情况下，EMQX 都不会收集您的个人信息，例如您的 MAC 地址、IP 地址、发送的消息内容。"
     },
     "telemetry_root_doc": {
       "desc": "配置 EMQX 节点向 EMQ 的遥测服务器发送遥测数据。\n详情请参考 https://www.emqx.io/docs/zh/v5.1/telemetry/telemetry.html。"
@@ -9354,7 +9354,7 @@
   },
   "emqx_conf_schema_types": {
     "bytesize": {
-      "desc": "表示字节数量的字符串，例如：<code>10B</code>、<code>640kb</code>、<code>4MB</code>、<code>1GB</code>。单位采用二进制标准，即 1MB 等于 1024KB。单位部分不区分大小写，即 1kb 等同于 1KB"
+      "desc": "表示字节数量的字符串，例如：<code>10B</code>、<code>640kb</code>、<code>4MB</code>、<code>1GB</code>。单位采用二进制标准，即 1MB 等于 1024KB。单位部分不区分大小写，即 1kb 等同于 1KB。"
     },
     "duration": {
       "desc": "表示时间长度的字符串，例如：<code>10s</code>、<code>2.5m</code>、<code>1h30m</code>、<code>1W2D</code> 或 <code>2345ms</code>，其中 <code>ms</code> 是最小单位。每个配置项都有自己的最小精度，设定值中超出精度的部分将被忽略。<br/>\n例如将一个类型为 <code>Duration(s)</code> 的配置项设置为 <code>1200ms</code>，最终生效的时间长度将是 <code>1s</code> 而不是 <code>1.2s</code>。<br/>\n<code>Duration</code> 等价于 <code>Duration(ms)</code>。单位部分不区分大小写。"
