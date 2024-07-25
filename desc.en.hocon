@@ -245,6 +245,10 @@
       "desc": "Field to take JWT from.",
       "label": "From Field"
     },
+    "jwks_headers": {
+      "desc": "List of HTTP headers to send with the JWKS request.",
+      "label": "HTTP Headers"
+    },
     "jwt_hmac": {
       "desc": "Configuration when the JWT for authentication is issued using the HMAC algorithm."
     },
@@ -328,6 +332,13 @@
     }
   },
   "emqx_authn_mnesia_schema": {
+    "bootstrap_file": {
+      "desc": "The bootstrap file imports users into the built-in database.\nIt will not import a user ID that already exists in the database.\nThe file content format is determined by `bootstrap_type`.",
+      "label": "Bootstrap File Path"
+    },
+    "bootstrap_type": {
+      "desc": "Specify which type of content the bootstrap file has.\n\n- **`plain`**:\n  - Expected data fields: `user_id`, `password`, `is_superuser`\n  - `user_id`: Can be Client ID or username, depending on built-in database authentication's `user_id_type` config.\n  - `password`: User's plaintext password.\n  - `is_superuser`: Boolean, user's administrative status.\n\n- **`hash`**:\n  - Expected data fields: `user_id`,`password_hash`,`salt`,`is_superuser`\n  - Definitions similar to `plain` type, with `password_hash` and `salt` added for security.\n\nThe content can be either in CSV, or JSON format.\n\nHere is a CSV example: `user_id,password_hash,salt,is_superuser\\nmy_user,b6c743545a7817ae8c8f624371d5f5f0373234bb0ff36b8ffbf19bce0e06ab75,de1024f462fb83910fd13151bd4bd235,true`\n\nAnd JSON content should be decoded into an array of objects, for example: `[{\"user_id\": \"my_user\",\"password\": \"s3cr3tp@ssw0rd\",\"is_superuser\": true}]`.\n\nThe hash string for `password_hash` depends on how `password_hash_algorithm` is configured for the built-in database authentication mechanism. For example, if it's configured as `password_hash_algorithm {name = sha256, salt_position = suffix}`, then the salt is appended to the password before hashed. Here is the equivalent Python expression: `hashlib.sha256(password + salt).hexdigest()`."
+    },
     "builtin_db": {
       "desc": "Configuration of authenticator using built-in database as data source."
     },
@@ -818,6 +829,10 @@
     "failed": {
       "desc": "Count of query failed.",
       "label": "Failed"
+    },
+    "ignore": {
+      "desc": "Count of query ignored.  This counter is increased whenever the authorization source attempts to authorize a request, but either it's not applicable, or an error was encountered and the result is undecidable",
+      "label": "Ignored"
     },
     "matched": {
       "desc": "Count of this resource is queried.",
@@ -1998,7 +2013,7 @@
       "label": "Connect Timeout"
     },
     "enable_pipelining": {
-      "desc": "A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request.",
+      "desc": "The maximum number of HTTP requests that can be sent before an HTTP response is received.\n\nSetting this to 1 is equivalent to turning off HTTP pipelining, and the EMQX must receive a response to the previous HTTP request before sending the next HTTP request.",
       "label": "HTTP Pipelining"
     },
     "headers": {
@@ -2226,7 +2241,7 @@
       "label": "HTTP Request Max Retries"
     },
     "config_parameters_data_type": {
-      "desc": "Data Type, an enumerated or a string. </br>\nFor string placeholders in format of ${var} is supported, the final value can be:</br>\n- TEXT\n- BOOLEAN\n- INT32\n- INT64\n- FLOAT\n- DOUBLE",
+      "desc": "Data Type, an enumerated or a string.\nFor string placeholders in format of ${var} is supported, the final value can be:\n\n- TEXT\n- BOOLEAN\n- INT32\n- INT64\n- FLOAT\n- DOUBLE",
       "label": "Data type"
     },
     "config_parameters_measurement": {
@@ -2234,7 +2249,7 @@
       "label": "Measurement"
     },
     "config_parameters_timestamp": {
-      "desc": "Timestamp. Placeholders in format of ${var} is supported, the final value can be:</br>\n- now: use the `now_ms` which is contained in the payload as timestamp\n- now_ms: same as above\n- now_us: use the `now_us` which is contained in the payload as timestamp\n- now_ns: use the `now_ns` which is contained in the payload as timestamp\n- any other: use the value directly as the timestamp",
+      "desc": "Timestamp. Placeholders in format of ${var} is supported, the final value can be:\n\n- now: use the `now_ms` which is contained in the payload as timestamp\n- now_ms: same as above\n- now_us: use the `now_us` which is contained in the payload as timestamp\n- now_ns: use the `now_ns` which is contained in the payload as timestamp\n- any other: use the value directly as the timestamp",
       "label": "Timestamp"
     },
     "config_parameters_value": {
@@ -4333,15 +4348,15 @@
       "label": "RPC Socket Buffer"
     },
     "rpc_socket_keepalive_count": {
-      "desc": "How many times the keepalive probe message can fail to receive a reply\nuntil the RPC connection is considered lost.",
+      "desc": "Corresponds to the `TCP_KEEPCNT` socket option. The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end.",
       "label": "RPC Socket Keepalive Count"
     },
     "rpc_socket_keepalive_idle": {
-      "desc": "How long the connections between the brokers should remain open after the last message is sent.",
+      "desc": "Corresponds to the `TCP_KEEPIDLE` socket option. The time (in seconds) the connection needs to remain idle before TCP starts sending keepalive probes.",
       "label": "RPC Socket Keepalive Idle"
     },
     "rpc_socket_keepalive_interval": {
-      "desc": "The interval between keepalive messages.",
+      "desc": "Corresponds to the `TCP_KEEPINTVL` socket option. The time (in seconds) between individual keepalive probes.",
       "label": "RPC Socket Keepalive Interval"
     },
     "rpc_socket_recbuf": {
@@ -4367,10 +4382,10 @@
   },
   "emqx_conf_schema_types": {
     "bytesize": {
-      "desc": "A string that represents a number of bytes, for example: <code>10B</code>, <code>640kb</code>, <code>4MB</code>, <code>1GB</code>. Units are interpreted as powers of 1024, and the unit part is case-insensitive."
+      "desc": "A string that represents a number of bytes, for example: <code>10B</code>, <code>640kb</code>, <code>4MB</code>, <code>1GB</code>. Units are binary standardized, i.e., 1MB equals 1024KB. units are not case sensitive, i.e., 1kb equals 1KB."
     },
     "duration": {
-      "desc": "A string that represents a time duration, for example: <code>10s</code>, <code>2.5m</code>, <code>1h30m</code>, <code>1W2D</code>, or <code>2345ms</code>, which is the smallest unit. When precision is specified, finer portions of the duration may be ignored: writing <code>1200ms</code> for <code>Duration(s)</code> is equivalent to writing <code>1s</code>. The unit part is case-insensitive."
+      "desc": "A string that represents a time duration, for example: <code>10s</code>, <code>2.5m</code>, <code>1h30m</code>, <code>1W2D</code>, or <code>2345ms</code>, which is the smallest unit. Each configuration item has its own minimum precision. The part of the setting value that exceeds the precision will be ignored.\n\nFor example, if a configuration item of type <code>Duration(s)</code> is set to <code>1200ms</code>, the final effective value will be <code>1s</code> instead of <code>1.2s</code>.\n\n`Duration` is equivalent to `Duration(ms)`. The unit part is case-insensitive."
     },
     "secret": {
       "desc": "A string holding some sensitive information, such as a password. When secret starts with <code>file://</code>, the rest of the string is interpreted as a path to a file containing the secret itself: whole content of the file except any trailing whitespace characters is considered a secret value. Note: when clustered, all EMQX nodes should have the same file present before using <code>file://</code> secrets."
@@ -4730,7 +4745,7 @@
       "label": "Listeners"
     },
     "max_connections": {
-      "desc": "Maximum number of simultaneous connections.",
+      "desc": "The maximum number of concurrent connections allowed by the listener.",
       "label": "Maximum connections"
     },
     "num_acceptors": {
@@ -4772,6 +4787,58 @@
     "query_timeout": {
       "desc": "Timeout for the LDAP query.",
       "label": "Query Timeout"
+    }
+  },
+  "emqx_dashboard_sso_oidc": {
+    "client_file_jwks": {
+      "desc": "Set JWKS from file."
+    },
+    "client_file_jwks_file": {
+      "desc": "The content of the JWKS."
+    },
+    "client_file_jwks_type": {
+      "desc": "The JWKS source type."
+    },
+    "client_jwks": {
+      "desc": "Set JWK or JWKS here to enable the `private_key_jwt` authorization or the `DPoP` extension."
+    },
+    "clientid": {
+      "desc": "The clientId for this backend."
+    },
+    "dashboard_addr": {
+      "desc": "The address of the EMQX Dashboard."
+    },
+    "fallback_methods": {
+      "desc": "Some providers do not provide all the method items in the provider configuration, set this value as a fallback for those items."
+    },
+    "issuer": {
+      "desc": "The URL of the OIDC issuer."
+    },
+    "name_var": {
+      "desc": "A template to map OIDC user information to a Dashboard name, its default value is `${sub}`."
+    },
+    "preferred_auth_methods": {
+      "desc": "Set the valid authentication methods and their priority."
+    },
+    "provider": {
+      "desc": "The OIDC provider."
+    },
+    "require_pkce": {
+      "desc": "Whether to require PKCE when getting the token."
+    },
+    "scopes": {
+      "desc": "The scopes, its default value is `[\"openid\"]`."
+    },
+    "secret": {
+      "desc": "The client secret."
+    },
+    "session_expiry": {
+      "desc": "The valid time span for an OIDC `state`, the default is `30s`, if the code response returned by the authorization server exceeds this time span, it will be treated as invalid."
+    }
+  },
+  "emqx_dashboard_sso_oidc_api": {
+    "code_callback": {
+      "desc": "The callback path for the OIDC authorization server.."
     }
   },
   "emqx_dashboard_sso_saml": {
@@ -5240,7 +5307,7 @@
       "desc": "The Gateway listeners overview"
     },
     "gateway_max_connections": {
-      "desc": "The Gateway allowed maximum connections/clients"
+      "desc": "The maximum number of concurrent connections allowed by the gateway."
     },
     "gateway_name": {
       "desc": "Gateway Name"
@@ -5613,8 +5680,8 @@
       "label": "Fail if no subprotocol"
     },
     "fields_ws_opts_idle_timeout": {
-      "desc": "Close transport-layer connections from the clients that have not sent MQTT CONNECT message within this interval.",
-      "label": "WS idle timeout"
+      "desc": "The timeout for waiting for the WebSocket upgrade request. After the timeout, the connection will be closed.",
+      "label": "WebSocket Upgrade Timeout"
     },
     "fields_ws_opts_max_frame_size": {
       "desc": "The maximum length of a single MQTT packet.",
@@ -5665,7 +5732,7 @@
       "desc": "The idle time of the client connection process. It has two purposes:\n  1. A newly created client process that does not receive any client requests after that time will be closed directly.\n  2. A running client process that does not receive any client requests after this time will go into hibernation to save resources."
     },
     "gateway_common_listener_access_rules": {
-      "desc": "The access control rules for this listener.\nSee: https://github.com/emqtt/esockd#allowdeny"
+      "desc": "An access rule list consisting of string rules to restrict or allow access from some addresses.\nThe rules that appear earlier in the list are matched first.\nThe format is `allow | deny <address> | <CIDR> | all`.\n\nFor example:\n\n`[\\\"deny 192.168.1.1\\\", \\\"allow 192.168.1.0/24\\\", \\\"deny, all\\\"]`"
     },
     "gateway_common_listener_bind": {
       "desc": "The IP address and port that the listener will bind."
@@ -5680,7 +5747,7 @@
       "desc": "Maximum connections per second."
     },
     "gateway_common_listener_max_connections": {
-      "desc": "Maximum number of concurrent connections."
+      "desc": "The maximum number of concurrent connections allowed by the listener."
     },
     "gateway_mountpoint": {
       "desc": "When publishing or subscribing, prefix all topics with a mountpoint string.\nThe prefixed string will be removed from the topic name when the message is delivered to the subscriber.\nThe mountpoint is a way that users can use to implement isolation of message routing between different listeners.\nFor example if a client A subscribes to `t` with `listeners.tcp.\\<name>.mountpoint` set to `some_tenant`,\nthen the client actually subscribes to the topic `some_tenant/t`.\nSimilarly, if another client B (connected to the same listener as the client A) sends a message to topic `t`,\nthe message is routed to all the clients subscribed `some_tenant/t`,\nso client A will receive the message, with topic name `t`. Set to `\"\"` to disable the feature.\nSupported placeholders in mountpoint string:<br/>\n  - <code>${clientid}</code>: clientid<br/>\n  - <code>${username}</code>: username<br/>\n  - <code>${endpoint_name}</code>: endpoint name"
@@ -5695,7 +5762,7 @@
       "desc": "Size of the acceptor pool."
     },
     "tcp_listener_proxy_protocol": {
-      "desc": "Enable the Proxy Protocol V1/2 if the EMQX cluster is deployed behind HAProxy or Nginx.\nSee: https://www.haproxy.com/blog/haproxy/proxy-protocol/"
+      "desc": "If a reverse proxy is deployed for EMQX, and the PROXY protocol is enabled at the proxy to pass the client's real IP,\nthis option needs to be turned on so that EMQX can extract the client's real IP from the PROXY protocol header.\nEMQX will automatically detect the version of the PROXY protocol and support V1 and V2.\n\nFor a detailed description of the PROXY protocol, please refer to: https://www.haproxy.com/blog/haproxy/proxy-protocol/"
     },
     "tcp_listener_proxy_protocol_timeout": {
       "desc": "Timeout for proxy protocol.\nEMQX will close the TCP connection if proxy protocol packet is not received within the timeout."
@@ -5708,6 +5775,15 @@
     },
     "tcp_udp_listeners": {
       "desc": "Settings for the listeners."
+    },
+    "udp_health_check": {
+      "desc": "Some Cloud platform use a `request-reply` mechanism to check whether a UDP port is healthy, here can configure this pair."
+    },
+    "udp_health_check_reply": {
+      "desc": "The content to reply."
+    },
+    "udp_health_check_request": {
+      "desc": "The content of the request."
     },
     "udp_listener_active_n": {
       "desc": "Specify the {active, N} option for the socket.\nSee: https://erlang.org/doc/man/inet.html#setopts-2"
@@ -5912,15 +5988,15 @@
   },
   "emqx_limiter_schema": {
     "bytes_rate": {
-      "desc": "Data publish rate.<br/>\nThis is used to limit the inbound bytes rate for this node.\nOnce the limit is reached, the restricted client will slow down and even be hung for a while.<br/>\nThe unit of the bytes could be:KB MB GB.<br/>\nFor example:<br/>\n- <code>500KB/s</code> :: Only the first 500 kilobytes are sent per second and other messages are buffered.<br/>\n- <code>500MB/10s</code> :: Only the first 500 megabytes are sent even 10 second and other messages are buffered.",
+      "desc": "Used to limit the number of bytes a single client can send to EMQX per second.\n\nOnce the limit is reached, EMQX will pause reading data from the receive-buffer, thus slowing down or even temporarily hanging the sender.\n\nThe unit of the bytes could be: B, KB, MB, GB.\n\nFor example:\n\n- `500KB/s`: Only 500 kilobytes per second will be received, and the remaining bytes will be delayed.\n- `500MB/10s`: Only 500 megabytes will be received every 10 seconds, and the remaining bytes will be delayed.",
       "label": "Data Publish Rate"
     },
     "max_conn_rate": {
-      "desc": "Maximum connection rate.<br/>\nThis is used to limit the connection rate for this node.\nOnce the limit is reached, new connections will be deferred or refused.<br/>\nFor example:<br/>\n- <code>1000/s</code> :: Only accepts 1000 connections per second<br/>\n- <code>1000/10s</code> :: Only accepts 1000 connections every 10 seconds.",
+      "desc": "Used to limit the rate at which the current listener accepts connections.\n\nOnce the limit is reached, EMQX will pause fetching connections from the Accept queue, thereby delaying or rejecting new connections.\n\nFor example:\n\n- `1000/s`: Only accepts 1000 connections per second.\n- `1000/10s`: Only accepts 1000 connections every 10 seconds.",
       "label": "Maximum Connection Rate"
     },
     "messages_rate": {
-      "desc": "Messages publish rate.<br/>\nThis is used to limit the inbound message numbers for this node.\nOnce the limit is reached, the restricted client will slow down and even be hung for a while.<br/>\nFor example:<br/>\n- <code>500/s</code> :: Only the first 500 messages are sent per second and other messages are buffered.<br/>\n- <code>500/10s</code> :: Only the first 500 messages are sent even 10 second and other messages are buffered.",
+      "desc": "Used to limit the number of messages a single client can send to EMQX per second.\n\nOnce the limit is reached, EMQX will pause reading data from the receive-buffer, thus slowing down or even temporarily hanging the sender.\n\nFor example:\n\n- `500/s`: Only 500 messages will be received per second, and the remaining messages will be delayed.\n- `500/10s`: Only 500 messages will be received every 10 seconds and the remaining messages will be delayed.",
       "label": "Messages Publish Rate"
     }
   },
@@ -7439,7 +7515,7 @@
       "desc": "Flow control."
     },
     "max_payload_size": {
-      "desc": "Maximum retained message size."
+      "desc": "The maximum size of retained messages allowed to be stored. EMQX will refuse to store retained messages larger than this size and output an Error log with the keyword 'retain_failed_for_payload_size_exceeded_limit'.\n\n0 means unlimited retained message size."
     },
     "max_retained_messages": {
       "desc": "Maximum number of retained messages. 0 means no limit."
@@ -7454,10 +7530,10 @@
       "desc": "Enable built-in Mnesia backend."
     },
     "msg_clear_interval": {
-      "desc": "Interval for EMQX to scan expired messages and delete them. Never scan if the value is 0."
+      "desc": "The time interval for checking and clearing expired retained messages. This can prevent expired retained messages from being stored for a long time.\n\nIf `msg_clear_interval` is set to 0, that is, expired retained messages are not actively checked regularly, EMQX will only check and delete expired retained messages when preparing for delivery."
     },
     "msg_expiry_interval": {
-      "desc": "Message retention time. This config is only applicable for messages without the Message Expiry Interval message property.\n0 means message will never expire."
+      "desc": "Expired retained messages will not be delivered again, and a setting of 0 means that retained messages will never expire.\n\nHowever, if the `Message-Expiry-Interval` property is specified in the MQTT message, the value of that property prevails."
     },
     "stop_publish_clear_msg": {
       "desc": "When the retained flag of the `PUBLISH` message is set and Payload is empty,\nwhether to continue to publish the message.\nSee:\nhttp://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc398718038"
@@ -7610,6 +7686,10 @@
     "event_topic": {
       "desc": "Message Topic",
       "label": "Message Topic"
+    },
+    "event_transformation": {
+      "desc": "Transformation",
+      "label": "Transformation"
     },
     "event_username": {
       "desc": "Username",
@@ -7980,12 +8060,15 @@
       "label": "Alarm Actions"
     },
     "alarm_size_limit": {
-      "desc": "The maximum total number of deactivated alarms to keep as history.<br/>When this limit is exceeded, the oldest deactivated alarms are deleted to cap the total number.",
+      "desc": "The maximum number of historical alarms that can be stored.\n\nWhen the maximum number is reached, the oldest historical alarms will be deleted to store new historical alarms.",
       "label": "Alarm size limit"
     },
     "alarm_validity_period": {
-      "desc": "Retention time of deactivated alarms. Alarms are not deleted immediately\nwhen deactivated, but after the retention time.",
+      "desc": "The validity period of historical alarms. Calculated from the time of activation of the historical alarm instead of the time of cancelation.\n\nIf it exists longer than the validity period, the alarm will be deleted.",
       "label": "Alarm validity period"
+    },
+    "banned_bootstrap_file": {
+      "desc": "The bootstrap file is a CSV file used to batch loading banned data when initializing a single node or cluster, in other words, the import operation is performed only if there is no data in the database.\n\nThe delimiter for this file is `,`.\n\nThe first line of this file must be a header line. All valid headers are listed here:\n- as :: required\n- who :: required\n- by  :: optional\n- reason :: optional\n- at :: optional\n- until :: optional\n\nSee the documentation for details on each field.\n\nEach row in the rest of this file must contain the same number of columns as the header line,\nand column can be omitted then its value will be `undefined`."
     },
     "base_listener_acceptors": {
       "desc": "The size of the listener's receiving pool.",
@@ -8087,28 +8170,28 @@
       "label": "CACert Depth"
     },
     "common_ssl_opts_schema_hibernate_after": {
-      "desc": "Hibernate the SSL process after idling for amount of time reducing its memory footprint.",
-      "label": "hibernate after"
+      "desc": "Specifies the amount of time that an SSL process will hibernate after being idle, thus reducing its memory footprint.\n\nThe hibernating process will be woken up when a new message arrives.\nHibernating and waking up too often can cause CPU utilization to increase, as they both perform garbage collection on the process.",
+      "label": "Hibernate After"
     },
     "common_ssl_opts_schema_keyfile": {
       "desc": "PEM format private key file.",
       "label": "Keyfile"
     },
     "common_ssl_opts_schema_log_level": {
-      "desc": "Log level for SSL communication. Default is 'notice'. Set to 'debug' to inspect TLS handshake messages.",
-      "label": "SSL log level"
+      "desc": "The minimum level of logging allowed for SSL output.\n\nThe default is `notice`, set to a lower `debug` level for more detailed logging that can be used to investigate SSL handshake issues.",
+      "label": "SSL Log Level"
     },
     "common_ssl_opts_schema_password": {
       "desc": "String containing the user's password. Only used if the private key file is password-protected.",
-      "label": "Keyfile passphrase"
+      "label": "Keyfile Passphrase"
     },
     "common_ssl_opts_schema_reuse_sessions": {
       "desc": "Enable TLS session reuse.<br/>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
-      "label": "TLS session reuse"
+      "label": "TLS Session Reuse"
     },
     "common_ssl_opts_schema_secure_renegotiate": {
-      "desc": "SSL parameter renegotiation is a feature that allows a client and a server\nto renegotiate the parameters of the SSL connection on the fly.\nRFC 5746 defines a more secure way of doing this. By enabling secure renegotiation,\nyou drop support for the insecure renegotiation, prone to MitM attacks.<br/>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
-      "label": "SSL renegotiate"
+      "desc": "Whether to reject TLS renegotiation attempts that are not compliant with [RFC 5746](http://www.ietf.org/rfc/rfc5746.txt).\n\nBy default, `secure_renegotiate` is set to `true`, which forces secure renegotiation.\nIf set to `false`, secure renegotiation will still be used, but will fall back to insecure renegotiation if the peer does not support [RFC 5746](http://www.ietf.org/rfc/rfc5746.txt), which increases the risk of a MitM attack.\n\nHas no effect when TLS version is configured (or negotiated) to 1.3.",
+      "label": "SSL Secure Renegotiation"
     },
     "common_ssl_opts_schema_user_lookup_fun": {
       "desc": "EMQX-internal callback that is used to lookup pre-shared key (PSK) identity.<br/>\nHas no effect when TLS version is configured (or negotiated) to 1.3",
@@ -8399,7 +8482,7 @@
       "label": "TCP user-space buffer"
     },
     "fields_tcp_opts_high_watermark": {
-      "desc": "The socket is set to a busy state when the amount of data queued internally\nby the VM socket implementation reaches this limit.",
+      "desc": "When EMQX tries to send more data than the OS has allocated for the socket's send buffer, the remaining data will be temporarily stored in Erlang's internal buffer and then sent in the background.\n\nIf the amount of data queued in the internal buffer exceeds `high_watermark`, the corresponding socket will be marked as busy.\n\nThe process sending data to this busy socket will be suspended until the socket is no longer busy, or the suspension time exceeds `send_timeout`.\n\nThe socket will only be unbusy when the data in the internal buffer is below the low watermark.\n\nWhile the process is suspended, the message queue of the process may accumulate, see `max_mailbox_len` for details.",
       "label": "TCP high watermark"
     },
     "fields_tcp_opts_keepalive": {
@@ -8419,7 +8502,7 @@
       "label": "SO_REUSEADDR"
     },
     "fields_tcp_opts_send_timeout": {
-      "desc": "The TCP send timeout for the connections.",
+      "desc": "The maximum time a process is suspended for sending data to a busy socket. After the timeout, the TCP connection and the process will be closed.\n\nThe process is unsuspended only when the socket is unbusy, that is, the data accumulated in the Erlang internal buffer drops from the high watermark (specified by `high_watermark`) to the low watermark (default 4 KB).\n\nTherefore, `(high_watermark - 4 KB) / send_timeout` must be a suitable message outflow speed, otherwise the suspended process will never be able to recover before the timeout.",
       "label": "TCP send timeout"
     },
     "fields_tcp_opts_send_timeout_close": {
@@ -8447,7 +8530,7 @@
       "label": "Allowed origins"
     },
     "fields_ws_opts_compress": {
-      "desc": "If <code>true</code>, compress WebSocket messages using <code>zlib</code>.<br/>\nThe configuration items under <code>deflate_opts</code> belong to the compression-related parameter configuration.",
+      "desc": "If <code>true</code>, compress WebSocket messages using <code>zlib</code>.\n\nThe configuration items under <code>deflate_opts</code> belong to the compression-related parameter configuration.",
       "label": "Ws compress"
     },
     "fields_ws_opts_fail_if_no_subprotocol": {
@@ -8455,15 +8538,15 @@
       "label": "Fail if no subprotocol"
     },
     "fields_ws_opts_idle_timeout": {
-      "desc": "Close transport-layer connections from the clients that have not sent MQTT CONNECT message within this interval.",
-      "label": "WS idle timeout"
+      "desc": "The timeout for waiting for the WebSocket upgrade request. After the timeout, the connection will be closed.",
+      "label": "WebSocket Upgrade Timeout"
     },
     "fields_ws_opts_max_frame_size": {
       "desc": "The maximum length of a single MQTT packet.",
       "label": "Max frame size"
     },
     "fields_ws_opts_mqtt_path": {
-      "desc": "WebSocket's MQTT protocol path. By default, the full URL for the WebSocket client to connect is:\n`ws://{ip}:{port}/mqtt`.\nAppend `/[...]` to the end of the path to make EMQX accept any subpath.\nFor example, specifying `mqtt/[...]` would allow clients to connect at paths like\n`mqtt/org1` or `mqtt/group2`, etc.\n\nNOTE: An unmatched path will cause the client to be rejected immediately at the HTTP layer,\nmeaning it will not be traceable at the MQTT layer.",
+      "desc": "WebSocket's MQTT protocol path. By default, the full URL for the WebSocket client to connect is:\n`ws://{host}:{port}/mqtt`.\nAppend `/[...]` to the end of the path to make EMQX accept any subpath.\nFor example, specifying `mqtt/[...]` would allow clients to connect at paths like\n`mqtt/org1` or `mqtt/group2`, etc.\n\nNOTE: An unmatched path will cause the client to be rejected immediately at the HTTP layer,\nmeaning it will not be traceable at the MQTT layer.",
       "label": "WS MQTT Path"
     },
     "fields_ws_opts_mqtt_piggyback": {
@@ -8471,11 +8554,11 @@
       "label": "MQTT Piggyback"
     },
     "fields_ws_opts_proxy_address_header": {
-      "desc": "HTTP header used to pass information about the client IP address.\nRelevant when the EMQX cluster is deployed behind a load-balancer.",
+      "desc": "The HTTP request header that carries the original client's IP address, EMQX will take the leftmost IP in the header as the original client's IP.\n\nThis option is typically used when EMQX is deployed behind a WebSocket proxy.",
       "label": "Proxy address header"
     },
     "fields_ws_opts_proxy_port_header": {
-      "desc": "HTTP header used to pass information about the client port. Relevant when the EMQX cluster is deployed behind a load-balancer.",
+      "desc": "The HTTP request header that carries the original client's source port, EMQX will take the leftmost port in the header as the original client's source port.\n\nThis option is typically used when EMQX is deployed behind a WebSocket proxy.",
       "label": "Proxy port header"
     },
     "fields_ws_opts_supported_subprotocols": {
@@ -8483,7 +8566,7 @@
       "label": "Supported subprotocols"
     },
     "fields_ws_opts_validate_utf8": {
-      "desc": "Set to <code>false</code> to disable WebSocket Frame UTF-8\n  validation for performance",
+      "desc": "Whether to verify that the payload of `text` and `close` frames is valid UTF-8. Disabling it can save resources and improve performance.",
       "label": "Enable/Disable WebSocket Frame utf8 validation"
     },
     "flapping_detect_ban_time": {
@@ -8519,11 +8602,11 @@
       "label": "Enable `force_shutdown` feature"
     },
     "force_shutdown_max_heap_size": {
-      "desc": "Total heap size",
-      "label": "Total heap size"
+      "desc": "The maximum heap size of the process. If the `force_shutdown` is enabled, processes that exceed this limit will automatically exit or be forcibly killed. Messages in the process message queue (mailbox) are also part of the heap. The shutdown of a process can be divided into the following two situations:\n\n- The process actively checks the current heap size during its own operation, and actively exits after finding that it exceeds the limit.\n- The underlying scheduling system checks the current heap size after performing garbage collection for the process, and forcibly kills the process after finding that it exceeds the limit.\n\nNote: The Error logs generated by the above two will be different. The log generated by the former is similar to `...errorContext: connection_shutdown, reason: #{max => 2097152, reason => proc_heap_too_large, value => 2787348}..`,\nand the log generated by the latter is similar to `...Context: maximum heap size reached...`.",
+      "label": "Maximum Process Heap Size"
     },
     "force_shutdown_max_mailbox_size": {
-      "desc": "In EMQX, each online client corresponds to an individual Erlang process. The configuration value establishes a mailbox size limit for these processes. If the mailbox size surpasses this limit, the client will be automatically terminated.",
+      "desc": "EMQX creates at least one lightweight process for each client connection.\n\nEach process has its own message queue (aka mailbox) to hold messages from other processes (e.g. MQTT messages) so that the process can read messages from the message queue (mailbox) at any time.\n\nIf the system is busy or the process hangs due to a busy socket (see `high_watermark`), the message queue can accumulate many messages.\n\nTo avoid excessive memory usage, EMQX will force a process to shut down when the length of its message queue exceeds `max_mailbox_size`.",
       "label": "Maximum mailbox size."
     },
     "mqtt": {
@@ -8545,12 +8628,16 @@
       "desc": "Whether the messages sent by the MQTT v3.1.1/v3.1.0 client will be looped back to the publisher itself, similar to <code>No Local</code> in MQTT 5.0.",
       "label": "Ignore Loop Deliver"
     },
+    "mqtt_keepalive_check_interval": {
+      "desc": "The frequency of checking for incoming MQTT packets determines how often the server will check for new MQTT packets.\nIf a certain amount of time passes without any packets being sent from the client, this time will be added up.\nOnce the accumulated time exceeds `keepalive-interval * keepalive-multiplier`, the connection will be terminated.\nThe default is set to 30 seconds, with a minimum value of 1 second and a maximum value of `keepalive-interval / 2`.",
+      "label": "Keep Alive Check Interval"
+    },
     "mqtt_keepalive_multiplier": {
       "desc": "Keep-Alive Timeout = Keep-Alive interval Ã Keep-Alive Multiplier.\nThe default value 1.5 is following the MQTT 5.0 specification. This multiplier is adjustable, providing system administrators flexibility for tailoring to their specific needs. For instance, if a client's 10-second Keep-Alive interval PINGREQ gets delayed by an extra 10 seconds, changing the multiplier to 2 lets EMQX tolerate this delay.",
       "label": "Keep Alive Multiplier"
     },
     "mqtt_listener_access_rules": {
-      "desc": "The access control rules for this listener.<br/>See: https://github.com/emqtt/esockd#allowdeny",
+      "desc": "An access rule list consisting of string rules to restrict or allow access from some addresses. The rules that appear earlier in the list are matched first.\nThe format is `allow | deny <address> | <CIDR> | all`.\n\nFor example:\n\n`[\\\"deny 192.168.1.1\\\", \\\"allow 192.168.1.0/24\\\", \\\"deny, all\\\"]`",
       "label": "Access rules"
     },
     "mqtt_listener_proxy_protocol": {
@@ -8558,7 +8645,7 @@
       "label": "Proxy protocol"
     },
     "mqtt_listener_proxy_protocol_timeout": {
-      "desc": "Timeout for proxy protocol. EMQX will close the TCP connection if proxy protocol packet is not received within the timeout.",
+      "desc": "If a reverse proxy is deployed for EMQX, and the PROXY protocol is enabled at the proxy to pass the client's real IP, this option needs to be turned on so that EMQX can extract the client's real IP from the PROXY protocol header.\n\nEMQX will automatically detect the version of the PROXY protocol and support V1 and V2.\n\nFor a detailed description of the PROXY protocol, please refer to: https://www.haproxy.com/blog/haproxy/proxy-protocol/",
       "label": "Proxy protocol timeout"
     },
     "mqtt_max_awaiting_rel": {
@@ -8598,7 +8685,7 @@
       "label": "Max Topic Levels"
     },
     "mqtt_message_expiry_interval": {
-      "desc": "The expiry interval of MQTT messages. For MQTT 5.0 clients, this configuration will only take effect when the Message-Expiry-Interval property is not set in the message; otherwise, the value of the Message-Expiry-Interval property will be used. For MQTT versions older than 5.0, this configuration will always take effect. Please note that setting message_expiry_interval greater than session_expiry_interval is meaningless, as all messages will be cleared when the session expires.",
+      "desc": "The expiry interval of MQTT messages. For MQTT 5.0 clients, this configuration will only take effect when the `Message-Expiry-Interval` property is not set in the message; otherwise, the value of the `Message-Expiry-Interval` property will be used. For MQTT versions older than 5.0, this configuration will always take effect. Please note that setting `message_expiry_interval` greater than `session_expiry_interval` is meaningless, as all messages will be cleared when the session expires.",
       "label": "Message Expiry Interval"
     },
     "mqtt_mqueue_default_priority": {
@@ -8606,7 +8693,7 @@
       "label": "Default Topic Priorities"
     },
     "mqtt_mqueue_priorities": {
-      "desc": "Topic priorities. Priority number [1-255]\nThere's no priority table by default, hence all messages are treated equal.\n\n**NOTE**: Comma and equal signs are not allowed for priority topic names.\n**NOTE**: Messages for topics not in the priority table are treated as either highest or lowest priority depending on the configured value for <code>mqtt.mqueue_default_priority</code>.\n\n**Examples**:\nTo configure <code>\"topic/1\" > \"topic/2\"</code>:\n<code>mqueue_priorities: {\"topic/1\": 10, \"topic/2\": 8}</code>",
+      "desc": "Topic priority list. Prioritize messages in the message queue by topic. The priority range is `[1, 255]`.\n\nThe larger the value, the higher the priority. Messages with higher priority will be sent first.\n\nTopics not in this list will use the default priority (specified by `mqueue_default_priority`).\n\nBy default, this list is empty, which means all topics have the same priority.\n\nNote: commas and equal signs are not supported in topic names.\n\nFor example, if you want `topic/1` to have a higher priority than `topic/2`, you can configure it like this:\n\n`mqueue_priorities: {\\\"topic/1\\\": 10, \\\"topic/2\\\": 8}`",
       "label": "Topic Priorities"
     },
     "mqtt_mqueue_store_qos0": {
@@ -8646,7 +8733,7 @@
       "label": "Shared Subscription Available"
     },
     "mqtt_shared_subscription_strategy": {
-      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Messages from a single publisher are dispatched to subscribers in turn;\n - `round_robin_per_group`: All messages are dispatched to subscribers in turn;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
+      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n - `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "mqtt_strict_mode": {
       "desc": "Whether to parse MQTT messages in strict mode.\nIn strict mode, invalid utf8 strings in for example client ID, topic name, etc. will cause the client to be disconnected.",
@@ -8657,7 +8744,7 @@
       "label": "Upgrade QoS"
     },
     "mqtt_use_username_as_clientid": {
-      "desc": "Whether to use Username as Client ID.\nThis setting takes effect later than <code>Use Peer Certificate as Username</code> and <code>Use peer certificate as Client ID</code>.",
+      "desc": "Whether to use Username as Client ID.\nThis setting takes effect later than `peer_cert_as_username` and `peer_cert_as_clientid`.",
       "label": "Use Username as Client ID"
     },
     "mqtt_wildcard_subscription": {
@@ -8705,7 +8792,7 @@
       "label": "Enable OCSP Stapling"
     },
     "server_ssl_opts_schema_fail_if_no_peer_cert": {
-      "desc": "Used together with {verify, verify_peer} by an TLS/DTLS server.\nIf set to true, the server fails if the client does not have a\ncertificate to send, that is, sends an empty certificate.\nIf set to false, it fails only if the client sends an invalid\ncertificate (an empty certificate is considered valid).",
+      "desc": "This option is only effective if `verify` is set to `verify_peer`.\n\nIf set to `true`, EMQX will reject the connection if the client fails to provide a certificate.\n\nIf set to `false`, EMQX will accept clients which don't present a certificate.",
       "label": "SSL fail if no peer cert"
     },
     "server_ssl_opts_schema_gc_after_handshake": {
@@ -8717,7 +8804,7 @@
       "label": "Handshake timeout"
     },
     "server_ssl_opts_schema_honor_cipher_order": {
-      "desc": "An important security setting. It forces the cipher to be set based\n on the server-specified order instead of the client-specified order,\n hence enforcing the (usually more properly configured) security\n ordering of the server administrator.",
+      "desc": "An important security setting. If this setting is enabled, the server will prioritize the cipher suites it prefers most from the list of cipher suites supported by the client, thus ignoring the client's preferences.\n\nThe server's cipher suites are specified by `ciphers`, with preference decreasing from left to right.\n\nIt is often better to use the server's preferences, as it is more likely that the server will be configured correctly.",
       "label": "SSL honor cipher order"
     },
     "server_ssl_opts_schema_ocsp_issuer_pem": {
@@ -8752,7 +8839,7 @@
       "desc": "Per group dispatch strategy for shared subscription.\nThis config is a map from shared subscription group name to the strategy\nname. The group name should be of format `[A-Za-z0-9]`. i.e. no\nspecial characters are allowed."
     },
     "shared_subscription_strategy_enum": {
-      "desc": "Dispatch strategy for shared subscription.\n- `random`: dispatch the message to a random selected subscriber\n- `round_robin`: select the subscribers in a round-robin manner\n- `round_robin_per_group`: select the subscribers in round-robin fashion within each shared subscriber group\n- `sticky`: always use the last selected subscriber to dispatch,\nuntil the subscriber disconnects.\n- `hash`: select the subscribers by the hash of `clientIds`\n- `local`: send to a random local subscriber. If local\nsubscriber was not found, send to a random subscriber cluster-wide"
+      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n - `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "stats_enable": {
       "desc": "Enable/disable statistic data collection.",
@@ -8847,7 +8934,7 @@
       "label": "Enable Busy Port monitoring."
     },
     "sysmon_vm_large_heap": {
-      "desc": "When an Erlang process consumed a large amount of memory for its heap space,\nthe system will write a warning level <code>large_heap</code> log, and an MQTT message is published to\nthe system topic <code>$SYS/sysmon/large_heap</code>.",
+      "desc": "When the heap memory occupied by a process exceeds the size specified by `large_heap`, the system will write a warning level `large_heap` log, and an MQTT message will be published to the system topic `$SYS/sysmon/large_heap`.",
       "label": "Enable Large Heap monitoring."
     },
     "sysmon_vm_long_gc": {
@@ -8859,7 +8946,7 @@
       "label": "Enable Long Schedule monitoring."
     },
     "sysmon_vm_process_check_interval": {
-      "desc": "The time interval for the periodic process limit check.",
+      "desc": "The time interval for the periodic process count limit check, used together with `process_high_watermark` and `process_low_watermark`.",
       "label": "Process limit check interval"
     },
     "sysmon_vm_process_high_watermark": {
@@ -9076,19 +9163,19 @@
   },
   "emqx_slow_subs_schema": {
     "enable": {
-      "desc": "Enable this feature"
+      "desc": "Enable Slow Subscriptions"
     },
     "expire_interval": {
-      "desc": "The eviction time of the record, which in the statistics record table"
+      "desc": "The expiration time of the slow subscription record, if the record is not updated within the expiration time, then the record will be deleted."
     },
     "stats_type": {
-      "desc": "The method to calculate the latency"
+      "desc": "Message latency calculation method:\n\n- `whole`: The time from when the message arrives at the EMQX (the EMQX gets the message from the receive-buffer) until the message completes delivery.\n- `internal`: The time from when the message arrives at the EMQX (the EMQX gets the message from the receive-buffer) to when the message begins to be delivered (the EMQX attempts to write the message to the send-buffer).\n- `response`: The time from the start of message delivery to the completion.\n\nNote: The completion delivery time refers to the time when QoS 1 and 2 messages complete the MQTT message response process, i.e., the time when QoS 1 message receives the PUBACK packet and QoS 2 message receives the PUBCOMP packet.\nSince there is no response packet for QoS 0 message, the completion delivery time of the QoS 0 message will be replaced by the time when the message starts to be delivered. Therefore, when using the `response` method to calculate the latency, the latency of a QoS 0 message will always be equal to 0."
     },
     "threshold": {
-      "desc": "The latency threshold for statistics"
+      "desc": "The Client ID and topic of the consumer whose message latency is greater than this threshold will be recorded in the slow subscription list."
     },
     "top_k_num": {
-      "desc": "The maximum number of records in the slow subscription statistics record table"
+      "desc": "The maximum number of slow-subscription records, up to a maximum of 1000."
     }
   },
   "emqx_stomp_schema": {
@@ -9166,7 +9253,7 @@
       "desc": "Set to `false` disable telemetry data report"
     },
     "telemetry_root_doc": {
-      "desc": "Configure telemetry data report from this EMQX node to EMQ's telemetry data collection server.\nSee https://www.emqx.io/docs/en/v5.0/telemetry/telemetry.html for more details."
+      "desc": "Whether to enable telemetry to allow EMQX to collect relevant usage information and share it with EMQ for the purpose of enhancing your product experience, and in no case will EMQX collect personal information about you, such as your MAC address, IP address, content of messages sent.\n\nSee https://docs.emqx.com/en/emqx/latest/telemetry/telemetry.html for more details."
     }
   },
   "emqx_topic_metrics_api": {
