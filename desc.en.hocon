@@ -4838,7 +4838,7 @@
   },
   "emqx_dashboard_sso_oidc_api": {
     "code_callback": {
-      "desc": "The callback path for the OIDC authorization server.."
+      "desc": "The callback path for the OIDC authorization server."
     }
   },
   "emqx_dashboard_sso_saml": {
