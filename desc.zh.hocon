@@ -6951,11 +6951,11 @@
       "desc": "如果这是超级用户，则为 true。"
     },
     "event_validation": {
-      "desc": "验证",
+      "desc": "消息验证",
       "label": "验证"
     },
     "event_transformation": {
-      "desc": "转换。",
+      "desc": "消息转换。",
       "label": "转换"
     }
   },
