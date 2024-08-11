@@ -1103,7 +1103,7 @@
       "label": "Azure Event Hubs Producer"
     },
     "kafka_topic": {
-      "desc": "Event Hubs name",
+      "desc": "Event Hubs name.  Supports templates (e.g.: `t-${payload.t}`).",
       "label": "Event Hubs Name"
     },
     "max_batch_bytes": {
@@ -1405,8 +1405,8 @@
       "label": "Confluent Producer"
     },
     "kafka_topic": {
-      "desc": "Event Hub name",
-      "label": "Event Hub Name"
+      "desc": "Kafka topic name.  Supports templates (e.g.: `t-${payload.t}`).",
+      "label": "Kafka Topic Name"
     },
     "max_batch_bytes": {
       "desc": "Maximum bytes to collect in a Confluent message batch. Most of the Kafka brokers default to a limit of 1 MB batch size. EMQX's default value is less than 1 MB in order to compensate Kafka message encoding overheads (especially when each individual message is very small). When a single message is over the limit, it is still sent (as a single element batch).",
@@ -2465,7 +2465,7 @@
       "label": "Producer Action"
     },
     "kafka_topic": {
-      "desc": "Kafka topic name",
+      "desc": "Kafka topic name.  Supports templates (e.g.: `t-${payload.t}`).",
       "label": "Kafka Topic Name"
     },
     "max_batch_bytes": {
