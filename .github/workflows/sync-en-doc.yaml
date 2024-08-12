@@ -1,0 +1,62 @@
+name: Sync en doc
+
+concurrency:
+  group: sync-en-doc-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  repository_dispatch:
+    types:
+      - release
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+      repository:
+        type: string
+        required: true
+      run_id:
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  sync-en-doc:
+    runs-on: ubuntu-latest
+    env:
+      EMQX_VERSION: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.version || github.event.inputs.version }}
+      REPOSITORY: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.repository || github.event.inputs.repository }}
+      RUN_ID: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.run-id || github.event.inputs.run_id }}
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: "emqx-enterprise-schema-dump"
+          repository: ${{ env.REPOSITORY }}
+          run-id: ${{ env.RUN_ID }}
+
+      - name: Create PR to update desc.en.hocon
+        run: |
+          set -euxo pipefail
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          BASE_BRANCH="$(echo v$(echo $EMQX_VERSION | awk -F. '{print $1$2}'))"
+          NEW_BRANCH="sync-${EMQX_VERSION}"
+          git checkout -b ${NEW_BRANCH} --track origin/${BASE_BRANCH}
+          cp _build/docgen/emqx-enterprise/desc.en.hocon ./
+          git add desc.en.hocon
+          git commit -m "chore: update desc.en.hocon for ${EMQX_VERSION}"
+          git push origin ${NEW_BRANCH}:${NEW_BRANCH}
+          VERSION=$(echo "${EMQX_VERSION}" | cut -d '-' -f 1)
+          for pr in $(gh pr list --state open --base ${BASE_BRANCH} --label sync-en-doc --search "sync en doc for ${VERSION} in:title" --repo ${{ github.repository }} --json number --jq '.[] | .number'); do
+            gh pr close $pr --repo ${{ github.repository }} --delete-branch || true
+          done
+          gh pr create --title "sync en doc for ${VERSION}" --base ${BASE_BRANCH} --head ${NEW_BRANCH} --body '' --label sync-en-doc --repo ${{ github.repository }}
