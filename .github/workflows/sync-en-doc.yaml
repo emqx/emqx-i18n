@@ -42,6 +42,7 @@ jobs:
           name: "emqx-enterprise-schema-dump"
           repository: ${{ env.REPOSITORY }}
           run-id: ${{ env.RUN_ID }}
+          github-token: ${{ secrets.PAT_RO_WORKFLOWS }}
 
       - name: Create PR to update desc.en.hocon
         run: |
