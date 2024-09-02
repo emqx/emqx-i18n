@@ -1626,11 +1626,11 @@
       "label": "Password"
     },
     "pipelining": {
-      "desc": "A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request.",
+      "desc": "A positive integer to specifiy whether to send HTTP requests continuously. When set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request.",
       "label": "HTTP Pipelining"
     },
     "pool_size": {
-      "desc": "The pool size.",
+      "desc": "Specifies the number of concurrent connections that can be maintained in the connection pool when interfacing with the Couchbase service.",
       "label": "Pool Size"
     },
     "server": {
@@ -4091,7 +4091,7 @@
       "label": "Max Inflight Message"
     },
     "password": {
-      "desc": "Optional MQTT username for connecting to the remote EMQX cluster.",
+      "desc": "Optional password for connecting to the remote EMQX cluster.",
       "label": "Password"
     },
     "pool_size": {
@@ -5107,7 +5107,7 @@
   },
   "emqx_dashboard_sso_oidc_api": {
     "code_callback": {
-      "desc": "The callback path for the OIDC authorization server.."
+      "desc": "The callback path for the OIDC authorization server."
     }
   },
   "emqx_dashboard_sso_saml": {

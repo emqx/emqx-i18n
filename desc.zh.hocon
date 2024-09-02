@@ -238,6 +238,10 @@
     "disconnect_after_expire": {
       "desc": "在 token 过期后断开客户端连接。",
       "label": "过期后断开链接"
+    },
+    "jwks_headers": {
+      "desc": "JWKS 请求中需要发送的 HTTP 请求头列表。",
+      "label": "HTTP 请求头"
     }
   },
   "emqx_authn_ldap_bind_schema": {
@@ -288,6 +292,13 @@
     "user_id_type": {
       "desc": "指定用于客户端身份 ID 认证的字段。",
       "label": "账号类型"
+    },
+    "bootstrap_file": {
+      "desc": "引导文件将用户导入内置数据库。\n对于数据库中已存在的用户 ID，不会重复导入。\n文件内容格式由 `bootstrap_type` 决定。",
+      "label": "引导文件路径"
+    },
+    "bootstrap_type": {
+      "desc": "指定引导文件的内容类型。\n\n- **`plain`**:\n  - 所需数据字段： `user_id`, `password`, `is_superuser`\n  - `user_id`: 可以是客户端 ID 或用户名，具体取决于内置数据库认证的 `user_id_type` 配置。\n  - `password`: 用户的明文密码。\n  - `is_superuser`: 布尔值，用户是否为管理员。\n\n- **`hash`**:\n  - 所需数据字段 `user_id`,`password_hash`,`salt`,`is_superuser`\n  - 定义与 `plain` 类型相似，为提高安全性增加了 `password_hash` 和 `salt`。\n\n内容可以是 CSV 或 JSON 格式。\n\n这是一个 CSV 示例：`user_id,password_hash,salt,is_superuser\\nmy_user,b6c743545a7817ae8c8f624371d5f5f0373234bb0ff36b8ffbf19bce0e06ab75,de1024f462fb83910fd13151bd4bd235,true`\n\nJSON 内容应解码为对象数组，例如：`[{\"user_id\": \"my_user\",\"password\": \"s3cr3tp@ssw0rd\",\"is_superuser\": true}]`.\n\n`password_hash` 的哈希字符串取决于内容数据库认证机制中 `password_hash_algorithm` 的配置。例如，如果配置为 `password_hash_algorithm {name = sha256, salt_position = suffix}`，则在哈希之前将 salt 添加到密码中。等效的 Python 表达式为： `hashlib.sha256(password + salt).hexdigest()`."
     }
   },
   "emqx_authn_mongodb_schema": {
@@ -694,6 +705,9 @@
     "builtin_db": {
       "desc": "使用内置数据库 (mnesia) 进行授权。",
       "label": "内置数据库"
+    },
+    "max_rules": {
+      "desc": "每个客户端/用户的最大规则数。请注意，随着规则数量的增加，性能可能会下降。"
     }
   },
   "emqx_authz_mongodb_schema": {
@@ -836,6 +850,10 @@
     "type": {
       "desc": "数据后端类型",
       "label": "类型"
+    },
+    "ignore": {
+      "desc": "鉴权查询被忽略的次数。 每当授权源尝试授权请求但不适用，或遇到错误且结果无法确定时，此计数器会增加。",
+      "label": "忽略"
     }
   },
   "emqx_auto_subscribe_api": {
@@ -1144,6 +1162,10 @@
     "partitions_limit": {
       "desc": "限制为给定主题产生数据的分区数量。\n特殊值 all_partitions 用于利用主题的所有分区。\n设置的值大于分区总数时无效。",
       "label": "最大分区数"
+    },
+    "producer_health_check_topic": {
+      "desc": "专用于更精确的连接器健康检查的主题名称。",
+      "label": "连接器健康检查主题"
     }
   },
   "emqx_bridge_cassandra": {
@@ -1855,6 +1877,10 @@
     "partitions_limit": {
       "desc": "限制为给定主题生产数据的分区数量。\n特殊值 all_partitions 用于利用该主题的所有分区。\n将此设置为大于分区总数的值将不会产生任何效果。",
       "label": "最大分区数"
+    },
+    "producer_health_check_topic": {
+      "desc": "专用于更精确的连接器健康检查的主题名称。",
+      "label": "连接器健康检查主题"
     }
   },
   "emqx_bridge_mqtt_schema": {
@@ -3206,6 +3232,18 @@
     "log_throttling_time_window": {
       "desc": "此配置设置控制限流消息的日志记录行为，包括但不限于像 'authorization_permission_denied' 这样的消息。\n在每个定义的时间窗口内，只有一个限流消息的实例会被记录，以防止日志泛滥。\n在每个时间窗口结束时，将生成一个摘要日志，详细说明该期间内任何限流消息的发生。\n重要的是，此设置的最短有效时间窗口为 1 秒（1s）。\n如果指定的值低于 1s，则会自动调整为 1s。",
       "label": "日志限流时间窗口"
+    },
+    "cluster_quic_lb_mode": {
+      "desc": "QUIC stack 负载均衡模式\n- 0: 禁用 (默认)\n- 1: server_ip\n- 2: server_id_fixed",
+      "label": " QUIC stack 负载均衡模式 "
+    },
+    "rpc_client_num": {
+      "desc": "设置该节点与每个远程节点之间发起的最大 RPC 通信通道数量。",
+      "label": "RPC TCP 客户端数量"
+    },
+    "rpc_server_port": {
+      "desc": "RPC 本地服务使用的监听端口。<br/>\n请注意，此配置仅在 rpc.port_discovery 设置为手动时生效。",
+      "label": "RPC 服务器端口"
     }
   },
   "emqx_connector_api": {
@@ -5034,6 +5072,15 @@
     "fields_ws_opts_supported_subprotocols": {
       "desc": "逗号分隔的支持的子协议列表。",
       "label": "支持的子协议"
+    },
+    "udp_health_check": {
+      "desc": "一些云平台使用“请求-回复”机制来检查 UDP 端口是否健康，这里可以配置这对内容。"
+    },
+    "udp_health_check_reply": {
+      "desc": "回复的内容。"
+    },
+    "udp_health_check_request": {
+      "desc": "请求的内容。"
     }
   },
   "emqx_gcp_device_api": {
@@ -6929,6 +6976,10 @@
     "event_validation": {
       "desc": "验证",
       "label": "验证"
+    },
+    "event_transformation": {
+      "desc": "消息转换",
+      "label": "消息转换"
     }
   },
   "emqx_rule_engine_api": {
@@ -7001,6 +7052,12 @@
     "api11": {
       "desc": "依据指定的消息内容和运行环境执行相应的规则。",
       "label": "执行规则"
+    },
+    "api1_qs_action": {
+      "desc": "筛选包含任意给定动作 ID 的规则。当与 source ID 筛选一起使用时，规则必须包含匹配某些条件的 source 和动作。"
+    },
+    "api1_qs_source": {
+      "desc": "筛选包含任意给定 source ID 的规则。当与动作 ID 筛选一起使用时，规则必须包含匹配某些条件的 source 和动作。"
     }
   },
   "emqx_rule_engine_schema": {
@@ -7107,6 +7164,10 @@
     "user_provided_function_function": {
       "desc": "用户提供的函数。 格式应为：'{module}:{function}'。\n其中 {module} 是 Erlang 回调模块， {function} 是 Erlang 函数。\n要编写自己的函数，请检查源文件：<code>apps/emqx_rule_engine/src/emqx_rule_actions.erl</code> 中的示例函数 <code>console</code> 和<code>republish</code> 。",
       "label": "用户提供的函数"
+    },
+    "republish_args_direct_dispatch": {
+      "desc": "启用直接分发到订阅者，而无需启动新的消息发布事件。\n当设置为 `true` 时，可以防止同一动作递归处理消息，适用于输出消息不需要进一步处理的情况。\n\n然而，启用此功能有几个限制：\n\n- 此动作的输出消息不会被保留。\n- 它不会触发基于此动作的输出主题运行的其他规则。\n- 它不会激活选择 `$events/message_publish` 的规则。\n- 它不会触发使用 `'message.publish'` 钩子的插件。\n- 不会收集此动作输出消息的主题指标。\n- 不会应用消息 schema 验证（EMQX Enterprise 的功能）。\n- 不会应用消息转换过程（EMQX Enterprise 的功能）。",
+      "label": "Direct Dispatch"
     }
   },
   "emqx_s3_schema": {
@@ -8123,6 +8184,13 @@
     "client_attrs_init_set_as_attr": {
       "desc": "从客户端数据中提取的客户端属性的名称。\n提取的属性将以此名称存储在 `client_attrs` 属性中。",
       "label": "命名提取的属性"
+    },
+    "banned_bootstrap_file": {
+      "desc": "引导文件是一个 CSV 文件，用于在初始化单节点或集群时批量加载被禁止的数据，换句话说，只有在数据库中没有数据时才执行导入操作。\n\n此文件的分隔符是 `,`。\n\n此文件的第一行必须是标题行。所有有效的标题如下所示：\n- as :: 必填\n- who :: 必填\n- by  :: 可选\n- reason :: 可选\n- at :: 可选\n- until :: 可选\n\n有关每个字段的详细信息，请参阅文档。\n\n此文件其余行中的每一行必须包含与标题行相同数量的列，\n如果列可以省略，则其值将为 `undefined`。"
+    },
+    "mqtt_keepalive_check_interval": {
+      "desc": "检查传入 MQTT 数据包的频率，决定服务器检查新 MQTT 数据包的频率。\n如果在没有客户端发送任何数据包的情况下经过了一定时间，这段时间将累加起来。\n一旦累积时间超过 `keepalive-interval * keepalive-multiplier`，连接将被终止。\n默认设置为 30 秒，最小值为 1 秒，最大值为 `keepalive-interval / 2`。",
+      "label": "Keep Alive 检查间隔"
     }
   },
   "emqx_slow_subs_api": {
@@ -8646,6 +8714,10 @@
     "partitions_limit": {
       "desc": "限制为给定主题产生数据的分区数量。\n特殊值 all_partitions 用于利用主题的所有分区。\n设置的值如果大于分区总数则无效。",
       "label": "最大分区数"
+    },
+    "producer_health_check_topic": {
+      "desc": "专用于更精确的连接器健康检查的主题名称。",
+      "label": "连接器健康检查主题"
     }
   },
   "emqx_bridge_gcp_pubsub_producer_schema": {
@@ -9789,6 +9861,10 @@
     "source_parameters": {
       "desc": "针对 Source 的详细配置。",
       "label": "Source 详细配置"
+    },
+    "group_id": {
+      "desc": "用于此 Source 的消费者组标识符。如果省略，将自动生成一个基于 Source 名称的标识符。",
+      "label": "自定义消费者组 ID"
     }
   },
   "emqx_bridge_pulsar_pubsub_schema": {
@@ -9999,6 +10075,38 @@
     "builtin_n_sites": {
       "desc": "负责存储分片的存储站点的数量。在此配置中，‘站点’特指启用了消息持久性功能的 EMQX 节点。此设置仅在持久存储数据库初始化期间有效。在此阶段，必须确保足够的站点在线，以保证分片能够正确分配；如果不满足此条件，消息存储将无法使用。初始化完成后，部分站点可能会离线，离线站点的数量及复制因子 (replication factor) 将影响系统的可用性。",
       "label": "初始站点数量"
+    },
+    "backend_type": {
+      "desc": "后端类型。",
+      "label": "后端类型"
+    },
+    "builtin_local": {
+      "desc": "使用嵌入式 RocksDB 键值存储的内置存储后端。\n此后端不支持集群。",
+      "label": "内置后端"
+    },
+    "builtin_raft": {
+      "desc": "使用嵌入式 RocksDB 键值存储的内置存储后端。",
+      "label": "具有 Raft 复制的内置后端"
+    },
+    "builtin_raft_n_sites": {
+      "desc": "需要共享存储分片集责任的存储站点数量。\n在此上下文中，站点是启用了消息持久性的 EMQX 节点。\n请注意，这仅在持久存储数据库初始化期间生效。\n在此阶段，至少需要上线这么多站点以在它们之间分配分片，否则消息存储将不可用。\n初始化完成后，站点可能会下线，这将根据下线站点的数量和复制因子影响可用性。",
+      "label": "初始站点数量"
+    },
+    "builtin_raft_replication_factor": {
+      "desc": "每个分片应有的相同副本数量。\n增加此数字可以提高持久性和可用性，但会消耗更多资源。\n复制工作需要健康的副本仲裁，因此一般情况下选择奇数个副本是一个好选择。\n请注意，这仅在持久存储数据库初始化期间生效。\n在数据库已创建后更改此配置参数不会生效。",
+      "label": "复制因子"
+    },
+    "builtin_write_buffer": {
+      "desc": "与从本地节点发送到分片 leader 的消息缓冲相关的配置。\n\nEMQX 在将 PUBLISH 消息提交到持久存储之前，会将来自本地客户端的 PUBLISH 消息累积在写缓冲区中。\n这有助于隐藏 EMQX 节点之间的网络延迟并提高写入吞吐量。",
+      "label": "本地写缓冲区"
+    },
+    "builtin_write_buffer_flush_interval": {
+      "desc": "缓冲消息的最大停留时间。\n本地写缓冲区将 _至少_ 按照 `flush_interval` 的频率刷新。\n\n更大的 `flush_interval` 值可能会带来更高的吞吐量和整体性能，但可能会增加端到端延迟。",
+      "label": "刷新间隔"
+    },
+    "builtin_write_buffer_max_items": {
+      "desc": "此配置参数定义本地写缓冲区中存储的最大消息数量。",
+      "label": "最大项目数"
     }
   },
   "emqx_bridge_s3_upload": {
@@ -10200,6 +10308,368 @@
     },
     "update_transformation": {
       "desc": "更新一个转换"
+    }
+  },
+  "emqx_authn_kerberos_schema": {
+    "principal": {
+      "desc": "服务器的 Kerberos 主体。\n例如： <code>mqtt/emqx-cluster-1.example.com@MY_REALM.EXAMPLE.COM</code>。\n注意：所使用的领域需要在 EMQX 节点的 /etc/krb5.conf 文件中配置。",
+      "label": "Kerberos 主体"
+    }
+  },
+  "emqx_bridge_azure_blob_storage_action_schema": {
+    "aggreg_parameters": {
+      "desc": "配置了聚合上传模式的动作参数集。",
+      "label": "Azure Blob Storage 聚合上传模式动作参数"
+    },
+    "aggregated_blob_template": {
+      "desc": "用于聚合上传的 Azure Blob Storage blob 名称模板。<br/>\n  模板可以包含以下变量的占位符：\n  <ul>\n  <li><code>${action}</code>: 动作名称（必需）。</li>\n  <li><code>${node}</code>: 执行上传的 EMQX 节点名称（必需）。</li>\n  <li><code>${datetime.{format}}</code>: 聚合上传开始的日期和时间，格式根据 <code>{format}</code> 字符串制定（必需）:\n      <ul>\n      <li><code>${datetime.rfc3339utc}</code>： RFC3339 格式的 UTC 日期和时间，</li>\n      <li><code>${datetime.rfc3339}</code>： RFC3339 格式的本地时区日期和时间，</li>\n      <li><code>${datetime.unix}</code>： Unix 时间戳。</li>\n      </ul>\n  </li>\n  <li><code>${datetime_until.{format}}</code>：聚合上传结束的日期和时间，包含相同的格式选项。</li>\n  <li><code>${sequence}</code>：同一时间间隔内聚合上传的序列号（必需）。</li>\n  </ul>\n  所有其他占位符都被视为无效。注意，如果模板中缺少标记为必需的占位符，它们将作为路径后缀添加到 Azure Blob Storage blob 名称中。",
+      "label": "Azure Blob Storage blob 名称模版"
+    },
+    "aggregated_container_name": {
+      "desc": "Azure Blob Storage 容器名称。不支持使用模版。",
+      "label": "Azure Blob Storage 容器名称"
+    },
+    "aggregated_mode": {
+      "desc": "启用基于时间的事件聚合，并将其作为单个对象上传到 Azure Blob Storage 服务。",
+      "label": "Azure Blob Storage 聚合上传"
+    },
+    "aggregation": {
+      "desc": "控制聚合上传过程的参数集。",
+      "label": "Aggregation 参数"
+    },
+    "aggregation_interval": {
+      "desc": "在上传之前，将事件聚合为单个对象的时间长度。",
+      "label": "时间间隔"
+    },
+    "aggregation_max_records": {
+      "desc": "每个聚合对象允许的记录（事件）数量。每次聚合上传包含的事件不会超过该数量，但可以少于该数量。<br/>\n  如果事件速率足够高，则在同一时间间隔内可能会有多个聚合上传。这些上传将具有不同但连续的序列号，它们将成为 Azure Blob Storage blob 名称的一部分。",
+      "label": "最大记录数"
+    },
+    "azure_blob_storage": {
+      "desc": "将传入事件上传到 Azure Blob Storage 服务的动作。",
+      "label": "上传到 Azure Blob Storage"
+    },
+    "direct_blob_template": {
+      "desc": "Azure Blob Storage blob 名称。",
+      "label": "Blob 名称"
+    },
+    "direct_container_template": {
+      "desc": "Azure Blob Storage 容器名称。",
+      "label": "容器名称"
+    },
+    "direct_content_template": {
+      "desc": "要上传的 Azure Blob Storage blob 的内容。支持使用模板。",
+      "label": "Azure Blob Storage Blob 内容"
+    },
+    "direct_mode": {
+      "desc": "启用将事件作为单独对象上传到 Azure Blob Storage 服务。",
+      "label": "Azure Blob Storage 直接上传"
+    },
+    "direct_parameters": {
+      "desc": "直接上传模式的动作参数集。动作支持 Azure Blob Storage 容器名称、blob 名称和 blob 内容的模板。",
+      "label": "Azure Blob Storage 直接上传模式动作参数"
+    },
+    "parameters": {
+      "desc": "一系列动作单数。",
+      "label": "Azure Blob Storage 动作参数"
+    }
+  },
+  "emqx_bridge_azure_blob_storage_connector_schema": {
+    "account_key": {
+      "desc": "Azure Blob Storage 服务的访问密钥。",
+      "label": "访问密钥"
+    },
+    "account_name": {
+      "desc": "Azure Blob Storage 服务的账户名称。",
+      "label": "账户名称"
+    },
+    "config_connector": {
+      "desc": "用来连接 Azure Blob Storage 服务的连接器配置。",
+      "label": "Azure Blob Storage 连接器配置"
+    }
+  },
+  "emqx_bridge_couchbase_action_schema": {
+    "couchbase": {
+      "desc": "将传入事件上传到 Couchbase 服务的动作。",
+      "label": "上传到 Couchbase"
+    },
+    "max_retries": {
+      "desc": "发送请求时发生错误的最大重试次数。",
+      "label": "最大重试次数"
+    },
+    "parameters": {
+      "desc": "动作的参数集。",
+      "label": "Couchbase 动作参数"
+    },
+    "sql": {
+      "desc": "SQL 模版。",
+      "label": "SQL 模版"
+    }
+  },
+  "emqx_bridge_couchbase_connector_schema": {
+    "config_connector": {
+      "desc": "用于连接 Couchbase 服务的连接器配置。",
+      "label": "Couchbase 连接器配置"
+    },
+    "connect_timeout": {
+      "desc": "连接到 HTTP 服务器时的超时时间。",
+      "label": "连接超时"
+    },
+    "password": {
+      "desc": "访问 Couchbase 服务的密码。",
+      "label": "密码"
+    },
+    "pipelining": {
+      "desc": "一个正整数，表示是否连续发送 HTTP 请求。当设置为 1 时，表示每次发送 HTTP 请求后，需要等待服务器返回再继续发送下一个请求。",
+      "label": "HTTP 流水线"
+    },
+    "pool_size": {
+      "desc": "指定与 Couchbase 服务对接时连接池中可以维持的并发连接数。",
+      "label": "连接池大小"
+    },
+    "server": {
+      "desc": "要连接的 IPv4 或 IPv6 地址或主机名。<br/>\n  主机条目的格式为：`Host[:Port]`。`Host[:Port]`.<br/>\n  如果未指定 `[:Port]`，则使用 Couchbase 默认的查询服务端口 8093。",
+      "label": "服务器地址"
+    },
+    "username": {
+      "desc": "访问 Couchbase 服务的用户名。",
+      "label": "用户名"
+    }
+  },
+  "emqx_bridge_datalayers": {
+    "action_parameters": {
+      "desc": "特定于此动作类型的额外参数。",
+      "label": "动作参数"
+    },
+    "connector": {
+      "desc": "Datalayers 连接器配置",
+      "label": "Datalayers 连接器"
+    },
+    "datalayers_action": {
+      "desc": "用于与 Datalayers 连接器交互的动作。",
+      "label": "Datalayers 动作"
+    },
+    "desc_config": {
+      "desc": "Datalayers 数据集成的配置",
+      "label": "Datalayers 数据集成配置"
+    },
+    "desc_name": {
+      "desc": "数据集成的名称。",
+      "label": "数据集成名称"
+    },
+    "desc_type": {
+      "desc": "数据集成的类型。",
+      "label": "数据集成类型"
+    },
+    "write_syntax": {
+      "desc": "用于写入数据点的 InfluxDB 行协议配置。这是一种基于文本的格式，提供数据点的测量、标签集、字段集和时间戳，并支持占位符。\n详见 [InfluxDB 1.8 行协议](https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_tutorial/) <br/>\n简短说明：<br/>\n```\n<measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]\n```\n请注意，整数值的占位符必须带有后缀 `i`。 例如 `${payload.int_value}i`。",
+      "label": "写入语法"
+    }
+  },
+  "emqx_bridge_datalayers_connector": {
+    "database": {
+      "desc": "Datalayers 数据库",
+      "label": "数据库"
+    },
+    "datalayers_api": {
+      "desc": "Datalayers 协议。",
+      "label": "HTTP API 协议"
+    },
+    "datalayers_parameters": {
+      "desc": "特定于此 Datalayers 连接器类型的参数集。",
+      "label": "Datalayers 特定参数"
+    },
+    "password": {
+      "desc": "Datalayers 密码。",
+      "label": "密码"
+    },
+    "precision": {
+      "desc": "Datalayers 时间精度。",
+      "label": "时间精度"
+    },
+    "server": {
+      "desc": "要连接的 IPv4 或 IPv6 地址或主机名。<br/>\n主机条目的格式为：`Host[:Port]`.<br/>\n如果未指定 `[:Port]`，则使用 Datalayers 的默认端口 8361。",
+      "label": "服务器地址"
+    },
+    "username": {
+      "desc": "Datalayers 用户名。",
+      "label": "用户名"
+    }
+  },
+  "emqx_cluster_link_schema": {
+    "clientid": {
+      "desc": "可选的基础 MQTT 客户端 ID，用于连接到远程 EMQX 集群。如果省略，将使用本地的 `cluster.name`。EMQX 在互相连接的集群之间维持多个连接，因此基础客户端 ID 会自动添加不同的后缀。",
+      "label": "基础客户端 ID"
+    },
+    "enable": {
+      "desc": "启用或停用集群连接。默认情况下启用连接，停用允许停止连接而无需删除其配置。连接必须在两个集群上启用才能正常工作。停用连接也应在两个集群上进行，以释放所有相关资源。",
+      "label": "启用"
+    },
+    "link": {
+      "desc": "集群连接配置",
+      "label": "集群连接"
+    },
+    "link_name": {
+      "desc": "连接（远程）集群名称。必须与远程集群中配置的 `cluster.name` 值完全相同。不得与本地的 cluster.name 相同。所有配置的集群连接名称必须唯一。",
+      "label": "连接的集群名称"
+    },
+    "links": {
+      "desc": "已连接的 EMQX 集群列表。",
+      "label": "连接的集群"
+    },
+    "max_inflight": {
+      "desc": "MQTT 协议的最大待处理（已发送但未确认）消息数。",
+      "label": "最大待处理消息"
+    },
+    "password": {
+      "desc": "用于连接到远程 EMQX 集群的密码（可选）。",
+      "label": "密码"
+    },
+    "pool_size": {
+      "desc": "将向连接的 EMQX 消息服务器发布消息的 MQTT 客户端池的大小。",
+      "label": "连接池大小"
+    },
+    "server": {
+      "desc": "远程 EMQX 消息服务器的 MQTT 主机和端口。",
+      "label": "MQTT 服务器"
+    },
+    "ssl": {
+      "desc": "用于连接到远程 EMQX 集群的 SSL 配置。",
+      "label": "SSL 选项"
+    },
+    "topics": {
+      "desc": "将由连接的远程 EMQX 消息服务器转发到本地消息服务器的 MQTT 主题。只有当本地 EMQX 有匹配的订阅者时，消息才会被转发。\n支持通配符。将一侧的主题列表设置为空可以建立单向连接：具有空主题的一侧不会接收远程消息，但可以根据连接另一侧配置的主题将相关消息转发给其连接的对端。",
+      "label": "主题"
+    },
+    "username": {
+      "desc": "用于连接到远程 EMQX 集群的 MQTT 用户名（可选）。",
+      "label": "用户名"
+    }
+  },
+  "emqx_connector_aggregator_schema": {
+    "container": {
+      "desc": "设置包含聚合事件的上传文件格式的配置。",
+      "label": "聚合事件容器"
+    },
+    "container_csv": {
+      "desc": "记录（事件）将被聚合并作为 CSV 文件上传。",
+      "label": "CSV 容器"
+    },
+    "container_csv_column_order": {
+      "desc": "事件字段将在生成的 CSV 文件中按此顺序排列为列。<br/>\n无论此设置如何，生成的 CSV 都将包含所有聚合事件的字段，但所有未在此明确提及的列将在此处列出的列之后按字典顺序排列。",
+      "label": "CSV 列顺序"
+    }
+  },
+  "emqx_dashboard_sso_oidc": {
+    "client_file_jwks": {
+      "desc": "从文件中设置 JWKS。"
+    },
+    "client_file_jwks_file": {
+      "desc": "JWKS 的内容。"
+    },
+    "client_file_jwks_type": {
+      "desc": "JWKS 的来源类型。"
+    },
+    "client_jwks": {
+      "desc": "在此处设置 JWK 或 JWKS 以启用 `private_key_jwt` 授权或 `DPoP` 扩展。"
+    },
+    "clientid": {
+      "desc": "此后端的 clientId。"
+    },
+    "dashboard_addr": {
+      "desc": "EMQX Dashboard 的地址。"
+    },
+    "fallback_methods": {
+      "desc": "一些身份提供商在提供商配置中没有提供所有方法项，将此值设置为这些项的回退。"
+    },
+    "issuer": {
+      "desc": "OIDC 发行者的 URL。"
+    },
+    "name_var": {
+      "desc": "将 OIDC 用户信息映射到 Dashboard 名称的模板，默认值是 `${sub}`。"
+    },
+    "preferred_auth_methods": {
+      "desc": "设置有效的身份验证方法及其优先级。"
+    },
+    "provider": {
+      "desc": "支持 OIDC 协议的身份服务提供商。"
+    },
+    "require_pkce": {
+      "desc": "获取 token 时是否需要 PKCE。"
+    },
+    "scopes": {
+      "desc": "范围，默认值是 `[\"openid\"]`."
+    },
+    "secret": {
+      "desc": "客户端密钥。"
+    },
+    "session_expiry": {
+      "desc": "OIDC `state` 的有效时间范围，默认为 `30s`，如果授权服务器返回的代码响应超过此时间范围，将视为无效。"
+    }
+  },
+  "emqx_dashboard_sso_oidc_api": {
+    "code_callback": {
+      "desc": "OIDC 授权服务器的回调路径。"
+    }
+  },
+  "emqx_ds_shared_sub_api": {
+    "durable_queue_delete": {
+      "desc": "删除一个持久队列。",
+      "label": "删除持久队列"
+    },
+    "durable_queue_get": {
+      "desc": "获取持久队列的信息。",
+      "label": "持久队列"
+    },
+    "durable_queues_get": {
+      "desc": "获取持久队列列表。",
+      "label": "持久队列列表"
+    },
+    "durable_queues_put": {
+      "desc": "创建一个持久队列。",
+      "label": "创建持久队列"
+    },
+    "param_queue_id": {
+      "desc": "持久队列的 ID。",
+      "label": "队列 ID"
+    }
+  },
+  "emqx_ds_shared_sub_schema": {
+    "enable": {
+      "desc": "启用共享订阅功能。",
+      "label": "启用共享订阅"
+    },
+    "leader_drop_timeout_interval_ms": {
+      "desc": "丢弃无响应会话的时间间隔（毫秒）。",
+      "label": "Leader 丢弃超时时间间隔"
+    },
+    "leader_renew_lease_interval_ms": {
+      "desc": "Leader 刷新租约的时间间隔（毫秒）。",
+      "label": "Leader 租约刷新时间间隔"
+    },
+    "leader_renew_streams_interval_ms": {
+      "desc": "Leader 刷新流的时间间隔（毫秒）。",
+      "label": "Leader 刷新数据流时间间隔"
+    },
+    "leader_session_not_replaying_timeout_ms": {
+      "desc": "Leader 等待会话离开中间状态的超时时间（毫秒）。",
+      "label": "Leader 会话非重放超时时间"
+    },
+    "leader_session_update_timeout_ms": {
+      "desc": "Leader 等待会话更新流状态的超时时间（毫秒）。\n如果会话在此时间内未更新流状态，Leader 将丢弃该会话。",
+      "label": "Leader 会话更新超时时间"
+    },
+    "session_find_leader_timeout_ms": {
+      "desc": "会话查找 Leader 的超时时间（毫秒）。\n如果会话在此时间内无法找到 Leader，会话将重试。",
+      "label": "会话查找 Leader 超时时间"
+    },
+    "session_min_update_stream_state_interval_ms": {
+      "desc": "会话更新流状态的最小时间间隔（毫秒）。\n如果会话在此时间内没有更新流状态，会话将发送空更新。",
+      "label": "会话更新流状态最小时间间隔"
+    },
+    "session_renew_lease_timeout_ms": {
+      "desc": "会话等待 leader 刷新租约的超时时间（毫秒）。\n如果 leader 在此时间内没有刷新租约，会话将认为 leader 丢失，并尝试寻找新的 leader。",
+      "label": "会话租约刷新超时时间"
     }
   }
 }
