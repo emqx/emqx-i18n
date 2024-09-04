@@ -3201,7 +3201,6 @@
       "desc": "TCP 调节参数。TCP 发送缓冲区大小。",
       "label": "RPC 套接字发送缓冲区大小"
     },
-    },
     "audit_log_ignore_high_frequency_request": {
       "desc": "忽略高频请求以避免淹没审计日志，例如发布/订阅踢出 http API 请求将被忽略。",
       "label": "忽略高频请求"
