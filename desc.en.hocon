@@ -180,6 +180,28 @@
       "label": "User ID"
     }
   },
+  "emqx_authn_cinfo_schema": {
+    "check": {
+      "desc": "A check to perform on the client information.\nIt defines a match-condition and a result to return if the condition is `true`.\nIf all checks are skipped, the default result `ignore` is returned.",
+      "label": "Client Information Check"
+    },
+    "checks": {
+      "desc": "A list of checks to perform on the client information.\nIf all checks are skipped, the default result `ignore` is returned.\nThe `ignore` result means to defer the authentication to the next authenticator in the chain.",
+      "label": "Client Information Checks"
+    },
+    "cinfo": {
+      "desc": "Authenticate clients based on the client information such as username, client ID,\nclient attributes, and data extracted from TLS certificate.",
+      "label": "Client Information Authentication"
+    },
+    "is_match": {
+      "desc": "One Variform expression or an array of expressions to evaluate with a set of pre-bound variables derived from the client information.\nSupported variables:\n- `username`: the username of the client.\n- `clientid`: the client ID of the client.\n- `client_attrs.*`: the client attributes of the client.\n- `peerhost`: the IP address of the client.\n- `cert_subject`: the subject of the TLS certificate.\n- `cert_common_name`: the issuer of the TLS certificate.\nIf the expression(s) all yields the string value `'true'`, then the associated `result` is returned from this authenticator.\nIf any expression yields the other than `'true'`, then the current check is skipped.",
+      "label": "Match Conditions"
+    },
+    "result": {
+      "desc": "The result to return if the match condition is `true`.\nSupported results:\n- `ignore`: defer the authentication to the next authenticator in the chain.\n- `allow`: allow the client to connect.\n- `deny`: deny the client to connect.",
+      "label": "Result"
+    }
+  },
   "emqx_authn_http_schema": {
     "body": {
       "desc": "HTTP request body.",
@@ -1195,6 +1217,14 @@
       "desc": "The maximum number of message batches that the producer can send to each partition before it must wait for an acknowledgement.\nSetting a higher number can enhance throughput. However, value above 1 may lead to potential message reordering risks.",
       "label": "Max Inflight"
     },
+    "max_linger_bytes": {
+      "desc": "Maximum number of bytes for a per-partition producer to wait for messages in order to collect a batch to buffer.",
+      "label": "Max Linger Bytes"
+    },
+    "max_linger_time": {
+      "desc": "Maximum duration for a per-partition producer to wait for messages in order to collect a batch to buffer.\nThe default value `0` means no wait. For non-memory buffer mode, it's advised to configure at least `5ms` for less IOPS.",
+      "label": "Max Linger Time"
+    },
     "metadata_request_timeout": {
       "desc": "Maximum wait time when fetching metadata from Azure Event Hubs.",
       "label": "Metadata Request Timeout"
@@ -1501,6 +1531,14 @@
       "desc": "The maximum number of message batches that the producer can send to each partition before it must wait for an acknowledgement.\nSetting a higher number can enhance throughput. However, value above 1 may lead to potential message reordering risks.",
       "label": "Max Inflight"
     },
+    "max_linger_bytes": {
+      "desc": "Maximum number of bytes for a per-partition producer to wait for messages in order to collect a batch to buffer.",
+      "label": "Max Linger Bytes"
+    },
+    "max_linger_time": {
+      "desc": "Maximum duration for a per-partition producer to wait for messages in order to collect a batch to buffer.\nThe default value `0` means no wait. For non-memory buffer mode, it's advised to configure at least `5ms` for less IOPS.",
+      "label": "Max Linger Time"
+    },
     "metadata_request_timeout": {
       "desc": "Maximum wait time when fetching metadata from Confluent.",
       "label": "Metadata Request Timeout"
@@ -1626,11 +1664,11 @@
       "label": "Password"
     },
     "pipelining": {
-      "desc": "A positive integer to specifiy whether to send HTTP requests continuously. When set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request.",
+      "desc": "A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request.",
       "label": "HTTP Pipelining"
     },
     "pool_size": {
-      "desc": "Specifies the number of concurrent connections that can be maintained in the connection pool when interfacing with the Couchbase service.",
+      "desc": "The pool size.",
       "label": "Pool Size"
     },
     "server": {
@@ -1684,6 +1722,10 @@
     "datalayers_parameters": {
       "desc": "Set of parameters specific for the given type of this Datalayers connector.",
       "label": "Datalayers Specific Parameters"
+    },
+    "driver_type": {
+      "desc": "The Driver used to communicate with Datalayers service.",
+      "label": "Driver Type"
     },
     "password": {
       "desc": "Datalayers password.",
@@ -2467,13 +2509,13 @@
       "desc": "Parameters for basic authentication.",
       "label": "Basic auth params"
     },
-    "config_auth_basic_password": {
-      "desc": "The password as configured at the IoTDB REST interface",
-      "label": "HTTP Basic Auth Password"
+    "config_auth_password": {
+      "desc": "The password as configured at the IoTDB/Thrift REST interface",
+      "label": "Auth Password"
     },
-    "config_auth_basic_username": {
-      "desc": "The username as configured at the IoTDB REST interface",
-      "label": "HTTP Basic Auth Username"
+    "config_auth_username": {
+      "desc": "The username as configured at the IoTDB REST/Thrift interface",
+      "label": "Auth Username"
     },
     "config_authentication": {
       "desc": "Authentication configuration",
@@ -2483,13 +2525,28 @@
       "desc": "The base URL of the external IoTDB service's REST interface.",
       "label": "IoTDB REST Service Base URL"
     },
+    "config_driver": {
+      "desc": "The drivers for IoTDB connector, can be:\n- rest\n- thrift"
+    },
     "config_max_retries": {
       "desc": "HTTP request max retry times if failed.",
       "label": "HTTP Request Max Retries"
     },
+    "config_protocol_version": {
+      "desc": "The version of IoTDB Thrift protocol"
+    },
+    "config_zoneId": {
+      "desc": "Timezone for IoTDB Thrift session"
+    },
     "desc_config": {
       "desc": "Configuration for Apache IoTDB bridge.",
       "label": "IoTDB Bridge Configuration"
+    },
+    "pool_size": {
+      "desc": "Size for the IoTDB Thrift connection pool"
+    },
+    "server": {
+      "desc": "The address of the IoTDB Thrift server (host:port)"
     }
   },
   "emqx_bridge_kafka": {
@@ -2672,6 +2729,14 @@
     "max_inflight": {
       "desc": "The maximum number of message batches that the producer can send to each partition before it must wait for an acknowledgement.\nSetting a higher number can enhance throughput. However, value above 1 may lead to potential message reordering risks.",
       "label": "Max Inflight"
+    },
+    "max_linger_bytes": {
+      "desc": "Maximum number of bytes for a per-partition producer to wait for messages in order to collect a batch to buffer.",
+      "label": "Max Linger Bytes"
+    },
+    "max_linger_time": {
+      "desc": "Maximum duration for a per-partition producer to wait for messages in order to collect a batch to buffer.\nThe default value `0` means no wait. For non-memory buffer mode, it's advised to configure at least `5ms` for less IOPS.",
+      "label": "Max Linger Time"
     },
     "metadata_request_timeout": {
       "desc": "Maximum wait time when fetching topic metadata.",
@@ -3791,6 +3856,118 @@
       "label": "Sent Success"
     }
   },
+  "emqx_bridge_snowflake_action_schema": {
+    "aggreg_parameters": {
+      "desc": "Set of parameters for the action in aggregated mode.",
+      "label": "Snowflake Aggregated Mode action parameters"
+    },
+    "aggregated_mode": {
+      "desc": "Enables time-based aggregation of incoming events and uploading them to the Snowflake as a single object.  This aggregation is done independently by each node in the cluster.",
+      "label": "Aggregated Snowflake Upload"
+    },
+    "aggregation": {
+      "desc": "Set of parameters governing the aggregation process.",
+      "label": "Aggregation parameters"
+    },
+    "aggregation_interval": {
+      "desc": "Amount of time events will be aggregated in a single file on each node before uploading.",
+      "label": "Time interval"
+    },
+    "aggregation_max_records": {
+      "desc": "Number of records (events) allowed per each aggregated file. Each aggregated upload will contain no more than that number of events, but may contain less.<br/>\n  If event rate is high enough, there obviously may be more than one aggregated upload during the same time interval. These uploads will have different, but consecutive sequence numbers, which will be a part of Snowflake staged file name.",
+      "label": "Maximum number of records"
+    },
+    "connect_timeout": {
+      "desc": "The timeout when connecting to the HTTP server.",
+      "label": "Connect Timeout"
+    },
+    "database": {
+      "desc": "Name of the Database that contains the Snowflake resources.",
+      "label": "Database"
+    },
+    "max_retries": {
+      "desc": "Max retry attempts if there's an error when sending an HTTP request.",
+      "label": "Max Retries"
+    },
+    "parameters": {
+      "desc": "Set of parameters for the action.",
+      "label": "Snowflake action parameters"
+    },
+    "pipe": {
+      "desc": "Name of the Pipe that'll be used to ingest data into the table.",
+      "label": "Pipe"
+    },
+    "pipe_user": {
+      "desc": "A username which has a role with permissions over the Pipe to be used.  The minimum permissions are `operate` and `monitor`.",
+      "label": "Pipe User"
+    },
+    "pipelining": {
+      "desc": "A positive integer. Whether to send HTTP requests continuously, when set to 1, it means that after each HTTP request is sent, you need to wait for the server to return and then continue to send the next request.",
+      "label": "HTTP Pipelining"
+    },
+    "pool_size": {
+      "desc": "The pool size.",
+      "label": "Pool Size"
+    },
+    "private_key": {
+      "desc": "The private key configured for the Pipe User.  This supports the input formats below:\n- Plain key: Enter the private key contents in PEM format directly as a string value.\n- File Path: Specify the path to a file that contains the private key. Ensure the path starts with <code>file://</code>.  The file path must be the same on all nodes in the cluster.",
+      "label": "Private Key"
+    },
+    "proxy_config": {
+      "desc": "Proxy configuration.  Only plain HTTP proxies are currently supported (no HTTPS).",
+      "label": "Proxy"
+    },
+    "proxy_config_host": {
+      "desc": "Proxy host address to connect to.",
+      "label": "Proxy Host"
+    },
+    "proxy_config_port": {
+      "desc": "Proxy port to use when connecting.",
+      "label": "Proxy Port"
+    },
+    "schema": {
+      "desc": "Name of the Schema that contains the Snowflake resources.",
+      "label": "Schema"
+    },
+    "snowflake": {
+      "desc": "Action that takes incoming events and uploads them to the Snowflake.",
+      "label": "Upload to Snowflake"
+    },
+    "stage": {
+      "desc": "Name of the Stage that'll be used for loading data files into Snowflake.",
+      "label": "Stage"
+    }
+  },
+  "emqx_bridge_snowflake_connector_schema": {
+    "account": {
+      "desc": "Account ID for Snowflake.",
+      "label": "Account"
+    },
+    "config_connector": {
+      "desc": "Configuration for a connector to Snowflake service.",
+      "label": "Snowflake Connector Configuration"
+    },
+    "dsn": {
+      "desc": "Data Source Name (DSN) associated with the installed Snowflake ODBC driver.",
+      "label": "DSN"
+    },
+    "proxy_config": {
+      "desc": "Proxy configuration.  Only plain HTTP proxies are currently supported (no HTTPS).",
+      "label": "Proxy"
+    },
+    "proxy_config_host": {
+      "desc": "Proxy host address to connect to.",
+      "label": "Proxy Host"
+    },
+    "proxy_config_port": {
+      "desc": "Proxy port to use when connecting.",
+      "label": "Proxy Port"
+    },
+    "server": {
+      "desc": "The address of Snowflake computing server to connect to.",
+      "label": "Server Host"
+    }
+  },
   "emqx_bridge_sqlserver": {
     "action_parameters": {
       "desc": "Action specific configuration.",
@@ -4091,7 +4268,7 @@
       "label": "Max Inflight Message"
     },
     "password": {
-      "desc": "Optional password for connecting to the remote EMQX cluster.",
+      "desc": "Optional MQTT username for connecting to the remote EMQX cluster.",
       "label": "Password"
     },
     "pool_size": {
@@ -5107,7 +5284,7 @@
   },
   "emqx_dashboard_sso_oidc_api": {
     "code_callback": {
-      "desc": "The callback path for the OIDC authorization server."
+      "desc": "The callback path for the OIDC authorization server.."
     }
   },
   "emqx_dashboard_sso_saml": {
@@ -6548,8 +6725,29 @@
     "delete_banned_api_response404": {
       "desc": "The banned object was not found in the blacklist."
     },
+    "filter_clientid": {
+      "desc": "Query the banned objects with an exact client ID."
+    },
+    "filter_like_clientid": {
+      "desc": "Fuzzy query banned objects with a client ID."
+    },
+    "filter_like_peerhost": {
+      "desc": "Fuzzy query banned objects with an IP address."
+    },
+    "filter_like_peerhost_net": {
+      "desc": "Fuzzy query banned objects with a CIDR."
+    },
+    "filter_like_username": {
+      "desc": "Fuzzy query banned objects with an username."
+    },
+    "filter_peerhost": {
+      "desc": "Query the banned objects with an exact IP address."
+    },
+    "filter_username": {
+      "desc": "Query the banned objects with an exact username."
+    },
     "list_banned_api": {
-      "desc": "List all currently banned client IDs, usernames and IP addresses.",
+      "desc": "List all currently banned client IDs, usernames and IP addresses.\nFilters are supported. Since filters are mutually exclusive, only one filter is allowed in a query.",
       "label": "List all banned client IDs"
     },
     "reason": {
@@ -8036,6 +8234,10 @@
       "desc": "Validation",
       "label": "Validation"
     },
+    "metrics_actions_discarded": {
+      "desc": "The number of discarded actions due to action being disabled or race condition while action is being deleted.",
+      "label": "Discarded"
+    },
     "metrics_actions_failed": {
       "desc": "How many times the rule failed to call the actions.",
       "label": "Failed Action"
@@ -9079,8 +9281,11 @@
       "desc": "Whether to enable support for MQTT shared subscription.",
       "label": "Shared Subscription Available"
     },
+    "mqtt_shared_subscription_initial_sticky_pick": {
+      "desc": "The strategy to use for the initial subscriber pick when shared_subscription_strategy is `sticky`.\n - `random`: Randomly select the subscriber;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
+    },
     "mqtt_shared_subscription_strategy": {
-      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n - `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
+      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n - `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends. The initial selection is made based on `mqtt_shared_subscription_initial_sticky_pick`;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "mqtt_strict_mode": {
       "desc": "Whether to parse MQTT messages in strict mode.\nIn strict mode, invalid utf8 strings in for example client ID, topic name, etc. will cause the client to be disconnected.",
@@ -9185,8 +9390,11 @@
     "shared_subscription_group_strategy": {
       "desc": "Per group dispatch strategy for shared subscription.\nThis config is a map from shared subscription group name to the strategy\nname. The group name should be of format `[A-Za-z0-9]`. i.e. no\nspecial characters are allowed."
     },
+    "shared_subscription_initial_sticky_pick_enum": {
+      "desc": "The strategy to use for the initial subscriber pick when the shared subscription strategy is `sticky`.\n - `random`: Randomly select the subscriber;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
+    },
     "shared_subscription_strategy_enum": {
-      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n - `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
+      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n - `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends. The initial selection is made based on the value of `initial_sticky_pick`;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "stats_enable": {
       "desc": "Enable/disable statistic data collection.",
@@ -9332,12 +9540,54 @@
     "desc_schema_registry_api_put": {
       "desc": "Update an existing schema",
       "label": "Update schema"
+    },
+    "external_registry_create": {
+      "desc": "Create external schema registry"
+    },
+    "external_registry_delete": {
+      "desc": "Delete external schema registry"
+    },
+    "external_registry_list": {
+      "desc": "List external schema registries"
+    },
+    "external_registry_lookup": {
+      "desc": "Lookup external schema registry"
+    },
+    "external_registry_update": {
+      "desc": "Update external schema registry"
+    },
+    "param_path_external_registry_name": {
+      "desc": "External registry name"
     }
   },
   "emqx_schema_registry_schema": {
     "avro_type": {
       "desc": "[Apache Avro](https://avro.apache.org/) serialization format.",
       "label": "Apache Avro"
+    },
+    "confluent_schema_registry": {
+      "desc": "Confluent External Schema Registry configuration.",
+      "label": "Confluent Schema Registry"
+    },
+    "confluent_schema_registry_auth": {
+      "desc": "Authentication options for accessing external registry.",
+      "label": "Authentication"
+    },
+    "confluent_schema_registry_auth_basic": {
+      "desc": "Use basic authentication method for accessing external registry.",
+      "label": "Basic Auth"
+    },
+    "confluent_schema_registry_auth_basic_password": {
+      "desc": "Password for basic authentication method.",
+      "label": "Password"
+    },
+    "confluent_schema_registry_auth_basic_username": {
+      "desc": "Username for basic authentication method.",
+      "label": "Username"
+    },
+    "confluent_schema_registry_url": {
+      "desc": "URL endpoint for external registry.",
+      "label": "Registry URL"
     },
     "json_type": {
       "desc": "Supports JSON Schema\n[Draft 03](http://tools.ietf.org/html/draft-zyp-json-schema-03)\n[Draft 04](http://tools.ietf.org/html/draft-zyp-json-schema-04) and\n[Draft 06](https://datatracker.ietf.org/doc/html/draft-wright-json-schema-00).",
@@ -9354,6 +9604,10 @@
     "schema_name": {
       "desc": "A name for the schema that will serve as its identifier.",
       "label": "Schema name"
+    },
+    "schema_registry_external_type": {
+      "desc": "External Schema Registry Type",
+      "label": "External Schema Registry Type"
     },
     "schema_registry_root": {
       "desc": "Schema registry configurations.",
