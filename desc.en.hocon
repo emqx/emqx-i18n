@@ -5284,7 +5284,7 @@
   },
   "emqx_dashboard_sso_oidc_api": {
     "code_callback": {
-      "desc": "The callback path for the OIDC authorization server.."
+      "desc": "The callback path for the OIDC authorization server."
     }
   },
   "emqx_dashboard_sso_saml": {
@@ -5550,6 +5550,176 @@
       "label": "Session Renew Lease Timeout"
     }
   },
+  "emqx_event_history_api": {
+    "authz_action_type": {
+      "desc": "The type of the authorize action"
+    },
+    "authz_from": {
+      "desc": "The type name of authorizer"
+    },
+    "clean_start": {
+      "desc": "Whether the client has a clean start.",
+      "label": "Clean Start"
+    },
+    "client_id": {
+      "desc": "The client ID.",
+      "label": "Client ID"
+    },
+    "dropped_msg_num": {
+      "desc": "The number of messages that have been dropped.",
+      "label": "Dropped Message Number"
+    },
+    "eh_clear": {
+      "desc": "clear all event history data\nNote: This is a dangerous operation.\nWhen only deleting data,\nthe manager and gc will try to reacquire the lock due to the loss of lock information,\nand the cached size of valid space only can be updated at the next refresh.\nWhen include the FDB's tenant, the GC will be shutdown forever."
+    },
+    "eh_client_list": {
+      "desc": "The list of clients that have connected to the broker.",
+      "label": "Event History Client List"
+    },
+    "eh_metrics": {
+      "desc": "Get the metrics of the internal resource"
+    },
+    "eh_msg_list": {
+      "desc": "The list of messages that have been published to the broker.",
+      "label": "Event History Message List"
+    },
+    "eh_stats": {
+      "desc": "event history tenant stats"
+    },
+    "event_history_get_config": {
+      "desc": "Show current Event History configuration."
+    },
+    "event_history_update_config": {
+      "desc": "Update Event History configuration."
+    },
+    "expiry_interval": {
+      "desc": "The expiry interval of the session.",
+      "label": "Session Expiry Interval"
+    },
+    "force_delete": {
+      "desc": "Whether to delete the corresponding tenant in FDB"
+    },
+    "gte_time": {
+      "desc": "The start time of the event(use unix millisecond or rfc3339).",
+      "label": "Start Time"
+    },
+    "guid": {
+      "desc": "GUID of the session or message"
+    },
+    "has_next": {
+      "desc": "Indicate whether there is a next page"
+    },
+    "ip": {
+      "desc": "The IP address of the client.",
+      "label": "IP"
+    },
+    "is_anonymous": {
+      "desc": "True if this user is anonymous."
+    },
+    "is_persistent": {
+      "desc": "Indicates whether this is a persistent session"
+    },
+    "is_superuser": {
+      "desc": "True if this is a super user."
+    },
+    "keepalive": {
+      "desc": "The keepalive interval of the client.",
+      "label": "Keepalive"
+    },
+    "lte_time": {
+      "desc": "The end time of the event(use unix millisecond or rfc3339).",
+      "label": "End Time"
+    },
+    "message_id": {
+      "desc": "The message ID.",
+      "label": "Message ID"
+    },
+    "qos": {
+      "desc": "The QoS level of the message.",
+      "label": "QoS"
+    },
+    "reason": {
+      "desc": "The reason for this event.",
+      "label": "Reason"
+    },
+    "result": {
+      "desc": "The result for this event"
+    },
+    "retain": {
+      "desc": "The retain flag"
+    },
+    "reverse": {
+      "desc": "If true, events will be returned in reverse time series order beginning at the end of the range"
+    },
+    "stats_count": {
+      "desc": "stats count"
+    },
+    "stats_size": {
+      "desc": "stats size"
+    },
+    "tenant": {
+      "desc": "the tenant name"
+    },
+    "time": {
+      "desc": "The millisecond that the event was triggered",
+      "label": "Time"
+    },
+    "topic": {
+      "desc": "The topic that the message was published to.",
+      "label": "Topic"
+    },
+    "type": {
+      "desc": "Event History Client Type",
+      "label": "Type"
+    },
+    "username": {
+      "desc": "the username which is used for this event."
+    }
+  },
+  "emqx_event_history_schema": {
+    "alarm_percent": {
+      "desc": "The percentage of maximum storage size to alarm"
+    },
+    "buffer": {
+      "desc": "Configuration for write workers"
+    },
+    "enable": {
+      "desc": "Enable this feature"
+    },
+    "event_history": {
+      "desc": "A feature to record events from clients or messages."
+    },
+    "events": {
+      "desc": "Events to be recorded"
+    },
+    "expiry_time": {
+      "desc": "The expiration time for each data"
+    },
+    "gc": {
+      "desc": "GC configuration"
+    },
+    "gc_interval": {
+      "desc": "The interval time between two GC checking"
+    },
+    "gc_percent": {
+      "desc": "The percentage of storage data to be deleted when the storage size exceeds the maximum size"
+    },
+    "max_size": {
+      "desc": "The maximum storage size of events in bytes for this tenant"
+    },
+    "query_quantity_limit": {
+      "desc": "Maximum number of reads for a query"
+    },
+    "query_time_limit": {
+      "desc": "Time limit for a query"
+    },
+    "storage": {
+      "desc": "Storage configuration"
+    },
+    "tenant": {
+      "desc": "If the value is not empty, all data will be stored in a tenant whose name is created by this value with a prefix.\nTenant config is Read Only, update at runtime will fail."
+    }
+  },
   "emqx_eviction_agent_api": {
     "node_eviction_status_get": {
       "desc": "Get the node eviction status",
@@ -5715,6 +5885,141 @@
     },
     "exproto_server": {
       "desc": "Configurations for starting the <code>ConnectionAdapter</code> service"
+    }
+  },
+  "emqx_fdb_ds_prometheus_api": {
+    "get_fdb_prom_data": {
+      "desc": "Get FoundationDB Prometheus Metrics",
+      "label": "FoundationDB Prometheus Metrics"
+    }
+  },
+  "emqx_fdb_ds_schema": {
+    "expiry_gc_interval": {
+      "desc": "GC interval for the expired generation."
+    },
+    "gc": {
+      "desc": "GC Configuration"
+    },
+    "gc_max_size": {
+      "desc": "The total available size of persistent storage."
+    },
+    "retainer_backend_fdb": {
+      "desc": "FoundationDB Durable Storage Retainer.",
+      "label": "FoundationDB Durable Storage Retainer."
+    },
+    "retainer_enable": {
+      "desc": "Enable FoundationDB Retainer backend",
+      "label": "Enable"
+    },
+    "session_storage_backend_fdb": {
+      "desc": "FoundationDB Durable Storage.",
+      "label": "FoundationDB Durable Storage."
+    },
+    "session_storage_backend_fdb_enable": {
+      "desc": "Enable FoundationDB Durable Storage backend.",
+      "label": "Enable FoundationDB Durable Storage backend."
+    },
+    "session_storage_backend_fdb_prefix": {
+      "desc": "Key prefix to use by FoundationDB Durable Storage backend for storing data.",
+      "label": "FoundationDB key prefix."
+    },
+    "session_storage_backend_fdb_storage_mod": {
+      "desc": "Low-level backend module for storing message data in FoundationDB.",
+      "label": "FoundationDB DS storage module."
+    },
+    "session_storage_backend_fdb_storage_options": {
+      "desc": "Options for low-level backend module storing message data in FoundationDB.",
+      "label": "FoundationDB DS storage options."
+    },
+    "session_storage_backend_fdb_tenant": {
+      "desc": "FoundationDB tenant to use by FoundationDB Durable Storage backend.",
+      "label": "FoundationDB tenant."
+    },
+    "session_storage_backend_fdb_write_shard_number": {
+      "desc": "FoundationDB DS write shard number.",
+      "label": "FoundationDB DS write shard number."
+    },
+    "size_gc_interval": {
+      "desc": "The interval for GC to check whether the used size exceeds the maximum available size."
+    },
+    "size_gc_percent": {
+      "desc": "Determine the amount of data that needs to be deleted as a percentage of the maximum size."
+    }
+  },
+  "emqx_fdb_mgmt_cli_api": {
+    "cluster_file": {
+      "desc": "The content of the cluster file"
+    },
+    "delete_fdb_cli": {
+      "desc": "Disable and Stop\nNOTE:\n1. Currently, a process may have a worker cached in its process dictionary or gen_server state, which cannot be cleared\n2. Tenants are the same as above\n3. The driver cannot be shut down or restarted manually"
+    },
+    "get_cluster_file": {
+      "desc": "Get content of the current cluster file"
+    },
+    "get_fdb_cli": {
+      "desc": "Get Configuration"
+    },
+    "post_cluster_file": {
+      "desc": "Update the content of the cluster file"
+    },
+    "post_fdb_cli": {
+      "desc": "Enable and Start"
+    }
+  },
+  "emqx_fdb_mgmt_cli_schema": {
+    "available_check_interval": {
+      "desc": "FDB health check interval when the last status is `available`"
+    },
+    "callbacks_on_external_threads": {
+      "desc": "If set, callbacks from external client libraries can be called from threads created by the FoundationDB client library. Otherwise, callbacks will be called from either the thread used to add the callback or the network thread. Setting this option can improve performance when connected using an external client, but may not be safe to use in all environments. Must be set before setting up the network. WARNING: This feature is considered experimental at this time."
+    },
+    "circuit_breaker": {
+      "desc": "A background server used to monitor the status of the FoundationDB cluster."
+    },
+    "client_threads_per_version": {
+      "desc": "Spawns multiple worker threads for each version of the client that is loaded.  Setting this to a number greater than one implies disable_local_client."
+    },
+    "cluster_file": {
+      "desc": "Path to cluster file"
+    },
+    "enable": {
+      "desc": "Enable this feature"
+    },
+    "external_client_library": {
+      "desc": "Adds an external client library for use by the multi-version client API. Must be set before setting up the network."
+    },
+    "max_watches": {
+      "desc": "Set the maximum number of watches allowed to be outstanding on a database connection. Increasing this number could result in increased resource usage. Reducing this number will not cancel any outstanding watches. Defaults to 10000 and cannot be larger than 1000000."
+    },
+    "tls_ca_path": {
+      "desc": "Set the file from which to load the certificate authority bundle"
+    },
+    "tls_cert_path": {
+      "desc": "Set the file from which to load the certificate chain"
+    },
+    "tls_key_path": {
+      "desc": "Set the file from which to load the private key corresponding to your own certificate"
+    },
+    "tls_verify_peers": {
+      "desc": "Set the peer certificate field verification criteria"
+    },
+    "transaction_max_retry_delay": {
+      "desc": "Set the maximum amount of backoff delay incurred in the call to `onError` if the error is retriable. This sets the `max_retry_delay` option of each transaction created by this database."
+    },
+    "transaction_retry_limit": {
+      "desc": "Set a maximum number of retries after which additional calls to `onError` will throw the most recently seen error code. This sets the `retry_limit` option of each transaction created by this database."
+    },
+    "transaction_timeout": {
+      "desc": "Set a timeout in milliseconds which, when elapsed, will cause each transaction automatically to be cancelled. This sets the `timeout` option of each transaction created by this database."
+    },
+    "unavailable_check_interval": {
+      "desc": "After the maximum number of attempts, we assume the cluster is unavailable, and may use a smaller interval for checking."
+    },
+    "waiting_check_interval": {
+      "desc": "FDB health check interval when the last status is `unavailable`, we assume this status was caused by network or cluster jitter and attempt to wait for it to be healed"
+    },
+    "waiting_check_times": {
+      "desc": "The maximum number of times we wait for the status to become healthy"
     }
   },
   "emqx_ft_api": {
