@@ -1166,6 +1166,14 @@
     "producer_health_check_topic": {
       "desc": "专用于更精确的连接器健康检查的主题名称。",
       "label": "连接器健康检查主题"
+    },
+    "max_linger_bytes": {
+      "desc": "每个分区生产者在发送数据前，为了收集批量消息进行缓冲，最多可以等待的消息字节数。",
+      "label": "最大等待字节数"
+    },
+    "max_linger_time": {
+      "desc": "每个分区生产者为了收集批量消息进行缓冲的最长等待时间。\n默认值为 0，表示不等待。 对于非内存缓冲模式，建议配置至少 5ms 以减少 IOPS（每秒输入输出操作次数）。",
+      "label": "最大等待时间"
     }
   },
   "emqx_bridge_cassandra": {
@@ -1881,6 +1889,14 @@
     "producer_health_check_topic": {
       "desc": "专用于更精确的连接器健康检查的主题名称。",
       "label": "连接器健康检查主题"
+    },
+    "max_linger_bytes": {
+      "desc": "每个分区生产者在发送数据前，为了收集批量消息进行缓冲，最多可以等待的消息字节数。",
+      "label": "最大等待字节数"
+    },
+    "max_linger_time": {
+      "desc": "每个分区生产者为了收集批量消息进行缓冲的最长等待时间。\n默认值为 0，表示不等待。 对于非内存缓冲模式，建议配置至少 5ms 以减少 IOPS（每秒输入输出操作次数）。",
+      "label": "最大等待时间"
     }
   },
   "emqx_bridge_mqtt_schema": {
@@ -5417,6 +5433,27 @@
     "who": {
       "desc": "封禁对象，具体的客户端 ID、用户名或者 IP 地址。",
       "label": "封禁对象"
+    },
+    "filter_clientid": {
+      "desc": "使用精确的客户端 ID 查询被封禁对象。"
+    },
+    "filter_like_clientid": {
+      "desc": "使用模糊客户端 ID 查询被封禁对象。"
+    },
+    "filter_like_peerhost": {
+      "desc": "使用模糊 IP 地址查询被封禁对象。"
+    },
+    "filter_like_peerhost_net": {
+      "desc": "使用 CIDR 进行模糊查询，查找被封禁对象。"
+    },
+    "filter_like_username": {
+      "desc": "使用模糊用户名查询被封禁对象。"
+    },
+    "filter_peerhost": {
+      "desc": "使用精确的 IP 地址查询被封禁对象。"
+    },
+    "filter_username": {
+      "desc": "使用精确的用户名查询被封禁对象。"
     }
   },
   "emqx_mgmt_api_clients": {
@@ -6968,6 +7005,10 @@
     "event_transformation": {
       "desc": "消息转换",
       "label": "消息转换"
+    },
+    "metrics_actions_discarded": {
+      "desc": "由于动作被停用或在动作被删除时发生竞态条件而导致丢弃的动作次数。",
+      "label": "Discarded"
     }
   },
   "emqx_rule_engine_api": {
@@ -8179,6 +8220,12 @@
     "mqtt_keepalive_check_interval": {
       "desc": "检查传入 MQTT 数据包的频率，决定服务器检查新 MQTT 数据包的频率。\n如果在没有客户端发送任何数据包的情况下经过了一定时间，这段时间将累加起来。\n一旦累积时间超过 `keepalive-interval * keepalive-multiplier`，连接将被终止。\n默认设置为 30 秒，最小值为 1 秒，最大值为 `keepalive-interval / 2`。",
       "label": "Keep Alive 检查间隔"
+    },
+    "mqtt_shared_subscription_initial_sticky_pick": {
+      "desc": "当 shared_subscription_strategy 为 `sticky` 时，初始订阅者选择的策略。\n - `random`: 随机选择订阅者；\n - `local`: 随机选择当前节点上的订阅者，如果当前节点上没有订阅者，则在集群中随机选择；\n - `hash_clientid`: 根据发布者的客户端 ID 进行哈希，选择订阅者；\n - `hash_topic`: 根据发布的主题进行哈希，选择订阅者。"
+    },
+    "shared_subscription_initial_sticky_pick_enum": {
+      "desc": "当共享订阅策略为 sticky 时，初始订阅者选择的策略。\n - `random`: 随机选择订阅者；\n - `local`: 随机选择当前节点上的订阅者，如果当前节点上没有订阅者，则在集群中随机选择；\n - `hash_clientid`: 根据发布者的客户端 ID 进行哈希，选择订阅者；\n - `hash_topic`: 根据发布的主题进行哈希，选择订阅者。"
     }
   },
   "emqx_slow_subs_api": {
@@ -8706,6 +8753,14 @@
     "producer_health_check_topic": {
       "desc": "专用于更精确的连接器健康检查的主题名称。",
       "label": "连接器健康检查主题"
+    },
+    "max_linger_bytes": {
+      "desc": "每个分区生产者在发送数据前，为了收集批量消息进行缓冲，最多可以等待的消息字节数。",
+      "label": "最大等待字节数"
+    },
+    "max_linger_time": {
+      "desc": "每个分区生产者为了收集批量消息进行缓冲的最长等待时间。\n默认值为 0，表示不等待。 对于非内存缓冲模式，建议配置至少 5ms 以减少 IOPS（每秒输入输出操作次数）。",
+      "label": "最大等待时间"
     }
   },
   "emqx_bridge_gcp_pubsub_producer_schema": {
@@ -9592,6 +9647,24 @@
     "desc_schema_registry_api_put": {
       "desc": "更新一个现有的 schema。",
       "label": "更新 schema"
+    },
+    "external_registry_create": {
+      "desc": "创建外部 schema registry"
+    },
+    "external_registry_delete": {
+      "desc": "删除外部 schema registry"
+    },
+    "external_registry_list": {
+      "desc": "列出外部 schema registries"
+    },
+    "external_registry_lookup": {
+      "desc": "查询外部 schema registry"
+    },
+    "external_registry_update": {
+      "desc": "更新外部 schema registry"
+    },
+    "param_path_external_registry_name": {
+      "desc": "外部 registry 名称"
     }
   },
   "emqx_schema_registry_schema": {
@@ -9642,6 +9715,34 @@
     "schema_type_protobuf": {
       "desc": "对于 protobuf schema，必须是 protobuf。",
       "label": "Protobuf Schema"
+    },
+    "confluent_schema_registry": {
+      "desc": "Confluent 外部 Schema Registry 配置。",
+      "label": "Confluent Schema Registry"
+    },
+    "confluent_schema_registry_auth": {
+      "desc": "访问外部 registry 的认证选项。",
+      "label": "认证"
+    },
+    "confluent_schema_registry_auth_basic": {
+      "desc": "使用基本认证方法访问外部 registry。",
+      "label": "基本认证"
+    },
+    "confluent_schema_registry_auth_basic_password": {
+      "desc": "基本认证方法的密码。",
+      "label": "密码"
+    },
+    "confluent_schema_registry_auth_basic_username": {
+      "desc": "基本认证方法的用户名。",
+      "label": "用户名"
+    },
+    "confluent_schema_registry_url": {
+      "desc": "外部 registry 的 URL 端点",
+      "label": "Registry URL"
+    },
+    "schema_registry_external_type": {
+      "desc": "外部 Schema Registry 类型",
+      "label": "外部 Schema Registry 类型"
     }
   },
   "emqx_bridge_es": {
@@ -9803,6 +9904,29 @@
     "desc_config": {
       "desc": "Apache IoTDB 连接器的配置。",
       "label": "IoTDB 连接器配置"
+    },
+    "config_auth_password": {
+      "desc": "在 IoTDB/Thrift REST 接口中配置的密码。",
+      "label": "认证密码"
+    },
+    "config_auth_username": {
+      "desc": "在 IoTDB REST/Thrift 接口中配置的用户名。",
+      "label": "认证用户名"
+    },
+    "config_driver": {
+      "desc": "IoTDB 连接器使用的驱动程序，可以是：\n- rest\n- thrift"
+    },
+    "config_protocol_version": {
+      "desc": "IoTDB Thrift 协议的版本。"
+    },
+    "config_zoneId": {
+      "desc": "IoTDB Thrift 会话的时区。"
+    },
+    "pool_size": {
+      "desc": "IoTDB Thrift 连接池的大小。"
+    },
+    "server": {
+      "desc": "IoTDB Thrift 服务器的地址（主机:端口）。"
     }
   },
   "emqx_bridge_mqtt_pubsub_schema": {
@@ -10482,6 +10606,10 @@
     "username": {
       "desc": "Datalayers 用户名。",
       "label": "用户名"
+    },
+    "driver_type": {
+      "desc": "用于与 Datalayers 服务通信的驱动程序。",
+      "label": "驱动类型"
     }
   },
   "emqx_cluster_link_schema": {
@@ -10658,6 +10786,140 @@
     "session_renew_lease_timeout_ms": {
       "desc": "会话等待 leader 刷新租约的超时时间（毫秒）。\n如果 leader 在此时间内没有刷新租约，会话将认为 leader 丢失，并尝试寻找新的 leader。",
       "label": "会话租约刷新超时时间"
+    }
+  },
+  "emqx_authn_cinfo_schema": {
+    "check": {
+      "desc": "对客户端信息进行的检查。\n它定义了一个匹配条件，并在条件为 true 时返回结果。\n如果所有检查都被跳过，则返回默认结果 ignore。",
+      "label": "客户端信息检查"
+    },
+    "checks": {
+      "desc": "对客户端信息执行的一组检查。\n如果所有检查都被跳过，则返回默认结果 ignore。\nignore 结果表示将认证流程交由链中的下一个认证器处理。",
+      "label": "客户端信息检查列表"
+    },
+    "cinfo": {
+      "desc": "基于客户端信息（如用户名、客户端ID、\n客户端属性以及从 TLS 证书提取的数据）进行客户端认证。",
+      "label": "客户端信息认证"
+    },
+    "is_match": {
+      "desc": "一个 Variform 表达式或表达式数组，用于评估一组从客户端信息派生的预绑定变量。\n支持的变量：\n- `username`: 客户端的用户名。\n- `clientid`: 客户端的客户端。\n- `client_attrs.*`: 客户端的客户端属性。\n- `peerhost`: 客户端的 IP 地址。\n- `cert_subject`: TLS 证书的主体\n- `cert_common_name`: TLS 证书通用名称。\n如果所有表达式的结果都是字符串值 'true'，则从此认证器返回关联的 result。\n如果任何表达式的结果不是 'true'，则跳过当前检查。",
+      "label": "匹配条件"
+    },
+    "result": {
+      "desc": "当匹配条件为 `true` 时返回的结果。\n支持的结果：\n- `ignore`: 将身份验证交由链中的下一个认证器处理。\n- `allow`: 允许客户端连接。\n- `deny`: 拒绝客户端连接。",
+      "label": "结果"
+    }
+  },
+  "emqx_bridge_snowflake_action_schema": {
+    "aggreg_parameters": {
+      "desc": "在聚合模式下执行动作的一组参数。",
+      "label": "Snowflake 聚合模式动作参数"
+    },
+    "aggregated_mode": {
+      "desc": "启用基于时间的事件聚合，并将其作为一个对象上传到 Snowflake。每个集群节点独立进行此聚合。",
+      "label": "Snowflake 聚合上传"
+    },
+    "aggregation": {
+      "desc": "控制聚合过程的一组参数。",
+      "label": "聚合参数"
+    },
+    "aggregation_interval": {
+      "desc": "每个节点在上传之前，将事件聚合到单个文件中的时间间隔。",
+      "label": "时间间隔"
+    },
+    "aggregation_max_records": {
+      "desc": "每个聚合文件允许的最大记录数（事件数）。 每次聚合上传将包含不超过该数量的事件，但可能会少于该数量。<br/>\n  如果事件速率较高，在同一时间间隔内可能会进行多次聚合上传。这些上传将具有不同但连续的序列号，且该序列号将作为 Snowflake 阶段文件名的一部分。",
+      "label": "最大记录数"
+    },
+    "connect_timeout": {
+      "desc": "连接到 HTTP 服务器时的超时时间。",
+      "label": "连接超时"
+    },
+    "database": {
+      "desc": "包含 Snowflake 资源的数据库名称。",
+      "label": "数据库"
+    },
+    "max_retries": {
+      "desc": "发送 HTTP 请求时出现错误的最大重试次数。",
+      "label": "最大重试次数"
+    },
+    "parameters": {
+      "desc": "一组动作参数",
+      "label": "Snowflake 动作参数"
+    },
+    "pipe": {
+      "desc": "用于将数据导入表的管道名称。",
+      "label": "管道"
+    },
+    "pipe_user": {
+      "desc": "具有使用 Pipe 权限的角色的用户名。最低要求的权限是 operate 和 monitor。",
+      "label": "管道用户"
+    },
+    "pipelining": {
+      "desc": "一个正整数。表示是否连续发送 HTTP 请求。设置为 1 时，表示每次发送 HTTP 请求后，需等待服务器返回再发送下一个请求.",
+      "label": "HTTP 管道化"
+    },
+    "pool_size": {
+      "desc": "连接池大小",
+      "label": "连接池大小"
+    },
+    "private_key": {
+      "desc": "为管道用户配置的私钥。支持以下输入格式：\n- 明文密钥：直接以字符串形式输入 PEM 格式的私钥内容。\n- 文件路径：指定包含私钥的文件路径。确保路径以 <code>file://</code> 开头。文件路径必须在集群的所有节点上相同。",
+      "label": "私钥"
+    },
+    "proxy_config": {
+      "desc": "代理配置。目前仅支持普通的 HTTP 代理（不支持 HTTPS）。",
+      "label": "代理"
+    },
+    "proxy_config_host": {
+      "desc": "用于连接的代理主机地址。",
+      "label": "代理主机"
+    },
+    "proxy_config_port": {
+      "desc": "连接时使用的代理端口。",
+      "label": "代理端口"
+    },
+    "schema": {
+      "desc": "包含 Snowflake 资源的模式名称。",
+      "label": "模式"
+    },
+    "snowflake": {
+      "desc": "将接收的事件上传到 Snowflake 的动作。",
+      "label": "上传到 Snowflake"
+    },
+    "stage": {
+      "desc": "用于将数据文件加载到 Snowflake 的 Stage 名称。",
+      "label": "存储区"
+    }
+  },
+  "emqx_bridge_snowflake_connector_schema": {
+    "account": {
+      "desc": "Snowflake 的账户 ID。",
+      "label": "账户"
+    },
+    "config_connector": {
+      "desc": "连接到 Snowflake 服务的连接器配置。",
+      "label": "Snowflake 连接器配置"
+    },
+    "dsn": {
+      "desc": "与已安装的 Snowflake ODBC 驱动程序关联的数据源名称 (DSN)。",
+      "label": "数据源名称"
+    },
+    "proxy_config": {
+      "desc": "代理配置。目前仅支持普通的 HTTP 代理（不支持 HTTPS）。",
+      "label": "代理"
+    },
+    "proxy_config_host": {
+      "desc": "用于连接的代理主机地址。",
+      "label": "代理主机"
+    },
+    "proxy_config_port": {
+      "desc": "连接时使用的代理端口。",
+      "label": "代理端口"
+    },
+    "server": {
+      "desc": "连接到 Snowflake 计算服务器的地址。",
+      "label": "服务器地址"
     }
   }
 }
