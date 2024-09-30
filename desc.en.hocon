@@ -2538,12 +2538,18 @@
     "config_zoneId": {
       "desc": "Timezone for IoTDB Thrift session"
     },
+    "connect_timeout": {
+      "desc": "Timeout for connecting to the IoTDB Thrift server"
+    },
     "desc_config": {
       "desc": "Configuration for Apache IoTDB bridge.",
       "label": "IoTDB Bridge Configuration"
     },
     "pool_size": {
       "desc": "Size for the IoTDB Thrift connection pool"
+    },
+    "recv_timeout": {
+      "desc": "Timeout for IoTDB Thrift server response"
     },
     "server": {
       "desc": "The address of the IoTDB Thrift server (host:port)"
@@ -4436,7 +4442,7 @@
       "label": "Cluster Protocol Distribution"
     },
     "cluster_quic_lb_mode": {
-      "desc": "QUIC stack LB Mode\n- 0: disabled (Default)\n- 1: server_ip\n- 2: server_id_fixed",
+      "desc": "QUIC stack LB Mode\n- 0: disabled (Default)\n- 1: server_ip\n- 2: server_id_fixed\n- N: when N>2 server_id_fixed and server_id is N\n- IfName: when IfName is string, server_id will be set to the first ip on interface IfName, ipv4 only",
       "label": " QUIC stack LB Mode "
     },
     "cluster_static_seeds": {
@@ -5284,7 +5290,7 @@
   },
   "emqx_dashboard_sso_oidc_api": {
     "code_callback": {
-      "desc": "The callback path for the OIDC authorization server.."
+      "desc": "The callback path for the OIDC authorization server."
     }
   },
   "emqx_dashboard_sso_saml": {
