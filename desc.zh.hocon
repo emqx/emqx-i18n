@@ -5438,7 +5438,7 @@
       "desc": "使用精确的客户端 ID 查询被封禁对象。"
     },
     "filter_like_clientid": {
-      "desc": "使用模糊客户端 ID 查询被封禁对象。"
+      "desc": "使用客户端 ID 正则表达式查询被封禁对象。"
     },
     "filter_like_peerhost": {
       "desc": "使用模糊 IP 地址查询被封禁对象。"
