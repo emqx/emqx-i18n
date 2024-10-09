@@ -3222,7 +3222,7 @@
       "label": "日志限流时间窗口"
     },
     "cluster_quic_lb_mode": {
-      "desc": "QUIC stack 负载均衡模式\n- 0: 禁用 (默认)\n- 1: server_ip\n- 2: server_id_fixed",
+      "desc": "QUIC stack 负载均衡模式\n- 0: 禁用 (默认)\n- 1: server_ip\n- 2: server_id_fixed\n- N: 当 N>2 时，server_id_fixed 并且 server_id 为 N\n- IfName: 当 IfName 为字符串时，server_id 将设置为接口 IfName 上的第一个 IP，仅支持 IPv4",
       "label": " QUIC stack 负载均衡模式 "
     },
     "rpc_client_num": {
@@ -9800,10 +9800,16 @@
       "desc": "当 HTTP 请求失败时的最大重试次数。",
       "label": "HTTP 请求最大重试次数"
     },
+    "connect_timeout": {
+      "desc": "连接到 IoTDB Thrift 服务器的超时时间。"
+    },
     "desc_config": {
       "desc": "Apache IoTDB 连接器的配置。",
       "label": "IoTDB 连接器配置"
-    }
+    },
+    "recv_timeout": {
+      "desc": "IoTDB Thrift server 响应超时时间。"
+    },
   },
   "emqx_bridge_mqtt_pubsub_schema": {
     "action_parameters": {
