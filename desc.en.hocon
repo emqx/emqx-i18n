@@ -194,7 +194,7 @@
       "label": "Client Information Authentication"
     },
     "is_match": {
-      "desc": "One Variform expression or an array of expressions to evaluate with a set of pre-bound variables derived from the client information.\nSupported variables:\n- `username`: the username of the client.\n- `clientid`: the client ID of the client.\n- `client_attrs.*`: the client attributes of the client.\n- `peerhost`: the IP address of the client.\n- `cert_subject`: the subject of the TLS certificate.\n- `cert_common_name`: the issuer of the TLS certificate.\nIf the expression(s) all yields the string value `'true'`, then the associated `result` is returned from this authenticator.\nIf any expression yields the other than `'true'`, then the current check is skipped.",
+      "desc": "One Variform expression or an array of expressions to evaluate with a set of pre-bound variables derived from the client information.\nSupported variables:\n- `username`: the username of the client.\n- `password`: the password of the client.\n- `clientid`: the client ID of the client.\n- `client_attrs.*`: the client attributes of the client.\n- `peerhost`: the IP address of the client.\n- `cert_subject`: the subject of the TLS certificate.\n- `cert_common_name`: the issuer of the TLS certificate.\n- `zone`: the config zone associated with the listener from which the client is accepted.\nIf the expression(s) all yields the string value `'true'`, then the associated `result` is returned from this authenticator.\nIf any expression yields the other than `'true'`, then the current check is skipped.",
       "label": "Match Conditions"
     },
     "result": {
@@ -2538,12 +2538,18 @@
     "config_zoneId": {
       "desc": "Timezone for IoTDB Thrift session"
     },
+    "connect_timeout": {
+      "desc": "Timeout for connecting to the IoTDB Thrift server"
+    },
     "desc_config": {
       "desc": "Configuration for Apache IoTDB bridge.",
       "label": "IoTDB Bridge Configuration"
     },
     "pool_size": {
       "desc": "Size for the IoTDB Thrift connection pool"
+    },
+    "recv_timeout": {
+      "desc": "Timeout for IoTDB Thrift server response"
     },
     "server": {
       "desc": "The address of the IoTDB Thrift server (host:port)"
@@ -4240,6 +4246,10 @@
     "mqtt_topic": {
       "desc": "MQTT topic or topic filter as data source (action input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in the remote system.",
       "label": "Source MQTT Topic"
+    },
+    "undefined_vars_as_null": {
+      "desc": "When writing to databases, treat undefined variables as NULL.\nWhen this option is enabled, if undefined variables (like ${var}) are used in templates, they will be replaced with \"NULL\" instead of the string \"undefined\". If this option is not enabled (default), the string \"undefined\" might be inserted.\nThis option should always be `true` if possible; the default value `false` is only to ensure backward compatibility.",
+      "label": "Undefined Vars as Null"
     }
   },
   "emqx_cluster_link_schema": {
@@ -4436,7 +4446,7 @@
       "label": "Cluster Protocol Distribution"
     },
     "cluster_quic_lb_mode": {
-      "desc": "QUIC stack LB Mode\n- 0: disabled (Default)\n- 1: server_ip\n- 2: server_id_fixed",
+      "desc": "QUIC stack LB Mode\n- 0: disabled (Default)\n- 1: server_ip\n- 2: server_id_fixed\n- N: when N>2 server_id_fixed and server_id is N\n- IfName: when IfName is string, server_id will be set to the first ip on interface IfName, ipv4 only",
       "label": " QUIC stack LB Mode "
     },
     "cluster_static_seeds": {
@@ -5284,7 +5294,7 @@
   },
   "emqx_dashboard_sso_oidc_api": {
     "code_callback": {
-      "desc": "The callback path for the OIDC authorization server.."
+      "desc": "The callback path for the OIDC authorization server."
     }
   },
   "emqx_dashboard_sso_saml": {
@@ -5503,9 +5513,9 @@
       "desc": "Get the list of durable queues.",
       "label": "Durable Queues"
     },
-    "durable_queues_put": {
-      "desc": "Create a durable queue.",
-      "label": "Create Durable Queue"
+    "durable_queues_post": {
+      "desc": "Declare new durable queue.",
+      "label": "Declare Durable Queue"
     },
     "param_queue_id": {
       "desc": "The ID of the durable queue.",
@@ -6729,16 +6739,16 @@
       "desc": "Query the banned objects with an exact client ID."
     },
     "filter_like_clientid": {
-      "desc": "Fuzzy query banned objects with a client ID."
+      "desc": "Fuzzy query banned objects with a regular expression for client ID."
     },
     "filter_like_peerhost": {
-      "desc": "Fuzzy query banned objects with an IP address."
+      "desc": "Fuzzy query banned objects with a regular expression for IP address."
     },
     "filter_like_peerhost_net": {
-      "desc": "Fuzzy query banned objects with a CIDR."
+      "desc": "Fuzzy query banned objects with a regular expression for CIDR."
     },
     "filter_like_username": {
-      "desc": "Fuzzy query banned objects with an username."
+      "desc": "Fuzzy query banned objects with a regular expression for username."
     },
     "filter_peerhost": {
       "desc": "Query the banned objects with an exact IP address."
