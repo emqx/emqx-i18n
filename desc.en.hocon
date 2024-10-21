@@ -4446,7 +4446,7 @@
       "label": "Cluster Protocol Distribution"
     },
     "cluster_quic_lb_mode": {
-      "desc": "QUIC stack LB Mode\n- 0: disabled (Default)\n- 1: server_ip\n- 2: server_id_fixed\n- N: when N>2 server_id_fixed and server_id is N\n- IfName: when IfName is string, server_id will be set to the first ip on interface IfName, ipv4 only",
+      "desc": "QUIC stack LB Mode\n- 0: disabled (Default)\n- 1: server_ip\n- 2: server_id_fixed\n- N: when N>2 server_id_fixed and server_id is N\n- IfName: when IfName is string, server_id will be set to the first ip on interface IfName, ipv4 only.",
       "label": " QUIC stack LB Mode "
     },
     "cluster_static_seeds": {
