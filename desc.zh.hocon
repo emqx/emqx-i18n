@@ -5439,25 +5439,25 @@
       "label": "封禁对象"
     },
     "filter_clientid": {
-      "desc": "使用精确的客户端 ID 查询被封禁对象。"
+      "desc": "使用精确的客户端 ID 查询封禁规则。"
     },
     "filter_like_clientid": {
-      "desc": "使用客户端 ID 正则表达式来匹配查询被封禁对象。"
+      "desc": "使用客户端 ID 正则表达式来匹配查询封禁规则。"
     },
     "filter_like_peerhost": {
-      "desc": "使用 IP 地址正则表达式来匹配查询被封禁对象。"
+      "desc": "使用 IP 地址正则表达式来匹配查询被封禁规则。"
     },
     "filter_like_peerhost_net": {
-      "desc": "使用 CIDR 正则表达式来匹配查询被封禁对象。"
+      "desc": "使用 CIDR 正则表达式来匹配查询被封禁规则。"
     },
     "filter_like_username": {
-      "desc": "使用用户名正则表达式来匹配查询被封禁对象。"
+      "desc": "使用用户名正则表达式来匹配查询被封禁规则。"
     },
     "filter_peerhost": {
-      "desc": "使用精确的 IP 地址查询被封禁对象。"
+      "desc": "使用精确的 IP 地址查询封禁规则。"
     },
     "filter_username": {
-      "desc": "使用精确的用户名查询被封禁对象。"
+      "desc": "使用精确的用户名查询封禁规则。"
     }
   },
   "emqx_mgmt_api_clients": {
