@@ -6055,7 +6055,7 @@
       "desc": "FDB health check interval when the last status is `unavailable`, we assume this status was caused by network or cluster jitter and attempt to wait for it to be healed"
     },
     "waiting_check_times": {
-      "desc": "The maximum number of times we wait for the status to become healthy"
+      "desc": "The maximum number of health check attempts while waiting for the status to recover to healthy."
     }
   },
   "emqx_ft_api": {
