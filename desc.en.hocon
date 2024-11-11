@@ -546,6 +546,26 @@
       "desc": "Import users into authenticator in global authentication chain.",
       "label": "Global import users into authenticator"
     },
+    "import_result_failed": {
+      "desc": "Total number of users whose import failed.",
+      "label": "Failed"
+    },
+    "import_result_override": {
+      "desc": "Total number of users successfully imported as overrides.",
+      "label": "Override"
+    },
+    "import_result_skipped": {
+      "desc": "Total number of users skipped because imported users are identical to existing users.",
+      "label": "Skipped"
+    },
+    "import_result_succ": {
+      "desc": "Total number of users successfully imported with new records.",
+      "label": "Success"
+    },
+    "import_result_total": {
+      "desc": "Total number of users contained in the file.",
+      "label": "Total"
+    },
     "listeners_listener_id_authentication_id_import_users_post": {
       "desc": "Import users into authenticator in listener authentication chain.",
       "label": "Import users into authenticator in listener"
@@ -1731,6 +1751,10 @@
       "desc": "Datalayers password.",
       "label": "Password"
     },
+    "pool_size": {
+      "desc": "Size of the connection pool towards the bridge target service.",
+      "label": "Connection Pool Size"
+    },
     "precision": {
       "desc": "Datalayers time precision.",
       "label": "Time Precision"
@@ -2409,6 +2433,10 @@
       "desc": "InfluxDB password.",
       "label": "Password"
     },
+    "pool_size": {
+      "desc": "Size of the connection pool towards the bridge target service.",
+      "label": "Connection Pool Size"
+    },
     "precision": {
       "desc": "InfluxDB time precision.",
       "label": "Time Precision"
@@ -2633,7 +2661,7 @@
       "label": "Key Encoding Mode"
     },
     "consumer_max_batch_bytes": {
-      "desc": "Set how many bytes to pull from Kafka in each fetch request. Please note that if the configured value is smaller than the message size in Kafka, it may negatively impact the fetch performance.",
+      "desc": "Set how many bytes to pull from Kafka in each fetch request.\nMessages are fetched in batches by the consumer, and if the first record batch in the first non-empty\npartition of the fetch is larger than this value, the record batch will still be returned to ensure\nthat the consumer can make progress. As such, this is not an absolute maximum. Set `1` for minimal latency.",
       "label": "Fetch Bytes"
     },
     "consumer_max_rejoin_attempts": {
@@ -2845,6 +2873,10 @@
     "group_id": {
       "desc": "Consumer group identifier to be used for this source.  If omitted, one based off the source name will be automatically generated.",
       "label": "Custom Consumer Group Id"
+    },
+    "max_wait_time": {
+      "desc": "Maximum amount of time that is waited for the Kafka broker to send a fetch response.",
+      "label": "Max Wait Time"
     },
     "source_parameters": {
       "desc": "Source specific configs.",
@@ -8038,6 +8070,9 @@
     }
   },
   "emqx_retainer_schema": {
+    "allow_never_expire": {
+      "desc": "If true, retained messages set to never expire (i.e., whose `Message-Expiry-Interval = 0`) are not affected by the expiry time override.  This configuration only takes effect when `msg_expiry_interval_override` is set."
+    },
     "backend": {
       "desc": "Settings for the database storing the retained messages."
     },
@@ -8077,8 +8112,14 @@
     "msg_clear_interval": {
       "desc": "The time interval for checking and clearing expired retained messages. This can prevent expired retained messages from being stored for a long time.\n\nIf `msg_clear_interval` is set to 0, that is, expired retained messages are not actively checked regularly, EMQX will only check and delete expired retained messages when preparing for delivery."
     },
+    "msg_clear_limit": {
+      "desc": "The maximum number of expired messages cleared at once each `msg_clear_interval`. Settings reasonable limit can prevent the clearing process from running for too long and consume too much resources."
+    },
     "msg_expiry_interval": {
       "desc": "Expired retained messages will not be delivered again, and a setting of 0 means that retained messages will never expire.\n\nHowever, if the `Message-Expiry-Interval` property is specified in the MQTT message, the value of that property prevails."
+    },
+    "msg_expiry_interval_override": {
+      "desc": "If set, this value will take precedence over any `Message-Expiry-Interval` property specified in retained MQTT messages, allowing messages to expire earlier if necessary.  This override only applies to the garbage collection process: it does not affect the expiry time of messages being written nor that of already written messages while iterating over them.  Therefore, messages that are candidate for garbage collection when overridden may still be visible when subscribing to retained topics."
     },
     "stop_publish_clear_msg": {
       "desc": "When the retained flag of the `PUBLISH` message is set and Payload is empty,\nwhether to continue to publish the message.\nSee:\nhttp://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc398718038"
@@ -8788,8 +8829,12 @@
       "desc": "Descriptive text.",
       "label": "Description"
     },
+    "durable_sessions": {
+      "desc": "Settings related to the durable session feature.",
+      "label": "Durable sessoins"
+    },
     "durable_sessions_enable": {
-      "desc": "Use durable storage for client sessions persistence.\nIf enabled, sessions configured to outlive client connections, along with their corresponding messages, will be durably stored and survive broker downtime.\n\n:::warning\nThis feature is currently experimental. Please don't enable it in the production environments that contain valuable data.\n:::",
+      "desc": "Use durable storage for client sessions persistence.\nIf enabled, sessions configured to outlive client connections, along with their corresponding messages, will be durably stored and survive broker downtime.\n\n:::warning\nMessages sent to the durable sessions are saved on disc.\nThis inevitably limits the overall throughput of the system.\n:::",
       "label": "Enable session persistence"
     },
     "durable_storage": {
@@ -9388,6 +9433,18 @@
     "session_ds_batch_size": {
       "desc": "This value affects the flow control for the persistent sessions.\nPersistent session queries the durable message storage in batches.\nThis value specifies size of the batch.\n\nNote: larger batches generally improve the throughput and overall performance of the system, but increase RAM usage per client.",
       "label": "Batch size"
+    },
+    "session_ds_heartbeat_interval": {
+      "desc": "Durable sessions back up their state on disc every heartbeat interval.\n\nHeartbeat interval is also taken into account during garbage collection of expired sessions.\nIt is added to the session expiry time as a safety margin when precise time of session termination is not precisely known.",
+      "label": "Durable session heartbeat interval"
+    },
+    "session_ds_idle_poll_interval": {
+      "desc": "Expiry interval for poll requests sent by durable sessions to the storage.",
+      "label": "Durable session idle poll interval"
+    },
+    "session_ds_message_retention_period": {
+      "desc": "Broker keeps messages sent to the durable sessions for this period of time.",
+      "label": "Message retenetion period"
     },
     "session_ds_session_gc_batch_size": {
       "desc": "The size of each batch of expired persistent sessions to be garbage collected per iteration.",
