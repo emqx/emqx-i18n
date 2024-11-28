@@ -1530,6 +1530,10 @@
       "desc": "InfluxDB 密码。",
       "label": "密码"
     },
+    "pool_size": {
+      "desc": "连接池的大小，指向桥接目标服务的连接池大小。",
+      "label": "连接池大小"
+    },
     "precision": {
       "desc": "InfluxDB 时间精度。",
       "label": "时间精度"
@@ -1715,7 +1719,7 @@
       "label": "Key 编码模式"
     },
     "consumer_max_batch_bytes": {
-      "desc": "设置每次从 Kafka 拉取数据的字节数。如该配置小于 Kafka 消息的大小，可能会影响消费性能。",
+      "desc": "设置每次从 Kafka 拉取数据的字节数。\n消息由消费者批量拉取，如果第一个非空\n分区中的第一个记录批次大于此值，记录批次仍将被返回，以确保\n消费者能够继续进程。因此，这不是绝对的最大值。设置为 1 可实现最低延迟。",
       "label": "拉取字节数"
     },
     "consumer_max_rejoin_attempts": {
@@ -4730,6 +4734,14 @@
     },
     "size_gc_percent": {
       "desc": "确定需要删除的数据量，占最大大小的百分比。"
+    },
+    "write_buffer_flush_interval": {
+      "desc": "刷新写入缓冲区的间隔时间。",
+      "label": "刷新间隔"
+    },
+    "write_buffer_max_items": {
+      "desc": "写入缓冲区中可存储的最大数据项数。",
+      "label": "最大数据项数"
     }
   },
   "emqx_fdb_mgmt_cli_api": {
@@ -7660,10 +7672,6 @@
       "desc": "受信任的 PEM 格式 CA  证书捆绑文件<br/>\n此文件中的证书用于验证 TLS 对等方的证书。\n如果要信任新 CA，请将新证书附加到文件中。\n无需重启 EMQX 即可加载更新的文件，因为系统会定期检查文件是否已更新（并重新加载）<br/>\n注意：从文件中失效（删除）证书不会影响已建立的连接。",
       "label": "CA 证书文件"
     },
-    "common_ssl_opts_schema_cacerts": {
-      "desc": "启用时，使用系统信任的 CA 证书来建立 TLS 连接。",
-      "label": "使用系统 CA 证书"
-    },
     "common_ssl_opts_schema_certfile": {
       "desc": "PEM 格式证书链文件<br/>\n此文件中的证书应与证书颁发链的顺序相反。也就是说，主机的证书应该放在文件的开头，\n然后是直接颁发者 CA 证书，依此类推，一直到根 CA 证书。\n根 CA 证书是可选的，如果想要添加，应加到文件到最末端。",
       "label": "证书文件"
@@ -7981,8 +7989,12 @@
       "label": "TCP keepalive 选项"
     },
     "fields_tcp_opts_nodelay": {
-      "desc": "连接的 TCP_NODELAY 标识",
-      "label": "TCP_NODELAY"
+      "desc": "连接的 `TCP_NODELAY` 标志。\n当设置为 `true` 时，无论数据大小，都会立即发送数据。",
+      "label": "无延迟"
+    },
+     "fields_tcp_opts_nolinger": {
+      "desc": "启用时，`SO_LINGER` 标志设置为 `(onoff=1, linger=0)`，这意味着 TCP socket 将立即关闭，发送 TCP-RST 包，丢弃任何未发送的数据，并跳过正常关闭步骤，包括 CLOSE_WAIT、FIN_WAIT 和 TIME_WAIT。When enabled, `SO_LINGER` flag is set as `(onoff=1, linger=0)`, which means the TCP socket is to be closed immediately by sending a TCP-RST packet,\ndiscarding any unsent data and skipping the graceful close steps, including CLOSE_WAIT, FIN_WAIT, and TIME_WAIT.",
+      "label": "无延迟关闭"
     },
     "fields_tcp_opts_recbuf": {
       "desc": "连接的 TCP 接收缓冲区（OS 内核）。",
@@ -10371,7 +10383,7 @@
       "label": "消息传递模式"
     },
     "exchange": {
-      "desc": "消息将被发送到的 RabbitMQ 交换机的名称。",
+      "desc": "消息将被发送到的 RabbitMQ 交换机的名称。支持使用模版（例如：`e-${payload.e}`）。",
       "label": "交换机"
     },
     "exchange_type": {
@@ -10403,7 +10415,7 @@
       "label": "发布确认超时时间"
     },
     "routing_key": {
-      "desc": "用于将消息路由到 RabbitMQ 交换机中正确队列的路由键。",
+      "desc": "用于将消息路由到 RabbitMQ 交换机中正确队列的路由键。支持使用模版，（例如：`k-${payload.r}`）。",
       "label": "路由键"
     },
     "server": {
@@ -10944,6 +10956,10 @@
     "password": {
       "desc": "Datalayers 密码。",
       "label": "密码"
+    },
+    "pool_size": {
+      "desc": "连接池的大小，指向桥接目标服务的连接池大小。",
+      "label": "连接池大小"
     },
     "precision": {
       "desc": "Datalayers 时间精度。",
