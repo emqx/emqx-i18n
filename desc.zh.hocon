@@ -11196,7 +11196,7 @@
       "label": "客户端信息认证"
     },
     "is_match": {
-      "desc": "一个 Variform 表达式或表达式数组，用于评估一组从客户端信息派生的预绑定变量。\n支持的变量：\n- `username`: 客户端的用户名。\n- `clientid`: 客户端的客户端。\n- `client_attrs.*`: 客户端的客户端属性。\n- `peerhost`: 客户端的 IP 地址。\n- `cert_subject`: TLS 证书的主体\n- `cert_common_name`: TLS 证书通用名称。\n如果所有表达式的结果都是字符串值 'true'，则从此认证器返回关联的 result。\n如果任何表达式的结果不是 'true'，则跳过当前检查。",
+      "desc": "一个 Variform 表达式或表达式数组，用于评估一组从客户端信息派生的预绑定变量。\n支持的变量：\n- `username`: 客户端的用户名。\n- `clientid`: 客户端的 id。\n- `client_attrs.*`: 客户端的客户端属性。\n- `peerhost`: 客户端的 IP 地址。\n- `cert_subject`: TLS 证书的主体\n- `cert_common_name`: TLS 证书通用名称。\n如果所有表达式的结果都是字符串值 'true'，则从此认证器返回关联的 result。\n如果任何表达式的结果不是 'true'，则跳过当前检查。",
       "label": "匹配条件"
     },
     "result": {
