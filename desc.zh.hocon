@@ -472,6 +472,26 @@
       "desc": "为全局认证链上的指定认证器导入用户数据。",
       "label": "为全局认证链上的指定认证器导入用户数据"
     },
+     "import_result_failed": {
+      "desc": "用户数据导入失败的用户总数。",
+      "label": "失败"
+    },
+    "import_result_override": {
+      "desc": "以覆盖方式成功导入用户数据的用户总数。",
+      "label": "覆盖"
+    },
+    "import_result_skipped": {
+      "desc": "因导入用户数据与现有用户数据相同而被跳过的用户总数。",
+      "label": "跳过"
+    },
+    "import_result_succ": {
+      "desc": "成功导入为新记录的用户总数。",
+      "label": "成功"
+    },
+    "import_result_total": {
+      "desc": "文件中包含的用户总数。",
+      "label": "总数"
+    },
     "listeners_listener_id_authentication_id_import_users_post": {
       "desc": "为监听器认证链上的指定认证器导入用户数据。",
       "label": "为监听器认证链上的指定认证器导入用户数据"
@@ -1510,6 +1530,10 @@
       "desc": "InfluxDB 密码。",
       "label": "密码"
     },
+    "pool_size": {
+      "desc": "连接池的大小，指向桥接目标服务的连接池大小。",
+      "label": "连接池大小"
+    },
     "precision": {
       "desc": "InfluxDB 时间精度。",
       "label": "时间精度"
@@ -1695,7 +1719,7 @@
       "label": "Key 编码模式"
     },
     "consumer_max_batch_bytes": {
-      "desc": "设置每次从 Kafka 拉取数据的字节数。如该配置小于 Kafka 消息的大小，可能会影响消费性能。",
+      "desc": "设置每次从 Kafka 拉取数据的字节数。\n消息由消费者批量拉取，如果第一个非空\n分区中的第一个记录批次大于此值，记录批次仍将被返回，以确保\n消费者能够继续进程。因此，这不是绝对的最大值。设置为 1 可实现最低延迟。",
       "label": "拉取字节数"
     },
     "consumer_max_rejoin_attempts": {
@@ -4320,6 +4344,176 @@
       "label": "模式类型"
     }
   },
+  "emqx_event_history_api": {
+    "authz_action_type": {
+      "desc": "授权动作的类型。"
+    },
+    "authz_from": {
+      "desc": "授权器的类型名称。"
+    },
+    "clean_start": {
+      "desc": "客户端是否为清除会话启动。",
+      "label": "清除会话启动"
+    },
+    "client_id": {
+      "desc": "客户端 ID。",
+      "label": "客户端 ID"
+    },
+    "dropped_msg_num": {
+      "desc": "已被丢弃的消息的数量。",
+      "label": "被丢弃的消息数量"
+    },
+    "eh_clear": {
+      "desc": "清除所有事件历史数据。\n注意：此操作风险较大。\n仅删除数据时，管理器和 GC 会尝试重新获取锁，因为锁信息丢失，\n有效空间缓存大小只能在下次刷新时更新。\n包含 FDB 的租户时，GC 将永久关闭。"
+    },
+    "eh_client_list": {
+      "desc": "已连接到消息服务器的客户端列表。",
+      "label": "事件历史客户端列表"
+    },
+    "eh_metrics": {
+      "desc": "获取内部资源的指标"
+    },
+    "eh_msg_list": {
+      "desc": "已发布到消息服务器的消息列表。",
+      "label": "事件历史消息列表"
+    },
+    "eh_stats": {
+      "desc": "事件历史租户统计。"
+    },
+    "event_history_get_config": {
+      "desc": "显示当前的事件历史配置。"
+    },
+    "event_history_update_config": {
+      "desc": "更新事件历史配置。"
+    },
+    "expiry_interval": {
+      "desc": "会话的到期间隔。",
+      "label": "会话到期间隔"
+    },
+    "force_delete": {
+      "desc": "是否删除 FDB 中对应的租户。"
+    },
+    "gte_time": {
+      "desc": "事件的开始时间（使用 Unix 毫秒或 rfc3339）。",
+      "label": "开始时间"
+    },
+    "guid": {
+      "desc": "会话或消息的 GUID"
+    },
+    "has_next": {
+      "desc": "指示是否有下一页"
+    },
+    "ip": {
+      "desc": "客户端的 IP 地址。",
+      "label": "IP"
+    },
+    "is_anonymous": {
+      "desc": "若用户为匿名，则为 True。"
+    },
+    "is_persistent": {
+      "desc": "指示是否为持久会话。"
+    },
+    "is_superuser": {
+      "desc": "若为超级用户，则为 True。"
+    },
+    "keepalive": {
+      "desc": "客户端的 keepalive 间隔。",
+      "label": "Keepalive"
+    },
+    "lte_time": {
+      "desc": "事件的结束时间（使用 Unix 毫秒或 rfc3339）。",
+      "label": "结束时间"
+    },
+    "message_id": {
+      "desc": "消息 ID。",
+      "label": "消息 ID"
+    },
+    "qos": {
+      "desc": "消息的 QoS 等级。",
+      "label": "QoS"
+    },
+    "reason": {
+      "desc": "此事件的原因。",
+      "label": "原因"
+    },
+    "result": {
+      "desc": "此事件的结果。"
+    },
+    "retain": {
+      "desc": "保留标志"
+    },
+    "reverse": {
+      "desc": "如果为 True，事件将按时间序列倒序返回，从时间范围的末尾开始。"
+    },
+    "stats_count": {
+      "desc": "统计计数。"
+    },
+    "stats_size": {
+      "desc": "统计大小。"
+    },
+    "tenant": {
+      "desc": "租户名称。"
+    },
+    "time": {
+      "desc": "事件触发的毫秒时间。",
+      "label": "时间"
+    },
+    "topic": {
+      "desc": "消息发布的主题。",
+      "label": "主题"
+    },
+    "type": {
+      "desc": "事件历史客户端类型。",
+      "label": "类型"
+    },
+    "username": {
+      "desc": "用于此事件的用户名。"
+    }
+  },
+  "emqx_event_history_schema": {
+    "alarm_percent": {
+      "desc": "达到最大存储大小的百分比时发出警报。"
+    },
+    "buffer": {
+      "desc": "写入工作线程的配置。"
+    },
+    "enable": {
+      "desc": "启用此功能"
+    },
+    "event_history": {
+      "desc": "记录来自客户端或消息的事件的功能。"
+    },
+    "events": {
+      "desc": "要记录的事件。"
+    },
+    "expiry_time": {
+      "desc": "每条数据的过期时间。"
+    },
+    "gc": {
+      "desc": "GC 配置。"
+    },
+    "gc_interval": {
+      "desc": "两次 GC 检查之间的时间间隔。"
+    },
+    "gc_percent": {
+      "desc": "当存储大小超过最大限制时，需要删除的存储数据百分比。"
+    },
+    "max_size": {
+      "desc": "此租户的事件最大存储大小（字节）。"
+    },
+    "query_quantity_limit": {
+      "desc": "查询的最大读取数量。"
+    },
+    "query_time_limit": {
+      "desc": "查询的时间限制。"
+    },
+    "storage": {
+      "desc": "存储配置"
+    },
+    "tenant": {
+      "desc": "如果该值不为空，则所有数据将存储在租户中，该租户的名称由该值和前缀创建。\n租户配置为只读，在运行时更新将失败。"
+    }
+  },
   "emqx_eviction_agent_api": {
     "node_eviction_status_get": {
       "desc": "获取节点驱逐状态",
@@ -4485,6 +4679,149 @@
     },
     "exproto_server": {
       "desc": "配置 ExProto 网关需要启动的 <code>ConnectionAdapter</code> 服务。\n该服务用于提供客户端的认证、发布、订阅和数据下行等功能。"
+    }
+  },
+  "emqx_fdb_ds_prometheus_api": {
+    "get_fdb_prom_data": {
+      "desc": "获取 FoundationDB Prometheus 指标。",
+      "label": "FoundationDB Prometheus 指标"
+    }
+  },
+  "emqx_fdb_ds_schema": {
+    "expiry_gc_interval": {
+      "desc": "清理过期数据的 GC 间隔时间。"
+    },
+    "gc": {
+      "desc": "GC 配置。"
+    },
+    "gc_max_size": {
+      "desc": "持久存储的总可用大小。"
+    },
+    "retainer_backend_fdb": {
+      "desc": "FoundationDB 持久存储 Retainer。",
+      "label": "FoundationDB 持久存储 Retainer"
+    },
+    "retainer_enable": {
+      "desc": "启用 FoundationDB Retainer 后端。",
+      "label": "启用"
+    },
+    "session_storage_backend_fdb": {
+      "desc": "FoundationDB 持久存储。",
+      "label": "FoundationDB 持久存储"
+    },
+    "session_storage_backend_fdb_enable": {
+      "desc": "启用 FoundationDB 持久存储后端。",
+      "label": "启用 FoundationDB Durable 持久存储后端"
+    },
+    "session_storage_backend_fdb_prefix": {
+      "desc": "FoundationDB 持久存储后端用于存储数据使用的键前缀。",
+      "label": "FoundationDB 健前缀"
+    },
+    "session_storage_backend_fdb_storage_mod": {
+      "desc": "在 FoundationDB 中存储消息数据的底层后端模块。",
+      "label": "FoundationDB DS 存储模块"
+    },
+    "session_storage_backend_fdb_storage_options": {
+      "desc": "FoundationDB 中存储消息数据的底层后端模块的配置选项。",
+      "label": "FoundationDB DS 存储选项"
+    },
+    "session_storage_backend_fdb_tenant": {
+      "desc": "FoundationDB 持久存储后端使用的租户。",
+      "label": "FoundationDB 租户"
+    },
+    "session_storage_backend_fdb_write_shard_number": {
+      "desc": "FoundationDB DS 写入分片数量。",
+      "label": "FoundationDB DS 写入分片数量"
+    },
+    "size_gc_interval": {
+      "desc": "GC 检查已用大小是否超过最大可用大小的时间间隔。"
+    },
+    "size_gc_percent": {
+      "desc": "确定需要删除的数据量，占最大大小的百分比。"
+    },
+    "write_buffer_flush_interval": {
+      "desc": "刷新写入缓冲区的间隔时间。",
+      "label": "刷新间隔"
+    },
+    "write_buffer_max_items": {
+      "desc": "写入缓冲区中可存储的最大数据项数。",
+      "label": "最大数据项数"
+    }
+  },
+  "emqx_fdb_mgmt_cli_api": {
+    "cluster_file": {
+      "desc": "集群文件的内容。"
+    },
+    "delete_fdb_cli": {
+      "desc": "禁用并停止。\n注意：\n1. 当前一个进程可能在其进程字典或 gen_server 状态中缓存了一个工作线程，无法清除。\n2. 租户同上。\n3. 驱动程序无法手动关闭或重启。"
+    },
+    "get_cluster_file": {
+      "desc": "获取当前集群文件的内容。"
+    },
+    "get_fdb_cli": {
+      "desc": "获取配置。"
+    },
+    "post_cluster_file": {
+      "desc": "更新集群文件的内容。"
+    },
+    "post_fdb_cli": {
+      "desc": "启用并启动"
+    }
+  },
+  "emqx_fdb_mgmt_cli_schema": {
+    "available_check_interval": {
+      "desc": "最后状态为 'available' 时的 FDB 健康检查间隔。"
+    },
+    "callbacks_on_external_threads": {
+      "desc": "如果设置，来自外部客户端库的回调可以从 FoundationDB 客户端库创建的线程调用。否则，回调将从用于添加回调的线程或网络线程调用。设置此选项在连接外部客户端时可以提高性能，但在所有环境中使用可能不安全。必须在设置网络之前设置该选项。警告：此功能目前被认为是实验性的。"
+    },
+    "circuit_breaker": {
+      "desc": "用于监控 FoundationDB 集群状态的后台服务器。"
+    },
+    "client_threads_per_version": {
+      "desc": "为每个加载的客户端版本生成多个工作线程。设置为大于 1 的值表示禁用本地客户端。"
+    },
+    "cluster_file": {
+      "desc": "集群文件的路径。"
+    },
+    "enable": {
+      "desc": "启用此功能。"
+    },
+    "external_client_library": {
+      "desc": "添加一个外部客户端库，以供多版本客户端 API 使用。必须在设置网络之前设置该选项。"
+    },
+    "max_watches": {
+      "desc": "设置允许在数据库连接上保留的活动监视器数量。增加该数值可能导致资源使用增加。减少该数值不会取消任何现有的活动监视器。默认值为 10000，不能超过 1000000。"
+    },
+    "tls_ca_path": {
+      "desc": "设置用于加载证书颁发机构捆绑包的文件。"
+    },
+    "tls_cert_path": {
+      "desc": "设置用于加载证书链的文件路径。"
+    },
+    "tls_key_path": {
+      "desc": "设置用于加载与自身证书对应的私钥文件路径。"
+    },
+    "tls_verify_peers": {
+      "desc": "设置对等证书字段的验证标准。"
+    },
+    "transaction_max_retry_delay": {
+      "desc": "设置在调用 `onError` 时的最大退避延迟（如果错误是可重试的）。此配置会设置该数据库每个事务的 `max_retry_delay` 选项。"
+    },
+    "transaction_retry_limit": {
+      "desc": "设置重试次数上限，超出该次数后，进一步调用 `onError` 将返回在最后一次重试中发生的错误代码。此项配置将设置此数据库创建的每个事务的 `retry_limit` 选项。"
+    },
+    "transaction_timeout": {
+      "desc": "设置超时时间（以毫秒为单位），超过该时间后，每个事务将自动取消。这会为数据库中创建的每个事务设置 `timeout` 选项。"
+    },
+    "unavailable_check_interval": {
+      "desc": "在尝试达到最大次数后，假定集群不可用，并可能使用更小的间隔进行检查。"
+    },
+    "waiting_check_interval": {
+      "desc": "当上次状态为 `不可用` 时的 FDB 健康检查间隔，假定该状态是由网络或集群抖动引起的，并尝试等待其恢复。"
+    },
+    "waiting_check_times": {
+      "desc": "等待状态恢复正常的最大健康检查次数。"
     }
   },
   "emqx_ft_api": {
@@ -5445,13 +5782,13 @@
       "desc": "使用客户端 ID 正则表达式来匹配查询封禁规则。"
     },
     "filter_like_peerhost": {
-      "desc": "使用 IP 地址正则表达式来匹配查询被封禁规则。"
+      "desc": "使用 IP 地址正则表达式来匹配查询封禁规则。"
     },
     "filter_like_peerhost_net": {
-      "desc": "使用 CIDR 正则表达式来匹配查询被封禁规则。"
+      "desc": "使用 CIDR 正则表达式来匹配查询封禁规则。"
     },
     "filter_like_username": {
-      "desc": "使用用户名正则表达式来匹配查询被封禁规则。"
+      "desc": "使用用户名正则表达式来匹配查询封禁规则。"
     },
     "filter_peerhost": {
       "desc": "使用精确的 IP 地址查询封禁规则。"
@@ -6672,6 +7009,9 @@
     }
   },
   "emqx_retainer_schema": {
+    "allow_never_expire": {
+      "desc": "如果为 true，设置为永不过期的保留消息（即 `Message-Expiry-Interval = 0`）将不会受到过期时间覆盖的影响。此配置仅在 `msg_expiry_interval_override` 设置时生效。"
+    },
     "backend": {
       "desc": "保留消息的存储后端"
     },
@@ -6707,6 +7047,12 @@
     },
     "msg_clear_interval": {
       "desc": "消息清理间隔。0 代表不进行清理"
+    },
+     "msg_clear_limit": {
+      "desc": "每次在 `msg_clear_interval` 期间清除的过期消息数量上限。设置合理的限制可以防止清理过程运行时间过长并消耗过多资源。"
+    },
+    "msg_expiry_interval_override": {
+      "desc": "如果设置了此值，它将优先于任何在保留的 MQTT 消息中指定的 `Message-Expiry-Interval` 属性，从而允许消息在必要时更早过期。此覆盖设置仅适用于垃圾回收过程：它不会影响正在写入的消息的过期时间，也不会影响在迭代过程中已经写入的消息的过期时间。因此，当覆盖时，可能会被垃圾回收的消息在订阅保留主题时仍然可见。"
     },
     "msg_expiry_interval": {
       "desc": "消息保留时间。0 代表永久保留"
@@ -7214,6 +7560,10 @@
       "desc": "S3 桶的名称。",
       "label": "存储桶"
     },
+    "bucket_access_method": {
+      "desc": "通过 HTTP API 访问存储桶的 HTTP 请求方法。",
+      "label": "存储桶访问方法"
+    },
     "host": {
       "desc": "S3 端点的主机。"
     },
@@ -7332,13 +7682,13 @@
       "desc": "指定要在 TLS 服务器名称指示扩展中使用的主机名。<br/>\n例如，当连接到 \"server.example.net\" 时，接受连接并执行 TLS 握手的真正服务器可能与 TLS 客户端最初连接到的主机不同，\n例如，当连接到 IP 地址时，或者当主机具有多个可解析的 DNS 记录时<br/>\n如果未指定，它将默认为使用的主机名字符串\n建立连接，除非使用 IP 地址<br/>\n然后，主机名也用于对等机的主机名验证证书<br/>\n特殊值 <code>disable</code> 阻止发送服务器名称指示扩展，并禁用主机名验证检查。",
       "label": "服务器名称指示"
     },
+    "clientid_override": {
+      "desc": "单行表达式，用于评估一组预定义的字符串函数（如规则引擎 SQL 语句中的函数）。\n该表达式可以是带有嵌套调用作为参数的函数调用，也可以是直接的变量引用。\n目前，它不支持用户自定义变量绑定（如 `var a=1`）或用户自定义函数。\n例如，要提取通过点分隔的客户端 ID 前缀：`nth(1, tokens(username, '.'))`。\n\n预绑定的变量有：\n- `cn`：客户端的 TLS 证书公共名（Common Name）。\n- `dn`：客户端的 TLS 证书区分名（Distinguished Name，主体）。\n- `clientid`：原始 MQTT 客户端 ID。\n- `username`：MQTT 客户端的用户名。\n- `client_attrs.{NAME}`：通过每个配置 `client_attrs_init` 初始化的客户端属性。\n\n你可以在 EMQX 文档中阅读更多关于 variform 表达式的信息。",
+      "label": "客户端 ID 覆盖表达式"
+    },
     "common_ssl_opts_schema_cacertfile": {
       "desc": "受信任的 PEM 格式 CA  证书捆绑文件<br/>\n此文件中的证书用于验证 TLS 对等方的证书。\n如果要信任新 CA，请将新证书附加到文件中。\n无需重启 EMQX 即可加载更新的文件，因为系统会定期检查文件是否已更新（并重新加载）<br/>\n注意：从文件中失效（删除）证书不会影响已建立的连接。",
       "label": "CA 证书文件"
-    },
-    "common_ssl_opts_schema_cacerts": {
-      "desc": "启用时，使用系统信任的 CA 证书来建立 TLS 连接。",
-      "label": "使用系统 CA 证书"
     },
     "common_ssl_opts_schema_certfile": {
       "desc": "PEM 格式证书链文件<br/>\n此文件中的证书应与证书颁发链的顺序相反。也就是说，主机的证书应该放在文件的开头，\n然后是直接颁发者 CA 证书，依此类推，一直到根 CA 证书。\n根 CA 证书是可选的，如果想要添加，应加到文件到最末端。",
@@ -7657,8 +8007,12 @@
       "label": "TCP keepalive 选项"
     },
     "fields_tcp_opts_nodelay": {
-      "desc": "连接的 TCP_NODELAY 标识",
-      "label": "TCP_NODELAY"
+      "desc": "连接的 `TCP_NODELAY` 标志。\n当设置为 `true` 时，无论数据大小，都会立即发送数据。",
+      "label": "无延迟"
+    },
+     "fields_tcp_opts_nolinger": {
+      "desc": "启用时，`SO_LINGER` 标志设置为 `(onoff=1, linger=0)`，这意味着 TCP socket 将立即关闭，发送 TCP-RST 包，丢弃任何未发送的数据，并跳过正常关闭步骤，包括 CLOSE_WAIT、FIN_WAIT 和 TIME_WAIT。When enabled, `SO_LINGER` flag is set as `(onoff=1, linger=0)`, which means the TCP socket is to be closed immediately by sending a TCP-RST packet,\ndiscarding any unsent data and skipping the graceful close steps, including CLOSE_WAIT, FIN_WAIT, and TIME_WAIT.",
+      "label": "无延迟关闭"
     },
     "fields_tcp_opts_recbuf": {
       "desc": "连接的 TCP 接收缓冲区（OS 内核）。",
@@ -8152,6 +8506,18 @@
     "session_ds_min_batch_size": {
       "desc": "该值影响持久会话的消息流控制。\n当 FreeSpace 变量的值大于此值或 ReceiveMaximum / 2（以较小者为准）时，会话将查询 DB 中的新消息。\n\nFreeSpace 计算为会话的 ReceiveMaximum 减去在途消息数。"
     },
+    "session_ds_heartbeat_interval": {
+      "desc": "持久会话每个心跳间隔将其状态备份到磁盘上。\n\n在对过期会话进行垃圾回收时，系统也会考虑心跳间隔的时间。\n当会话终止的精确时间不确定时，心跳间隔会作为安全边际添加到会话过期时间中。",
+      "label": "持久会话心跳间隔"
+    },
+    "session_ds_idle_poll_interval": {
+      "desc": "持久会话向存储发送轮询请求的过期间隔时间。",
+      "label": "持久会话空闲轮询间隔"
+    },
+    "session_ds_message_retention_period": {
+      "desc": "消息服务器会在此时间段内保留发送到持久会话的消息。",
+      "label": "消息保留期"
+    },
     "session_ds_session_gc_batch_size": {
       "desc": "每次迭代要垃圾回收的过期持久会话的批量大小。",
       "label": "会话垃圾收集批次大小"
@@ -8183,8 +8549,12 @@
     "broker_session_history_retain": {
       "desc": "保留会话注册历史记录的持续时间。将此值设置为大于 0s 的值会增加内存使用并影响性能。\n这个保留的历史记录可以用来监控过去配置的持续时间内注册了多少会话。\n注意：如果 enable_session_registry 设置为 false，则此配置无效。<br/>\n注意：如果客户端使用随机客户端 ID，则不建议启用此功能，至少不是长时间保留。<br/>\n注意：在集群中，集群内节点中的最低（但大于 0s）值将生效。"
     },
+     "durable_sessions": {
+      "desc": "会话持久化功能的相关设置。",
+      "label": "会话持久化"
+    },
     "durable_sessions_enable": {
-      "desc": "使用持久存储来持久化客户端会话。\n如果启用，会话和相应的消息将被持久存储，并在服务器停机时保留。",
+      "desc": "使用持久存储来持久化客户端会话。\n如果启用，会话和相应的消息将被持久存储，并在服务器停机时保留。\n\n:::warning\n发送到持久会话的消息会被存储在磁盘上。\n这不可避免地限制了系统的总体吞吐量。\n:::",
       "label": "启用会话持久化"
     },
     "durable_storage": {
@@ -9987,7 +10357,11 @@
     "group_id": {
       "desc": "用于此 Source 的消费者组标识符。如果省略，将自动生成一个基于 Source 名称的标识符。",
       "label": "自定义消费者组 ID"
-    }
+    },
+    "max_wait_time": {
+      "desc": "等待 Kafka broker 发送拉取响应的最长时间。",
+      "label": "最大等待时间"
+    },
   },
   "emqx_bridge_pulsar_pubsub_schema": {
     "action_parameters": {
@@ -10037,7 +10411,7 @@
       "label": "消息传递模式"
     },
     "exchange": {
-      "desc": "消息将被发送到的 RabbitMQ 交换机的名称。",
+      "desc": "消息将被发送到的 RabbitMQ 交换机的名称。支持使用模版（例如：`e-${payload.e}`）。",
       "label": "交换机"
     },
     "exchange_type": {
@@ -10069,7 +10443,7 @@
       "label": "发布确认超时时间"
     },
     "routing_key": {
-      "desc": "用于将消息路由到 RabbitMQ 交换机中正确队列的路由键。",
+      "desc": "用于将消息路由到 RabbitMQ 交换机中正确队列的路由键。支持使用模版，（例如：`k-${payload.r}`）。",
       "label": "路由键"
     },
     "server": {
@@ -10135,6 +10509,12 @@
     "s3_upload_parameters": {
       "desc": "上传操作的参数集。操作支持在 S3 桶名称、对象键和对象内容中使用模板。",
       "label": "S3 上传操作参数"
+    }
+  },
+  "emqx_ds_fdb_backend_schema": {
+    "backend": {
+      "desc": "一个使用 FDB 的简化后端，用于存储 MQTT 消息并优化低延迟性能。",
+      "label": "简化的持久存储 FDB 后端"
     }
   },
   "emqx_ds_schema": {
@@ -10605,6 +10985,10 @@
       "desc": "Datalayers 密码。",
       "label": "密码"
     },
+    "pool_size": {
+      "desc": "连接池的大小，指向桥接目标服务的连接池大小。",
+      "label": "连接池大小"
+    },
     "precision": {
       "desc": "Datalayers 时间精度。",
       "label": "时间精度"
@@ -10751,17 +11135,13 @@
       "desc": "获取持久队列列表。",
       "label": "持久队列列表"
     },
-    "durable_queues_put": {
-      "desc": "创建一个持久队列。",
-      "label": "创建持久队列"
+    "durable_queues_post": {
+      "desc": "声明新持久队列。",
+      "label": "声明持久队列"
     },
     "param_queue_id": {
       "desc": "持久队列的 ID。",
       "label": "队列 ID"
-    },
-    "durable_queues_post": {
-      "desc": "声明新持久队列。",
-      "label": "声明持久队列"
     }
   },
   "emqx_ds_shared_sub_schema": {
@@ -10816,7 +11196,7 @@
       "label": "客户端信息认证"
     },
     "is_match": {
-      "desc": "一个 Variform 表达式或表达式数组，用于评估一组从客户端信息派生的预绑定变量。\n支持的变量：\n- `username`: 客户端的用户名。\n- `password`：客户端的密码。\n- `clientid`: 客户端的客户端。\n- `client_attrs.*`: 客户端的客户端属性。\n- `peerhost`: 客户端的 IP 地址。\n- `cert_subject`: TLS 证书的主体\n- `cert_common_name`: TLS 证书通用名称。\n- `zone`：与接受客户端的监听器关联的配置区域。\n如果所有表达式的结果都是字符串值 'true'，则从此认证器返回关联的 result。\n如果任何表达式的结果不是 'true'，则跳过当前检查。",
+      "desc": "一个 Variform 表达式或表达式数组，用于评估一组从客户端信息派生的预绑定变量。\n支持的变量：\n- `username`: 客户端的用户名。\n- `clientid`: 客户端的 id。\n- `client_attrs.*`: 客户端的客户端属性。\n- `peerhost`: 客户端的 IP 地址。\n- `cert_subject`: TLS 证书的主体\n- `cert_common_name`: TLS 证书通用名称。\n如果所有表达式的结果都是字符串值 'true'，则从此认证器返回关联的 result。\n如果任何表达式的结果不是 'true'，则跳过当前检查。",
       "label": "匹配条件"
     },
     "result": {
