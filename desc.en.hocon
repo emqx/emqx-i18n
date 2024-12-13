@@ -546,6 +546,26 @@
       "desc": "Import users into authenticator in global authentication chain.",
       "label": "Global import users into authenticator"
     },
+    "import_result_failed": {
+      "desc": "Total number of users whose import failed.",
+      "label": "Failed"
+    },
+    "import_result_override": {
+      "desc": "Total number of users successfully imported as overrides.",
+      "label": "Override"
+    },
+    "import_result_skipped": {
+      "desc": "Total number of users skipped because imported users are identical to existing users.",
+      "label": "Skipped"
+    },
+    "import_result_succ": {
+      "desc": "Total number of users successfully imported with new records.",
+      "label": "Success"
+    },
+    "import_result_total": {
+      "desc": "Total number of users contained in the file.",
+      "label": "Total"
+    },
     "listeners_listener_id_authentication_id_import_users_post": {
       "desc": "Import users into authenticator in listener authentication chain.",
       "label": "Import users into authenticator in listener"
@@ -1731,6 +1751,10 @@
       "desc": "Datalayers password.",
       "label": "Password"
     },
+    "pool_size": {
+      "desc": "Size of the connection pool towards the bridge target service.",
+      "label": "Connection Pool Size"
+    },
     "precision": {
       "desc": "Datalayers time precision.",
       "label": "Time Precision"
@@ -2409,6 +2433,10 @@
       "desc": "InfluxDB password.",
       "label": "Password"
     },
+    "pool_size": {
+      "desc": "Size of the connection pool towards the bridge target service.",
+      "label": "Connection Pool Size"
+    },
     "precision": {
       "desc": "InfluxDB time precision.",
       "label": "Time Precision"
@@ -2633,7 +2661,7 @@
       "label": "Key Encoding Mode"
     },
     "consumer_max_batch_bytes": {
-      "desc": "Set how many bytes to pull from Kafka in each fetch request. Please note that if the configured value is smaller than the message size in Kafka, it may negatively impact the fetch performance.",
+      "desc": "Set how many bytes to pull from Kafka in each fetch request.\nMessages are fetched in batches by the consumer, and if the first record batch in the first non-empty\npartition of the fetch is larger than this value, the record batch will still be returned to ensure\nthat the consumer can make progress. As such, this is not an absolute maximum. Set `1` for minimal latency.",
       "label": "Fetch Bytes"
     },
     "consumer_max_rejoin_attempts": {
@@ -2820,10 +2848,6 @@
       "desc": "Fine tune the socket send buffer. The default value is tuned for high throughput.",
       "label": "Socket Send Buffer Size"
     },
-    "socket_tcp_keepalive": {
-      "desc": "Enable TCP keepalive.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
-      "label": "TCP keepalive options"
-    },
     "ssl_client_opts": {
       "desc": "TLS/SSL options for client.",
       "label": "TLS/SSL options"
@@ -2845,6 +2869,10 @@
     "group_id": {
       "desc": "Consumer group identifier to be used for this source.  If omitted, one based off the source name will be automatically generated.",
       "label": "Custom Consumer Group Id"
+    },
+    "max_wait_time": {
+      "desc": "Maximum amount of time that is waited for the Kafka broker to send a fetch response.",
+      "label": "Max Wait Time"
     },
     "source_parameters": {
       "desc": "Source specific configs.",
@@ -3479,7 +3507,7 @@
       "label": "Message Delivery Mode"
     },
     "exchange": {
-      "desc": "The name of the RabbitMQ exchange where the messages will be sent.",
+      "desc": "The name of the RabbitMQ exchange where the messages will be sent. Supports templates (e.g.: `e-${payload.e}`).",
       "label": "Exchange"
     },
     "exchange_type": {
@@ -3511,7 +3539,7 @@
       "label": "Publish Confirmation Timeout"
     },
     "routing_key": {
-      "desc": "The routing key used to route messages to the correct queue in the RabbitMQ exchange.",
+      "desc": "The routing key used to route messages to the correct queue in the RabbitMQ exchange. Supports templates (e.g.: `k-${payload.r}`).",
       "label": "Routing Key"
     },
     "server": {
@@ -4698,7 +4726,7 @@
       "label": "Crash Dump Bytes"
     },
     "node_crash_dump_file": {
-      "desc": "Location of the crash dump file.",
+      "desc": "Location of the crash dump file. Defaults to <code>log/erl_crash.YYYY.MM.DD.HH.MM.SS.dump</code>.\nThe timestamp is generated when emqx starts.",
       "label": "Crash Dump File"
     },
     "node_crash_dump_seconds": {
@@ -5072,6 +5100,9 @@
     "password": {
       "desc": "Dashboard Password"
     },
+    "password_expire_in_seconds": {
+      "desc": "Time in seconds until the password expiresc."
+    },
     "redirect": {
       "desc": "Redirect to IDP SSO login page"
     },
@@ -5122,6 +5153,10 @@
     }
   },
   "emqx_dashboard_monitor_api": {
+    "clear_monitor": {
+      "desc": "Clear monitor (statistics) data for the whole cluster.",
+      "label": "Clear cluster stats data"
+    },
     "current_stats": {
       "desc": "Current monitor (statistics) data, e.g. number of connections and connection rate in the whole cluster.",
       "label": "Cluster runtime stats"
@@ -5207,6 +5242,9 @@
     "num_acceptors": {
       "desc": "Socket acceptor pool size for TCP protocols. Default is the number of schedulers online",
       "label": "Number of acceptors"
+    },
+    "password_expired_time": {
+      "desc": "The expiration time for the password of users. The default value `0` means the password will never expire."
     },
     "proxy_header": {
       "desc": "Enable support for `HAProxy` header. Be aware once enabled regular HTTP requests can't be handled anymore.",
@@ -5430,6 +5468,12 @@
       "label": "Get delayed status"
     }
   },
+  "emqx_ds_fdb_backend_schema": {
+    "backend": {
+      "desc": "A simpler backend that uses FDB. Serves for storing MQTT messages and optimized for low latency.",
+      "label": "A simpler DS FDB backend"
+    }
+  },
   "emqx_ds_schema": {
     "backend_type": {
       "desc": "Backend type.",
@@ -5558,6 +5602,176 @@
     "session_renew_lease_timeout_ms": {
       "desc": "The timeout in milliseconds for the session to wait for the leader to renew the lease.\nIf the leader does not renew the lease within this time, the session will consider\nthe leader as lost and try to find a new leader.",
       "label": "Session Renew Lease Timeout"
+    }
+  },
+  "emqx_event_history_api": {
+    "authz_action_type": {
+      "desc": "The type of the authorize action"
+    },
+    "authz_from": {
+      "desc": "The type name of authorizer"
+    },
+    "clean_start": {
+      "desc": "Whether the client has a clean start.",
+      "label": "Clean Start"
+    },
+    "client_id": {
+      "desc": "The client ID.",
+      "label": "Client ID"
+    },
+    "dropped_msg_num": {
+      "desc": "The number of messages that have been dropped.",
+      "label": "Dropped Message Number"
+    },
+    "eh_clear": {
+      "desc": "clear all event history data\nNote: This is a dangerous operation.\nWhen only deleting data,\nthe manager and gc will try to reacquire the lock due to the loss of lock information,\nand the cached size of valid space only can be updated at the next refresh.\nWhen include the FDB's tenant, the GC will be shutdown forever."
+    },
+    "eh_client_list": {
+      "desc": "The list of clients that have connected to the broker.",
+      "label": "Event History Client List"
+    },
+    "eh_metrics": {
+      "desc": "Get the metrics of the internal resource"
+    },
+    "eh_msg_list": {
+      "desc": "The list of messages that have been published to the broker.",
+      "label": "Event History Message List"
+    },
+    "eh_stats": {
+      "desc": "event history tenant stats"
+    },
+    "event_history_get_config": {
+      "desc": "Show current Event History configuration."
+    },
+    "event_history_update_config": {
+      "desc": "Update Event History configuration."
+    },
+    "expiry_interval": {
+      "desc": "The expiry interval of the session.",
+      "label": "Session Expiry Interval"
+    },
+    "force_delete": {
+      "desc": "Whether to delete the corresponding tenant in FDB"
+    },
+    "gte_time": {
+      "desc": "The start time of the event(use unix millisecond or rfc3339).",
+      "label": "Start Time"
+    },
+    "guid": {
+      "desc": "GUID of the session or message"
+    },
+    "has_next": {
+      "desc": "Indicate whether there is a next page"
+    },
+    "ip": {
+      "desc": "The IP address of the client.",
+      "label": "IP"
+    },
+    "is_anonymous": {
+      "desc": "True if this user is anonymous."
+    },
+    "is_persistent": {
+      "desc": "Indicates whether this is a persistent session"
+    },
+    "is_superuser": {
+      "desc": "True if this is a super user."
+    },
+    "keepalive": {
+      "desc": "The keepalive interval of the client.",
+      "label": "Keepalive"
+    },
+    "lte_time": {
+      "desc": "The end time of the event(use unix millisecond or rfc3339).",
+      "label": "End Time"
+    },
+    "message_id": {
+      "desc": "The message ID.",
+      "label": "Message ID"
+    },
+    "qos": {
+      "desc": "The QoS level of the message.",
+      "label": "QoS"
+    },
+    "reason": {
+      "desc": "The reason for this event.",
+      "label": "Reason"
+    },
+    "result": {
+      "desc": "The result for this event"
+    },
+    "retain": {
+      "desc": "The retain flag"
+    },
+    "reverse": {
+      "desc": "If true, events will be returned in reverse time series order beginning at the end of the range"
+    },
+    "stats_count": {
+      "desc": "stats count"
+    },
+    "stats_size": {
+      "desc": "stats size"
+    },
+    "tenant": {
+      "desc": "the tenant name"
+    },
+    "time": {
+      "desc": "The millisecond that the event was triggered",
+      "label": "Time"
+    },
+    "topic": {
+      "desc": "The topic that the message was published to.",
+      "label": "Topic"
+    },
+    "type": {
+      "desc": "Event History Client Type",
+      "label": "Type"
+    },
+    "username": {
+      "desc": "the username which is used for this event."
+    }
+  },
+  "emqx_event_history_schema": {
+    "alarm_percent": {
+      "desc": "The percentage of maximum storage size to alarm"
+    },
+    "buffer": {
+      "desc": "Configuration for write workers"
+    },
+    "enable": {
+      "desc": "Enable this feature"
+    },
+    "event_history": {
+      "desc": "A feature to record events from clients or messages."
+    },
+    "events": {
+      "desc": "Events to be recorded"
+    },
+    "expiry_time": {
+      "desc": "The expiration time for each data"
+    },
+    "gc": {
+      "desc": "GC configuration"
+    },
+    "gc_interval": {
+      "desc": "The interval time between two GC checking"
+    },
+    "gc_percent": {
+      "desc": "The percentage of storage data to be deleted when the storage size exceeds the maximum size"
+    },
+    "max_size": {
+      "desc": "The maximum storage size of events in bytes for this tenant"
+    },
+    "query_quantity_limit": {
+      "desc": "Maximum number of reads for a query"
+    },
+    "query_time_limit": {
+      "desc": "Time limit for a query"
+    },
+    "storage": {
+      "desc": "Storage configuration"
+    },
+    "tenant": {
+      "desc": "If the value is not empty, all data will be stored in a tenant whose name is created by this value with a prefix.\nTenant config is Read Only, update at runtime will fail."
     }
   },
   "emqx_eviction_agent_api": {
@@ -5725,6 +5939,159 @@
     },
     "exproto_server": {
       "desc": "Configurations for starting the <code>ConnectionAdapter</code> service"
+    }
+  },
+  "emqx_fdb_ds_prometheus_api": {
+    "get_fdb_prom_data": {
+      "desc": "Get FoundationDB Prometheus Metrics",
+      "label": "FoundationDB Prometheus Metrics"
+    }
+  },
+  "emqx_fdb_ds_schema": {
+    "batch_delete_size": {
+      "desc": "Batch size for deleting the oldest data in the `compacted` storage."
+    },
+    "expiry_gc_interval": {
+      "desc": "GC interval for the expired generation."
+    },
+    "gc": {
+      "desc": "GC Configuration"
+    },
+    "gc_max_gen_size": {
+      "desc": "The maximum available size of a generation for the persistent storage.\nIf the size of the current generation exceeds it, a new generation will be created."
+    },
+    "gc_max_size": {
+      "desc": "The maximum available size for the persistent storage."
+    },
+    "retainer_backend_fdb": {
+      "desc": "FoundationDB Durable Storage Retainer.",
+      "label": "FoundationDB Durable Storage Retainer."
+    },
+    "retainer_enable": {
+      "desc": "Enable FoundationDB Retainer backend",
+      "label": "Enable"
+    },
+    "session_storage_backend_fdb": {
+      "desc": "FoundationDB Durable Storage.",
+      "label": "FoundationDB Durable Storage."
+    },
+    "session_storage_backend_fdb_enable": {
+      "desc": "Enable FoundationDB Durable Storage backend.",
+      "label": "Enable FoundationDB Durable Storage backend."
+    },
+    "session_storage_backend_fdb_prefix": {
+      "desc": "Key prefix to use by FoundationDB Durable Storage backend for storing data.",
+      "label": "FoundationDB key prefix."
+    },
+    "session_storage_backend_fdb_storage_mod": {
+      "desc": "Low-level backend module for storing message data in FoundationDB.",
+      "label": "FoundationDB DS storage module."
+    },
+    "session_storage_backend_fdb_storage_options": {
+      "desc": "Options for low-level backend module storing message data in FoundationDB.",
+      "label": "FoundationDB DS storage options."
+    },
+    "session_storage_backend_fdb_storage_write_buffer": {
+      "desc": "Write buffer size for FoundationDB Durable Storage backend.",
+      "label": "Write buffer size."
+    },
+    "session_storage_backend_fdb_tenant": {
+      "desc": "FoundationDB tenant to use by FoundationDB Durable Storage backend.",
+      "label": "FoundationDB tenant."
+    },
+    "session_storage_backend_fdb_write_shard_number": {
+      "desc": "FoundationDB DS write shard number.",
+      "label": "FoundationDB DS write shard number."
+    },
+    "size_gc_interval": {
+      "desc": "The interval for GC to check whether the used size exceeds the maximum available size."
+    },
+    "size_gc_percent": {
+      "desc": "Determine the amount of data that needs to be deleted as a percentage of the maximum size."
+    },
+    "write_buffer_flush_interval": {
+      "desc": "The interval for flushing the write buffer.",
+      "label": "Flush interval."
+    },
+    "write_buffer_max_items": {
+      "desc": "The maximum number of items that can be stored in the write buffer.",
+      "label": "Maximum number of items."
+    }
+  },
+  "emqx_fdb_mgmt_cli_api": {
+    "cluster_file": {
+      "desc": "The content of the cluster file"
+    },
+    "delete_fdb_cli": {
+      "desc": "Disable and Stop\nNOTE:\n1. Currently, a process may have a worker cached in its process dictionary or gen_server state, which cannot be cleared\n2. Tenants are the same as above\n3. The driver cannot be shut down or restarted manually"
+    },
+    "get_cluster_file": {
+      "desc": "Get content of the current cluster file"
+    },
+    "get_fdb_cli": {
+      "desc": "Get Configuration"
+    },
+    "post_cluster_file": {
+      "desc": "Update the content of the cluster file"
+    },
+    "post_fdb_cli": {
+      "desc": "Enable and Start"
+    }
+  },
+  "emqx_fdb_mgmt_cli_schema": {
+    "available_check_interval": {
+      "desc": "FDB health check interval when the last status is `available`"
+    },
+    "callbacks_on_external_threads": {
+      "desc": "If set, callbacks from external client libraries can be called from threads created by the FoundationDB client library. Otherwise, callbacks will be called from either the thread used to add the callback or the network thread. Setting this option can improve performance when connected using an external client, but may not be safe to use in all environments. Must be set before setting up the network. WARNING: This feature is considered experimental at this time."
+    },
+    "circuit_breaker": {
+      "desc": "A background server used to monitor the status of the FoundationDB cluster."
+    },
+    "client_threads_per_version": {
+      "desc": "Spawns multiple worker threads for each version of the client that is loaded.  Setting this to a number greater than one implies disable_local_client."
+    },
+    "cluster_file": {
+      "desc": "Path to cluster file"
+    },
+    "enable": {
+      "desc": "Enable this feature"
+    },
+    "external_client_library": {
+      "desc": "Adds an external client library for use by the multi-version client API. Must be set before setting up the network."
+    },
+    "max_watches": {
+      "desc": "Set the maximum number of watches allowed to be outstanding on a database connection. Increasing this number could result in increased resource usage. Reducing this number will not cancel any outstanding watches. Defaults to 10000 and cannot be larger than 1000000."
+    },
+    "tls_ca_path": {
+      "desc": "Set the file from which to load the certificate authority bundle"
+    },
+    "tls_cert_path": {
+      "desc": "Set the file from which to load the certificate chain"
+    },
+    "tls_key_path": {
+      "desc": "Set the file from which to load the private key corresponding to your own certificate"
+    },
+    "tls_verify_peers": {
+      "desc": "Set the peer certificate field verification criteria"
+    },
+    "transaction_max_retry_delay": {
+      "desc": "Set the maximum amount of backoff delay incurred in the call to `onError` if the error is retriable. This sets the `max_retry_delay` option of each transaction created by this database."
+    },
+    "transaction_retry_limit": {
+      "desc": "Set a maximum number of retries after which additional calls to `onError` will throw the most recently seen error code. This sets the `retry_limit` option of each transaction created by this database."
+    },
+    "transaction_timeout": {
+      "desc": "Set a timeout in milliseconds which, when elapsed, will cause each transaction automatically to be cancelled. This sets the `timeout` option of each transaction created by this database."
+    },
+    "unavailable_check_interval": {
+      "desc": "After the maximum number of attempts, we assume the cluster is unavailable, and may use a smaller interval for checking."
+    },
+    "waiting_check_interval": {
+      "desc": "FDB health check interval when the last status is `unavailable`, we assume this status was caused by network or cluster jitter and attempt to wait for it to be healed"
+    },
+    "waiting_check_times": {
+      "desc": "The maximum number of times we wait for the status to become healthy"
     }
   },
   "emqx_ft_api": {
@@ -7446,6 +7813,10 @@
       "desc": "The rate of evicting connections, in connections per second",
       "label": "Connection eviction rate"
     },
+    "local_status_connection_eviction_rpc_timeout": {
+      "desc": "The timeout for connection eviction RPC, in seconds",
+      "label": "Connection eviction RPC timeout"
+    },
     "local_status_connection_goal": {
       "desc": "The number of connections that the node should have after the rebalance/evacuation process",
       "label": "Connection goal"
@@ -7477,6 +7848,10 @@
     "local_status_session_eviction_rate": {
       "desc": "The rate of evicting sessions, in sessions per second",
       "label": "Session eviction rate"
+    },
+    "local_status_session_eviction_rpc_timeout": {
+      "desc": "The timeout for session eviction RPC, in seconds",
+      "label": "Session eviction RPC timeout"
     },
     "local_status_session_goal": {
       "desc": "The number of sessions that the node should have after the evacuation process",
@@ -7606,7 +7981,57 @@
       "label": "Oracle Database Sid"
     }
   },
+  "emqx_otel_sampler_api": {
+    "clientid": {
+      "desc": "Client ID",
+      "label": "Client ID"
+    },
+    "sample_white_list_delete": {
+      "desc": "Purge white list for specific type",
+      "label": "Purge white list"
+    },
+    "sample_white_list_get": {
+      "desc": "Show the list of sampler white list for specific type",
+      "label": "Show white list"
+    },
+    "sample_white_list_post": {
+      "desc": "Update white list for specific type",
+      "label": "Update white list"
+    },
+    "topic": {
+      "desc": "TopicName or TopicFilter",
+      "label": "Topic"
+    },
+    "white_list_type": {
+      "desc": "Type of white list. Can be `clientid`, `topic`",
+      "label": "White list type"
+    }
+  },
   "emqx_otel_schema": {
+    "client_connect_disconnect": {
+      "desc": "Enable/disable background tracing for all clients' connect/disconnect events at the configured sample ratio.",
+      "label": "Trace Client Connect/Disconnect"
+    },
+    "client_messaging": {
+      "desc": "Enable/disable background messaging events for all clients at the configured sample ratio and trace-level.",
+      "label": "Trace Messaging Events"
+    },
+    "client_subscribe_unsubscribe": {
+      "desc": "Enable/disable background tracing for all clients' subscribe/unsubscribe at the configured sample ratio.",
+      "label": "Trace Client Subscribe/Unsubscribe"
+    },
+    "clientid_match_rules_max": {
+      "desc": "Maximum length of the whitelist for clientid matching.",
+      "label": "Maximum Number of Client ID Match Whitelist"
+    },
+    "cluster_identifier": {
+      "desc": "An attribute value added into Span's Attributes. The attribute key will be `cluster.id`\nTypically, set a simple and easily recognizable name or use the cluster name to identify different EMQX clusters.",
+      "label": "Cluster Identifier"
+    },
+    "e2e_tracing_options": {
+      "desc": "End-to-end tracing options",
+      "label": "End-to-End Tracing Options"
+    },
     "enable": {
       "desc": "Enable or disable Open Telemetry signal.",
       "label": "Enable."
@@ -7630,6 +8055,10 @@
     "max_queue_size": {
       "desc": "The maximum queue size. After the size is reached Open Telemetry signals are dropped.",
       "label": "Max Queue Size"
+    },
+    "msg_trace_level": {
+      "desc": "Trace level for all message exchanges during the message publishing process.\n- `0`: Basic events during message publish will be recorded as Spans.\n  Including 'client.connect', 'client.authz', 'message.route', 'message.forward', 'message.handle_forward', 'broker.publish'.\n- `1`: In addition to basic events.\n  The events 'broker.puback', 'client.puback', 'broker.pubrec', 'client.pubrec' will be recorded as Spans.\n  That is, the first response packet in the QoS1 or QoS2 message interaction.\n- `2`: In addition to level 1.\n  The events 'broker.pubrel', 'client.pubrel', 'broker.pubcomp', 'client.pubcomp' will be recorded as Spans.",
+      "label": "Message Trace Level"
     },
     "opentelemetry": {
       "desc": "Open Telemetry Toolkit configuration",
@@ -7655,17 +8084,29 @@
       "desc": "Open Telemetry Traces configuration.",
       "label": "Open Telemetry Traces"
     },
+    "sample_ratio": {
+      "desc": "Background tracing sample ratio for the listed event types.",
+      "label": "Sampling Ratio"
+    },
     "scheduled_delay": {
       "desc": "The delay interval between two consecutive exports of Open Telemetry signals.",
       "label": "Scheduled Delay Interval"
     },
+    "topic_match_rules_max": {
+      "desc": "Maximum length of the whitelist based for topic matching.",
+      "label": "Maximum Number of Topic Match Whitelist"
+    },
     "trace_all": {
-      "desc": "If enabled, all published messages are traced, a new trace ID is generated if it can't be extracted from the message.\nOtherwise, only messages published with trace context are traced. Disabled by default.",
+      "desc": "If enabled, all published messages are traced, a new trace ID is generated if it can't be extracted from the message.\nOtherwise, only messages published with trace context are traced.\nDisabled by default.\nNote: this config only takes effect when `trace_mode` is set to `legacy`.",
       "label": "Trace All"
     },
     "trace_filter": {
       "desc": "Open Telemetry Trace Filter configuration",
       "label": "Trace Filter"
+    },
+    "trace_mode": {
+      "desc": "OpenTelemetry tracing mode.\n- `legacy`: follow the old tracing method, only trace message publishing and delivery.\n  Span names will be compatible to versions before 5.9.\n- `e2e`: end-to-end tracing mode. All client behaviors will be traced:\n  - connect and disconnect\n  - subscribe and unsubscribe\n  - messaging events such as `PUBLISH`, `PUBACK`, `PUBREL` etc.\n  When enabled (for each type of events), there will be a background tracing for all clients at the configured sample ratio.\n  From the dashboard, one can also add additional trace whitelist on top of the background tracing at full volume for a list of clients or topics.\n  See dashboard or API documents for more details.\n  More control and sampling options can be provided in `e2e_tracing_options`",
+      "label": "Trace Mode"
     }
   },
   "emqx_plugins_schema": {
@@ -8038,6 +8479,9 @@
     }
   },
   "emqx_retainer_schema": {
+    "allow_never_expire": {
+      "desc": "If true, retained messages set to never expire (i.e., whose `Message-Expiry-Interval = 0`) are not affected by the expiry time override.  This configuration only takes effect when `msg_expiry_interval_override` is set."
+    },
     "backend": {
       "desc": "Settings for the database storing the retained messages."
     },
@@ -8077,8 +8521,14 @@
     "msg_clear_interval": {
       "desc": "The time interval for checking and clearing expired retained messages. This can prevent expired retained messages from being stored for a long time.\n\nIf `msg_clear_interval` is set to 0, that is, expired retained messages are not actively checked regularly, EMQX will only check and delete expired retained messages when preparing for delivery."
     },
+    "msg_clear_limit": {
+      "desc": "The maximum number of expired messages cleared at once each `msg_clear_interval`. Settings reasonable limit can prevent the clearing process from running for too long and consume too much resources."
+    },
     "msg_expiry_interval": {
       "desc": "Expired retained messages will not be delivered again, and a setting of 0 means that retained messages will never expire.\n\nHowever, if the `Message-Expiry-Interval` property is specified in the MQTT message, the value of that property prevails."
+    },
+    "msg_expiry_interval_override": {
+      "desc": "If set, this value will take precedence over any `Message-Expiry-Interval` property specified in retained MQTT messages, allowing messages to expire earlier if necessary.  This override only applies to the garbage collection process: it does not affect the expiry time of messages being written nor that of already written messages while iterating over them.  Therefore, messages that are candidate for garbage collection when overridden may still be visible when subscribing to retained topics."
     },
     "stop_publish_clear_msg": {
       "desc": "When the retained flag of the `PUBLISH` message is set and Payload is empty,\nwhether to continue to publish the message.\nSee:\nhttp://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc398718038"
@@ -8580,6 +9030,10 @@
       "desc": "The name of the S3 bucket.",
       "label": "Bucket"
     },
+    "bucket_access_method": {
+      "desc": "Method to be used to access the bucket through HTTP API.",
+      "label": "Bucket Access Method"
+    },
     "host": {
       "desc": "The host of the S3 endpoint."
     },
@@ -8650,8 +9104,8 @@
       "label": "Max connections"
     },
     "base_listener_mountpoint": {
-      "desc": "When publishing or subscribing, prefix all topics with a mountpoint string.\nThe prefixed string will be removed from the topic name when the message\nis delivered to the subscriber. The mountpoint is a way that users can use\nto implement isolation of message routing between different listeners.\nFor example if a client A subscribes to `t` with `listeners.tcp.\\<name>.mountpoint`\nset to `some_tenant`, then the client actually subscribes to the topic\n`some_tenant/t`. Similarly, if another client B (connected to the same listener\nas the client A) sends a message to topic `t`, the message is routed\nto all the clients subscribed `some_tenant/t`, so client A will receive the\nmessage, with topic name `t`.<br/>\nSet to `\"\"` to disable the feature.<br/>\n\nVariables in mountpoint string:\n  - <code>${clientid}</code>: clientid\n  - <code>${username}</code>: username",
-      "label": "mountpoint"
+      "desc": "- Adds a static or templated prefix (e.g., `n1/` or `${username}/`) to topics used by clients in `SUBSCRIBE` and `UNSUBSCRIBE` requests, `PUBLISH` messages, and Will Message (if supplied in the `CONNECT` packet).\n- Removes this prefix from topics of messages published to the respective subscriptions.\n\nThe supported placeholders are:\n- `${username}`\n- `${clientid}`\n- `${zone}`\n- `${client_attrs.NAME}`\n\nFor example, with `mountpoint=\"${username}/\"` a client using `u1` as username will have:\n- Client SUBSCRIBE `sensors/#` -> `u1/sensors/#` internally in the broker.\n- Broker PUBLISH `u1/sensors/data` -> `sensors/data` sent to the client.\n\nThe prefix mount/unmount is applied to:\n- Will in `CONNECT`\n- `PUBLISH`\n- `SUBSCRIBE`\n- `UNSUBSCRIBE`\n\nNote: mounting occurs **after authorization/ACL checks**.",
+      "label": "Mountpoint"
     },
     "base_listener_zone": {
       "desc": "The configuration zone to which the listener belongs.\nClients connected to this listener will inherit zone-settings created under this zone name.\n\nA zone can override the configs under below root names:\n- `mqtt`\n- `force_shutdown`\n- `force_gc`\n- `flapping_detect`\n- `durable_sessions`",
@@ -8693,11 +9147,11 @@
       "label": "QUIC TLS cipher suites"
     },
     "client_attrs_init": {
-      "desc": "Specify how to initialize client attributes.\nEach client attribute can be initialized as `client_attrs.{NAME}`,\nwhere `{NAME}` is the name of the attribute specified in the config field `set_as_attr`.\nThe initialized client attribute will be stored in the `client_attrs` property with the specified name,\nand can be used as a placeholder in a template for authentication and authorization.\nFor example, use `${client_attrs.alias}` to render an HTTP POST body when `set_as_attr = alias`,\nor render listener config `moutpoint = devices/${client_attrs.alias}/` to initialize a per-client topic namespace.",
+      "desc": "Specify how to initialize client attributes.\nEach client attribute can be initialized as `client_attrs.{NAME}`,\nwhere `{NAME}` is the name of the attribute specified in the config field `set_as_attr`.\n\nThe initialized client attribute will be stored in the `client_attrs` property with the specified name,\nand can be used as a variable to render a template for mountpoint, authentication and authorization requests.\n\nFor example, use `${client_attrs.tns}` to render an HTTP POST body when `set_as_attr = tns`,\nor render listener config `moutpoint = ${client_attrs.tns}/` for topic namespacing.",
       "label": "Client Attributes Initialization"
     },
     "client_attrs_init_expression": {
-      "desc": "A one line expression to evaluate a set of predefined string functions (like in the rule engine SQL statements).\nThe expression can be a function call with nested calls as its arguments, or direct variable reference.\nSo far, it does not provide user-defined variable binding (like `var a=1`) or user-defined functions.\nAs an example, to extract the prefix of client ID delimited by a dot: `nth(1, tokens(clientid, '.'))`.\n\nThe variables pre-bound variables are:\n- `cn`: Client's TLS certificate common name.\n- `dn`: Client's TLS certificate distinguished name (the subject).\n- `clientid`: MQTT Client ID.\n- `username`: MQTT Client's username.\n- `user_property.{NAME}`: User properties in the CONNECT packet.\n\nYou can read more about variform expressions in EMQX docs.",
+      "desc": "A one line expression to evaluate a set of predefined string functions (like in the rule engine SQL statements).\nThe expression can be a function call with nested calls as its arguments, or direct variable reference.\nSo far, it does not provide user-defined variable binding (like `var a=1`) or user-defined functions.\nAs an example, to extract the prefix of client ID delimited by a dot: `nth(1, tokens(clientid, '.'))`.\n\nThe variables pre-bound variables are:\n- `clientid`: MQTT Client ID.\n- `username`: MQTT Client's username.\n- `user_property.{NAME}`: User properties in the CONNECT packet.\nFor TLS clients, connected directly or via proxy-protocol (v2) enabled load balancer,\nsome extra variables can be used:\n- `cn`: Client's TLS certificate common name.\n- `dn`: Client's TLS certificate distinguished name (the subject).\n- `peersni`: TLS server name indication sent by the client.\n\nYou can read more about variform expressions in EMQX docs.",
       "label": "Client Attribute Extraction Regular Expression"
     },
     "client_attrs_init_set_as_attr": {
@@ -8712,13 +9166,13 @@
       "desc": "Specify the host name to be used in TLS Server Name Indication extension.<br/>\nFor instance, when connecting to \"server.example.net\", the genuine server\nwhich accepts the connection and performs TLS handshake may differ from the\nhost the TLS client initially connects to, e.g. when connecting to an IP address\nor when the host has multiple resolvable DNS records <br/>\nIf not specified, it will default to the host name string which is used\nto establish the connection, unless it is IP address used.<br/>\nThe host name is then also used in the host name verification of the peer\ncertificate.<br/> The special value 'disable' prevents the Server Name\nIndication extension from being sent and disables the hostname\nverification check.",
       "label": "Server Name Indication"
     },
+    "clientid_override": {
+      "desc": "A one line expression to evaluate a set of predefined string functions (like in the rule engine SQL statements).\nThe expression can be a function call with nested calls as its arguments, or direct variable reference.\nSo far, it does not provide user-defined variable binding (like `var a=1`) or user-defined functions.\nAs an example, to extract the prefix of username delimited by a dot: `nth(1, tokens(username, '.'))`.\n\nThe variables pre-bound variables are:\n- `clientid`: The original MQTT Client ID.\n- `username`: MQTT Client's username.\n- `client_attrs.{NAME}`: Client attributes initialized by per config `client_attrs_init`.\nFor TLS clients, connected directly or via proxy-protocol (v2) enabled load balancer,\nsome extra variables can be used:\n- `cn`: Client's TLS certificate common name.\n- `dn`: Client's TLS certificate distinguished name (the subject).\n- `peersni`: TLS server name indication sent by the client.\n\nYou can read more about variform expressions in EMQX docs.",
+      "label": "Client ID Override Expression"
+    },
     "common_ssl_opts_schema_cacertfile": {
       "desc": "Trusted PEM format CA certificates bundle file.<br/>\nThe certificates in this file are used to verify the TLS peer's certificates.\nAppend new certificates to the file if new CAs are to be trusted.\nThere is no need to restart EMQX to have the updated file loaded, because\nthe system regularly checks if file has been updated (and reload).<br/>\nNOTE: invalidating (deleting) a certificate from the file will not affect\nalready established connections.",
       "label": "CACertfile"
-    },
-    "common_ssl_opts_schema_cacerts": {
-      "desc": "When enabled, uses the system trusted CA certificates for establishing to TLS connections.",
-      "label": "Use System CA Certificates"
     },
     "common_ssl_opts_schema_certfile": {
       "desc": "PEM format certificates chain file.<br/>\nThe certificates in this file should be in reversed order of the certificate\nissue chain. That is, the host's certificate should be placed in the beginning\nof the file, followed by the immediate issuer certificate and so on.\nAlthough the root CA certificate is optional, it should be placed at the end of\nthe file if it is to be added.",
@@ -8788,8 +9242,12 @@
       "desc": "Descriptive text.",
       "label": "Description"
     },
+    "durable_sessions": {
+      "desc": "Settings related to the durable session feature.",
+      "label": "Durable sessoins"
+    },
     "durable_sessions_enable": {
-      "desc": "Use durable storage for client sessions persistence.\nIf enabled, sessions configured to outlive client connections, along with their corresponding messages, will be durably stored and survive broker downtime.\n\n:::warning\nThis feature is currently experimental. Please don't enable it in the production environments that contain valuable data.\n:::",
+      "desc": "Use durable storage for client sessions persistence.\nIf enabled, sessions configured to outlive client connections, along with their corresponding messages, will be durably stored and survive broker downtime.\n\n:::warning\nMessages sent to the durable sessions are saved on disc.\nThis inevitably limits the overall throughput of the system.\n:::",
       "label": "Enable session persistence"
     },
     "durable_storage": {
@@ -8871,6 +9329,10 @@
     "fields_listeners_wss": {
       "desc": "HTTPS websocket listeners.",
       "label": "HTTPS websocket listeners"
+    },
+    "fields_mqtt_opts_parse_unit": {
+      "desc": "This setting specifies the level of granularity for data processed during MQTT framing, determining how frames are extracted and parsed from a byte stream:\n\n- `chunk`: Frames are processed at the transport layer packet level. This method uses raw byte chunks as the parsing unit, requiring the application logic to assemble and interpret MQTT frames. The size of each chunk non-deterministically depends on factors such as transmission speed, socket buffer size, and other kernel settings.\n- `frame`: Frames are processed as complete MQTT messages. This method ensures that only fully-formed MQTT frames are delivered to the application logic for further handling. In most of the cases, it offers better performance than the `chunk` option.\n\nNote, the choice of `parse_unit` affects the interpretation of the `active_n` setting: it defines either the number of raw byte chunks or complete MQTT messages are delivered to the connection process.",
+      "label": "MQTT Message Parse Unit"
     },
     "fields_mqtt_quic_listener_certfile": {
       "desc": "Path to the certificate file. Will be deprecated in 5.1, use .ssl_options.certfile instead.",
@@ -9049,8 +9511,12 @@
       "label": "TCP keepalive options"
     },
     "fields_tcp_opts_nodelay": {
-      "desc": "The TCP_NODELAY flag for the connections.",
-      "label": "TCP_NODELAY"
+      "desc": "The `TCP_NODELAY` flag for the connections.\nWhen set to `true`, data is sent immediately, regardless of size.",
+      "label": "No Delay"
+    },
+    "fields_tcp_opts_nolinger": {
+      "desc": "When enabled, `SO_LINGER` flag is set as `(onoff=1, linger=0)`, which means the TCP socket is to be closed immediately by sending a TCP-RST packet,\ndiscarding any unsent data and skipping the graceful close steps, including CLOSE_WAIT, FIN_WAIT, and TIME_WAIT.",
+      "label": "No Linger"
     },
     "fields_tcp_opts_recbuf": {
       "desc": "The TCP receive buffer (OS kernel) for the connections.",
@@ -9389,6 +9855,18 @@
       "desc": "This value affects the flow control for the persistent sessions.\nPersistent session queries the durable message storage in batches.\nThis value specifies size of the batch.\n\nNote: larger batches generally improve the throughput and overall performance of the system, but increase RAM usage per client.",
       "label": "Batch size"
     },
+    "session_ds_heartbeat_interval": {
+      "desc": "Durable sessions back up their state on disc every heartbeat interval.\n\nHeartbeat interval is also taken into account during garbage collection of expired sessions.\nIt is added to the session expiry time as a safety margin when precise time of session termination is not precisely known.",
+      "label": "Durable session heartbeat interval"
+    },
+    "session_ds_idle_poll_interval": {
+      "desc": "Expiry interval for poll requests sent by durable sessions to the storage.",
+      "label": "Durable session idle poll interval"
+    },
+    "session_ds_message_retention_period": {
+      "desc": "Broker keeps messages sent to the durable sessions for this period of time.",
+      "label": "Message retenetion period"
+    },
     "session_ds_session_gc_batch_size": {
       "desc": "The size of each batch of expired persistent sessions to be garbage collected per iteration.",
       "label": "Session garbage collection batch size"
@@ -9405,6 +9883,10 @@
     },
     "shared_subscription_strategy_enum": {
       "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n - `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends. The initial selection is made based on the value of `initial_sticky_pick`;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
+    },
+    "socket_tcp_keepalive": {
+      "desc": "Enable TCP keepalive.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: EMQX will start sending probes after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
+      "label": "TCP keepalive options"
     },
     "stats_enable": {
       "desc": "Enable/disable statistic data collection.",
@@ -9801,6 +10283,203 @@
     },
     "stomp_frame_max_headers_length": {
       "desc": "The maximum string length of the Header Value"
+    }
+  },
+  "emqx_streaming_api": {
+    "acls_delete": {
+      "desc": "Delete EMQX streaming ACL rules.\nCurrently, only ONE rule can be deleted each time.\nNote: It will NOT report an error if no matching ACL rule is found. Instead, all ACL rules will stay unmodified.\nCAUTION: We use <code>POST</code> instead of standard <code>DELETE</code> to delete an ACL rule here."
+    },
+    "acls_get": {
+      "desc": "List all EMQX streaming ACL rules"
+    },
+    "acls_post": {
+      "desc": "Create a new EMQX streaming ACL rule.\nNote: Creating a rule which is the same as an existing one will NOT report an error. Instead, the old rule will stay unmodified."
+    },
+    "all_metrics_get": {
+      "desc": "Get overall metrics including streams, groups, etc"
+    },
+    "basic_users_delete": {
+      "desc": "Delete an EMQX streaming user with SASL/PLAIN or SASL/SCRAM-* mechanism.\nNote: It is allowed to have more than one authentication mechanisms for a user. This API only deletes ONE of them each time.\nCAUTION: We use <code>POST</code> instead of standard <code>DELETE</code> to delete a user here for future compatibility."
+    },
+    "basic_users_get": {
+      "desc": "List all EMQX streaming users with SASL/PLAIN or SASL/SCRAM-* mechanism.\nNote: It is allowed to have more than one authentication mechanisms for a user, which means that the same user can appear more than once (with different mechanisms) in the returned list."
+    },
+    "basic_users_post": {
+      "desc": "Create a new EMQX streaming user with SASL/PLAIN or SASL/SCRAM-* mechanism.\nNote: It is allowed to have more than one authentication mechanisms for a user."
+    },
+    "basic_users_put": {
+      "desc": "Update the credential of an existing EMQX streaming user with SASL/PLAIN or SASL/SCRAM-* mechanism.\nThe mechanism can NOT be modified."
+    },
+    "client_host": {
+      "desc": "Client host"
+    },
+    "client_id": {
+      "desc": "Client Id"
+    },
+    "comsumer_id": {
+      "desc": "Consumer Id"
+    },
+    "config_get": {
+      "desc": "Get configuration"
+    },
+    "config_put": {
+      "desc": "Update configuration"
+    },
+    "consumer_group_detail_get": {
+      "desc": "Get the details of a consumer group"
+    },
+    "consumer_groups_get": {
+      "desc": "List all consumer groups in brief"
+    },
+    "consumer_groups_resp": {
+      "desc": "Consumer groups"
+    },
+    "end_offset": {
+      "desc": "The end offset"
+    },
+    "generation_id": {
+      "desc": "Generation Id"
+    },
+    "group_count": {
+      "desc": "Group count"
+    },
+    "group_id": {
+      "desc": "Group Id"
+    },
+    "host": {
+      "desc": "Host IP address, or a special value * to match all hosts.\nDo NOT pass hostnames as they can make the ACL rule work incorrectly.\nNote that CIDR notions like 192.168.1.114/24 are NOT supported."
+    },
+    "iterations": {
+      "desc": "Iterations for SCRAM-* mechanisms.\nIt will be ignored for non-hashing mechanisms such as <code>PLAIN</code>.\nThis field can be omitted for the default value <code>4096</code>. It can only be an positive integer between <code>4096</code> and <code>16384</code> if set explicitly."
+    },
+    "lag": {
+      "desc": "Lag"
+    },
+    "leader_member_id": {
+      "desc": "Leader member ID"
+    },
+    "mechanism": {
+      "desc": "The SASL mechanism name for a user.\nIt should be always in UPPERCASE."
+    },
+    "member_id": {
+      "desc": "Member Id"
+    },
+    "member_number": {
+      "desc": "Member number"
+    },
+    "mqtt_topic_filter": {
+      "desc": "Currently, topic filters with <code>#</code> is NOT allowed.\nThe field should be empty for streams with <code>free</code> type.\nThe field can NOT be empty for streams with <code>default</code> type."
+    },
+    "operation": {
+      "desc": "The operation of ACL rules.\nIt should be always in UPPERCASE."
+    },
+    "partition_count": {
+      "desc": "Running partition count"
+    },
+    "partition_index": {
+      "desc": "The index of partition"
+    },
+    "partition_number": {
+      "desc": "Partition number should follow Kafka standards. It can only be a positive integer or -1 (for default value)."
+    },
+    "password": {
+      "desc": "The password itself.\nWhen using <code>PLAIN</code> mechanism, it is the only choice.\nWhen using SCRAM-* mechanisms, it is encouraged to pass hashed credentials by <code>salted_password</code> instead of this field to avoid transmitting secrets directly. However, you can still use this field. When both of this field and <code>salted_password</code> are provided, only <code>salted_password</code> will be used.\nYou should set at least one of <code>salted_password</code> and <code>password</code> no matter what mechanism is used."
+    },
+    "pattern_type": {
+      "desc": "The pattern type to match the resource name.\nIt should be always in UPPERCASE.\nCAUTION: The field can only be <code>LITERAL</code> when the <code>resource_name</code> is set to <code>*</code>. This rule is not checked. However, any violation can make the ACL rule not work as expected."
+    },
+    "permission": {
+      "desc": "The permission type of ACL rules.\nIt should be always in UPPERCASE"
+    },
+    "principal_name": {
+      "desc": "The principal name (usually the username).\nIt can be a special value <code>*</code> to match all principals with any name, or a non-empty string whose length (counting as UTF-8 bytes) is less than or equal to 255. For the latter case, the name can NOT contain character <code>:</code>."
+    },
+    "principal_type": {
+      "desc": "The type of a principal.\nIn requests, this field can be omitted for the default value <code>User</code>, and can only be <code>User</code> if set explicitly.\nIn responses, this field is always <code>User</code>."
+    },
+    "protocol_name": {
+      "desc": "Protocol name"
+    },
+    "rebalance_timeout_ms": {
+      "desc": "Rebalance timeout in milliseconds"
+    },
+    "resource_name": {
+      "desc": "The resource name of ACL rules (for example, topic name or group id).\nIt can be a special value <code>*</code> to match all resources with any name, or it should follow the naming rules of streams, see the definition of Stream for details.\nCAUTION: You should always use <code>kafka-cluster</code> for <code>CLUSTER</code> resource type. This rule is NOT checked. The ACL rule will NEVER match when other name is used for <code>CLUSTER</code> resource type. (Note for dev: Pop up a warning such as \"The rule will never take effect, are you sure to use this name?\"?)"
+    },
+    "resource_type": {
+      "desc": "The resource type of ACL rules.\nIt should be always in UPPERCASE."
+    },
+    "retention_time": {
+      "desc": "Retention time in milliseconds. The string should indicate a positive integer within Int32 range, or -1 (for default value)."
+    },
+    "salt": {
+      "desc": "Salt used for SCRAM-* mechanisms.\nIt will be ignored for non-hashing mechanisms such as <code>PLAIN</code>.\nThis field can be omitted to let the server choose automatically."
+    },
+    "salt_password": {
+      "desc": "Hashed password for SCRAM mechanisms.\nWhen using <code>PLAIN</code> mechanism, just omit it.\nWhen using SCRAM-* mechanisms, it is encouraged to pass hashed credentials by this field instead of <code>password</code> to avoid transmitting secrets directly. However, you can still omit this field and use <code>password</code> instead. When both of them are provided, only <code>salted_password</code> will be used.\nYou should set at least one of <code>salted_password</code> and <code>password</code> no matter what mechanism is used."
+    },
+    "session_timeout_ms": {
+      "desc": "Session timeout in milliseconds"
+    },
+    "start_offset": {
+      "desc": "The start offset"
+    },
+    "state": {
+      "desc": "State"
+    },
+    "stream_count": {
+      "desc": "Created stream count"
+    },
+    "stream_name": {
+      "desc": "Stream name should follow Kafka naming rules.\n1. It can not be empty.\n2, It can not be <code>.</code> or <code>...</code>\n3. The length can not exceed 249 characters.\n4. It can not contain characters other than alphabets, <code>.</code>, <code>_</code> and <code>-</code>."
+    },
+    "stream_name_delete": {
+      "desc": "Delete a stream"
+    },
+    "stream_name_get": {
+      "desc": "Get the details of a Stream"
+    },
+    "stream_type": {
+      "desc": "Type of the stream.\n1. <code>default</code> means EMQX will push all messages to Hornbill that produced by the specified MQTT topic.\n2. <code>free</code> means the Kafka topic has no EMQX rule or action."
+    },
+    "streams_get": {
+      "desc": "List all streams"
+    },
+    "streams_post": {
+      "desc": "Create a stream"
+    },
+    "streams_resp": {
+      "desc": "All streams"
+    },
+    "topic_number": {
+      "desc": "Topic Number"
+    },
+    "total_messages_in_rate": {
+      "desc": "Messaeg in rate"
+    },
+    "total_messages_out_rate": {
+      "desc": "Message out rate"
+    },
+    "user_name": {
+      "desc": "The name of an EMQX streaming (Kafka) user. It\n1. should be a non-empty string whose length (counting as UTF-8 bytes) is less than or equal to 255\n2. should NOT be <code>*</code>\n3. should NOT contain character <code>:</code>"
+    }
+  },
+  "emqx_streaming_schema": {
+    "desc_streaming": {
+      "desc": "The configuration for Streaming.",
+      "label": "Streaming"
+    },
+    "enable": {
+      "desc": "Whether to enable Streaming.",
+      "label": "Enable"
+    },
+    "hornbill_admin_api": {
+      "desc": "The http interface endpoints of the Hornbill nodes to be linked, use commas to separate multiple addresses.\ni.e: <code>127.0.0.1:8080, 127.0.0.1:8081</code>\nWhen the port is not specified, its default value is 8080.",
+      "label": "Hornbill HTTP Endpoints"
+    },
+    "hornbill_kafka_api": {
+      "desc": "The streaming interface endpoints of the Hornbill nodes to be linked, use commas to separate multiple addresses.\ni.e: <code>127.0.0.1:9092,127.0.0.1:9093</code>\nWhen the port is not specified, its default value is 9092.",
+      "label": "Hornbill Streaming Endpoints"
     }
   },
   "emqx_telemetry_api": {
