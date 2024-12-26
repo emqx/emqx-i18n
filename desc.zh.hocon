@@ -1629,7 +1629,7 @@
       "label": "字段"
     },
     "config_parameters_timestamp": {
-      "desc": "时间戳。支持格式为 ${var} 的占位符，最终值可以是：\n\n- now: 使用载荷中包含的 `now_ms` 作为时间戳\n- now_ms: 同上\n- now_us: 使用载荷中包含的 `now_us` 作为时间戳\n- now_ns: 使用载荷中包含的 `now_ns` 作为时间戳\n- 其他: 直接使用值作为时间戳。",
+      "desc": "时间戳。支持格式为 ${var} 的占位符，最终值可以是：\n\n- now: 使用当前时间（毫秒）\n- now_ms: 同上\n- now_us: 使用当前时间（微秒）\n- now_ns: 使用当前时间（纳秒）\n- 任何整数: 直接使用该值作为时间戳\n- 占位符: 使用负载中的值作为时间戳", "label": "时间戳"",
       "label": "时间戳"
     },
     "config_parameters_value": {
@@ -2243,7 +2243,7 @@
       "label": "投递模式"
     },
     "exchange": {
-      "desc": " RabbitMQ Exchange 名称。",
+      "desc": " 消息将发送到的 RabbitMQ 交换机的名称。支持模板（例如：e-${payload.e}）。",
       "label": "交换机"
     },
     "exchange_type": {
@@ -2275,7 +2275,7 @@
       "label": "发布确认超时"
     },
     "routing_key": {
-      "desc": "用于路由消息的 Routing Key。",
+      "desc": "用于将消息路由到 RabbitMQ 交换机中正确队列的路由键。支持模板（例如：k-${payload.r}）。",
       "label": "路由键"
     },
     "server": {
@@ -2526,6 +2526,96 @@
     "server": {
       "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>\n主机名具有以下形式：`Host[:Port]`。<br/>\n如果未指定 `[:Port]`，则使用 SQL Server 默认端口 1433。",
       "label": "服务器地址"
+    }
+  },
+  "emqx_bridge_tablestore": {
+    "action_parameters": {
+      "desc": "与此动作类型相关的附加参数。",
+      "label": "动作参数"
+    },
+    "connector": {
+      "desc": "Tablestore 连接器的配置。",
+      "label": "Tablestore 连接器配置"
+    },
+    "desc_access_key_id": {
+      "desc": "访问密钥 ID，例如 NTS**********************",
+      "label": "访问密钥 ID"
+    },
+    "desc_access_key_secret": {
+      "desc": "访问密钥，例如 7NR2****************************************",
+      "label": "访问密钥"
+    },
+    "desc_config": {
+      "desc": "Tablestore 数据集成的配置。",
+      "label": "Tablestore 集成配置"
+    },
+    "desc_data_source": {
+      "desc": "数据源。可以是静态值或占位符，如 `${payload.data_source}`。",
+      "label": "数据源"
+    },
+    "desc_endpoint": {
+      "desc": "Tablestore 的端点，例如 https://myinstance.cn-hangzhou.ots.aliyuncs.com。",
+      "label": "端点"
+    },
+    "desc_fields": {
+      "desc": "字段。字段列和字段值可以是静态值或占位符，如 `${payload.column_name}` 和 `${payload.column_value}`。",
+      "label": "字段"
+    },
+    "desc_instance_name": {
+      "desc": "实例名称。",
+      "label": "实例名称"
+    },
+    "desc_measurement": {
+      "desc": "度量名称。可以是静态值或占位符，如 `${payload.measurement}`。",
+      "label": "度量名称"
+    },
+    "desc_meta_update_model": {
+      "desc": "时间序列元数据的更新模式。可以是以下之一：\n- MUM_NORMAL: 正常模式。当以此模式发送消息时，如果时间序列元数据不存在，Tablestore 将动态创建元数据。\n- MUM_IGNORE: 不更新元数据。当以此模式发送消息时，Tablestore 将不会尝试创建时间序列元数据。\n默认为 MUM_NORMAL。",
+      "label": "元数据更新模式"
+    },
+    "desc_table_name": {
+      "desc": "序列表名称。 可以是静态值或占位符，如 `${payload.table_name}`。",
+      "label": "表名"
+    },
+    "desc_tags": {
+      "desc": "Tags. 标签键和值可以是静态字符串或占位符，如 `${payload.tag_key}` 和 `${payload.tag_value}`。",
+      "label": "标签"
+    },
+    "desc_timestamp": {
+      "desc": "字段的微秒时间戳。\n可以是静态值或占位符，如 `${payload.microsecond_timestamp}`。\n如果未提供或设置为 `NOW`，则 EMQX 写入 Tablestore 时的毫秒时间戳将被使用。",
+      "label": "时间戳"
+    },
+    "pool_size": {
+      "desc": "连接池大小。",
+      "label": "连接池大小"
+    },
+    "storage_model_type": {
+      "desc": "存储模型类型。可以是 `timeseries` 或 `order`。",
+      "label": "存储模型类型"
+    },
+    "tablestore_action": {
+      "desc": "与 Tablestore 连接器交互的动作。",
+      "label": "Tablestore 动作"
+    },
+    "tablestore_fields": {
+      "desc": "Tablestore 字段。",
+      "label": "Tablestore 字段"
+    },
+    "tablestore_fields_column": {
+      "desc": "字段的列名。可以是静态值或占位符，如 `${payload.column}`。",
+      "label": "列"
+    },
+    "tablestore_fields_isbinary": {
+      "desc": "是否尝试将二进制值写为 `binary` 类型。默认为 `false`，表示将二进制值写为字符串。\n可以是静态值或占位符，如 `${payload.is_binary}`。",
+      "label": "是否为二进制"
+    },
+    "tablestore_fields_isint": {
+      "desc": "是否尝试将数值写为 `integer` 类型。默认为 `false`，表示将整数写为浮动数。\n可以是静态值或占位符，如 `${payload.is_int}`。",
+      "label": "是否为整数"
+    },
+    "tablestore_fields_value": {
+      "desc": "字段的值。可以是静态值或占位符，如 `${payload.value}`。",
+      "label": "值"
     }
   },
   "emqx_bridge_tdengine": {
@@ -3014,7 +3104,7 @@
       "label": "数据库"
     },
     "desc_log": {
-      "desc": "EMQX 支持同时多个日志输出，一个控制台输出，和多个文件输出。\n默认情况下，EMQX 运行在容器中，或者在 'console' 或 'foreground' 模式下运行时，会输出到 控制台，否则输出到文件。",
+      "desc": "EMQX 支持多个日志处理器，包括一个控制台处理器和多个文件处理器。\n默认情况下，EMQX 在 Docker 环境或控制台/前台模式下运行时会输出日志到控制台，\n否则会将日志输出到文件 `${EMQX_LOG_DIR}/emqx.log.N`。\n对于高级配置，您可以在此部分找到更多参数。",
       "label": "日志"
     },
     "desc_log_burst_limit": {
@@ -3866,6 +3956,10 @@
     }
   },
   "emqx_dashboard_monitor_api": {
+    "clear_monitor": {
+      "desc": "清除整个集群的监控（统计）数据。",
+      "label": "清除集群统计数据"
+    },
     "current_stats": {
       "desc": "当前监控（统计）数据，例如整个集群中的连接数和连接速率。",
       "label": "集群运行统计"
@@ -4688,11 +4782,17 @@
     }
   },
   "emqx_fdb_ds_schema": {
+    "batch_delete_size": {
+      "desc": "在 `compacted` 存储中删除最旧数据的批量大小。"
+    },
     "expiry_gc_interval": {
       "desc": "清理过期数据的 GC 间隔时间。"
     },
     "gc": {
       "desc": "GC 配置。"
+    },
+    "gc_max_gen_size": {
+      "desc": "持久化存储中一个代的最大可用大小。\n如果当前代的大小超过该值，将会创建一个新的代。"
     },
     "gc_max_size": {
       "desc": "持久存储的总可用大小。"
@@ -4724,6 +4824,10 @@
     "session_storage_backend_fdb_storage_options": {
       "desc": "FoundationDB 中存储消息数据的底层后端模块的配置选项。",
       "label": "FoundationDB DS 存储选项"
+    },
+     "session_storage_backend_fdb_storage_write_buffer": {
+      "desc": "FoundationDB持久存储后端的写缓冲区大小。",
+      "label": "些缓冲区大小"
     },
     "session_storage_backend_fdb_tenant": {
       "desc": "FoundationDB 持久存储后端使用的租户。",
@@ -6599,7 +6703,57 @@
       "label": "Oracle 数据库 Sid"
     }
   },
+  "emqx_otel_sampler_api": {
+    "clientid": {
+      "desc": "客户端 ID",
+      "label": "客户端 ID"
+    },
+    "sample_white_list_delete": {
+      "desc": "P清除特定类型的白名单",
+      "label": "清除白名单"
+    },
+    "sample_white_list_get": {
+      "desc": "显示特定类型的采样白名单。",
+      "label": "显示白名单"
+    },
+    "sample_white_list_post": {
+      "desc": "更新特定类型的白名单。",
+      "label": "更新白名单"
+    },
+    "topic": {
+      "desc": "主题名称或主题过滤器",
+      "label": "主题"
+    },
+    "white_list_type": {
+      "desc": "白名单的类型。可以是 `clientid` 或 `topic`。",
+      "label": "白名单类型"
+    }
+  },
   "emqx_otel_schema": {
+    "client_connect_disconnect": {
+      "desc": "启用/禁用在配置的采样比率下，所有客户端的连接/断开连接事件的后台追踪。",
+      "label": "追踪客户端连接/断开连接"
+    },
+    "client_messaging": {
+      "desc": "启用/禁用在配置的采样比率和追踪级别下，所有客户端的消息传输事件的后台追踪。",
+      "label": "追踪消息传输事件"
+    },
+    "client_subscribe_unsubscribe": {
+      "desc": "启用/禁用在配置的采样比率下，所有客户端的订阅/取消订阅事件的后台追踪。",
+      "label": "追踪客户端订阅/取消订阅"
+    },
+    "clientid_match_rules_max": {
+      "desc": "客户端 ID 匹配白名单的最大长度。",
+      "label": "客户端 ID 匹配白名单的最大数量"
+    },
+    "cluster_identifier": {
+      "desc": "添加到 Span 的属性中的一个属性值。属性键为 cluster.id\n通常，设置一个简单且易于识别的名称，或者使用集群名称来标识不同的 EMQX 集群。",
+      "label": "集群标识符"
+    },
+    "e2e_tracing_options": {
+      "desc": "端到端追踪选项。",
+      "label": "端到端追踪选项"
+    },
     "enable": {
       "desc": "启用或禁用 open telemetry 指标",
       "label": "启用。"
@@ -6612,6 +6766,10 @@
     },
     "interval": {
       "desc": "发送指标到 Open Telemetry 端点的时间间隔"
+    },
+    "msg_trace_level": {
+      "desc": "消息发布过程中的所有消息交换的追踪级别。\n- 0：将记录消息发布过程中的基本事件作为 Span。\n 包括 'client.connect'、'client.authz'、'message.route'、'message.forward'、'message.handle_forward'、'broker.publish'。\n- 1：除了基本事件外，\n 事件 'broker.puback'、'client.puback'、'broker.pubrec'、'client.pubrec' 将作为 Span 记录。\n 也就是 QoS1 或 QoS2 消息交互中的第一个响应数据包。\n- 2：除了级别 1 的事件外，\n 事件 'broker.pubrel'、'client.pubrel'、'broker.pubcomp'、'client.pubcomp' 将作为 Span 记录。",
+      "label": "消息追踪级别"
     },
     "opentelemetry": {
       "desc": "Open Telemetry 工具包配置",
@@ -6660,18 +6818,31 @@
       "desc": "Open Telemetry 追踪配置。",
       "label": "Open Telemetry 追踪"
     },
+    "sample_ratio": {
+      "desc": "列出事件类型的后台追踪采样比率。",
+      "label": "采样比率"
+    },
     "scheduled_delay": {
       "desc": "两次连续导出 Open Telemetry 信号之间的延迟间隔。",
       "label": "计划延迟间隔"
     },
+    "topic_match_rules_max": {
+      "desc": "基于主题匹配的白名单最大长度。",
+      "label": "最大主题匹配白名单数量"
+    },
     "trace_all": {
-      "desc": "如果启用，将追踪所有发布的消息，如果无法从消息中提取追踪 ID，则生成新的追踪 ID。\n否则，只追踪带有追踪上下文的消息。默认禁用。",
+      "desc": "如果启用，将追踪所有发布的消息，如果无法从消息中提取追踪 ID，则生成新的追踪 ID。\n否则，只追踪带有追踪上下文的消息。默认禁用。\n注意：改设置只有当 `追踪模式` 设置为 `legacy` 的时候才生效。",
       "label": "追踪全部"
     },
     "trace_filter": {
       "desc": "Open Telemetry 追踪过滤器配置",
       "label": "追踪过滤器"
+    },
+    "trace_mode": {
+      "desc": "OpenTelemetry 追踪模式。\n- legacy: 使用旧的追踪方法，只追踪消息发布和传递。\n Span 名称将与 5.9 之前的版本兼容。\n- e2e: 端到端追踪模式。所有客户端行为都将被追踪：\n - 连接和断开连接\n - 订阅和取消订阅\n - 消息事件，如 PUBLISH、PUBACK、PUBREL 等。\n 启用后（对于每种事件类型），将对所有客户端进行后台追踪，按配置的采样比例进行。\n 更多详情见 Dashboard 或 API 文档。\n 从 Dashboard 中，您还可以为一组客户端或主题在后台追踪的基础上添加额外的追踪白名单。",
+      "label": "追踪模式"
     }
+  },
   },
   "emqx_plugins_schema": {
     "check_interval": {
@@ -7631,8 +7802,8 @@
       "label": "最大并发连接数"
     },
     "base_listener_mountpoint": {
-      "desc": "发布或订阅时，请在所有主题前面加上 mountpoint 字符串。\n\n将消息传递给订阅者时，将从主题名称中删除带前缀的字符串。挂载点是一种用户可以用来实现不同侦听器之间消息路由隔离的方法。\n\n例如，如果客户机 A 使用 <code>listeners.tcp.\\<name>.mountpoint</code> 设置为'some_tenant'，那么客户端实际上订阅了主题'some_tenant/t'。<br/>\n类似地，如果另一个客户端 B（与客户端 A 连接到同一个侦听器）向主题 't' 发送消息，该消息将路由到所有订阅了'some_租户/t'的客户端，因此客户端 A 将接收主题名为't'的消息<br/>\n\n设置为<code>\"\"</code> 以禁用该功能<br/>\n\nmountpoint 字符串中的变量：\n- <code>${clientid}</code>: clientid\n- <code>${username}</code>: username",
-      "label": "mountpoint"
+      "desc": "为客户端在 SUBSCRIBE 和 UNSUBSCRIBE 请求、PUBLISH 消息以及遗嘱消息（如果在 CONNECT 数据包中提供）使用的主题添加静态或模板化的前缀（例如，n1/ 或 ${username}/）。\n- 从发布到相应订阅的消息的主题中移除此前缀。\n\n支持的占位符有：\n- ${username}\n- ${clientid}\n- ${zone}\n- ${client_attrs.NAME}\n\n例如，使用 mountpoint=\"${username}/\" 配置时，使用 u1 作为用户名的客户端将具有：\n- 客户端 SUBSCRIBE sensors/# -> 在代理服务器内部为 u1/sensors/#。\n- 代理服务器 PUBLISH u1/sensors/data -> 发送给客户端的主题为 sensors/data。\n\n前缀挂载/卸载适用于：\n- CONNECT 中的遗嘱消息\n- PUBLISH\n- SUBSCRIBE\n- UNSUBSCRIBE\n\n注意：挂载操作发生在 授权/ACL 检查之后。",
+      "label": "Mountpoint"
     },
     "base_listener_zone": {
       "desc": "监听器所属的配置 zone。\n连接到此监听器的客户端将继承在此 zone 名称下创建的 zone 设置。\n\n一个 zone 可以覆盖以下根名称下的配置：\n- `mqtt`\n- `force_shutdown`\n- `force_gc`\n- `flapping_detect`\n- `durable_sessions`",
@@ -8011,7 +8182,7 @@
       "label": "无延迟"
     },
      "fields_tcp_opts_nolinger": {
-      "desc": "启用时，`SO_LINGER` 标志设置为 `(onoff=1, linger=0)`，这意味着 TCP socket 将立即关闭，发送 TCP-RST 包，丢弃任何未发送的数据，并跳过正常关闭步骤，包括 CLOSE_WAIT、FIN_WAIT 和 TIME_WAIT。When enabled, `SO_LINGER` flag is set as `(onoff=1, linger=0)`, which means the TCP socket is to be closed immediately by sending a TCP-RST packet,\ndiscarding any unsent data and skipping the graceful close steps, including CLOSE_WAIT, FIN_WAIT, and TIME_WAIT.",
+      "desc": "启用时，`SO_LINGER` 标志设置为 `(onoff=1, linger=0)`，这意味着 TCP socket 将立即关闭，发送 TCP-RST 包，丢弃任何未发送的数据，并跳过正常关闭步骤，包括 CLOSE_WAIT、FIN_WAIT 和 TIME_WAIT。",
       "label": "无延迟关闭"
     },
     "fields_tcp_opts_recbuf": {
@@ -8577,11 +8748,11 @@
       "label": "批次大小"
     },
     "client_attrs_init": {
-      "desc": "指定如何初始化客户端属性。每个属性可被初始化为 `client_attrs.{NAME}` ，其中 `{NAME}` 是在配置字段 `set_as_attr` 中指定的属性名称。初始化的客户端属性将以指定的名称存储在 `client_attrs` 属性中。然后，它们可以在身份验证和授权过程的模板中用作占位符。例如，当 `set_as_attr = alias` 时，使用 `${client_attrs.alias}` 来渲染 HTTP POST 请求体，或者渲染监听器配置 `moutpoint = devices/${client_attrs.alias}/` 来初始化每个客户端独有的主题命名空间。",
+      "desc": "指定如何初始化客户端属性。每个属性可被初始化为 `client_attrs.{NAME}` ，其中 `{NAME}` 是在配置字段 `set_as_attr` 中指定的属性名称。初始化的客户端属性将以指定的名称存储在 `client_attrs` 属性中，并使用指定的名称，可以作为变量来渲染挂载点、身份认证和授权请求的模板。例如，当 `set_as_attr = alias` 时，使用 `${client_attrs.alias}` 来渲染 HTTP POST 请求体，或者为主题命名空间渲染监听器配置 `moutpoint = devices/${client_attrs.alias}/`。",
       "label": "客户端属性初始化"
     },
     "client_attrs_init_expression": {
-      "desc": "单行表达式，用于求值一组预定义的字符串函数（类似规则引擎 SQL 语句中的函数）。\n表达式可以是带有嵌套调用的函数调用，或直接变量引用。\n目前，它不提供用户定义的变量绑定（如 `var a=1`）或用户定义的函数。\n例如，提取以点分隔的客户端 ID 的前缀：`nth(1, tokens(clientid, '.'))`。\n\n预绑定的变量包括：\n- `cn`: 客户端 TLS 证书的常用名称。\n- `dn`: 客户端 TLS 证书的专有名称（主题）。\n- `clientid`: MQTT 客户端 ID。\n- `username`: MQTT 客户端的用户名。\n- `user_property.{NAME}`: CONNECT 包中的用户属性。\n\n您可以在 EMQX 文档中了解更多关于各种表达式的信息。",
+      "desc": "单行表达式，用于求值一组预定义的字符串函数（类似规则引擎 SQL 语句中的函数）。\n表达式可以是带有嵌套调用的函数调用，或直接变量引用。\n目前，它不提供用户定义的变量绑定（如 `var a=1`）或用户定义的函数。\n例如，提取以点分隔的客户端 ID 的前缀：`nth(1, tokens(clientid, '.'))`。\n\n预绑定的变量包括：\n- clientid：MQTT 客户端 ID。\n- username：MQTT 客户端的用户名。\n- user_property.{NAME}：连接包中的用户属性。\n对于 TLS 客户端，直接连接或通过启用代理协议（v2）负载均衡器连接时，\n还可以使用一些额外的变量：\n- cn：客户端的 TLS 证书公共名称。\n- dn：客户端的 TLS 证书区分名称（主体）。\n- peersni：客户端发送的 TLS 服务器名称指示。\n\n您可以在 EMQX 文档中阅读更多关于变量表达式的信息。",
       "label": "客户端属性提取正则表达式"
     },
     "client_attrs_init_set_as_attr": {
