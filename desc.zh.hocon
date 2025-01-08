@@ -6843,7 +6843,6 @@
       "label": "追踪模式"
     }
   },
-  },
   "emqx_plugins_schema": {
     "check_interval": {
       "desc": "检查间隔：检查集群中插件的状态是否一致，<br/>\n如果连续 3 次检查结果不一致，则报警。"
