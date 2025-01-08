@@ -2243,7 +2243,7 @@
       "label": "投递模式"
     },
     "exchange": {
-      "desc": " 消息将发送到的 RabbitMQ 交换机的名称。支持模板（例如：e-${payload.e}）。",
+      "desc": " 消息将发送到的 RabbitMQ Exchange 的名称。支持模板（例如：e-${payload.e}）。",
       "label": "交换机"
     },
     "exchange_type": {
@@ -2275,7 +2275,7 @@
       "label": "发布确认超时"
     },
     "routing_key": {
-      "desc": "用于将消息路由到 RabbitMQ 交换机中正确队列的路由键。支持模板（例如：k-${payload.r}）。",
+      "desc": "用于将消息路由到 RabbitMQ Exchange 中正确队列的 Routing Key。支持模板（例如：k-${payload.r}）。",
       "label": "路由键"
     },
     "server": {
@@ -2578,7 +2578,7 @@
       "label": "表名"
     },
     "desc_tags": {
-      "desc": "Tags. 标签键和值可以是静态字符串或占位符，如 `${payload.tag_key}` 和 `${payload.tag_value}`。",
+      "desc": "标签。标签键和值可以是静态字符串或占位符，如 `${payload.tag_key}` 和 `${payload.tag_value}`。",
       "label": "标签"
     },
     "desc_timestamp": {
@@ -7802,7 +7802,7 @@
       "label": "最大并发连接数"
     },
     "base_listener_mountpoint": {
-      "desc": "为客户端在 SUBSCRIBE 和 UNSUBSCRIBE 请求、PUBLISH 消息以及遗嘱消息（如果在 CONNECT 数据包中提供）使用的主题添加静态或模板化的前缀（例如，n1/ 或 ${username}/）。\n- 从发布到相应订阅的消息的主题中移除此前缀。\n\n支持的占位符有：\n- ${username}\n- ${clientid}\n- ${zone}\n- ${client_attrs.NAME}\n\n例如，使用 mountpoint=\"${username}/\" 配置时，使用 u1 作为用户名的客户端将具有：\n- 客户端 SUBSCRIBE sensors/# -> 在代理服务器内部为 u1/sensors/#。\n- 代理服务器 PUBLISH u1/sensors/data -> 发送给客户端的主题为 sensors/data。\n\n前缀挂载/卸载适用于：\n- CONNECT 中的遗嘱消息\n- PUBLISH\n- SUBSCRIBE\n- UNSUBSCRIBE\n\n注意：挂载操作发生在 授权/ACL 检查之后。",
+      "desc": "为客户端在 SUBSCRIBE 和 UNSUBSCRIBE 请求、`PUBLISH` 消息以及遗嘱消息（如果在 `CONNECT` 数据包中提供）使用的主题添加静态或模板化的前缀（例如，`n1/` 或 `${username}/`）。\n- 从发布到相应订阅的消息的主题中移除此前缀。\n\n支持的占位符有：\n- `${username}`\n- `${clientid}`\n- `${zone}`\n- `${client_attrs.NAME}`\n\n例如，使用 `mountpoint=\"${username}/\"` 配置时，使用 `u1` 作为用户名的客户端将具有：\n- 客户端 `SUBSCRIBE sensors/#` 在服务器内部为 `u1/sensors/#`。\n- 服务器 `PUBLISH u1/sensors/data` -> 发送给客户端的主题为 `sensors/data`。\n\n前缀挂载/卸载适用于：\n- `CONNECT` 中的遗嘱消息\n- `PUBLISH`\n- `SUBSCRIBE`\n- `UNSUBSCRIBE`\n\n注意：挂载操作发生在 授权/ACL 检查之后。",
       "label": "Mountpoint"
     },
     "base_listener_zone": {
