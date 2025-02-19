@@ -739,6 +739,10 @@
       "desc": "定义查询中过滤条件的条件表达式。\n过滤器支持以下占位符<br/>\n - <code>${username}</code>：在连接时将用客户端使用的 <code>用户名</code> 替换<br/>\n - <code>${clientid}</code>：在连接时将用客户端使用的 <code>客户端 ID</code> 替换",
       "label": "过滤器"
     },
+    "limit": {
+      "desc": "限制获取的记录数量。",
+      "label": "授权记录限制"
+    },
     "mongo_rs": {
       "desc": "使用 MongoDB 授权（副本集模式）",
       "label": "mongo_rs"
@@ -750,6 +754,10 @@
     "mongo_single": {
       "desc": "使用 MongoDB 授权（单实例）。",
       "label": "mongo_single"
+    },
+    "skip": {
+      "desc": "跳过的授权记录数量。",
+      "label": "跳过的授权记录数"
     }
   },
   "emqx_authz_mysql_schema": {
@@ -1084,7 +1092,7 @@
       "label": "动作类型"
     },
     "buffer_memory_overload_protection": {
-      "desc": "当缓冲模式设置为<code>memory</code>时适用。在高内存压力下，EMQX 将丢弃旧的缓冲消息。高内存阈值由配置项<code>sysmon.os.sysmem_high_watermark</code>定义。注意：此设置仅在 Linux 上有效。",
+      "desc": "当缓冲模式设置为<code>memory</code>时适用。在高内存压力下，EMQX 将丢弃旧的缓冲消息。注意：此设置仅在 Linux 上有效。",
       "label": "内存过载保护"
     },
     "buffer_per_partition_limit": {
@@ -1621,7 +1629,7 @@
       "label": "参数数据"
     },
     "config_parameters_data_type": {
-      "desc": "数据类型，可以是枚举或字符串。\n支持格式为 ${var} 的字符串占位符，最终值可以是：\n\n- TEXT\n- BOOLEAN\n- INT32\n- INT64\n- FLOAT\n- DOUBLE",
+      "desc": "数据类型，可以是：\n\n- test\n- boolean\n- int32\n- int64\n- float\n- double",
       "label": "数据类型"
     },
     "config_parameters_measurement": {
@@ -1629,7 +1637,7 @@
       "label": "字段"
     },
     "config_parameters_timestamp": {
-      "desc": "时间戳。支持格式为 ${var} 的占位符，最终值可以是：\n\n- now: 使用当前时间（毫秒）\n- now_ms: 同上\n- now_us: 使用当前时间（微秒）\n- now_ns: 使用当前时间（纳秒）\n- 任何整数: 直接使用该值作为时间戳\n- 占位符: 使用负载中的值作为时间戳",
+      "desc": "时间戳。支持格式为 ${var} 的占位符，最终值可以是：\n\n- now: 使用当前时间（毫秒）\n- now_ms: 同上\n- now_us: 使用当前时间（微秒）\n- now_ns: 使用当前时间（纳秒）\n- 任何整数: 直接使用该值作为时间戳\n- 占位符: 使用 payload 中的值作为时间戳",
       "label": "时间戳"
     },
     "config_parameters_value": {
@@ -1679,7 +1687,7 @@
       "label": "数据桥接类型"
     },
     "buffer_memory_overload_protection": {
-      "desc": "缓存模式是 <code>memory</code> 或 <code>hybrid</code> 时适用。当系统处于高内存压力时，从队列中丢弃旧的消息以减缓内存增长。内存压力值由配置项 <code>sysmon.os.sysmem_high_watermark</code> 决定。注意，该配置仅在 Linux 系统中有效。",
+      "desc": "缓存模式是 <code>memory</code> 或 <code>hybrid</code> 时适用。当系统处于高内存压力时，从队列中丢弃旧的消息以减缓内存增长。注意，该配置仅在 Linux 系统中有效。",
       "label": "内存过载保护"
     },
     "buffer_mode": {
@@ -2107,7 +2115,7 @@
       "label": "认证"
     },
     "buffer_memory_overload_protection": {
-      "desc": "缓存模式是 <code>memory</code> 或 <code>hybrid</code> 时适用。当系统处于高内存压力时，从队列中丢弃旧的消息以减缓内存增长。内存压力值由配置项 <code>sysmon.os.sysmem_high_watermark</code> 决定。注意，该配置仅在 Linux 系统中有效。",
+      "desc": "缓存模式是 <code>memory</code> 或 <code>hybrid</code> 时适用。当系统处于高内存压力时，从队列中丢弃旧的消息以减缓内存增长。注意，该配置仅在 Linux 系统中有效。",
       "label": "内存过载保护"
     },
     "buffer_mode": {
@@ -2659,6 +2667,9 @@
     }
   },
   "emqx_bridge_v2_api": {
+     "actions_summary": {
+      "desc": "汇总动作"
+    },
     "desc_api1": {
       "desc": "列出所有创建的数据桥接。",
       "label": "列出所有数据桥接"
@@ -2734,6 +2745,9 @@
     "desc_qs_also_delete_dep_actions": {
       "desc": "是否级联删除依赖的动作。",
       "label": "级联删除依赖的动作?"
+    },
+    "sources_summary": {
+      "desc": "汇总动作。"
     }
   },
   "emqx_bridge_v2_schema": {
@@ -3658,7 +3672,7 @@
       "label": "清除会话"
     },
     "clientid_prefix": {
-      "desc": "可选的前缀，用于在出口网桥使用的 clientid 前加上前缀。",
+      "desc": "可选的前缀，用于在出口桥接使用的 clientid 前加上前缀。\n如果使用了 `static_clientids`，则此设置无效。",
       "label": "客户 ID 前缀"
     },
     "egress_desc": {
@@ -3744,6 +3758,18 @@
     "server_configs": {
       "desc": "服务器相关的配置。",
       "label": "服务配置。"
+    },
+    "static_clientid_entry": {
+      "desc": "将 EMQX 节点名称映射到静态客户端 ID 的条目。\n\n如果定义了任何条目，则仅匹配这些条目的 EMQX 节点会使用相应的客户端 ID 启动 MQTT 客户端。",
+      "label": "静态客户端 ID 条目"
+    },
+    "static_clientid_entry_ids": {
+      "desc": "分配给此节点的静态客户端 ID 数组。",
+      "label": "静态客户端 ID"
+    },
+    "static_clientid_entry_node": {
+      "desc": "节点名称（例如：`emqx@10.0.0.1`）。",
+      "label": "节点名称"
     },
     "username": {
       "desc": "MQTT 协议的用户名",
@@ -6709,7 +6735,7 @@
       "label": "客户端 ID"
     },
     "sample_white_list_delete": {
-      "desc": "P清除特定类型的白名单",
+      "desc": "清除特定类型的白名单",
       "label": "清除白名单"
     },
     "sample_white_list_get": {
@@ -7205,6 +7231,9 @@
     },
     "max_payload_size": {
       "desc": "允许存储的保留消息的最大大小。EMQX 将拒绝存储超过此大小的保留消息，并输出包含关键字 'retain_failed_for_payload_size_exceeded_limit' 的错误日志。\n\n0 表示保留消息大小不受限制。"
+    },
+    "max_publish_rate": {
+      "desc": "发布保留消息的最大速率。超过该限制发布的消息会被传递，但不会作为保留消息存储。"
     },
     "max_retained_messages": {
       "desc": "消息保留的数量上限。0 表示无限"
@@ -7801,8 +7830,8 @@
       "label": "最大并发连接数"
     },
     "base_listener_mountpoint": {
-      "desc": "为客户端在 SUBSCRIBE 和 UNSUBSCRIBE 请求、`PUBLISH` 消息以及遗嘱消息（如果在 `CONNECT` 数据包中提供）使用的主题添加静态或模板化的前缀（例如，`n1/` 或 `${username}/`）。\n- 从发布到相应订阅的消息的主题中移除此前缀。\n\n支持的占位符有：\n- `${username}`\n- `${clientid}`\n- `${zone}`\n- `${client_attrs.NAME}`\n\n例如，使用 `mountpoint=\"${username}/\"` 配置时，使用 `u1` 作为用户名的客户端将具有：\n- 客户端 `SUBSCRIBE sensors/#` 在服务器内部为 `u1/sensors/#`。\n- 服务器 `PUBLISH u1/sensors/data` -> 发送给客户端的主题为 `sensors/data`。\n\n前缀挂载/卸载适用于：\n- `CONNECT` 中的遗嘱消息\n- `PUBLISH`\n- `SUBSCRIBE`\n- `UNSUBSCRIBE`\n\n注意：挂载操作发生在 授权/ACL 检查之后。",
-      "label": "Mountpoint"
+      "desc": "在客户端的 SUBSCRIBE 和 UNSUBSCRIBE 请求、`PUBLISH` 消息以及遗嘱消息（如果在 `CONNECT` 数据包中提供）中，为主题添加静态或模板化的前缀（例如，`n1/` 或 `${username}/`）。\n- 从发布到相应订阅的消息的主题中移除此前缀。\n\n支持的占位符有：\n- `${username}`\n- `${clientid}`\n- `${zone}`\n- `${client_attrs.NAME}`\n\n例如，使用 `mountpoint=\"${username}/\"` 配置时，使用 `u1` 作为用户名的客户端将具有：\n- 客户端 `SUBSCRIBE sensors/#` 在服务器内部为 `u1/sensors/#`。\n- 服务器发布 `PUBLISH u1/sensors/data` -> 发送给客户端的主题为 `sensors/data`。\n\n前缀挂载/卸载适用于：\n- `CONNECT` 中的遗嘱消息\n- `PUBLISH`\n- `SUBSCRIBE`\n- `UNSUBSCRIBE`\n\n注意：挂载操作发生在**授权/ACL 检查之后**。",
+      "label": "挂载点"
     },
     "base_listener_zone": {
       "desc": "监听器所属的配置 zone。\n连接到此监听器的客户端将继承在此 zone 名称下创建的 zone 设置。\n\n一个 zone 可以覆盖以下根名称下的配置：\n- `mqtt`\n- `force_shutdown`\n- `force_gc`\n- `flapping_detect`\n- `durable_sessions`",
@@ -8127,6 +8156,10 @@
     "fields_mqtt_quic_listener_ssl_options": {
       "desc": "QUIC 传输层的 TLS 选项",
       "label": "TLS 选项"
+    },
+    "fields_mqtt_quic_listener_sslkeylogfile": {
+      "desc": "指定本地文件系统中文件的路径，监听器将在该文件中写入每个连接的 TLS 会话密钥，从而实现流量解密。此设置无法在运行时更改。Specify the path to the file on the local filesystem where the listener writes TLS session secrets for each connection, enabling decryption of the traffic. This cannot be changed at runtime.",
+      "label": "SSLKEYLOGFILE"
     },
     "fields_mqtt_quic_listener_stateless_operation_expiration_ms": {
       "desc": "同一个对端的操作之间的时间限制，单位是毫秒。 默认：100",
@@ -8575,6 +8608,14 @@
     },
     "sys_topics": {
       "desc": "系统主题配置。"
+    },
+    "sysmon_broker_pool_mailbox_size_alarm_threshold": {
+      "desc": "当代理服务器线程池的最大邮箱大小超过该阈值时，会触发告警。代理服务器线程池负责处理添加和移除订阅，以及路由信息的复制。\n\n可能导致此告警触发的原因有多种。以下是一些需要检查或考虑的事项：\n- 增加 EMQX 的 CPU / RAM 资源；\n- 审查客户端的订阅情况，例如，尝试压缩主题过滤器；\n- 检查集群内部网络带宽是否已达到最大值。",
+      "label": "邮箱大小告警"
+    },
+    "sysmon_mnesia_tm_mailbox_size_alarm_threshold": {
+      "desc": "当 mnesia 事务管理器的邮箱大小超过该阈值时，会触发告警。该进程负责处理 EMQX 内部数据库 mnesia 中的所有事务。\n\n可能导致此告警触发的原因有多种。以下是一些需要检查或考虑的事项：\n- 降低 `max_conn_rate`，以便客户端以较慢的速度加入；\n- 增加 EMQX 的 CPU / RAM 资源；\n- 降低客户端侧的保留消息速率；\n- 检查集群内部网络带宽是否已达到最大值。",
+      "label": "mnesia 事务管理器邮箱大小告警"
     },
     "sysmon_os_cpu_check_interval": {
       "desc": "定期 CPU 检查的时间间隔。",
@@ -9123,7 +9164,7 @@
       "label": "动作类型"
     },
     "buffer_memory_overload_protection": {
-      "desc": "当缓冲模式设置为<code>memory</code>时适用。在高内存压力下，EMQX 将丢弃旧的缓冲消息。高内存阈值在配置<code>sysmon.os.sysmem_high_watermark</code>中定义。注意：此配置仅在 Linux 上有效。",
+      "desc": "当缓冲模式设置为<code>memory</code>时适用。在高内存压力下，EMQX 将丢弃旧的缓冲消息。注意：此配置仅在 Linux 上有效。",
       "label": "内存过载保护"
     },
     "buffer_mode": {
@@ -9569,7 +9610,7 @@
       "label": "参数"
     },
     "config_path": {
-      "desc": "此动作的 URL 路径。<br/>\n此路径将附加到连接器的 <code>url</code> 配置，以形成完整的 URL 地址。\n此选项允许使用带有变量的模板。例如，<code>/room/{$room_no}</code>。",
+      "desc": "此动作的 URL 路径。<br/>\n此路径将附加到连接器的 <code>url</code> 配置，以形成完整的 URL 地址。\n此选项允许使用带有变量的模板。例如，<code>/room/${room_no}</code>。",
       "label": "URL 路径"
     },
     "config_request_timeout": {
@@ -9743,7 +9784,7 @@
       "label": "本地主题"
     },
     "egress_pool_size": {
-      "desc": "将发布消息到远程代理的 MQTT 客户端池的大小。<br/>\n每个 MQTT 客户端都将分配'clientid'，格式为'${clientid_prefix}:${bridge_name}:egress:${node}:${n}'\n其中'n'是池中客户端的编号。",
+      "desc": "将发布消息到远程代理的 MQTT 客户端池的大小。<br/>\n每个 MQTT 客户端都将分配'clientid'，格式为'${clientid_prefix}:${bridge_name}:egress:${node}:${n}'\n其中'n'是池中客户端的编号。\n\n如果 `static_clientids` 不为空，则此选项无效。当使用静态客户端 ID 时，池的大小始终根据每个节点分配的 ID 数量来确定。",
       "label": "客户端池大小"
     },
     "egress_remote": {
@@ -9775,7 +9816,7 @@
       "label": "本地主题"
     },
     "ingress_pool_size": {
-      "desc": "将从远程代理接收消息的 MQTT 客户端池的大小。<br/>\n仅当'remote.topic'是共享订阅主题或主题过滤器时才会尊重此值，\n（例如$share/name1/topic1或$share/name2/topic2/#），否则只会使用一个 MQTT 客户端。\n每个 MQTT 客户端都将分配'clientid'，格式为'${clientid_prefix}:${bridge_name}:ingress:${node}:${n}'\n其中'n'是池中客户端的编号。\n注意：当 EMQX 进行集群化时，非共享订阅将无法正常工作。",
+      "desc": "将从远程代理接收消息的 MQTT 客户端池的大小。<br/>\n仅当'remote.topic'是共享订阅主题或主题过滤器时才会尊重此值，\n（例如$share/name1/topic1或$share/name2/topic2/#），否则只会使用一个 MQTT 客户端。\n每个 MQTT 客户端都将分配'clientid'，格式为'${clientid_prefix}:${bridge_name}:ingress:${node}:${n}'\n其中'n'是池中客户端的编号。\n注意：当 EMQX 进行集群化时，非共享订阅将无法正常工作。\n\n如果 `static_clientids` 不为空，则此选项无效。当使用静态客户端 ID 时，池的大小始终根据每个节点分配的 ID 数量来确定。",
       "label": "客户端池大小"
     },
     "ingress_remote": {
@@ -10495,6 +10536,10 @@
     "mqtt_subscriber_source": {
       "desc": "订阅 Source 的配置。",
       "label": "Source"
+    },
+     "source_no_local": {
+      "desc": "在订阅远程主题时是否设置 no-local 标志。如果设置为 true，并且你使用相同的连接器向你也订阅的主题发布消息，则此设置可防止服务器将你自己发布的消息转发回你。仅在使用 MQTT 协议版本 5 时生效。请注意，如果你使用的工作线程池大小大于 1，你仍然会收到重复的消息。",
+      "label": "No Local"
     }
   },
   "emqx_bridge_gcp_pubsub_consumer_schema": {
