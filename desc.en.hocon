@@ -778,6 +778,10 @@
       "desc": "Indicates which attribute is used to represent the both allowed topics list of  `publish` and `subscribe`.",
       "label": "All Attribute"
     },
+    "ldap_struct": {
+      "desc": "LDAP Authorization settings",
+      "label": "LDAP authorization"
+    },
     "publish_attribute": {
       "desc": "Indicates which attribute is used to represent the allowed topics list of the `publish`.",
       "label": "Publish Attribute"
@@ -3031,6 +3035,10 @@
     "config_connector": {
       "desc": "Configurations for an MQTT connector.",
       "label": "MQTT connector"
+    },
+    "connect_timeout": {
+      "desc": "Timeout for connecting to the remote broker.  The connection worker process is blocked up to this amount of time when attempting the initial connection.",
+      "label": "Connect Timeout"
     },
     "egress_desc": {
       "desc": "The egress config defines how this bridge forwards messages from the local broker to the remote broker.<br/>\nTemplate with variables is allowed in 'remote.topic', 'local.qos', 'local.retain', 'local.payload'.<br/>\nNOTE: if this bridge is used as the action of a rule, and also 'local.topic'\nis configured, then both the data got from the rule and the MQTT messages that matches\n'local.topic' will be forwarded.",
@@ -8375,6 +8383,9 @@
     "push_gateway_enable": {
       "desc": "Enable or disable Pushgateway"
     },
+    "push_gateway_method": {
+      "desc": "The HTTP Method of pushing metrics to Pushgateway. Available options:<br/>\n - <code>put</code>: All metrics with the grouping key specified in the URL are replaced by the metrics pushed with PUT.<br/>\n - <code>post</code>: POST works exactly like the PUT method but only metrics with the same name as the newly pushed metrics are replaced.<br/>\nThe default value is <code>put</code>."
+    },
     "push_gateway_url": {
       "desc": "URL of Pushgateway server. Pushgateway is optional, should not be configured if prometheus is to scrape EMQX."
     },
@@ -8882,6 +8893,10 @@
     "ri_from": {
       "desc": "The topics of the rule",
       "label": "Topics of Rule"
+    },
+    "ri_last_modified_at": {
+      "desc": "Time at which the rule was last modified.",
+      "label": "Rule Last Modified Time"
     },
     "ri_metrics": {
       "desc": "The metrics of the rule",
