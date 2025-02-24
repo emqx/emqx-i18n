@@ -708,6 +708,10 @@
       "desc": "表示使用哪个属性来表示允许`发布`和`订阅`的主题列表。",
       "label": "所有属性"
     },
+    "ldap_struct": {
+      "desc": "LDAP 授权设置",
+      "label": "LDAP 授权"
+    },
     "publish_attribute": {
       "desc": "表示使用哪个属性来表示允许`发布`的主题列表。",
       "label": "发布属性"
@@ -7032,6 +7036,9 @@
     "push_gateway_enable": {
       "desc": "启用或禁用 Pushgateway。"
     },
+    "push_gateway_method": {
+      "desc": "推送指标到 Pushgateway 的 HTTP 方法。可选项如下：<br/>\n - <code>put</code>: 所有在 URL 中指定分组键的指标会被通过 PUT 推送的指标替换。<br/>\n - <code>post</code>: POST 方法与 PUT 方法完全相同，但仅替换与新推送的指标同名的指标。<br/>\n默认值为 <code>put</code>。"
+    },
     "push_gateway_url": {
       "desc": "Pushgateway 服务器的 URL。Push Gateway 是可选的，如果 Prometheus 要抓取 EMQX，则不应配置。"
     },
@@ -7473,6 +7480,10 @@
     "ri_from": {
       "desc": "规则指定的主题",
       "label": "规则指定的主题"
+    },
+    "ri_last_modified_at": {
+      "desc": "规则最后被修改的时间。",
+      "label": "规则最后修改时间"
     },
     "ri_metrics": {
       "desc": "规则的计数器",
@@ -9874,6 +9885,10 @@
     "config_connector": {
       "desc": "MQTT connector 的配置。",
       "label": "MQTT 连接器"
+    },
+     "connect_timeout": {
+      "desc": "连接远程代理服务器的超时时间。在尝试建立初始连接时，连接的工作进程会暂停，直到达到设定的超时时间为止。",
+      "label": "连接超时时间"
     }
   },
   "emqx_bridge_mysql": {
