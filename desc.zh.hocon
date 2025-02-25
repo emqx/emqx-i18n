@@ -708,6 +708,10 @@
       "desc": "表示使用哪个属性来表示允许`发布`和`订阅`的主题列表。",
       "label": "所有属性"
     },
+    "ldap_struct": {
+      "desc": "LDAP 授权设置",
+      "label": "LDAP 授权"
+    },
     "publish_attribute": {
       "desc": "表示使用哪个属性来表示允许`发布`的主题列表。",
       "label": "发布属性"
@@ -6716,6 +6720,10 @@
     }
   },
   "emqx_oracle": {
+    "role": {
+      "desc": "选择用于连接到 Oracle 数据库的角色。<br/>- <code>normal</code>: 不使用任何特殊角色<br/>- <code>sysdba</code>: 系统数据库管理员角色，具有高级权限",
+      "label": "角色"
+    },
     "server": {
       "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>主机名具有以下形式：`Host[:Port]`。<br/>如果未指定 `[:Port]`，则使用 Oracle Database 默认端口 1521。",
       "label": "服务器地址"
@@ -6953,7 +6961,7 @@
       "desc": "数据推送间隔"
     },
     "job_name": {
-      "desc": "推送到 Push Gateway 的 Job 名称。可用变量为：<br/>\n- ${name}: EMQX 节点的名称。\n- ${host}: EMQX 节点主机名。\n例如，当 EMQX 节点名为 <code>emqx@127.0.0.1</code> 则 name 变量的值为 <code>emqx</code>，host 变量的值为 <code>127.0.0.1</code>。<br/>\n默认值为: <code>${name}/instance/${name}~${host}</code>"
+      "desc": "推送到 Push Gateway 的 Job 名称。可用变量为：<br/>\n- ${cluster_name}: EMQX 集群的名称。<br/>\n- ${name}: EMQX 节点的名称。<br/>\n- ${host}: EMQX 节点主机名。\n例如，当 EMQX 节点名为 <code>emqx@127.0.0.1</code> 则 name 变量的值为 <code>emqx</code>，host 变量的值为 <code>127.0.0.1</code>。<br/>\n默认值为: <code>${name}/instance/${name}~${host}</code>"
     },
     "mnesia_collector": {
       "desc": "开启或关闭 Mnesia 采集器, 使用 mnesia:system_info/1 收集 Mnesia 相关指标"
@@ -7027,6 +7035,9 @@
     },
     "push_gateway_enable": {
       "desc": "启用或禁用 Pushgateway。"
+    },
+    "push_gateway_method": {
+      "desc": "推送指标到 Pushgateway 的 HTTP 方法。可选项如下：<br/>\n - <code>put</code>: 所有在 URL 中指定分组键的指标会被通过 PUT 推送的指标替换。<br/>\n - <code>post</code>: POST 方法与 PUT 方法完全相同，但仅替换与新推送的指标同名的指标。<br/>\n默认值为 <code>put</code>。"
     },
     "push_gateway_url": {
       "desc": "Pushgateway 服务器的 URL。Push Gateway 是可选的，如果 Prometheus 要抓取 EMQX，则不应配置。"
@@ -7470,6 +7481,10 @@
       "desc": "规则指定的主题",
       "label": "规则指定的主题"
     },
+    "ri_last_modified_at": {
+      "desc": "规则最后被修改的时间。",
+      "label": "规则最后修改时间"
+    },
     "ri_metrics": {
       "desc": "规则的计数器",
       "label": "规则计数器"
@@ -7882,7 +7897,7 @@
       "label": "服务器名称指示"
     },
     "clientid_override": {
-      "desc": "单行表达式，用于评估一组预定义的字符串函数（如规则引擎 SQL 语句中的函数）。\n该表达式可以是带有嵌套调用作为参数的函数调用，也可以是直接的变量引用。\n目前，它不支持用户自定义变量绑定（如 `var a=1`）或用户自定义函数。\n例如，要提取通过点分隔的客户端 ID 前缀：`nth(1, tokens(username, '.'))`。\n\n预绑定的变量有：\n- `cn`：客户端的 TLS 证书公共名（Common Name）。\n- `dn`：客户端的 TLS 证书区分名（Distinguished Name，主体）。\n- `clientid`：原始 MQTT 客户端 ID。\n- `username`：MQTT 客户端的用户名。\n- `client_attrs.{NAME}`：通过每个配置 `client_attrs_init` 初始化的客户端属性。\n\n你可以在 EMQX 文档中阅读更多关于 variform 表达式的信息。",
+      "desc": "单行表达式，用于解析一组预定义的字符串函数（类似于规则引擎 SQL 语句）。\n该表达式可以是一个函数调用，并且可以使用嵌套调用作为其参数，或者是直接的变量引用。\n目前，它不支持用户自定义变量绑定（如 var a=1）或用户自定义函数。\n\n例如，提取以点（.）分隔的用户名前缀的表达式：nth(1, tokens(username, '.'))。\n\n预绑定的变量包括：\n- `clientid`：原始 MQTT 客户端 ID。\n- `username`：MQTT 客户端的用户名。\n- `client_attrs.{NAME}`：通过 client_attrs_init 配置初始化的客户端属性。\n\n对于通过 TLS 直接连接或通过启用了 proxy-protocol (v2) 的负载均衡器连接的客户端，还可以使用以下额外变量：\n- `cn`：客户端 TLS 证书的通用名称（Common Name）。\n- `dn`：客户端 TLS 证书的可分辨名称（Distinguished Name，即主题）。\n- `peersni`：客户端发送的 TLS 服务器名称指示（Server Name Indication, SNI）。\n\n您可以在 EMQX 文档中阅读更多关于 variform 表达式的内容。",
       "label": "客户端 ID 覆盖表达式"
     },
     "common_ssl_opts_schema_cacertfile": {
@@ -8158,7 +8173,7 @@
       "label": "TLS 选项"
     },
     "fields_mqtt_quic_listener_sslkeylogfile": {
-      "desc": "指定本地文件系统中文件的路径，监听器将在该文件中写入每个连接的 TLS 会话密钥，从而实现流量解密。此设置无法在运行时更改。Specify the path to the file on the local filesystem where the listener writes TLS session secrets for each connection, enabling decryption of the traffic. This cannot be changed at runtime.",
+      "desc": "指定本地文件系统中文件的路径，监听器将在该文件中写入每个连接的 TLS 会话密钥，从而实现流量解密。此设置无法在运行时更改。",
       "label": "SSLKEYLOGFILE"
     },
     "fields_mqtt_quic_listener_stateless_operation_expiration_ms": {
@@ -8792,7 +8807,7 @@
       "label": "客户端属性初始化"
     },
     "client_attrs_init_expression": {
-      "desc": "单行表达式，用于求值一组预定义的字符串函数（类似规则引擎 SQL 语句中的函数）。\n表达式可以是带有嵌套调用的函数调用，或直接变量引用。\n目前，它不提供用户定义的变量绑定（如 `var a=1`）或用户定义的函数。\n例如，提取以点分隔的客户端 ID 的前缀：`nth(1, tokens(clientid, '.'))`。\n\n预绑定的变量包括：\n- clientid：MQTT 客户端 ID。\n- username：MQTT 客户端的用户名。\n- user_property.{NAME}：连接包中的用户属性。\n对于 TLS 客户端，直接连接或通过启用代理协议（v2）负载均衡器连接时，\n还可以使用一些额外的变量：\n- cn：客户端的 TLS 证书公共名称。\n- dn：客户端的 TLS 证书区分名称（主体）。\n- peersni：客户端发送的 TLS 服务器名称指示。\n\n您可以在 EMQX 文档中阅读更多关于变量表达式的信息。",
+      "desc": "单行表达式，用于解析一组预定义的字符串函数（类似规则引擎 SQL 语句中的函数）。\n表达式可以是带有嵌套调用的函数调用，或直接变量引用。\n目前，它不提供用户定义的变量绑定（如 `var a=1`）或用户定义的函数。\n例如，提取以点分隔的客户端 ID 的前缀：`nth(1, tokens(clientid, '.'))`。\n\n预绑定的变量包括：\n- `clientid`：MQTT 客户端 ID。\n- `username`：MQTT 客户端的用户名。\n- `user_property.{NAME}`：连接包中的用户属性。\n对于 TLS 客户端，直接连接或通过启用代理协议（v2）负载均衡器连接时，\n还可以使用一些额外的变量：\n- `cn`：客户端的 TLS 证书公共名称。\n- `dn`：客户端的 TLS 证书区分名称（主体）。\n- `peersni`：客户端发送的 TLS 服务器名称指示。\n\n您可以在 EMQX 文档中阅读更多关于变量表达式的信息。",
       "label": "客户端属性提取正则表达式"
     },
     "client_attrs_init_set_as_attr": {
@@ -9870,6 +9885,10 @@
     "config_connector": {
       "desc": "MQTT connector 的配置。",
       "label": "MQTT 连接器"
+    },
+     "connect_timeout": {
+      "desc": "连接远程代理服务器的超时时间。在尝试建立初始连接时，连接的工作进程会暂停，直到达到设定的超时时间为止。",
+      "label": "连接超时时间"
     }
   },
   "emqx_bridge_mysql": {
