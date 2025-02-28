@@ -44,6 +44,36 @@
       "desc": "Filter logs by source IP when logs, applicable for logs generated from Dashboard or REST API operations."
     }
   },
+  "emqx_auth_cache_schema": {
+    "auth_cache_config": {
+      "desc": "Configuration of authentication/authorization cache.",
+      "label": "Cache Configuration"
+    },
+    "cache_ttl": {
+      "desc": "Time after which the cached authentication/authorization result will expire.",
+      "label": "Cache TTL"
+    },
+    "cleanup_interval": {
+      "desc": "Interval to clean up expired cached results.",
+      "label": "Cleanup Interval"
+    },
+    "enable": {
+      "desc": "Enable or disable the cache.",
+      "label": "Enable"
+    },
+    "max_count": {
+      "desc": "Maximum number of cached results.",
+      "label": "Max Cache Size"
+    },
+    "max_memory": {
+      "desc": "Maximum memory usage of the cache.",
+      "label": "Max Memory Usage"
+    },
+    "stat_update_interval": {
+      "desc": "Interval to update cache statistics.",
+      "label": "Stat Update Interval"
+    }
+  },
   "emqx_auth_ext_schema": {
     "common_ssl_opts_schema_partial_chain": {
       "desc": "Enable or disable peer verification with partial_chain.\nWhen local verifies a peer certificate during the x509 path validation\nprocess, it constructs a certificate chain that starts with the peer\ncertificate and ends with a trust anchor.\nBy default, if it is set to `false`, the trust anchor is the\nRoot CA, and the certificate chain must be complete.\nHowever, if the setting is set to `true` or `cacert_from_cacertfile`,\nthe last certificate in `cacertfile` will be used as the trust anchor\ncertificate (intermediate CA). This creates a partial chain\nin the path validation.\nAlternatively, if it is configured with `two_cacerts_from_cacertfile`,\none of the last two certificates in `cacertfile` will be used as the\ntrust anchor certificate, forming a partial chain. This option is\nparticularly useful for intermediate CA certificate rotation.\nHowever, please note that it incurs some additional overhead, so it\nshould only be used for certificate rotation purposes.",
@@ -99,6 +129,14 @@
       "desc": "Update user in authenticator in global authentication chain.",
       "label": "Update user in authenticator"
     },
+    "authentication_node_cache_reset_post": {
+      "desc": "Reset node-wise authentication cache",
+      "label": "Reset node-wise authentication cache"
+    },
+    "authentication_node_cache_status_get": {
+      "desc": "Get authentication cache status.",
+      "label": "Authentication Cache Status"
+    },
     "authentication_order_put": {
       "desc": "Reorder all authenticators in global authentication chain.",
       "label": "Reorder Authenticators"
@@ -106,6 +144,14 @@
     "authentication_post": {
       "desc": "Create authenticator for global authentication.",
       "label": "Create authenticator"
+    },
+    "authentication_settings_get": {
+      "desc": "Get authentication settings.",
+      "label": "Authentication Settings"
+    },
+    "authentication_settings_put": {
+      "desc": "Update authentication settings.",
+      "label": "Update Authentication Settings"
     },
     "is_superuser": {
       "desc": "Is superuser",
@@ -166,6 +212,10 @@
     "param_auth_id": {
       "desc": "Authenticator ID.",
       "label": "Authenticator ID"
+    },
+    "param_clientid": {
+      "desc": "Client ID",
+      "label": "Client ID"
     },
     "param_listener_id": {
       "desc": "Listener ID.",
@@ -532,6 +582,10 @@
       "desc": "The max rate of matched, times/second.",
       "label": "Max Rate"
     },
+    "settings": {
+      "desc": "Authentication global settings.",
+      "label": "Authentication Settings"
+    },
     "status": {
       "desc": "The status of the resource.",
       "label": "Status"
@@ -575,16 +629,60 @@
     "authorization_cache_delete": {
       "desc": "Clean all authorization cache in the cluster.",
       "label": "Clean authorization cache in cluster"
+    },
+    "authorization_node_cache_get": {
+      "desc": "Get settings of node-wise authorization cache.",
+      "label": "Get node-wise authorization cache settings"
+    },
+    "authorization_node_cache_put": {
+      "desc": "Update settings of node-wise authorization cache.",
+      "label": "Update node-wise authorization cache settings"
+    },
+    "authorization_node_cache_reset_post": {
+      "desc": "Reset node-wise authorization cache.",
+      "label": "Reset node-wise authorization cache"
+    },
+    "authorization_node_cache_status_get": {
+      "desc": "Get metrics of node-wise authorization cache.",
+      "label": "Get node-wise authorization cache metrics"
+    },
+    "param_clientid": {
+      "desc": "Client ID",
+      "label": "Client ID"
     }
   },
   "emqx_authz_api_mnesia": {
+    "ALREADY_EXISTS": {
+      "desc": "Authorization already exists.",
+      "label": "Already exists"
+    },
+    "NOT_FOUND": {
+      "desc": "Not Found",
+      "label": "Not Found"
+    },
     "action": {
       "desc": "Authorized action (publish/subscribe/all)",
       "label": "action"
     },
+    "bad_request": {
+      "desc": "Bad rule schema.",
+      "label": "Bad request"
+    },
+    "bad_request_clientid": {
+      "desc": "Bad clientid or bad rule format.",
+      "label": "Bad request"
+    },
+    "bad_request_username": {
+      "desc": "Bad username or bad rule format.",
+      "label": "Bad request"
+    },
     "clientid": {
       "desc": "ClientID",
       "label": "clientid"
+    },
+    "clientid_re": {
+      "desc": "ClientID regex for filtering applied rules",
+      "label": "ClientID regex"
     },
     "fuzzy_clientid": {
       "desc": "Fuzzy search `clientid` as substring",
@@ -593,6 +691,10 @@
     "fuzzy_username": {
       "desc": "Fuzzy search `username` as substring",
       "label": "fuzzy_username"
+    },
+    "ipaddr": {
+      "desc": "IP address/mask for filtering applied rules",
+      "label": "IP address/mask"
     },
     "permission": {
       "desc": "Permission",
@@ -653,6 +755,10 @@
     "username": {
       "desc": "Username",
       "label": "username"
+    },
+    "username_re": {
+      "desc": "Username regex for filtering applied rules",
+      "label": "Username regex"
     },
     "users_clientid_get": {
       "desc": "Show the list of rules for clients",
@@ -880,6 +986,10 @@
     "authorization": {
       "desc": "Configuration related to the client authorization.",
       "label": "authorization"
+    },
+    "authz_latency_buckets": {
+      "desc": "The buckets of the total authorization latency histogram metric.",
+      "label": "Total Authorization Latency Metric Buckets"
     },
     "deny": {
       "desc": "The number of authentication failures.",
@@ -1780,6 +1890,42 @@
       "label": "Username"
     }
   },
+  "emqx_bridge_disk_log_action_schema": {
+    "action_parameters": {
+      "desc": "Set of parameters for the action.",
+      "label": "Disk Log action parameters"
+    },
+    "disk_log": {
+      "desc": "Action that takes incoming events and appends them to local rotating log files in JSON lines format.",
+      "label": "Append to Log File"
+    },
+    "template": {
+      "desc": "Content of the JSON object to be written. Supports templates.",
+      "label": "Content"
+    },
+    "write_mode": {
+      "desc": "Whether to write logs synchronously or asynchronously to disk.",
+      "label": "Write Mode"
+    }
+  },
+  "emqx_bridge_disk_log_connector_schema": {
+    "config_connector": {
+      "desc": "Configuration for a Disk Logging connector.",
+      "label": "Disk Log Connector Configuration"
+    },
+    "filepath": {
+      "desc": "Base file path to the log file to be written to.  Actual log files will have the format `filepath.N`, where `N` is `1..max_file_number`.  The currently used file can be found by taking the file with the most recent modification date.  Note that the directory containing it must also be writable by the EMQX application user, as it'll also contain extra files for internal use (ending in `.siz` and `.idx`).",
+      "label": "Log filepath"
+    },
+    "max_file_number": {
+      "desc": "Maximum number of log files to be used.  Once the maximum number of files is reached and a new rotation is required, the oldest such file is truncated and used as the new current file.",
+      "label": "Maximum Number of Files"
+    },
+    "max_file_size": {
+      "desc": "Maximum size for the currently active log file.  At least one entry is written to each log, so the final file size may exceed this maximum if a single log entry exceeds this value.",
+      "label": "Maximum File Size"
+    }
+  },
   "emqx_bridge_dynamo": {
     "action_parameters": {
       "desc": "Action specific configuration.",
@@ -2479,6 +2625,10 @@
       "desc": "IoTDB action parameter data",
       "label": "Parameter Data"
     },
+    "action_resource_opts": {
+      "desc": "Action resource options",
+      "label": "Action Resource Options"
+    },
     "auth_basic": {
       "desc": "Parameters for basic authentication.",
       "label": "Basic auth params"
@@ -2535,9 +2685,22 @@
       "desc": "Value. Placeholders in format of ${var} is supported",
       "label": "Value"
     },
+    "creation_opts": {
+      "desc": "Creation options",
+      "label": "Creation Options"
+    },
     "desc_config": {
       "desc": "Configuration for Apache IoTDB bridge.",
       "label": "IoTDB Bridge Configuration"
+    },
+    "desc_config_get": {
+      "desc": "Get configuration for IoTDB."
+    },
+    "desc_config_post": {
+      "desc": "Create configuration for IoTDB."
+    },
+    "desc_config_put": {
+      "desc": "Update configuration for IoTDB."
     },
     "desc_name": {
       "desc": "Action name, a human-readable identifier.",
@@ -2859,10 +3022,6 @@
     "socket_send_buffer": {
       "desc": "Fine tune the socket send buffer. The default value is tuned for high throughput.",
       "label": "Socket Send Buffer Size"
-    },
-    "socket_tcp_keepalive": {
-      "desc": "Enable TCP keepalive.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: TCP keepalive probes are sent after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
-      "label": "TCP keepalive options"
     },
     "ssl_client_opts": {
       "desc": "TLS/SSL options for client.",
@@ -4403,6 +4562,30 @@
       "desc": "Configuration for sources.",
       "label": "Source Configuration"
     },
+    "fallback_action_kind": {
+      "desc": "Fallback kind.",
+      "label": "Kind"
+    },
+    "fallback_action_reference": {
+      "desc": "A fallback Action that will be triggered if a query to this action fails.  The same message context that triggered the primary action will be sent unmodified to the fallbacks.",
+      "label": "Fallback Action"
+    },
+    "fallback_action_reference_name": {
+      "desc": "Fallback Action name.",
+      "label": "Name"
+    },
+    "fallback_action_reference_type": {
+      "desc": "Fallback Action type.",
+      "label": "Type"
+    },
+    "fallback_action_republish": {
+      "desc": "Republish fallback action.  Works the same way as the Republish rule action from Rule Engine.",
+      "label": "Republish"
+    },
+    "fallback_actions": {
+      "desc": "List of fallback actions that will be triggered if a query to this action fails.",
+      "label": "Fallback Actions"
+    },
     "mqtt_topic": {
       "desc": "MQTT topic or topic filter as data source (action input).  If rule action is used as data source, this config should be left empty, otherwise messages will be duplicated in the remote system.",
       "label": "Source MQTT Topic"
@@ -4858,7 +5041,7 @@
       "label": "Crash Dump Bytes"
     },
     "node_crash_dump_file": {
-      "desc": "Location of the crash dump file.",
+      "desc": "Location of the crash dump file. Defaults to <code>log/erl_crash.YYYY.MM.DD.HH.MM.SS.dump</code>.\nThe timestamp is generated when emqx starts.",
       "label": "Crash Dump File"
     },
     "node_crash_dump_seconds": {
@@ -5008,6 +5191,10 @@
     "container_csv_column_order": {
       "desc": "Event fields that will be ordered first as columns in the resulting CSV file.<br/>\nRegardless of this setting, resulting CSV will contain all the fields of aggregated events, but all the columns not explicitly mentioned here will be ordered after the ones listed here in the lexicographical order.",
       "label": "CSV column order"
+    },
+    "container_json_lines": {
+      "desc": "Records (events) will be aggregated and uploaded as a [JSON Lines](https://jsonlines.org/) file.",
+      "label": "JSON Lines container"
     }
   },
   "emqx_connector_api": {
@@ -5116,6 +5303,10 @@
     "desc_type": {
       "desc": "The type of the connector.",
       "label": "Connector Type"
+    },
+    "ehttpc_max_inactive": {
+      "desc": "Maximum amount of time without any activity that the HTTP driver will wait before attempting to reconnect.",
+      "label": "Max Inactive"
     }
   },
   "emqx_connector_schema_lib": {
@@ -5159,6 +5350,9 @@
     "backend_not_found": {
       "desc": "Operate failed. Backend not exists"
     },
+    "change_mfa": {
+      "desc": "Setup MFA for a dashboard user."
+    },
     "change_pwd_api": {
       "desc": "Change dashboard user password",
       "label": "Change dashboard user password"
@@ -5174,6 +5368,9 @@
     "delete_backend": {
       "desc": "Delete a backend",
       "label": "Delete Backend"
+    },
+    "delete_mfa": {
+      "desc": "Delete MFA state for a dashboard user.\nAfter the state is deleted, the user will have MFA explicitly disabled, to re-enabled MFA, call the `POST` method."
     },
     "delete_user_api": {
       "desc": "Delete dashboard user",
@@ -5223,6 +5420,12 @@
       "desc": "Dashboard user logout.\nThis endpoint is only for the Dashboard, not the `API Key`.\nThe token from the `/login` endpoint must be a bearer authorization in the headers.",
       "label": "Dashboard user logout"
     },
+    "mfa_status": {
+      "desc": "MFA status.\n- `none`: no MFA enabled\n- `disabled`: MFA is disabled for the user\n- Otherwise: The MFA mechanism in use, e.g. `totp`"
+    },
+    "mfa_token": {
+      "desc": "Multifactor authentication token."
+    },
     "new_pwd": {
       "desc": "New password"
     },
@@ -5231,6 +5434,9 @@
     },
     "password": {
       "desc": "Dashboard Password"
+    },
+    "password_expire_in_seconds": {
+      "desc": "Time in seconds until the password expiresc."
     },
     "redirect": {
       "desc": "Redirect to IDP SSO login page"
@@ -5320,6 +5526,10 @@
       "desc": "Support Cross-Origin Resource Sharing (CORS).\nAllows a server to indicate any origins (domain, scheme, or port) other than\nits own from which a browser should permit loading resources.",
       "label": "CORS"
     },
+    "default_mfa": {
+      "desc": "Default Multifactor authentication settings for Dashboard.\nWhen set as `none`, MFA can be enabled per user from the dashboard.\nIf set as `{mechanism = totp}`, the user will be initialized with\na random TOTP secret when logging in for the first time.",
+      "label": "Default MFA Settings"
+    },
     "default_password": {
       "desc": "The password used to initialize a database record for `admin` user.\nNOTE: Changing the default password after it has been initialized (boot up for the fist time) has no effect.\nOnce initialized, the default password `public` must be changed from dashboard or CLI as soon as possible.",
       "label": "Default password"
@@ -5343,6 +5553,14 @@
     "desc_listeners": {
       "desc": "Configuration for the dashboard listener.",
       "label": "Listeners"
+    },
+    "http_listener_settings": {
+      "desc": "Settings for the HTTP listener.",
+      "label": "HTTP Listener Settings"
+    },
+    "https_listener_settings": {
+      "desc": "Settings for the HTTPS listener.",
+      "label": "HTTPS Listener Settings"
     },
     "i18n_lang": {
       "desc": "Internationalization language support.",
@@ -5368,9 +5586,20 @@
       "desc": "The maximum number of concurrent connections allowed by the listener.",
       "label": "Maximum connections"
     },
+    "mfa_mechanism": {
+      "desc": "Multifactor authentication mechanism.",
+      "label": "MFA Mechanism"
+    },
+    "mfa_settings": {
+      "desc": "Multifactor authentication settings.",
+      "label": "MFA Settings"
+    },
     "num_acceptors": {
       "desc": "Socket acceptor pool size for TCP protocols. Default is the number of schedulers online",
       "label": "Number of acceptors"
+    },
+    "password_expired_time": {
+      "desc": "The expiration time for the password of users. The default value `0` means the password will never expire."
     },
     "proxy_header": {
       "desc": "Enable support for `HAProxy` header. Be aware once enabled regular HTTP requests can't be handled anymore.",
@@ -5490,6 +5719,44 @@
     },
     "backend_enable": {
       "desc": "Whether to enable this backend."
+    },
+    "sso_struct": {
+      "desc": "Dashboard Single Sign-On",
+      "label": "Dashboard Single Sign-On"
+    }
+  },
+  "emqx_dashboard_swagger": {
+    "count": {
+      "desc": "Total number of records matching the query.\nNote: this field is present only if the query can be optimized and does not require a full table scan.",
+      "label": "Count"
+    },
+    "cursor": {
+      "desc": "Opaque value representing the current iteration state.",
+      "label": "Cursor"
+    },
+    "cursor_response": {
+      "desc": "Opaque value representing the current iteration state.",
+      "label": "Cursor"
+    },
+    "hasnext": {
+      "desc": "Flag indicating whether there are more results available on next pages.",
+      "label": "Has Next"
+    },
+    "limit": {
+      "desc": "Results per page",
+      "label": "Limit"
+    },
+    "page": {
+      "desc": "Page number of the results to fetch.",
+      "label": "Page"
+    },
+    "position": {
+      "desc": "An opaque token that can then be in subsequent requests to get the next chunk of results: `?position={prev_response.meta.position}`.\nIt is used instead of `page` parameter to traverse highly volatile data. Can be omitted or set to `none` to get the first chunk of data.",
+      "label": "Position"
+    },
+    "start": {
+      "desc": "The position of the current first element of the data collection.",
+      "label": "Start"
     }
   },
   "emqx_delayed_api": {
@@ -5594,12 +5861,6 @@
       "label": "Get delayed status"
     }
   },
-  "emqx_ds_fdb_backend_schema": {
-    "backend": {
-      "desc": "A simpler backend that uses FDB. Serves for storing MQTT messages and optimized for low latency.",
-      "label": "A simpler DS FDB backend"
-    }
-  },
   "emqx_ds_schema": {
     "backend_type": {
       "desc": "Backend type.",
@@ -5697,207 +5958,33 @@
       "desc": "Enable the shared subscription feature.",
       "label": "Enable Shared Subscription"
     },
-    "leader_drop_timeout_interval_ms": {
-      "desc": "The interval in milliseconds for the leader to drop non-responsive sessions.",
-      "label": "Leader Drop Timeout Interval"
+    "leader_periodical_actions_interval": {
+      "desc": "The interval in milliseconds for the leader to perform periodical actions.",
+      "label": "Leader Periodical Actions Interval"
     },
-    "leader_renew_lease_interval_ms": {
-      "desc": "The interval in milliseconds for the leader to renew the lease.",
-      "label": "Leader Renew Lease Interval"
-    },
-    "leader_renew_streams_interval_ms": {
+    "leader_renew_streams_interval": {
       "desc": "The interval in milliseconds for the leader to renew the streams.",
       "label": "Leader Renew Streams Interval"
     },
-    "leader_session_not_replaying_timeout_ms": {
-      "desc": "The timeout in milliseconds for the leader to wait for the session leave intermediate states.",
-      "label": "Leader Session Not Replaying Timeout"
+    "leader_ssubscriber_timeout": {
+      "desc": "The maximum time in milliseconds for the leader to wait for the ping from a shared subscriber.\nIf the shared subscriber does not ping the leader within this time, the leader will consider\nthe shared subscriber as lost and will reclaim its streams.",
+      "label": "Leader Subscriber Timeout"
     },
-    "leader_session_update_timeout_ms": {
-      "desc": "The timeout in milliseconds for the leader to wait for the session to update the stream state.\nIf the session does not update the stream state within this time, the leader will drop the session.",
-      "label": "Leader Session Update Timeout"
-    },
-    "session_find_leader_timeout_ms": {
+    "session_find_leader_timeout": {
       "desc": "The timeout in milliseconds for the session to find a leader.\nIf the session cannot find a leader within this time, the session will retry.",
       "label": "Session Find Leader Timeout"
     },
-    "session_min_update_stream_state_interval_ms": {
-      "desc": "The minimum interval in milliseconds for the session to update the stream state.\nIf session has no updates for the stream state within this time, the session will\nsend empty updates.",
-      "label": "Session Min Update Stream State Interval"
+    "session_ping_leader_interval": {
+      "desc": "The interval in milliseconds for the session to ping the leader.",
+      "label": "Session Ping Leader Interval"
     },
-    "session_renew_lease_timeout_ms": {
-      "desc": "The timeout in milliseconds for the session to wait for the leader to renew the lease.\nIf the leader does not renew the lease within this time, the session will consider\nthe leader as lost and try to find a new leader.",
-      "label": "Session Renew Lease Timeout"
-    }
-  },
-  "emqx_event_history_api": {
-    "authz_action_type": {
-      "desc": "The type of the authorize action"
+    "session_ping_leader_timeout": {
+      "desc": "The timeout in milliseconds for the session to wait for the leader to respond to the ping.\nIf the leader does not respond to the ping within this time, the session will consider\nthe leader as lost and try to find a new leader.",
+      "label": "Session Ping Leader Timeout"
     },
-    "authz_from": {
-      "desc": "The type name of authorizer"
-    },
-    "clean_start": {
-      "desc": "Whether the client has a clean start.",
-      "label": "Clean Start"
-    },
-    "client_id": {
-      "desc": "The client ID.",
-      "label": "Client ID"
-    },
-    "dropped_msg_num": {
-      "desc": "The number of messages that have been dropped.",
-      "label": "Dropped Message Number"
-    },
-    "eh_clear": {
-      "desc": "clear all event history data\nNote: This is a dangerous operation.\nWhen only deleting data,\nthe manager and gc will try to reacquire the lock due to the loss of lock information,\nand the cached size of valid space only can be updated at the next refresh.\nWhen include the FDB's tenant, the GC will be shutdown forever."
-    },
-    "eh_client_list": {
-      "desc": "The list of clients that have connected to the broker.",
-      "label": "Event History Client List"
-    },
-    "eh_metrics": {
-      "desc": "Get the metrics of the internal resource"
-    },
-    "eh_msg_list": {
-      "desc": "The list of messages that have been published to the broker.",
-      "label": "Event History Message List"
-    },
-    "eh_stats": {
-      "desc": "event history tenant stats"
-    },
-    "event_history_get_config": {
-      "desc": "Show current Event History configuration."
-    },
-    "event_history_update_config": {
-      "desc": "Update Event History configuration."
-    },
-    "expiry_interval": {
-      "desc": "The expiry interval of the session.",
-      "label": "Session Expiry Interval"
-    },
-    "force_delete": {
-      "desc": "Whether to delete the corresponding tenant in FDB"
-    },
-    "gte_time": {
-      "desc": "The start time of the event(use unix millisecond or rfc3339).",
-      "label": "Start Time"
-    },
-    "guid": {
-      "desc": "GUID of the session or message"
-    },
-    "has_next": {
-      "desc": "Indicate whether there is a next page"
-    },
-    "ip": {
-      "desc": "The IP address of the client.",
-      "label": "IP"
-    },
-    "is_anonymous": {
-      "desc": "True if this user is anonymous."
-    },
-    "is_persistent": {
-      "desc": "Indicates whether this is a persistent session"
-    },
-    "is_superuser": {
-      "desc": "True if this is a super user."
-    },
-    "keepalive": {
-      "desc": "The keepalive interval of the client.",
-      "label": "Keepalive"
-    },
-    "lte_time": {
-      "desc": "The end time of the event(use unix millisecond or rfc3339).",
-      "label": "End Time"
-    },
-    "message_id": {
-      "desc": "The message ID.",
-      "label": "Message ID"
-    },
-    "qos": {
-      "desc": "The QoS level of the message.",
-      "label": "QoS"
-    },
-    "reason": {
-      "desc": "The reason for this event.",
-      "label": "Reason"
-    },
-    "result": {
-      "desc": "The result for this event"
-    },
-    "retain": {
-      "desc": "The retain flag"
-    },
-    "reverse": {
-      "desc": "If true, events will be returned in reverse time series order beginning at the end of the range"
-    },
-    "stats_count": {
-      "desc": "stats count"
-    },
-    "stats_size": {
-      "desc": "stats size"
-    },
-    "tenant": {
-      "desc": "the tenant name"
-    },
-    "time": {
-      "desc": "The millisecond that the event was triggered",
-      "label": "Time"
-    },
-    "topic": {
-      "desc": "The topic that the message was published to.",
-      "label": "Topic"
-    },
-    "type": {
-      "desc": "Event History Client Type",
-      "label": "Type"
-    },
-    "username": {
-      "desc": "the username which is used for this event."
-    }
-  },
-  "emqx_event_history_schema": {
-    "alarm_percent": {
-      "desc": "The percentage of maximum storage size to alarm"
-    },
-    "buffer": {
-      "desc": "Configuration for write workers"
-    },
-    "enable": {
-      "desc": "Enable this feature"
-    },
-    "event_history": {
-      "desc": "A feature to record events from clients or messages."
-    },
-    "events": {
-      "desc": "Events to be recorded"
-    },
-    "expiry_time": {
-      "desc": "The expiration time for each data"
-    },
-    "gc": {
-      "desc": "GC configuration"
-    },
-    "gc_interval": {
-      "desc": "The interval time between two GC checking"
-    },
-    "gc_percent": {
-      "desc": "The percentage of storage data to be deleted when the storage size exceeds the maximum size"
-    },
-    "max_size": {
-      "desc": "The maximum storage size of events in bytes for this tenant"
-    },
-    "query_quantity_limit": {
-      "desc": "Maximum number of reads for a query"
-    },
-    "query_time_limit": {
-      "desc": "Time limit for a query"
-    },
-    "storage": {
-      "desc": "Storage configuration"
-    },
-    "tenant": {
-      "desc": "If the value is not empty, all data will be stored in a tenant whose name is created by this value with a prefix.\nTenant config is Read Only, update at runtime will fail."
+    "session_unsubscribe_timeout": {
+      "desc": "The timeout in milliseconds for the session to wait for the streams to reach\nconsistent state that may be reported to the leader. If the timeout is reached,\nthe session will send the latest known consistent state to the leader.",
+      "label": "Session Unsubscribe Timeout"
     }
   },
   "emqx_eviction_agent_api": {
@@ -6065,159 +6152,6 @@
     },
     "exproto_server": {
       "desc": "Configurations for starting the <code>ConnectionAdapter</code> service"
-    }
-  },
-  "emqx_fdb_ds_prometheus_api": {
-    "get_fdb_prom_data": {
-      "desc": "Get FoundationDB Prometheus Metrics",
-      "label": "FoundationDB Prometheus Metrics"
-    }
-  },
-  "emqx_fdb_ds_schema": {
-    "batch_delete_size": {
-      "desc": "Batch size for deleting the oldest data in the `compacted` storage."
-    },
-    "expiry_gc_interval": {
-      "desc": "GC interval for the expired generation."
-    },
-    "gc": {
-      "desc": "GC Configuration"
-    },
-    "gc_max_gen_size": {
-      "desc": "The maximum available size of a generation for the persistent storage.\nIf the size of the current generation exceeds it, a new generation will be created."
-    },
-    "gc_max_size": {
-      "desc": "The maximum available size for the persistent storage."
-    },
-    "retainer_backend_fdb": {
-      "desc": "FoundationDB Durable Storage Retainer.",
-      "label": "FoundationDB Durable Storage Retainer."
-    },
-    "retainer_enable": {
-      "desc": "Enable FoundationDB Retainer backend",
-      "label": "Enable"
-    },
-    "session_storage_backend_fdb": {
-      "desc": "FoundationDB Durable Storage.",
-      "label": "FoundationDB Durable Storage."
-    },
-    "session_storage_backend_fdb_enable": {
-      "desc": "Enable FoundationDB Durable Storage backend.",
-      "label": "Enable FoundationDB Durable Storage backend."
-    },
-    "session_storage_backend_fdb_prefix": {
-      "desc": "Key prefix to use by FoundationDB Durable Storage backend for storing data.",
-      "label": "FoundationDB key prefix."
-    },
-    "session_storage_backend_fdb_storage_mod": {
-      "desc": "Low-level backend module for storing message data in FoundationDB.",
-      "label": "FoundationDB DS storage module."
-    },
-    "session_storage_backend_fdb_storage_options": {
-      "desc": "Options for low-level backend module storing message data in FoundationDB.",
-      "label": "FoundationDB DS storage options."
-    },
-    "session_storage_backend_fdb_storage_write_buffer": {
-      "desc": "Write buffer size for FoundationDB Durable Storage backend.",
-      "label": "Write buffer size."
-    },
-    "session_storage_backend_fdb_tenant": {
-      "desc": "FoundationDB tenant to use by FoundationDB Durable Storage backend.",
-      "label": "FoundationDB tenant."
-    },
-    "session_storage_backend_fdb_write_shard_number": {
-      "desc": "FoundationDB DS write shard number.",
-      "label": "FoundationDB DS write shard number."
-    },
-    "size_gc_interval": {
-      "desc": "The interval for GC to check whether the used size exceeds the maximum available size."
-    },
-    "size_gc_percent": {
-      "desc": "Determine the amount of data that needs to be deleted as a percentage of the maximum size."
-    },
-    "write_buffer_flush_interval": {
-      "desc": "The interval for flushing the write buffer.",
-      "label": "Flush interval."
-    },
-    "write_buffer_max_items": {
-      "desc": "The maximum number of items that can be stored in the write buffer.",
-      "label": "Maximum number of items."
-    }
-  },
-  "emqx_fdb_mgmt_cli_api": {
-    "cluster_file": {
-      "desc": "The content of the cluster file"
-    },
-    "delete_fdb_cli": {
-      "desc": "Disable and Stop\nNOTE:\n1. Currently, a process may have a worker cached in its process dictionary or gen_server state, which cannot be cleared\n2. Tenants are the same as above\n3. The driver cannot be shut down or restarted manually"
-    },
-    "get_cluster_file": {
-      "desc": "Get content of the current cluster file"
-    },
-    "get_fdb_cli": {
-      "desc": "Get Configuration"
-    },
-    "post_cluster_file": {
-      "desc": "Update the content of the cluster file"
-    },
-    "post_fdb_cli": {
-      "desc": "Enable and Start"
-    }
-  },
-  "emqx_fdb_mgmt_cli_schema": {
-    "available_check_interval": {
-      "desc": "FDB health check interval when the last status is `available`"
-    },
-    "callbacks_on_external_threads": {
-      "desc": "If set, callbacks from external client libraries can be called from threads created by the FoundationDB client library. Otherwise, callbacks will be called from either the thread used to add the callback or the network thread. Setting this option can improve performance when connected using an external client, but may not be safe to use in all environments. Must be set before setting up the network. WARNING: This feature is considered experimental at this time."
-    },
-    "circuit_breaker": {
-      "desc": "A background server used to monitor the status of the FoundationDB cluster."
-    },
-    "client_threads_per_version": {
-      "desc": "Spawns multiple worker threads for each version of the client that is loaded.  Setting this to a number greater than one implies disable_local_client."
-    },
-    "cluster_file": {
-      "desc": "Path to cluster file"
-    },
-    "enable": {
-      "desc": "Enable this feature"
-    },
-    "external_client_library": {
-      "desc": "Adds an external client library for use by the multi-version client API. Must be set before setting up the network."
-    },
-    "max_watches": {
-      "desc": "Set the maximum number of watches allowed to be outstanding on a database connection. Increasing this number could result in increased resource usage. Reducing this number will not cancel any outstanding watches. Defaults to 10000 and cannot be larger than 1000000."
-    },
-    "tls_ca_path": {
-      "desc": "Set the file from which to load the certificate authority bundle"
-    },
-    "tls_cert_path": {
-      "desc": "Set the file from which to load the certificate chain"
-    },
-    "tls_key_path": {
-      "desc": "Set the file from which to load the private key corresponding to your own certificate"
-    },
-    "tls_verify_peers": {
-      "desc": "Set the peer certificate field verification criteria"
-    },
-    "transaction_max_retry_delay": {
-      "desc": "Set the maximum amount of backoff delay incurred in the call to `onError` if the error is retriable. This sets the `max_retry_delay` option of each transaction created by this database."
-    },
-    "transaction_retry_limit": {
-      "desc": "Set a maximum number of retries after which additional calls to `onError` will throw the most recently seen error code. This sets the `retry_limit` option of each transaction created by this database."
-    },
-    "transaction_timeout": {
-      "desc": "Set a timeout in milliseconds which, when elapsed, will cause each transaction automatically to be cancelled. This sets the `timeout` option of each transaction created by this database."
-    },
-    "unavailable_check_interval": {
-      "desc": "After the maximum number of attempts, we assume the cluster is unavailable, and may use a smaller interval for checking."
-    },
-    "waiting_check_interval": {
-      "desc": "FDB health check interval when the last status is `unavailable`, we assume this status was caused by network or cluster jitter and attempt to wait for it to be healed"
-    },
-    "waiting_check_times": {
-      "desc": "The maximum number of times we wait for the status to become healthy"
     }
   },
   "emqx_ft_api": {
@@ -6406,10 +6340,10 @@
       "desc": "Create a subscription membership"
     },
     "awaiting_rel_cnt": {
-      "desc": "Number of awaiting acknowledge packet"
+      "desc": "Number of awaiting acknowledge packets."
     },
     "awaiting_rel_max": {
-      "desc": "Maximum allowed number of awaiting PUBREC packet"
+      "desc": "Maximum allowed number of awaiting PUBREC packets."
     },
     "clean_start": {
       "desc": "Indicate whether the client is using a brand new session"
@@ -6571,7 +6505,7 @@
       "desc": "Number of protocol packets received"
     },
     "reductions": {
-      "desc": "Erlang reduction"
+      "desc": "Erlang reductions"
     },
     "rh": {
       "desc": "Retain Handling option, enum: 0, 1, 2"
@@ -7004,17 +6938,38 @@
     }
   },
   "emqx_limiter_schema": {
+    "alloc_interval": {
+      "desc": "Token allocation interval for shared limiter."
+    },
+    "burst": {
+      "desc": "How many tokens are allowed when the rate is exceeded."
+    },
+    "bytes_burst": {
+      "desc": "Number of bytes that can be sent in a burst.\n\nFor example: `100MB/60m`: Once in 60 minutes, up to 100 megabytes can be sent in a short period of time.",
+      "label": "Data Publish Burst"
+    },
     "bytes_rate": {
       "desc": "Used to limit the number of bytes a single client can send to EMQX per second.\n\nOnce the limit is reached, EMQX will pause reading data from the receive-buffer, thus slowing down or even temporarily hanging the sender.\n\nThe unit of the bytes could be: B, KB, MB, GB.\n\nFor example:\n\n- `500KB/s`: Only 500 kilobytes per second will be received, and the remaining bytes will be delayed.\n- `500MB/10s`: Only 500 megabytes will be received every 10 seconds, and the remaining bytes will be delayed.",
       "label": "Data Publish Rate"
+    },
+    "max_conn_burst": {
+      "desc": "Number of connections that can be accepted in a burst.\n\nFor example: `10000/60m`: Once in 60 minutes, up to 10000 connections can be accepted in a short period of time.",
+      "label": "Maximum Connection Burst"
     },
     "max_conn_rate": {
       "desc": "Used to limit the rate at which the current listener accepts connections.\n\nOnce the limit is reached, EMQX will pause fetching connections from the Accept queue, thereby delaying or rejecting new connections.\n\nFor example:\n\n- `1000/s`: Only accepts 1000 connections per second.\n- `1000/10s`: Only accepts 1000 connections every 10 seconds.",
       "label": "Maximum Connection Rate"
     },
+    "messages_burst": {
+      "desc": "Number of messages that can be sent in a burst.\n\nFor example: `10000/60m`: Once in 60 minutes, up to 10000 messages can be sent in a short period of time.",
+      "label": "Messages Publish Burst"
+    },
     "messages_rate": {
       "desc": "Used to limit the number of messages a single client can send to EMQX per second.\n\nOnce the limit is reached, EMQX will pause reading data from the receive-buffer, thus slowing down or even temporarily hanging the sender.\n\nFor example:\n\n- `500/s`: Only 500 messages will be received per second, and the remaining messages will be delayed.\n- `500/10s`: Only 500 messages will be received every 10 seconds and the remaining messages will be delayed.",
       "label": "Messages Publish Rate"
+    },
+    "mqtt": {
+      "desc": "MQTT related limiters."
     }
   },
   "emqx_lwm2m_api": {
@@ -7267,13 +7222,93 @@
     }
   },
   "emqx_mgmt_api_clients": {
+    "authz_cache_access": {
+      "desc": "Access type",
+      "label": "Access Type"
+    },
+    "authz_cache_result": {
+      "desc": "Allow or deny",
+      "label": "Result"
+    },
+    "authz_cache_topic": {
+      "desc": "Topic name",
+      "label": "Topic Name"
+    },
+    "authz_cache_updated_time": {
+      "desc": "Update time",
+      "label": "Updated Time"
+    },
+    "await_pubrel_timeout": {
+      "desc": "Number of PUBLISH packets dropped due to awaiting PUBREL timeout",
+      "label": "Awaiting PUBREL Timeout"
+    },
+    "awaiting_rel_cnt": {
+      "desc": "Number of awaiting PUBREC packets.",
+      "label": "Awaiting PUBREC Count"
+    },
+    "awaiting_rel_max": {
+      "desc": "Maximum allowed number of awaiting PUBREC packets.",
+      "label": "Awaiting PUBREC Max"
+    },
+    "bad_request": {
+      "desc": "Cannot handle this request.",
+      "label": "Bad Request"
+    },
     "clean_authz_cache": {
       "desc": "Clean client authz cache in the cluster.",
       "label": "Clean client authz cache in the cluster."
     },
+    "clean_start": {
+      "desc": "Indicate whether the client is using a brand new session",
+      "label": "Clean Start"
+    },
+    "client_port": {
+      "desc": "Client's port",
+      "label": "Client Port"
+    },
+    "clientid": {
+      "desc": "Client ID",
+      "label": "Client ID"
+    },
+    "clientid_not_found": {
+      "desc": "Client ID not found",
+      "label": "Client ID not found"
+    },
     "clients_info_from_id": {
       "desc": "Get clients info by client ID",
       "label": "Get clients info by client ID"
+    },
+    "conn_state": {
+      "desc": "The current connection status of the client, the possible values are connected,idle,disconnected",
+      "label": "Connection State"
+    },
+    "connected": {
+      "desc": "Whether the client is connected",
+      "label": "Connected"
+    },
+    "connected_at": {
+      "desc": "Session creation time, rfc3339 or timestamp(millisecond)",
+      "label": "Connected At"
+    },
+    "created_at": {
+      "desc": "Client session creation time, rfc3339 or timestamp(millisecond)",
+      "label": "Created At"
+    },
+    "disconnected_at": {
+      "desc": "Client disconnection time, rfc3339 or timestamp(millisecond)\nIt's Only valid and returned when connected is false",
+      "label": "Disconnected At"
+    },
+    "dropped": {
+      "desc": "Number of dropped PUBLISH packets",
+      "label": "Dropped Messages"
+    },
+    "durable": {
+      "desc": "Session is durable",
+      "label": "Durable"
+    },
+    "expiry_interval": {
+      "desc": "Session expiration interval, with the unit of second",
+      "label": "Expiry Interval"
     },
     "get_authz_cache": {
       "desc": "Get client authz cache in the cluster.",
@@ -7295,9 +7330,53 @@
       "desc": "Get the total number of sessions in the cluster.\nBy default, it includes only those sessions that have not expired.\nIf the `broker.session_history_retain` config is set to a duration greater than 0s,\nthis count will also include sessions that expired within the specified retain time.\nBy specifying the `since` parameter, it can return the number of sessions that have expired within the specified time.",
       "label": "Count number of sessions"
     },
+    "gte_connected_at": {
+      "desc": "Search client connection creation time by greater than or equal method, rfc3339 or timestamp(epoch millisecond)",
+      "label": "GTE Connected At"
+    },
+    "gte_created_at": {
+      "desc": "Search client session creation time by greater than or equal method, rfc3339 or timestamp(millisecond)",
+      "label": "GTE Created At"
+    },
+    "heap_size": {
+      "desc": "Erlang process heap size with the unit of byte",
+      "label": "Heap Size"
+    },
+    "inflight_cnt": {
+      "desc": "Current length of inflight",
+      "label": "Inflight Count"
+    },
+    "inflight_max": {
+      "desc": "Maximum length of inflight",
+      "label": "Inflight Max"
+    },
     "inflight_msgs_list": {
       "desc": "Client's in-flight messages list.\nMessages are sorted by time at which they were inserted to the In-flight storage (from older to newer messages).",
       "label": "Client's in-flight messages"
+    },
+    "invalid_parameter": {
+      "desc": "Invalid parameters",
+      "label": "Invalid parameter"
+    },
+    "ip_address": {
+      "desc": "Client's IP address",
+      "label": "IP Address"
+    },
+    "is_bridge": {
+      "desc": "Indicates whether the client is connected with the bridge flag set.",
+      "label": "Is Bridge"
+    },
+    "is_expired": {
+      "desc": "Indicates whether the client is expired",
+      "label": "Is Expired"
+    },
+    "keepalive": {
+      "desc": "Client's keepalive time, with the unit of second",
+      "label": "Keepalive"
+    },
+    "keepalive_interval": {
+      "desc": "Keepalive Interval",
+      "label": "Keepalive"
     },
     "kick_client_id": {
       "desc": "Kick out client by client ID",
@@ -7307,9 +7386,49 @@
       "desc": "Kick out a batch of client by client IDs",
       "label": "Kick out a batch of client by client IDs"
     },
+    "like_clientid": {
+      "desc": "Fuzzy search `clientid` as substring",
+      "label": "Like Client ID"
+    },
+    "like_username": {
+      "desc": "Fuzzy search `username` as substring",
+      "label": "Like Username"
+    },
     "list_clients": {
       "desc": "List clients",
       "label": "List clients"
+    },
+    "lte_connected_at": {
+      "desc": "Search client connection creation time by less than or equal method, rfc3339 or timestamp(epoch millisecond)",
+      "label": "LTE Connected At"
+    },
+    "lte_created_at": {
+      "desc": "Search client session creation time by less than or equal method, rfc3339 or timestamp(millisecond)",
+      "label": "LTE Created At"
+    },
+    "mailbox_len": {
+      "desc": "Erlang process mailbox size",
+      "label": "Mailbox Length"
+    },
+    "max_payload_bytes": {
+      "desc": "Client's inflight/mqueue messages payload limit. The total payload size of all messages in the response will not exceed this value. Messages beyond the limit will be silently omitted in the response. The only exception to this rule is when the first message payload is already larger than the limit, in this case, the first message will be returned in the response.",
+      "label": "Max Payload Bytes"
+    },
+    "mountpoint": {
+      "desc": "Topic mountpoint",
+      "label": "Mountpoint"
+    },
+    "mqueue_dropped": {
+      "desc": "Number of messages dropped by the message queue due to exceeding the length",
+      "label": "Mqueue Dropped"
+    },
+    "mqueue_len": {
+      "desc": "Current length of send-buffer queue",
+      "label": "Mqueue Length"
+    },
+    "mqueue_max": {
+      "desc": "Maximum length of send-buffer queue",
+      "label": "Mqueue Max"
     },
     "mqueue_msgs_list": {
       "desc": "Client's mqueue messages list.\nMessages are ordered according to their priority and queue (FIFO) order: from higher priority to lower priority.\nBy default, all messages in Mqueue have the same priority of 0.",
@@ -7346,9 +7465,165 @@
       "desc": "Message topic.",
       "label": "Message Topic"
     },
+    "n_streams": {
+      "desc": "Number of durable streams",
+      "label": "Number of Durable Streams"
+    },
+    "nl": {
+      "desc": "No local",
+      "label": "No Local"
+    },
+    "node_name": {
+      "desc": "Node name",
+      "label": "Node name"
+    },
+    "not_implemented": {
+      "desc": "API not implemented",
+      "label": "Not Implemented"
+    },
+    "payload_encoding": {
+      "desc": "Client's inflight/mqueue messages payload encoding.",
+      "label": "Payload Encoding"
+    },
+    "proto_name": {
+      "desc": "Client protocol name",
+      "label": "Protocol Name"
+    },
+    "proto_ver": {
+      "desc": "Protocol version",
+      "label": "Protocol Version"
+    },
+    "qos": {
+      "desc": "QoS",
+      "label": "QoS"
+    },
+    "rap": {
+      "desc": "Retain as published",
+      "label": "Retain as Published"
+    },
+    "recv_cnt": {
+      "desc": "Number of TCP packets received",
+      "label": "Received TCP Packets"
+    },
+    "recv_msg": {
+      "desc": "Number of PUBLISH packets received",
+      "label": "Received Messages"
+    },
+    "recv_msg_qos0": {
+      "desc": "Number of PUBLISH QoS0 packets received",
+      "label": "Received QoS0 Messages"
+    },
+    "recv_msg_qos1": {
+      "desc": "Number of PUBLISH QoS1 packets received",
+      "label": "Received QoS1 Messages"
+    },
+    "recv_msg_qos2": {
+      "desc": "Number of PUBLISH QoS2 packets received",
+      "label": "Received QoS2 Messages"
+    },
+    "recv_oct": {
+      "desc": "Number of bytes received",
+      "label": "Received Bytes"
+    },
+    "recv_pkt": {
+      "desc": "Number of MQTT packets received",
+      "label": "Received Packets"
+    },
+    "reductions": {
+      "desc": "Erlang reductions",
+      "label": "Reductions"
+    },
+    "requested_client_fields": {
+      "desc": "Comma separated list of client fields to return in the response",
+      "label": "Requested Client Fields"
+    },
+    "rh": {
+      "desc": "Retain handling",
+      "label": "Retain Handling"
+    },
+    "send_cnt": {
+      "desc": "Number of TCP packets sent",
+      "label": "Sent TCP Packets"
+    },
+    "send_msg": {
+      "desc": "Number of PUBLISH packets sent",
+      "label": "Sent Messages"
+    },
+    "send_msg_dropped": {
+      "desc": "Number of dropped PUBLISH packets",
+      "label": "Dropped Messages"
+    },
+    "send_msg_dropped_expired": {
+      "desc": "Number of dropped PUBLISH packets due to expired",
+      "label": "Dropped Messages Due to Expired"
+    },
+    "send_msg_dropped_queue_full": {
+      "desc": "Number of dropped PUBLISH packets due to queue full",
+      "label": "Dropped Messages Due to Queue Full"
+    },
+    "send_msg_dropped_too_large": {
+      "desc": "Number of dropped PUBLISH packets due to too large",
+      "label": "Dropped Messages Due to Too Large"
+    },
+    "send_msg_qos0": {
+      "desc": "Number of PUBLISH QoS0 packets sent",
+      "label": "Sent QoS0 Messages"
+    },
+    "send_msg_qos1": {
+      "desc": "Number of PUBLISH QoS1 packets sent",
+      "label": "Sent QoS1 Messages"
+    },
+    "send_msg_qos2": {
+      "desc": "Number of PUBLISH QoS2 packets sent",
+      "label": "Sent QoS2 Messages"
+    },
+    "send_oct": {
+      "desc": "Number of bytes sent",
+      "label": "Sent Bytes"
+    },
+    "send_pkt": {
+      "desc": "Number of MQTT packets sent",
+      "label": "Sent Packets"
+    },
+    "seqno_q1_comm": {
+      "desc": "Sequence number of the last PUBACK received from the client (Durable sessions only)",
+      "label": "Seqno Q1 Comm"
+    },
+    "seqno_q1_dup": {
+      "desc": "Sequence number of the last QoS1 message sent to the client, that hasn't been acked (Durable sessions only)",
+      "label": "Seqno Q1 Dup"
+    },
+    "seqno_q1_next": {
+      "desc": "Sequence number of the next QoS1 message to be sent to the client (Durable sessions only)",
+      "label": "Seqno Q1 Next"
+    },
+    "seqno_q2_comm": {
+      "desc": "Sequence number of the last PUBCOMP received from the client (Durable sessions only)",
+      "label": "Seqno Q2 Comm"
+    },
+    "seqno_q2_dup": {
+      "desc": "Sequence number of the last QoS2 message sent to the client, that hasn't been acked (Durable sessions only)",
+      "label": "Seqno Q2 Dup"
+    },
+    "seqno_q2_next": {
+      "desc": "Sequence number of next QoS2 message to be added to the batch (Durable sessions only)",
+      "label": "Seqno Q2 Next"
+    },
+    "seqno_q2_rec": {
+      "desc": "Sequence number of last PUBREC received from the client (Durable sessions only)",
+      "label": "Seqno Q2 Rec"
+    },
+    "sessions_count": {
+      "desc": "Number of sessions",
+      "label": "Sessions Count"
+    },
     "set_keepalive_seconds": {
       "desc": "Set the online client keepalive by seconds",
       "label": "Set the online client keepalive by seconds"
+    },
+    "since": {
+      "desc": "Include sessions expired after this time (UNIX Epoch in seconds precision)",
+      "label": "Since"
     },
     "subscribe": {
       "desc": "Subscribe",
@@ -7358,6 +7633,18 @@
       "desc": "Subscribe bulk",
       "label": "Subscribe bulk"
     },
+    "subscriptions_cnt": {
+      "desc": "Number of subscriptions established by this client",
+      "label": "Subscriptions Count"
+    },
+    "subscriptions_max": {
+      "desc": "Maximum number of subscriptions allowed by this client",
+      "label": "Subscriptions Max"
+    },
+    "topic": {
+      "desc": "Topic name",
+      "label": "Topic Name"
+    },
     "unsubscribe": {
       "desc": "Unsubscribe",
       "label": "Unsubscribe"
@@ -7365,9 +7652,21 @@
     "unsubscribe_g": {
       "desc": "Unsubscribe bulk",
       "label": "Unsubscribe bulk"
+    },
+    "username": {
+      "desc": "User name of client when connecting",
+      "label": "Username"
     }
   },
   "emqx_mgmt_api_cluster": {
+    "cluster_name": {
+      "desc": "Cluster name. Statically set in the configuration `cluster.name`.",
+      "label": "Cluster Name"
+    },
+    "cluster_topology": {
+      "desc": "Cluster topology: connections between core and replicant nodes.",
+      "label": "Cluster Topology"
+    },
     "force_remove_node": {
       "desc": "Force leave node from cluster",
       "label": "Force leave node from cluster"
@@ -7384,6 +7683,10 @@
       "desc": "Get the execution status of all asynchronous invite status per node",
       "label": "Get invitation statuses"
     },
+    "invitation_progress": {
+      "desc": "Get invitation progress created by async operation.",
+      "label": "Invitation Progress"
+    },
     "invite_node": {
       "desc": "Invite node to cluster",
       "label": "Invite node to cluster"
@@ -7391,6 +7694,46 @@
     "invite_node_async": {
       "desc": "Send a join invitation to a node to join the cluster but do not wait for the join result. Join status can be retrieved with `GET api/<version>/invitation`",
       "label": "Asynchronously invite"
+    },
+    "node_invitation_failed": {
+      "desc": "A list of information about nodes that failed to be invited",
+      "label": "Node Invitation Failed"
+    },
+    "node_invitation_failed_reason": {
+      "desc": "Failure reason",
+      "label": "Failure Reason"
+    },
+    "node_invitation_in_progress": {
+      "desc": "Nodes that are processing invitations.",
+      "label": "Node Invitation In Progress"
+    },
+    "node_invitation_in_progress_started_at": {
+      "desc": "The time invitation is started.",
+      "label": "Started At"
+    },
+    "node_invitation_succeed": {
+      "desc": "Node invitation succeeded.",
+      "label": "Node Invitation Succeeded"
+    },
+    "node_invitation_succeed_finished_at": {
+      "desc": "The time async invitation result is received.",
+      "label": "Finished At"
+    },
+    "node_names": {
+      "desc": "Nodes in the cluster",
+      "label": "Node names"
+    },
+    "replicated_log_streams": {
+      "desc": "The number of RLOG (replicated log) streams.",
+      "label": "Replicated Log Streams"
+    },
+    "self_node_name": {
+      "desc": "Self node name. The node which served the request.",
+      "label": "Self node name"
+    },
+    "timeout": {
+      "desc": "Timeout in milliseconds",
+      "label": "Timeout"
     }
   },
   "emqx_mgmt_api_configs": {
@@ -7848,6 +8191,42 @@
       "desc": "Whether to initiate all subscribed topic name registration messages to the client after the Session has been taken over by a new channel"
     }
   },
+  "emqx_mt_api": {
+    "client_count": {
+      "desc": "Count all clients in a namespace",
+      "label": "Count Clients"
+    },
+    "client_list": {
+      "desc": "List all clients in a namespace",
+      "label": "List Clients"
+    },
+    "last_client_in_query": {
+      "desc": "The last client from the previous page.\nFor the first page, use empty string.",
+      "label": "Last Client ID"
+    },
+    "last_ns_in_query": {
+      "desc": "The last namespace from the previous page.\nFor the first page, use empty string.",
+      "label": "Last Namespace"
+    },
+    "limit_in_query": {
+      "desc": "The number of items to return",
+      "label": "Limit"
+    },
+    "ns_list": {
+      "desc": "List all namespaces\"\nThe namespace is sorted in lexicographical order,\nso this API can be used for prefix based fuzzy search.",
+      "label": "List Namespaces"
+    }
+  },
+  "emqx_mt_schema": {
+    "config": {
+      "desc": "Multi-tenancy configuration",
+      "label": "Multi-tenancy"
+    },
+    "default_max_sessions": {
+      "desc": "The default number of live sessions allowed for each namespace.\nAccess will be denied for new clients if limit is reached.\nOnline config changes do not affect running sessions.",
+      "label": "Default Max Number of Sessions"
+    }
+  },
   "emqx_mysql": {
     "server": {
       "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe MySQL default port 3306 is used if `[:Port]` is not specified.",
@@ -7939,6 +8318,10 @@
       "desc": "The rate of evicting connections, in connections per second",
       "label": "Connection eviction rate"
     },
+    "local_status_connection_eviction_rpc_timeout": {
+      "desc": "The timeout for connection eviction RPC, in seconds",
+      "label": "Connection eviction RPC timeout"
+    },
     "local_status_connection_goal": {
       "desc": "The number of connections that the node should have after the rebalance/evacuation process",
       "label": "Connection goal"
@@ -7970,6 +8353,10 @@
     "local_status_session_eviction_rate": {
       "desc": "The rate of evicting sessions, in sessions per second",
       "label": "Session eviction rate"
+    },
+    "local_status_session_eviction_rpc_timeout": {
+      "desc": "The timeout for session eviction RPC, in seconds",
+      "label": "Session eviction RPC timeout"
     },
     "local_status_session_goal": {
       "desc": "The number of sessions that the node should have after the evacuation process",
@@ -8333,6 +8720,10 @@
     },
     "job_name": {
       "desc": "Job Name that is pushed to the Push Gateway. Available variables:<br/>\n- ${cluster_name}: Name of EMQX cluster.<br/>\n- ${name}: Name of EMQX node.<br/>\n- ${host}: Host name of EMQX node.<br/>\nFor example, when the EMQX node name is <code>emqx@127.0.0.1</code> then the <code>name</code>\nvariable takes value <code>emqx</code> and the <code>host</code> variable takes value <code>127.0.0.1</code>.\nDefault value is: <code>${name}/instance/${name}~${host}</code>"
+    },
+    "latency_buckets": {
+      "desc": "Comma separated duration values for latency histogram buckets.",
+      "label": "Latency Histogram Buckets"
     },
     "legacy_deprecated_setting": {
       "desc": "Deprecated since 5.4.0"
@@ -9059,7 +9450,7 @@
       "label": "Republish Configuration"
     },
     "desc_republish_args": {
-      "desc": "The arguments of the built-in 'republish' action.One can use variables in the args.\nThe variables are selected by the rule. For example, if the rule SQL is defined as following:\n<code>\n    SELECT clientid, qos, payload FROM \"t/1\"\n</code>\nThen there are 3 variables available: <code>clientid</code>, <code>qos</code> and\n<code>payload</code>. And if we've set the args to:\n<code>\n    {\n        topic = \"t/${clientid}\"\n        qos = \"${qos}\"\n        payload = \"msg: ${payload}\"\n    }\n</code>\nWhen the rule is triggered by an MQTT message with payload = `hello`, qos = 1,\nclientid = `Steve`, the rule will republish a new MQTT message to topic `t/Steve`,\npayload = `msg: hello`, and `qos = 1`.",
+      "desc": "The arguments of the built-in 'republish' action. One can use variables in the args.\nThe variables are selected by the rule. For example, if the rule SQL is defined as following:\n<code>\n    SELECT clientid, qos, payload FROM \"t/1\"\n</code>\nThen there are 3 variables available: <code>clientid</code>, <code>qos</code> and\n<code>payload</code>. And if we've set the args to:\n<code>\n    {\n        topic = \"t/${clientid}\"\n        qos = \"${qos}\"\n        payload = \"msg: ${payload}\"\n    }\n</code>\nWhen the rule is triggered by an MQTT message with payload = `hello`, qos = 1,\nclientid = `Steve`, the rule will republish a new MQTT message to topic `t/Steve`,\npayload = `msg: hello`, and `qos = 1`.",
       "label": "Republish Args"
     },
     "desc_rule_engine": {
@@ -9105,6 +9496,9 @@
     "republish_function": {
       "desc": "Republish the message as a new MQTT message",
       "label": "Republish Function"
+    },
+    "republish_mqtt_properties_prop": {
+      "desc": "An MQTT property that can be set while republishing."
     },
     "rule_engine_ignore_sys_message": {
       "desc": "When set to 'true' (default), rule-engine will ignore messages published to $SYS topics.",
@@ -9354,6 +9748,10 @@
       "desc": "All TLS/DTLS versions to be supported.<br/>\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config.<br/>\nIn case PSK cipher suites are intended, make sure to configure\n<code>['tlsv1.2', 'tlsv1.1']</code> here.",
       "label": "SSL versions"
     },
+    "config_backup_interval": {
+      "desc": "Interval at which backups to `cluster.hocon` are made.  Even if multiple configuration updates are made withing this interval, only one backup will be made with the current configuration.",
+      "label": "Config Backup Interval"
+    },
     "conn_congestion_enable_alarm": {
       "desc": "Enable or disable connection congestion alarm.",
       "label": "Enable/disable congestion alarm"
@@ -9465,6 +9863,10 @@
     "fields_listeners_wss": {
       "desc": "HTTPS websocket listeners.",
       "label": "HTTPS websocket listeners"
+    },
+    "fields_mqtt_opts_parse_unit": {
+      "desc": "This setting specifies the level of granularity for data processed during MQTT framing, determining how frames are extracted and parsed from a byte stream:\n\n- `chunk`: Frames are processed at the transport layer packet level. This method uses raw byte chunks as the parsing unit, requiring the application logic to assemble and interpret MQTT frames. The size of each chunk non-deterministically depends on factors such as transmission speed, socket buffer size, and other kernel settings.\n- `frame`: Frames are processed as complete MQTT messages. This method ensures that only fully-formed MQTT frames are delivered to the application logic for further handling. In most of the cases, it offers better performance than the `chunk` option.\n\nNote, the choice of `parse_unit` affects the interpretation of the `active_n` setting: it defines either the number of raw byte chunks or complete MQTT messages are delivered to the connection process.",
+      "label": "MQTT Message Parse Unit"
     },
     "fields_mqtt_quic_listener_certfile": {
       "desc": "Path to the certificate file. Will be deprecated in 5.1, use .ssl_options.certfile instead.",
@@ -9797,6 +10199,9 @@
       "desc": "Keep-Alive Timeout = Keep-Alive interval Ã Keep-Alive Multiplier.\nThe default value 1.5 is following the MQTT 5.0 specification. This multiplier is adjustable, providing system administrators flexibility for tailoring to their specific needs. For instance, if a client's 10-second Keep-Alive interval PINGREQ gets delayed by an extra 10 seconds, changing the multiplier to 2 lets EMQX tolerate this delay.",
       "label": "Keep Alive Multiplier"
     },
+    "mqtt_limiter": {
+      "desc": "MQTT related limiter configuration."
+    },
     "mqtt_listener_access_rules": {
       "desc": "An access rule list consisting of string rules to restrict or allow access from some addresses. The rules that appear earlier in the list are matched first.\nThe format is `allow | deny <address> | <CIDR> | all`.\n\nFor example:\n\n`[\"deny 192.168.1.1\", \"allow 192.168.1.0/24\", \"deny all\"]`",
       "label": "Access rules"
@@ -10019,6 +10424,10 @@
     },
     "shared_subscription_strategy_enum": {
       "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n - `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends. The initial selection is made based on the value of `initial_sticky_pick`;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
+    },
+    "socket_tcp_keepalive": {
+      "desc": "Enable TCP keepalive.\nThe value is three comma separated numbers in the format of 'Idle,Interval,Probes'\n - Idle: The number of seconds a connection needs to be idle before the server begins to send out keep-alive probes (Linux default 7200).\n - Interval: The number of seconds between TCP keep-alive probes (Linux default 75).\n - Probes: The maximum number of TCP keep-alive probes to send before giving up and killing the connection if no response is obtained from the other end (Linux default 9).\nFor example \"240,30,5\" means: EMQX will start sending probes after the connection is idle for 240 seconds, and the probes are sent every 30 seconds until a response is received, if it misses 5 consecutive responses, the connection should be closed.\nDefault: 'none'",
+      "label": "TCP keepalive options"
     },
     "stats_enable": {
       "desc": "Enable/disable statistic data collection.",
