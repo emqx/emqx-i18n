@@ -5966,7 +5966,7 @@
       "desc": "The interval in milliseconds for the leader to renew the streams.",
       "label": "Leader Renew Streams Interval"
     },
-    "leader_ssubscriber_timeout": {
+    "leader_subscriber_timeout": {
       "desc": "The maximum time in milliseconds for the leader to wait for the ping from a shared subscriber.\nIf the shared subscriber does not ping the leader within this time, the leader will consider\nthe shared subscriber as lost and will reclaim its streams.",
       "label": "Leader Subscriber Timeout"
     },
