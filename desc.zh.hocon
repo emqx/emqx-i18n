@@ -48,6 +48,14 @@
       "desc": "为全局认证链创建认证器。",
       "label": "创建认证器"
     },
+     "authentication_settings_get": {
+      "desc": "获取认证设置。",
+      "label": "认证设置"
+    },
+    "authentication_settings_put": {
+      "desc": "更新认证设置。",
+      "label": "更新认证设置"
+    },
     "is_superuser": {
       "desc": "是否是超级用户。",
       "label": "超级用户"
@@ -108,6 +116,10 @@
       "desc": "认证器 ID。由认证方式与数据源组成 `{mechanism}:{built_in_database}`，如 `password_based:built_in_database`",
       "label": "认证器 ID "
     },
+    "param_clientid": {
+      "desc": "客户端 ID",
+      "label": "客户端 ID"
+    },
     "param_listener_id": {
       "desc": "监听器 ID。",
       "label": "监听器 ID"
@@ -119,6 +131,14 @@
     "param_user_id": {
       "desc": "用户 ID，根据设置的账号类型不同，可以是 username 或 clientid",
       "label": "用户 ID"
+    },
+    "authentication_node_cache_reset_post": {
+      "desc": "重置节点级别的认证缓存。",
+      "label": "重置节点级别的认证缓存"
+    },
+    "authentication_node_cache_status_get": {
+      "desc": "获取认证缓存状态。",
+      "label": "认证缓存状态"
     },
     "authentication_order_put": {
       "desc": "在全局认证链中重新排序所有认证器。",
@@ -458,6 +478,10 @@
       "desc": "当前认数据源曾经达到的最大查询速度，单位：次/秒。",
       "label": "最大查询速度"
     },
+    "settings": {
+      "desc": "认证全局设置。",
+      "label": "认证设置"
+    },
     "status": {
       "desc": "数据源状态。",
       "label": "数据源状态"
@@ -503,14 +527,59 @@
       "label": "清除授权结果缓存"
     }
   },
+  "authorization_node_cache_get": {
+      "desc": "获取节点级别授权缓存的设置。",
+      "label": "获取节点级别授权缓存设置"
+    },
+    "authorization_node_cache_put": {
+      "desc": "更新节点级别授权缓存的设置。",
+      "label": "更新节点级别授权缓存设置"
+    },
+    "authorization_node_cache_reset_post": {
+      "desc": "重置节点级别授权缓存。",
+      "label": "重置节点级别授权缓存"
+    },
+    "authorization_node_cache_status_get": {
+      "desc": "获取节点级别授权缓存的指标。",
+      "label": "获取节点级别授权缓存指标"
+    },
+    "param_clientid": {
+      "desc": "客户端 ID",
+      "label": "客户端 ID"
+    }
+  },
   "emqx_authz_api_mnesia": {
+     "ALREADY_EXISTS": {
+      "desc": "授权已存在。",
+      "label": "已存在"
+    },
+    "NOT_FOUND": {
+      "desc": "未找到。",
+      "label": "未找到"
+    },
     "action": {
       "desc": "授权的动作 （发布/订阅/发布与订阅）",
       "label": "动作"
     },
+    "bad_request": {
+      "desc": "规则 schema 无效。",
+      "label": "错误请求"
+    },
+    "bad_request_clientid": {
+      "desc": "客户端 ID 无效或规则格式错误。",
+      "label": "错误请求"
+    },
+    "bad_request_username": {
+      "desc": "用户名无效或规则格式错误。",
+      "label": "错误请求"
+    },
     "clientid": {
       "desc": "客户端 ID",
       "label": "客户端 ID"
+    },
+    "clientid_re": {
+      "desc": "用于筛选适用规则的 ClientID 正则表达式。",
+      "label": "ClientID 正则表达式"
     },
     "fuzzy_clientid": {
       "desc": "使用字串匹配模糊搜索客户端 ID",
@@ -519,6 +588,10 @@
     "fuzzy_username": {
       "desc": "使用字串匹配模糊搜索用户名",
       "label": "用户名字串"
+    },
+    "ipaddr": {
+      "desc": "用于筛选适用规则的 IP 地址/掩码。",
+      "label": "IP 地址/掩码"
     },
     "permission": {
       "desc": "对应的权限",
@@ -579,6 +652,10 @@
     "username": {
       "desc": "用户名",
       "label": "用户名"
+    },
+    "username_re": {
+      "desc": "用于筛选适用规则的用户名正则表达式。",
+      "label": "用户名正则表达式"
     },
     "users_clientid_get": {
       "desc": "显示客户端规则列表。",
@@ -810,6 +887,10 @@
     "authorization": {
       "desc": "与客户端授权相关的配置。",
       "label": "授权"
+    },
+    "authz_latency_buckets": {
+      "desc": "用于统计总授权延迟的直方图指标分桶。",
+      "label": "总授权延迟指标分桶"
     },
     "deny": {
       "desc": "----",
@@ -1304,6 +1385,42 @@
       "label": "连接超时"
     }
   },
+  "emqx_bridge_disk_log_action_schema": {
+    "action_parameters": {
+      "desc": "该操作的一组参数。",
+      "label": "磁盘日志操作参数"
+    },
+    "disk_log": {
+      "desc": "将接收到的事件追加到本地循环日志文件（JSON 行格式）中的操作。",
+      "label": "追加到日志文件"
+    },
+    "template": {
+      "desc": "要写入的 JSON 对象的内容，支持使用模板。",
+      "label": "内容"
+    },
+    "write_mode": {
+      "desc": "日志是同步写入还是异步写入磁盘。",
+      "label": "写入模式"
+    }
+  },
+  "emqx_bridge_disk_log_connector_schema": {
+    "config_connector": {
+      "desc": "磁盘日志连接器的配置。",
+      "label": "磁盘日志连接器配置"
+    },
+    "filepath": {
+      "desc": "要写入日志文件的基础路径。实际日志文件的格式为 `filepath.N`， 其中 `N` 的范围为 `1..max_file_number`。当前使用的文件可以通过查找修改时间最新的文件来确定。请注意，EMQX 应用程序用户必须对该目录具有写入权限，因为该目录还包含额外的内部使用文件（扩展名为 .siz 和 .idx）。",
+      "label": "日志文件路径"
+    },
+    "max_file_number": {
+      "desc": "最大日志文件数量。当达到最大文件数量且需要进行新一轮日志轮转时，最旧的文件将被截断并用作新的当前日志文件。",
+      "label": "最大文件数量"
+    },
+    "max_file_size": {
+      "desc": "当前正在写入的日志文件的最大大小。至少会向每个日志文件写入一条日志，因此如果单条日志条目超过该值，则最终文件大小可能会超过此最大值。",
+      "label": "最大文件大小"
+    }
+  },
   "emqx_bridge_dynamo": {
     "config_enable": {
       "desc": "启用/禁用桥接",
@@ -1559,7 +1676,7 @@
       "label": "服务器地址"
     },
     "token": {
-      "desc": "InfluxDB 令牌。",
+      "desc": "InfluxDB token。",
       "label": "Token"
     },
     "username": {
@@ -1620,9 +1737,22 @@
       "desc": "IoTDB 数据桥接配置",
       "label": "IoTDB 配置"
     },
+    "desc_config_get": {
+      "desc": "获取 IoTDB 配置。"
+    },
+    "desc_config_post": {
+      "desc": "创建 IoTDB 配置。"
+    },
+    "desc_config_put": {
+      "desc": "更新 IoTDB 配置。"
+    },
     "desc_name": {
       "desc": "IoTDB 数据桥接名称。",
       "label": "桥接名称"
+    },
+    "action_resource_opts": {
+      "desc": "动作资源选项",
+      "label": "动作资源选项"
     },
     "action_parameters": {
       "desc": "IoTDB 动作参数",
@@ -1647,7 +1777,11 @@
     "config_parameters_value": {
       "desc": "值。支持格式为 ${var} 的占位符",
       "label": "值"
-    }
+    },
+    "creation_opts": {
+      "desc": "创建选项",
+      "label": "创建选项"
+    },
   },
   "emqx_bridge_kafka": {
     "auth_gssapi_kerberos": {
@@ -1882,10 +2016,6 @@
       "desc": "TCP socket 的发送缓存调优。默认值是针对高吞吐量的一个推荐值。",
       "label": "Socket 发送缓存大小"
     },
-    "socket_tcp_keepalive": {
-      "desc": "为 Kafka 桥接连接启用 TCP keepalive。\n该值是3个由逗号分隔的数字，格式为 'Idle,Interval,Probes'。\n - Idle: 连接在服务器开始发送 keep-alive 探测（Linux 默认 7200）之前需要空闲的秒数。\n - Interval: TCP keep-alive 探测发送间隔的秒数（Linux 默认 75）。\n - Probes: 如果没有从另一端获得响应，在放弃并终止连接之前发送的 TCP keep-alive 探测的最大数量 （Linux 默认 9）。\n例如 \"240,30,5\" 表示： 在连接空闲 240 秒后发送 TCP keepalive 探测 ，并且每 30 秒发送一次探测，直到收到响应，如果连续错过 5 个响应，则应关闭连接。\n默认值： 'none'",
-      "label": "TCP keepalive 选项"
-    },
     "ssl_client_opts": {
       "desc": "Kafka 客户端的 TLS/SSL 选项",
       "label": "TLS/SSL 选项"
@@ -2107,11 +2237,11 @@
       "label": "用户名"
     },
     "auth_token": {
-      "desc": "令牌认证的参数。",
+      "desc": "Token 认证的参数。",
       "label": "Token 认证参数"
     },
     "auth_token_jwt": {
-      "desc": "JWT 认证令牌。",
+      "desc": "JWT 认证 token。",
       "label": "JWT"
     },
     "authentication": {
@@ -2366,8 +2496,8 @@
       "label": "SecretKey"
     },
     "security_token": {
-      "desc": "RocketMQ 服务器安全令牌",
-      "label": "安全令牌"
+      "desc": "RocketMQ 服务器安全 token",
+      "label": "安全 token"
     },
     "send_buffer": {
       "desc": "RocketMQ 驱动的套字节发送消息的缓冲区大小",
@@ -2770,6 +2900,30 @@
     "desc_sources": {
       "desc": "Source 的配置。",
       "label": "Source 配置"
+    },
+    "fallback_action_kind": {
+      "desc": "回退操作的类别。",
+      "label": "类别"
+    },
+    "fallback_action_reference": {
+      "desc": "如果此操作的查询失败，将触发的回退操作。 触发主操作的相同消息上下文将被原样发送到回退操作。",
+      "label": "回退操作"
+    },
+    "fallback_action_reference_name": {
+      "desc": "回退操作的名称。",
+      "label": "名称"
+    },
+    "fallback_action_reference_type": {
+      "desc": "回退操作的类型。",
+      "label": "类型"
+    },
+    "fallback_action_republish": {
+      "desc": "回退操作的消息重发布。其工作方式与规则引擎中的重发布规则操作相同。",
+      "label": "重发布"
+    },
+    "fallback_actions": {
+      "desc": "如果此操作的查询失败，将触发的回退操作列表。",
+      "label": "回退操作"
     },
     "undefined_vars_as_null": {
       "desc": "写入数据库时，将未定义的变量视为 NULL。\n启用此选项时，如果模板中使用了未定义的变量（如 ${var}），它们将被替换为 \"NULL\"，而不是字符串 \"undefined\"。如果此选项未启用（默认），则可能插入字符串 \"undefined\"。\n如果可能，此选项应始终设置为 `true`；默认值 `false` 仅用于确保向后兼容性。",
@@ -3238,7 +3392,7 @@
       "label": "崩溃文件最大大小"
     },
     "node_crash_dump_file": {
-      "desc": "设置 Erlang crash_dump 文件的存储路径和文件名。",
+      "desc": "设置 Erlang crash_dump 文件的存储路径和文件名。默认为 <code>log/erl_crash.YYYY.MM.DD.HH.MM.SS.dump</code>。\n时间戳是在 EMQX 启动时生成的。",
       "label": "节点崩溃时的 Dump 文件"
     },
     "node_crash_dump_seconds": {
@@ -3492,6 +3646,10 @@
     "desc_type": {
       "desc": "连接器的类型。",
       "label": "连接器类型"
+    },
+    "ehttpc_max_inactive": {
+      "desc": "HTTP 驱动程序在没有任何活动的情况下等待重新连接的最长时间。",
+      "label": "最大无活动时间"
     }
   },
   "emqx_connector_http": {
@@ -3863,6 +4021,9 @@
     "backend_not_found": {
       "desc": "操作失败。后端不存在"
     },
+    "change_mfa": {
+      "desc": "为 Dashboard 用户设置多重身份认证（MFA）。"
+    }
     "change_pwd_api": {
       "desc": "更改 Dashboard 用户密码",
       "label": "更改 Dashboard 用户密码"
@@ -3879,6 +4040,9 @@
       "desc": "删除一个后端",
       "label": "删除后端"
     },
+    "delete_mfa": {
+      "desc": "删除 Dashboard 用户的多重身份认证（MFA）状态。\n删除后，该用户的 MFA 将被显式禁用。如需重新启用 MFA，请调用 `POST` 方法。"
+    }
     "delete_user_api": {
       "desc": "删除 Dashboard 用户",
       "label": "删除 Dashboard 用户"
@@ -3908,7 +4072,7 @@
     },
     "login": {
       "desc": "----",
-      "label": "获取 Dashboard 认证令牌。"
+      "label": "获取 Dashboard 认证 token。"
     },
     "login_api": {
       "desc": "登录成功后返回 Dashboard 认证 Token。",
@@ -3927,6 +4091,12 @@
       "desc": "Dashboard 用户退出登录",
       "label": "Dashboard 用户退出登录"
     },
+    "mfa_status": {
+      "desc": "多重身份认证（MFA）状态。\n- `none`：未启用 MFA\n- `disabled`：用户的 MFA 已禁用\n- 其他值：正在使用的 MFA 机制，例如 `totp`。"
+    },
+    "mfa_token": {
+      "desc": "多重身份认证（MFA）token。"
+    }
     "new_pwd": {
       "desc": "新密码"
     },
@@ -3935,6 +4105,9 @@
     },
     "password": {
       "desc": "Dashboard 密码"
+    },
+    "password_expire_in_seconds": {
+      "desc": "密码过期的剩余时间（秒）。"
     },
     "redirect": {
       "desc": "重定向到 IDP SSO 登录页面"
@@ -4032,6 +4205,10 @@
       "desc": "CORS（Cross-Origin Resource Sharing，跨域资源共享）允许服务器响应来自任何来源（域名、协议或端口）的请求，启用后允许另一个域名下的服务直接通过 JavaScript 调用 EMQX REST API。",
       "label": "CORS"
     },
+    "default_mfa": {
+      "desc": "Dashboard 的默认多重身份认证（MFA）设置。\n当设置为 `none` 时，可在 Dashboard 为每个用户单独启用 MFA。\n如果设置为 `{mechanism = totp}`，用户在首次登录时将自动初始化一个随机的 TOTP 密钥。",
+      "label": "默认 MFA 设置"
+    },
     "default_password": {
       "desc": "用于初始化 admin 用户数据库记录的密码。\n注意：在初始化（第一次启动）后更改默认密码将不起作用。\n一旦初始化完成，默认密码 public 必须尽快通过 Dashboard 或 CLI 更改。",
       "label": "默认密码"
@@ -4045,16 +4222,24 @@
       "label": "Dashboard"
     },
     "desc_http": {
-      "desc": "Dashboard 监听器(HTTP)配置。",
-      "label": "HTTP 配置"
+      "desc": "Dashboard 监听器的配置（plaintext）。",
+      "label": "HTTP"
     },
     "desc_https": {
-      "desc": "Dashboard 监听器(HTTPS)配置。",
-      "label": "HTTPS 配置"
+      "desc": "Dashboard 监听器的配置（TLS）。",
+      "label": "HTTPS"
     },
     "desc_listeners": {
       "desc": "Dashboard 监听器配置。",
       "label": "监听器"
+    },
+    "http_listener_settings": {
+      "desc": "HTTP 监听器的设置。",
+      "label": "HTTP 监听器设置"
+    },
+"https_listener_settings": {
+      "desc": "HTTPS 监听器的设置。",
+      "label": "HTTPS 监听器设置"
     },
     "i18n_lang": {
       "desc": "设置 Swagger 多语言的版本，可为 en 或 zh，默认为 en。",
@@ -4080,9 +4265,20 @@
       "desc": "同时处理的最大连接数。",
       "label": "最大连接数"
     },
+    "mfa_mechanism": {
+      "desc": "多重身份认证（MFA）机制。",
+      "label": "MFA 机制"
+    },
+"mfa_settings": {
+      "desc": "多重身份认证（MFA）设置。",
+      "label": "MFA 设置"
+    },
     "num_acceptors": {
       "desc": "TCP 协议的 Socket acceptor 池大小, 通常配置为 CPU 核数",
       "label": "Acceptor 数量"
+    },
+    "password_expired_time": {
+      "desc": "用户密码的过期时间。默认值 `0` 表示密码永不过期。"
     },
     "proxy_header": {
       "desc": "启用 Proxy Protocol 以提取客户端连接的原始信息，要求使用了代理服务器并且代理服务器也启用 Proxy Protocol。注意：一旦开启了这个功能，就无法再处理普通的 HTTP 请求。",
@@ -4150,6 +4346,44 @@
     },
     "backend_enable": {
       "desc": "是否启用该后端"
+    },
+    "sso_struct": {
+      "desc": "Dashboard 单点登录（SSO）。",
+      "label": "Dashboard 单点登录"
+    }
+  },
+  "emqx_dashboard_swagger": {
+    "count": {
+      "desc": "匹配查询条件的记录总数。\n注意：仅当查询能够优化且不需要全表扫描时，此字段才会存在。",
+      "label": "总数"
+    },
+    "cursor": {
+      "desc": "表示当前迭代状态的不透明值。",
+      "label": "游标"
+    },
+    "cursor_response": {
+      "desc": "表示当前迭代状态的不透明值。",
+      "label": "游标"
+    },
+    "hasnext": {
+      "desc": "指示是否还有更多结果可用于下一页。",
+      "label": "是否有下一页"
+    },
+    "limit": {
+      "desc": "每页返回的结果数量。",
+      "label": "每页限制"
+    },
+    "page": {
+      "desc": "要获取的结果所在页码。",
+      "label": "页码"
+    },
+    "position": {
+      "desc": "一个不透明的 token，可用于后续请求以获取下一批结果：`?position={prev_response.meta.position}`。\n用于替代 `page` 参数以遍历高度动态的数据。可以省略或设置为 `none` 以获取第一批数据。",
+      "label": "位置"
+    },
+    "start": {
+      "desc": "当前数据集合中第一个元素的位置。",
+      "label": "起始位置"
     }
   },
   "emqx_delayed_api": {
@@ -4468,176 +4702,6 @@
       "label": "模式类型"
     }
   },
-  "emqx_event_history_api": {
-    "authz_action_type": {
-      "desc": "授权动作的类型。"
-    },
-    "authz_from": {
-      "desc": "授权器的类型名称。"
-    },
-    "clean_start": {
-      "desc": "客户端是否为清除会话启动。",
-      "label": "清除会话启动"
-    },
-    "client_id": {
-      "desc": "客户端 ID。",
-      "label": "客户端 ID"
-    },
-    "dropped_msg_num": {
-      "desc": "已被丢弃的消息的数量。",
-      "label": "被丢弃的消息数量"
-    },
-    "eh_clear": {
-      "desc": "清除所有事件历史数据。\n注意：此操作风险较大。\n仅删除数据时，管理器和 GC 会尝试重新获取锁，因为锁信息丢失，\n有效空间缓存大小只能在下次刷新时更新。\n包含 FDB 的租户时，GC 将永久关闭。"
-    },
-    "eh_client_list": {
-      "desc": "已连接到消息服务器的客户端列表。",
-      "label": "事件历史客户端列表"
-    },
-    "eh_metrics": {
-      "desc": "获取内部资源的指标"
-    },
-    "eh_msg_list": {
-      "desc": "已发布到消息服务器的消息列表。",
-      "label": "事件历史消息列表"
-    },
-    "eh_stats": {
-      "desc": "事件历史租户统计。"
-    },
-    "event_history_get_config": {
-      "desc": "显示当前的事件历史配置。"
-    },
-    "event_history_update_config": {
-      "desc": "更新事件历史配置。"
-    },
-    "expiry_interval": {
-      "desc": "会话的到期间隔。",
-      "label": "会话到期间隔"
-    },
-    "force_delete": {
-      "desc": "是否删除 FDB 中对应的租户。"
-    },
-    "gte_time": {
-      "desc": "事件的开始时间（使用 Unix 毫秒或 rfc3339）。",
-      "label": "开始时间"
-    },
-    "guid": {
-      "desc": "会话或消息的 GUID"
-    },
-    "has_next": {
-      "desc": "指示是否有下一页"
-    },
-    "ip": {
-      "desc": "客户端的 IP 地址。",
-      "label": "IP"
-    },
-    "is_anonymous": {
-      "desc": "若用户为匿名，则为 True。"
-    },
-    "is_persistent": {
-      "desc": "指示是否为持久会话。"
-    },
-    "is_superuser": {
-      "desc": "若为超级用户，则为 True。"
-    },
-    "keepalive": {
-      "desc": "客户端的 keepalive 间隔。",
-      "label": "Keepalive"
-    },
-    "lte_time": {
-      "desc": "事件的结束时间（使用 Unix 毫秒或 rfc3339）。",
-      "label": "结束时间"
-    },
-    "message_id": {
-      "desc": "消息 ID。",
-      "label": "消息 ID"
-    },
-    "qos": {
-      "desc": "消息的 QoS 等级。",
-      "label": "QoS"
-    },
-    "reason": {
-      "desc": "此事件的原因。",
-      "label": "原因"
-    },
-    "result": {
-      "desc": "此事件的结果。"
-    },
-    "retain": {
-      "desc": "保留标志"
-    },
-    "reverse": {
-      "desc": "如果为 True，事件将按时间序列倒序返回，从时间范围的末尾开始。"
-    },
-    "stats_count": {
-      "desc": "统计计数。"
-    },
-    "stats_size": {
-      "desc": "统计大小。"
-    },
-    "tenant": {
-      "desc": "租户名称。"
-    },
-    "time": {
-      "desc": "事件触发的毫秒时间。",
-      "label": "时间"
-    },
-    "topic": {
-      "desc": "消息发布的主题。",
-      "label": "主题"
-    },
-    "type": {
-      "desc": "事件历史客户端类型。",
-      "label": "类型"
-    },
-    "username": {
-      "desc": "用于此事件的用户名。"
-    }
-  },
-  "emqx_event_history_schema": {
-    "alarm_percent": {
-      "desc": "达到最大存储大小的百分比时发出警报。"
-    },
-    "buffer": {
-      "desc": "写入工作线程的配置。"
-    },
-    "enable": {
-      "desc": "启用此功能"
-    },
-    "event_history": {
-      "desc": "记录来自客户端或消息的事件的功能。"
-    },
-    "events": {
-      "desc": "要记录的事件。"
-    },
-    "expiry_time": {
-      "desc": "每条数据的过期时间。"
-    },
-    "gc": {
-      "desc": "GC 配置。"
-    },
-    "gc_interval": {
-      "desc": "两次 GC 检查之间的时间间隔。"
-    },
-    "gc_percent": {
-      "desc": "当存储大小超过最大限制时，需要删除的存储数据百分比。"
-    },
-    "max_size": {
-      "desc": "此租户的事件最大存储大小（字节）。"
-    },
-    "query_quantity_limit": {
-      "desc": "查询的最大读取数量。"
-    },
-    "query_time_limit": {
-      "desc": "查询的时间限制。"
-    },
-    "storage": {
-      "desc": "存储配置"
-    },
-    "tenant": {
-      "desc": "如果该值不为空，则所有数据将存储在租户中，该租户的名称由该值和前缀创建。\n租户配置为只读，在运行时更新将失败。"
-    }
-  },
   "emqx_eviction_agent_api": {
     "node_eviction_status_get": {
       "desc": "获取节点驱逐状态",
@@ -4803,159 +4867,6 @@
     },
     "exproto_server": {
       "desc": "配置 ExProto 网关需要启动的 <code>ConnectionAdapter</code> 服务。\n该服务用于提供客户端的认证、发布、订阅和数据下行等功能。"
-    }
-  },
-  "emqx_fdb_ds_prometheus_api": {
-    "get_fdb_prom_data": {
-      "desc": "获取 FoundationDB Prometheus 指标。",
-      "label": "FoundationDB Prometheus 指标"
-    }
-  },
-  "emqx_fdb_ds_schema": {
-    "batch_delete_size": {
-      "desc": "在 `compacted` 存储中删除最旧数据的批量大小。"
-    },
-    "expiry_gc_interval": {
-      "desc": "清理过期数据的 GC 间隔时间。"
-    },
-    "gc": {
-      "desc": "GC 配置。"
-    },
-    "gc_max_gen_size": {
-      "desc": "持久化存储中一个代的最大可用大小。\n如果当前代的大小超过该值，将会创建一个新的代。"
-    },
-    "gc_max_size": {
-      "desc": "持久存储的总可用大小。"
-    },
-    "retainer_backend_fdb": {
-      "desc": "FoundationDB 持久存储 Retainer。",
-      "label": "FoundationDB 持久存储 Retainer"
-    },
-    "retainer_enable": {
-      "desc": "启用 FoundationDB Retainer 后端。",
-      "label": "启用"
-    },
-    "session_storage_backend_fdb": {
-      "desc": "FoundationDB 持久存储。",
-      "label": "FoundationDB 持久存储"
-    },
-    "session_storage_backend_fdb_enable": {
-      "desc": "启用 FoundationDB 持久存储后端。",
-      "label": "启用 FoundationDB Durable 持久存储后端"
-    },
-    "session_storage_backend_fdb_prefix": {
-      "desc": "FoundationDB 持久存储后端用于存储数据使用的键前缀。",
-      "label": "FoundationDB 健前缀"
-    },
-    "session_storage_backend_fdb_storage_mod": {
-      "desc": "在 FoundationDB 中存储消息数据的底层后端模块。",
-      "label": "FoundationDB DS 存储模块"
-    },
-    "session_storage_backend_fdb_storage_options": {
-      "desc": "FoundationDB 中存储消息数据的底层后端模块的配置选项。",
-      "label": "FoundationDB DS 存储选项"
-    },
-     "session_storage_backend_fdb_storage_write_buffer": {
-      "desc": "FoundationDB持久存储后端的写缓冲区大小。",
-      "label": "些缓冲区大小"
-    },
-    "session_storage_backend_fdb_tenant": {
-      "desc": "FoundationDB 持久存储后端使用的租户。",
-      "label": "FoundationDB 租户"
-    },
-    "session_storage_backend_fdb_write_shard_number": {
-      "desc": "FoundationDB DS 写入分片数量。",
-      "label": "FoundationDB DS 写入分片数量"
-    },
-    "size_gc_interval": {
-      "desc": "GC 检查已用大小是否超过最大可用大小的时间间隔。"
-    },
-    "size_gc_percent": {
-      "desc": "确定需要删除的数据量，占最大大小的百分比。"
-    },
-    "write_buffer_flush_interval": {
-      "desc": "刷新写入缓冲区的间隔时间。",
-      "label": "刷新间隔"
-    },
-    "write_buffer_max_items": {
-      "desc": "写入缓冲区中可存储的最大数据项数。",
-      "label": "最大数据项数"
-    }
-  },
-  "emqx_fdb_mgmt_cli_api": {
-    "cluster_file": {
-      "desc": "集群文件的内容。"
-    },
-    "delete_fdb_cli": {
-      "desc": "禁用并停止。\n注意：\n1. 当前一个进程可能在其进程字典或 gen_server 状态中缓存了一个工作线程，无法清除。\n2. 租户同上。\n3. 驱动程序无法手动关闭或重启。"
-    },
-    "get_cluster_file": {
-      "desc": "获取当前集群文件的内容。"
-    },
-    "get_fdb_cli": {
-      "desc": "获取配置。"
-    },
-    "post_cluster_file": {
-      "desc": "更新集群文件的内容。"
-    },
-    "post_fdb_cli": {
-      "desc": "启用并启动"
-    }
-  },
-  "emqx_fdb_mgmt_cli_schema": {
-    "available_check_interval": {
-      "desc": "最后状态为 'available' 时的 FDB 健康检查间隔。"
-    },
-    "callbacks_on_external_threads": {
-      "desc": "如果设置，来自外部客户端库的回调可以从 FoundationDB 客户端库创建的线程调用。否则，回调将从用于添加回调的线程或网络线程调用。设置此选项在连接外部客户端时可以提高性能，但在所有环境中使用可能不安全。必须在设置网络之前设置该选项。警告：此功能目前被认为是实验性的。"
-    },
-    "circuit_breaker": {
-      "desc": "用于监控 FoundationDB 集群状态的后台服务器。"
-    },
-    "client_threads_per_version": {
-      "desc": "为每个加载的客户端版本生成多个工作线程。设置为大于 1 的值表示禁用本地客户端。"
-    },
-    "cluster_file": {
-      "desc": "集群文件的路径。"
-    },
-    "enable": {
-      "desc": "启用此功能。"
-    },
-    "external_client_library": {
-      "desc": "添加一个外部客户端库，以供多版本客户端 API 使用。必须在设置网络之前设置该选项。"
-    },
-    "max_watches": {
-      "desc": "设置允许在数据库连接上保留的活动监视器数量。增加该数值可能导致资源使用增加。减少该数值不会取消任何现有的活动监视器。默认值为 10000，不能超过 1000000。"
-    },
-    "tls_ca_path": {
-      "desc": "设置用于加载证书颁发机构捆绑包的文件。"
-    },
-    "tls_cert_path": {
-      "desc": "设置用于加载证书链的文件路径。"
-    },
-    "tls_key_path": {
-      "desc": "设置用于加载与自身证书对应的私钥文件路径。"
-    },
-    "tls_verify_peers": {
-      "desc": "设置对等证书字段的验证标准。"
-    },
-    "transaction_max_retry_delay": {
-      "desc": "设置在调用 `onError` 时的最大退避延迟（如果错误是可重试的）。此配置会设置该数据库每个事务的 `max_retry_delay` 选项。"
-    },
-    "transaction_retry_limit": {
-      "desc": "设置重试次数上限，超出该次数后，进一步调用 `onError` 将返回在最后一次重试中发生的错误代码。此项配置将设置此数据库创建的每个事务的 `retry_limit` 选项。"
-    },
-    "transaction_timeout": {
-      "desc": "设置超时时间（以毫秒为单位），超过该时间后，每个事务将自动取消。这会为数据库中创建的每个事务设置 `timeout` 选项。"
-    },
-    "unavailable_check_interval": {
-      "desc": "在尝试达到最大次数后，假定集群不可用，并可能使用更小的间隔进行检查。"
-    },
-    "waiting_check_interval": {
-      "desc": "当上次状态为 `不可用` 时的 FDB 健康检查间隔，假定该状态是由网络或集群抖动引起的，并尝试等待其恢复。"
-    },
-    "waiting_check_times": {
-      "desc": "等待状态恢复正常的最大健康检查次数。"
     }
   },
   "emqx_ft_api": {
@@ -5707,17 +5618,38 @@
     }
   },
   "emqx_limiter_schema": {
+    "alloc_interval": {
+      "desc": "共享限流器的 token 分配间隔时间。"
+    },
+      "burst": {
+      "desc": "当速率超出限制时允许的 token 数量。"
+    },
+    "bytes_burst": {
+      "desc": "可以突发发送的字节数。\n\n例如：`100MB/60m`：在 60 分钟内，可以在短时间内发送最多 100MB 的数据。",
+      "label": "数据发布突发量"
+    }
     "bytes_rate": {
       "desc": "用于限制单个客户端每秒钟可以向 EMQX 发送的字节数。\n\n一旦达到限制，EMQX 将暂停从接收缓冲区读取数据，从而减慢甚至暂时挂起发送方。\n\n字节的单位可以是：B、KB、MB、GB。\n\n例如：\n\n- 500KB/s：每秒钟只接收 500 千字节，剩余字节将被延迟。\n- 500MB/10s：每 10 秒只接收 500 兆字节，剩余字节将被延迟。",
       "label": "数据发布速率"
+    },
+    "max_conn_burst": {
+      "desc": "可以突发接受的连接数。\n\n例如：`10000/60m`：在 60 分钟内，可以在短时间内接受最多 10000 个连接。",
+      "label": "最大连接突发量"
     },
     "max_conn_rate": {
       "desc": "用于限制当前监听器接受连接的速率。\n\n一旦达到限制，EMQX 将暂停从接受队列中获取连接，从而延迟或拒绝新连接。\n\n例如：\n\n- 1000/s：每秒只接受 1000 个连接。\n- 1000/10s：每 10 秒只接受 1000 个连接。",
       "label": "最大连接速率"
     },
+    "messages_burst": {
+      "desc": "可以突发发送的消息数。\n\n例如：`10000/60m`：在 60 分钟内，可以在短时间内发送最多 10000 条消息。",
+      "label": "消息发布突发量"
+    },
     "messages_rate": {
       "desc": "用于限制单个客户端每秒钟可以向 EMQX 发送的消息数量。\n\n一旦达到限制，EMQX 将暂停从接收缓冲区读取数据，从而减慢甚至暂时挂起发送方。\n\n例如：\n\n- 500/s：每秒只接收 500 条消息，剩余消息将被延迟。\n- 500/10s：每 10 秒只接收 500 条消息，剩余消息将被延迟。",
       "label": "消息发布速率"
+    },
+    "mqtt": {
+      "desc": "MQTT 相关限流器。"
     }
   },
   "emqx_lwm2m_api": {
@@ -5932,13 +5864,93 @@
     }
   },
   "emqx_mgmt_api_clients": {
+    "authz_cache_access": {
+      "desc": "访问类型",
+      "label": "访问类型"
+    },
+    "authz_cache_result": {
+      "desc": "允许或拒绝",
+      "label": "结果"
+    },
+    "authz_cache_topic": {
+      "desc": "主题名称",
+      "label": "主题名称"
+    },
+    "authz_cache_updated_time": {
+      "desc": "更新时间",
+      "label": "更新时间"
+    },
+    "await_pubrel_timeout": {
+      "desc": "因等待 PUBREL 超时而丢弃的 PUBLISH 数据包数量",
+      "label": "等待 PUBREL 超时"
+    },
+    "awaiting_rel_cnt": {
+      "desc": "正在等待的 PUBREC 数据包数量。",
+      "label": "等待 PUBREC 计数"
+    },
+    "awaiting_rel_max": {
+      "desc": "允许等待的最大 PUBREC 数据包数量。",
+      "label": "等待 PUBREC 最大值"
+    },
+    "bad_request": {
+      "desc": "无法处理此请求。",
+      "label": "错误请求"
+    },
     "clean_authz_cache": {
-      "desc": "清除指定客户端的授权缓存",
+      "desc": "清除指定客户端的授权缓存。",
       "label": "清除指定客户端的授权缓存"
+    },
+    "clean_start": {
+      "desc": "指示客户端是否使用全新的会话。",
+      "label": "全新会话（Clean Start）"
+    },
+    "client_port": {
+      "desc": "客户端端口。",
+      "label": "客户端端口"
+    },
+    "clientid": {
+      "desc": "客户端 ID。",
+      "label": "客户端 ID"
+    },
+    "clientid_not_found": {
+      "desc": "未找到客户端 ID。",
+      "label": "客户端 ID 未找到"
     },
     "clients_info_from_id": {
       "desc": "获取指定客户端的详细信息",
       "label": "获取指定客户端信息"
+    },
+    "conn_state": {
+      "desc": "客户端的当前连接状态，可能的值包括：connected（已连接）、idle（空闲）、disconnected（已断开）。",
+      "label": "连接状态"
+    },
+    "connected": {
+      "desc": "客户端是否已连接。",
+      "label": "已连接"
+    },
+    "connected_at": {
+      "desc": "会话创建时间，格式为 RFC3339 或时间戳（毫秒）",
+      "label": "连接时间"
+    },
+    "created_at": {
+      "desc": "客户端会话创建时间，格式为 RFC3339 或时间戳（毫秒）",
+      "label": "创建时间"
+    },
+    "disconnected_at": {
+      "desc": "客户端断开连接的时间，格式为 RFC3339 或时间戳（毫秒）。\n仅在 `connected` 为 `false` 时有效并返回。",
+      "label": "断开连接时间"
+    },
+    "dropped": {
+      "desc": "丢弃的 PUBLISH 数据包数量。",
+      "label": "丢弃的消息数"
+    },
+    "durable": {
+      "desc": "会话为持久会话。",
+      "label": "持久会话"
+    },
+    "expiry_interval": {
+      "desc": "会话过期时间间隔，单位为秒。",
+      "label": "过期间隔"
     },
     "get_authz_cache": {
       "desc": "获取指定客户端的授权缓存",
@@ -5948,6 +5960,30 @@
       "desc": "获取指定客户端的订阅列表",
       "label": "获取客户端订阅"
     },
+    "invalid_parameter": {
+      "desc": "无效的参数。",
+      "label": "无效参数"
+    },
+    "ip_address": {
+      "desc": "客户端的 IP 地址。",
+      "label": "IP 地址"
+    },
+    "is_bridge": {
+      "desc": "指示客户端是否以桥接模式连接。",
+      "label": "是否桥接"
+    },
+    "is_expired": {
+      "desc": "指示客户端是否已过期。",
+      "label": "是否过期"
+    },
+    "keepalive": {
+      "desc": "客户端的 Keepalive（保活）时间，单位为秒。",
+      "label": "保活时间"
+    },
+    "keepalive_interval": {
+      "desc": "Keepalive（保活）时间间隔",
+      "label": "保活间隔"
+    },
     "kick_client_id": {
       "desc": "踢出指定客户端",
       "label": "踢出指定客户端"
@@ -5956,13 +5992,177 @@
       "desc": "----",
       "label": "根据客户端 ID 批量踢除客户端"
     },
+    "like_clientid": {
+      "desc": "模糊搜索 `clientid` 作为子字符串。",
+      "label": "类似客户端 ID"
+    },
+    "like_username": {
+      "desc": "模糊搜索 `username` 作为子字符串。",
+      "label": "类似用户名"
+    },
     "list_clients": {
       "desc": "列出客户端",
       "label": "列出客户端"
     },
+    "n_streams": {
+      "desc": "持久化消息流的数量",
+      "label": "持久化流数量"
+    },
+    "nl": {
+      "desc": "MQTT No Local 选项，控制客户端是否接收自己发布的消息。",
+      "label": "No Local"
+    },
+    "node_name": {
+      "desc": "节点名称",
+      "label": "节点名称"
+    },
+    "not_implemented": {
+      "desc": "API 尚未实现",
+      "label": "未实现"
+    },
+    "payload_encoding": {
+      "desc": "客户端的 Inflight/MQueue 消息的 payload 编码格式。",
+      "label": "Payload 编码"
+    },
+    "proto_name": {
+      "desc": "客户端使用的协议名称",
+      "label": "协议名称"
+    },
+    "proto_ver": {
+      "desc": "客户端使用的协议版本",
+      "label": "协议版本"
+    },
+    "qos": {
+      "desc": "消息服务质量（QoS）",
+      "label": "QoS"
+    },
+    "rap": {
+      "desc": "客户端是否按原始发布方式保留 MQTT 保留消息的 Retain 标志。",
+      "label": "按原始发布方式保留"
+    },
+    "recv_cnt": {
+      "desc": "接收的 TCP 数据包数量。",
+      "label": "接收的 TCP 数据包"
+    },
+    "recv_msg": {
+      "desc": "接收的 PUBLISH 报文数量。",
+      "label": "接收的消息"
+    },
+    "recv_msg_qos0": {
+      "desc": "接收的 QoS0 PUBLISH 报文数量。",
+      "label": "接收的 QoS0 消息"
+    },
+    "recv_msg_qos1": {
+      "desc": "接收的 QoS1 PUBLISH 报文数量。",
+      "label": "接收的 QoS1 消息"
+    },
+    "recv_msg_qos2": {
+      "desc": "接收的 QoS2 PUBLISH 报文数量。",
+      "label": "接收的 QoS2 消息"
+    },
+    "recv_oct": {
+      "desc": "接收的字节数。",
+      "label": "接收的字节数"
+    },
+    "recv_pkt": {
+      "desc": "接收的 MQTT 报文数量",
+      "label": "接收的报文"
+    },
+    "reductions": {
+      "desc": "Erlang 计算量（Reductions）。",
+      "label": "计算量"
+    },
+    "requested_client_fields": {
+      "desc": "请求在响应中返回的客户端字段，多个字段以逗号分隔。",
+      "label": "请求的客户端字段"
+    },
+    "rh": {
+      "desc": "保留消息处理（Retain handling）。",
+      "label": "保留消息处理"
+    },
+    "send_cnt": {
+      "desc": "发送的 TCP 数据包数量。",
+      "label": "发送的 TCP 数据包"
+    },
+    "send_msg": {
+      "desc": "发送的 PUBLISH 报文数量。",
+      "label": "发送的消息"
+    },
+    "send_msg_dropped": {
+      "desc": "被丢弃的 PUBLISH 报文数量。",
+      "label": "丢弃的消息"
+    },
+    "send_msg_dropped_expired": {
+      "desc": "因过期被丢弃的 PUBLISH 报文数量。",
+      "label": "因过期丢弃的消息"
+    },
+    "send_msg_dropped_queue_full": {
+      "desc": "因队列已满被丢弃的 PUBLISH 报文数量。",
+      "label": "因队列已满丢弃的消息"
+    },
+    "send_msg_dropped_too_large": {
+      "desc": "因消息过大被丢弃的 PUBLISH 报文数量。",
+      "label": "因消息过大丢弃的消息"
+    },
+    "send_msg_qos0": {
+      "desc": "发送的 QoS0 PUBLISH 报文数量。",
+      "label": "发送的 QoS0 消息"
+    },
+    "send_msg_qos1": {
+      "desc": "发送的 QoS1 PUBLISH 报文数量。",
+      "label": "发送的 QoS1 消息"
+    },
+    "send_msg_qos2": {
+      "desc": "发送的 QoS2 PUBLISH 报文数量。",
+      "label": "发送的 QoS2 消息"
+    },
+    "send_oct": {
+      "desc": "发送的字节数。",
+      "label": "发送的字节数"
+    },
+    "send_pkt": {
+      "desc": "发送的 MQTT 报文数量。",
+      "label": "发送的报文"
+    },
+    "seqno_q1_comm": {
+      "desc": "最后一个从客户端收到的 PUBACK 报文的序列号（仅适用于持久会话）。",
+      "label": "QoS1 已确认序列号"
+    },
+    "seqno_q1_dup": {
+      "desc": "最后一个发送给客户端但尚未收到确认（ACK）的 QoS1 消息序列号（仅适用于持久会话）。",
+      "label": "QoS1 重传序列号"
+    },
+    "seqno_q1_next": {
+      "desc": "下一个要发送给客户端的 QoS1 消息的序列号（仅适用于持久会话）。",
+      "label": "QoS1 下一个序列号"
+    },
+    "seqno_q2_comm": {
+      "desc": "最后一个从客户端收到的 PUBCOMP 报文的序列号（仅适用于持久会话）。Sequence number of the last PUBCOMP received from the client (Durable sessions only)",
+      "label": "QoS2 已确认序列号"
+    },
+    "seqno_q2_dup": {
+      "desc": "最后一个发送给客户端但尚未确认的 QoS2 消息的序列号（仅适用于持久会话）。",
+      "label": "QoS2 重传序列号"
+    },
+    "seqno_q2_next": {
+      "desc": "下一个要添加到批处理的 QoS2 消息的序列号（仅适用于持久会话）。",
+      "label": "QoS2 下一个序列号"
+    },
+    "seqno_q2_rec": {
+      "desc": "最后一个从客户端收到的 PUBREC 报文的序列号（仅适用于持久会话）。",
+      "label": "QoS2 接收序列号"
+    },
+    "sessions_count": {
+      "desc": "会话的数量。",
+      "label": "会话数量"
+    },
     "set_keepalive_seconds": {
       "desc": "设置客户端的 MQTT 心跳保活时间",
       "label": "设置客户端的 MQTT 心跳保活时间"
+    },
+     "since": {
+      "desc": "仅包含在此时间（UNIX 纪元时间，秒级精度）之后过期的会话。",
+      "label": "起始时间"
     },
     "subscribe": {
       "desc": "订阅",
@@ -5972,6 +6172,18 @@
       "desc": "批量订阅",
       "label": "批量订阅"
     },
+    "subscriptions_cnt": {
+      "desc": "该客户端已建立的订阅数量。",
+      "label": "订阅数量"
+    },
+    "subscriptions_max": {
+      "desc": "该客户端允许的最大订阅数量。",
+      "label": "最大订阅数"
+    },
+    "topic": {
+      "desc": "主题名称。",
+      "label": "主题名称"
+    },
     "unsubscribe": {
       "desc": "取消订阅",
       "label": "取消订阅"
@@ -5980,6 +6192,10 @@
       "desc": "批量取消订阅",
       "label": "批量取消订阅"
     },
+    "username": {
+      "desc": "客户端连接时使用的用户名称。",
+      "label": "用户名"
+    }
     "get_client_inflight_msgs": {
       "desc": "获取客户端未确认消息。",
       "label": "获取客户端未确认消息"
@@ -5992,9 +6208,61 @@
       "desc": "获取集群中的会话总数。\n默认情况下，仅包括那些未过期的会话。\n如果 broker.session_history_retain 配置设置为大于 0 秒的持续时间，\n这个计数也将包括在指定保留时间内过期的会话。\n通过指定 since 参数，它可以返回在指定时间内过期的会话数。",
       "label": "会话数量统计"
     },
+    "gte_connected_at": {
+      "desc": "按大于或等于的方法搜索客户端连接创建时间，格式为 RFC3339 或时间戳（毫秒）。",
+      "label": "GTE 连接时间"
+    },
+    "gte_created_at": {
+      "desc": "按大于或等于的方法搜索客户端会话创建时间，格式为 RFC3339 或时间戳（毫秒）。",
+      "label": "GTE 创建时间"
+    },
+    "heap_size": {
+      "desc": "Erlang 进程堆大小，单位为字节。",
+      "label": "堆大小"
+    },
+    "inflight_cnt": {
+      "desc": "当前未确认消息（Inflight）的数量",
+      "label": "未确认消息数"
+    },
+    "inflight_max": {
+      "desc": "未确认消息（Inflight）的最大数量",
+      "label": "未确认消息最大值"
+    },
     "inflight_msgs_list": {
       "desc": "客户端未确认消息列表。\n按 MQTT 包 ID 排序，这可能不代表消息的时间顺序。",
       "label": "客户端未确认消息"
+    },
+    "lte_connected_at": {
+      "desc": "按小于或等于的方法搜索客户端连接创建时间，格式为 RFC3339 或时间戳（毫秒）。",
+      "label": "LTE 连接时间"
+    },
+    "lte_created_at": {
+      "desc": "按小于或等于的方法搜索客户端会话创建时间，格式为 RFC3339 或时间戳（毫秒）。",
+      "label": "LTE 创建时间"
+    },
+    "mailbox_len": {
+      "desc": "Erlang 进程邮箱大小",
+      "label": "邮箱长度"
+    },
+    "max_payload_bytes": {
+      "desc": "客户端的未确认消息（inflight）/ 消息队列（mqueue）消息负载限制。\n返回的所有消息总负载大小不会超过此值。\n超出限制的消息将在响应中被静默省略。\n唯一的例外是当第一条消息的负载已超过限制时，在这种情况下，该消息仍会被返回。",
+      "label": "最大负载字节数"
+    },
+    "mountpoint": {
+      "desc": "主题挂载点",
+      "label": "挂载点"
+    },
+    "mqueue_dropped": {
+      "desc": "由于队列长度超限，被消息队列丢弃的消息数量。",
+      "label": "消息队列丢弃数"
+    },
+    "mqueue_len": {
+      "desc": "当前发送缓冲队列（send-buffer queue）的长度。",
+      "label": "消息队列长度"
+    },
+    "mqueue_max": {
+      "desc": "发送缓冲队列（send-buffer queue）的最大长度。",
+      "label": "消息队列最大长度"
     },
     "mqueue_msgs_list": {
       "desc": "客户端消息队列列表。保留优先队列（先入先出）的顺序，优先级从高到低。默认情况下所有消息的优先级都为 0。",
@@ -6033,6 +6301,14 @@
     }
   },
   "emqx_mgmt_api_cluster": {
+    "cluster_name": {
+      "desc": "集群名称。该值在配置项 `cluster.name` 中静态设置。",
+      "label": "集群名称"
+    },
+    "cluster_topology": {
+      "desc": "集群拓扑结构：核心节点与副本节点之间的连接关系。",
+      "label": "集群拓扑"
+    },
     "force_remove_node": {
       "desc": "强制节点离开集群",
       "label": "强制节点离开集群"
@@ -6045,6 +6321,10 @@
       "desc": "获取 RLOG 集群拓扑：核心节点与副本节点之间的连接。",
       "label": "获取集群拓扑"
     },
+    "invitation_progress": {
+      "desc": "获取由异步操作创建的邀请进度。",
+      "label": "邀请进度"
+    },
     "invite_node": {
       "desc": "邀请节点加入集群",
       "label": "邀请节点加入集群"
@@ -6056,6 +6336,46 @@
     "invite_node_async": {
       "desc": "向一个节点发送加入集群的邀请，但不等待加入结果。加入状态可以通过 `GET api/<version>/invitation` 获取。",
       "label": "异步邀请"
+    },
+    "node_invitation_failed": {
+      "desc": "失败的节点邀请信息列表。",
+      "label": "节点邀请失败"
+    },
+    "node_invitation_failed_reason": {
+      "desc": "失败原因",
+      "label": "失败原因"
+    },
+    "node_invitation_in_progress": {
+      "desc": "正在处理邀请的节点。",
+      "label": "节点邀请进行中"
+    },
+    "node_invitation_in_progress_started_at": {
+      "desc": "邀请开始的时间。",
+      "label": "开始时间"
+    },
+    "node_invitation_succeed": {
+      "desc": "节点邀请成功。",
+      "label": "节点邀请成功"
+    },
+    "node_invitation_succeed_finished_at": {
+      "desc": "异步邀请结果接收的时间。",
+      "label": "完成时间"
+    },
+    "node_names": {
+      "desc": "集群中节点的名称。",
+      "label": "节点名称"
+    },
+    "replicated_log_streams": {
+      "desc": "RLOG（复制日志）流的数量。",
+      "label": "复制日志流"
+    },
+    "self_node_name": {
+      "desc": "自身节点名称，指当前处理请求的节点。",
+      "label": "自身节点名称"
+    },
+    "timeout": {
+      "desc": "超时时间（毫秒）。",
+      "label": "超时时间"
     }
   },
   "emqx_mgmt_api_configs": {
@@ -6529,6 +6849,42 @@
       "desc": "在会话被重用后，网关是否主动向客户端注册对已订阅主题名称"
     }
   },
+  "emqx_mt_api": {
+    "client_count": {
+      "desc": "统计命名空间中的所有客户端数量。",
+      "label": "客户端数量统计"
+    },
+    "client_list": {
+      "desc": "列出命名空间中的所有客户端。",
+      "label": "客户端列表"
+    },
+    "last_client_in_query": {
+      "desc": "上一页的最后一个客户端。\n对于第一页，请使用空字符串。",
+      "label": "最后一个客户端 ID"
+    },
+    "last_ns_in_query": {
+      "desc": "上一页的最后一个命名空间。\n对于第一页，请使用空字符串。",
+      "label": "最后一个命名空间"
+    },
+    "limit_in_query": {
+      "desc": "要返回的项目数量。",
+      "label": "返回限制"
+    },
+    "ns_list": {
+      "desc": "列出所有命名空间。\n命名空间按字典序排序，\n因此此 API 可用于基于前缀的模糊搜索。",
+      "label": "命名空间列表"
+    }
+  },
+  "emqx_mt_schema": {
+    "config": {
+      "desc": "多租户（Multi-Tenancy）配置。",
+      "label": "多租户"
+    },
+    "default_max_sessions": {
+      "desc": "每个命名空间默认允许的最大活动会话数。\n如果达到上限，新客户端的访问将被拒绝。\n在线修改配置不会影响正在运行的会话。",
+      "label": "默认最大会话数"
+    }
+  },
   "emqx_node_rebalance_api": {
     "abs_conn_threshold": {
       "desc": "当前节点上的连接数与迁入节点上的平均连接数的最大期望差值，低于此比例是重平衡过程的目的。",
@@ -6614,6 +6970,10 @@
       "desc": "每秒迁出的连接数",
       "label": "连接迁出速率"
     },
+    "local_status_connection_eviction_rpc_timeout": {
+      "desc": "连接驱逐（Eviction）RPC 调用的超时时间（秒）。",
+      "label": "连接驱逐 RPC 超时时间"
+    },
     "local_status_connection_goal": {
       "desc": "节点在重新平衡/疏散任务完成后预期拥有的连接数",
       "label": "连接数目标"
@@ -6645,6 +7005,10 @@
     "local_status_session_eviction_rate": {
       "desc": "每秒迁出的会话数",
       "label": "会话迁出速率"
+    },
+    "local_status_session_eviction_rpc_timeout": {
+      "desc": "会话驱逐（Eviction）RPC 调用的超时时间（秒）。",
+      "label": "会话驱逐 RPC 超时时间"
     },
     "local_status_session_goal": {
       "desc": "疏散任务完成后节点预期的会话数",
@@ -6993,6 +7357,10 @@
     },
     "enable_basic_auth": {
       "desc": "启用或禁用 Prometheus 抓取 API 的基本认证，不适用于 Push Gateway。"
+    },
+    "latency_buckets": {
+      "desc": "用于延迟直方图分桶的逗号分隔时间时长值。",
+      "label": "延迟直方图分桶"
     },
     "legacy_deprecated_setting": {
       "desc": "自5.4.0版本起弃用。"
@@ -7710,6 +8078,9 @@
       "desc": "将消息重新发布为新的 MQTT 消息",
       "label": "重新发布函数"
     },
+    "republish_mqtt_properties_prop": {
+      "desc": "在消息重发布时可设置的 MQTT 属性。"
+    },
     "rule_engine_ignore_sys_message": {
       "desc": "当设置为“true”（默认）时，规则引擎将忽略发布到 $SYS 主题的消息。",
       "label": "忽略系统消息"
@@ -7948,6 +8319,10 @@
       "desc": "支持所有 TLS/DTLS 版本<br/>\n注：PSK 的 Ciphers 无法在 <code>tlsv1.3</code> 中使用，如果打算使用 PSK 密码套件，请确保这里配置为 <code>[\"tlsv1.2\",\"tlsv1.1\"]</code>。",
       "label": "SSL 版本"
     },
+    "config_backup_interval": {
+      "desc": "备份 `cluster.hocon` 配置文件的时间间隔。即使在该时间间隔内进行了多次配置更新，也只会创建一次备份，包含当前的最新配置。",
+      "label": "配置备份间隔"
+    },
     "conn_congestion_enable_alarm": {
       "desc": "启用或者禁用连接阻塞告警功能。",
       "label": "启用/禁用阻塞告警"
@@ -8043,6 +8418,10 @@
     "fields_listeners_wss": {
       "desc": "HTTPS websocket 监听器。",
       "label": "HTTPS websocket 监听器"
+    },
+    "fields_mqtt_opts_parse_unit": {
+      "desc": "此设置指定 MQTT 解析时的数据处理粒度，决定从字节流中提取和解析 MQTT 帧的方式：\n\n- `chunk`：按传输层数据包级别处理帧。此方式使用原始字节块作为解析单位，需要应用逻辑自行组装和解析 MQTT 帧。每个数据块的大小不确定，受传输速率、socket 缓冲区大小及其他内核设置影响。\n- `frame`：按完整的 MQTT 消息处理帧。此方式确保应用逻辑仅接收完整的 MQTT 帧进行处理。在大多数情况下，它比 `chunk` 选项具有更好的性能。\n\n请注意，`parse_unit` 的选择会影响 `active_n` 设置的解释方式：它决定了传递到连接进程的是原始字节块的数量还是完整的 MQTT 消息数量。",
+      "label": "MQTT 消息解析单位"
     },
     "fields_mqtt_quic_listener_certfile": {
       "desc": "证书文件。在 5.1 中会被废弃，使用 .ssl_options.certfile 代替。",
@@ -8374,6 +8753,9 @@
       "desc": "EMQX 判定客户端 Keep Alive 超时使用的 Keep Alive 倍数。计算公式为：Keep Alive 超时 = Keep Alive 间隔 × Keep Alive 倍数。 默认值 1.5 遵循 MQTT 5.0 规范。此倍数可调整，为系统管理员提供根据特定需求进行定制的灵活性。例如，如果客户端的 10 秒保持连接间隔的 PINGREQ 因为额外的 10 秒延迟，将倍数更改为 2 可以让 EMQX 容忍此延迟。",
       "label": "Keep Alive 倍数"
     },
+    "mqtt_limiter": {
+      "desc": "MQTT 相关的限流器配置。"
+    },
     "mqtt_listener_access_rules": {
       "desc": "此监听器的访问控制规则。",
       "label": "访问控制规则"
@@ -8595,6 +8977,10 @@
     },
     "shared_subscription_strategy_enum": {
       "desc": "共享订阅的分发策略名称。\n- `random`：随机选择一个组内成员；\n- `round_robin`：循环选择下一个成员；\n- `round_robin_per_group`：在共享组内循环选择下一个成员；\n- `sticky`：使用上一次选中的成员；\n- `hash`：根据 ClientID 哈希映射到一个成员；\n- `local`：随机分发到节点本地成成员，如果本地成员不存在，则随机分发到任意一个成员"
+    },
+    "socket_tcp_keepalive": {
+      "desc": "启用 TCP Keepalive（保持连接）。\n该值由三个以逗号分隔的数字组成，格式为 'Idle,Interval,Probes'：\n - Idle：连接空闲多长时间（秒）后，服务器开始发送 Keepalive 探测报文（Linux 默认值 7200）。\n - Interval：每次 TCP Keepalive 探测之间的间隔时间（秒）（Linux 默认值 75）。\n - Probes：如果未从对端收到响应，在放弃连接并关闭之前，最多发送的 TCP Keepalive 探测报文次数（Linux 默认值 9）。\n例如，配置为 \"240,30,5\" 意味着：当连接空闲 240 秒后，EMQX 将开始发送探测报文，每 30 秒发送一次直到收到响应，如果连续 5 没有收到响应，则关闭该连接。\n默认值：'none'。",
+      "label": "TCP keepalive 选项"
     },
     "stats_enable": {
       "desc": "启用/禁用统计数据收集功能。",
@@ -10745,12 +11131,6 @@
       "label": "S3 上传操作参数"
     }
   },
-  "emqx_ds_fdb_backend_schema": {
-    "backend": {
-      "desc": "一个使用 FDB 的简化后端，用于存储 MQTT 消息并优化低延迟性能。",
-      "label": "简化的持久存储 FDB 后端"
-    }
-  },
   "emqx_ds_schema": {
     "builtin": {
       "desc": "使用嵌入式 RocksDB 键值存储的内置会话存储后端。",
@@ -10996,6 +11376,36 @@
     "topics": {
       "desc": "此验证规则应验证的单个主题过滤器或主题过滤器列表。",
       "label": "主题（过滤器）"
+    }
+  },
+  "emqx_auth_cache_schema": {
+    "auth_cache_config": {
+      "desc": "认证/授权缓存的配置。",
+      "label": "缓存配置"
+    },
+    "cache_ttl": {
+      "desc": "缓存的认证/授权结果过期的时间。",
+      "label": "缓存 TTL"
+    },
+    "cleanup_interval": {
+      "desc": "清理过期缓存结果的时间间隔。",
+      "label": "清理间隔"
+    },
+    "enable": {
+      "desc": "启用或禁用缓存。",
+      "label": "启用"
+    },
+    "max_count": {
+      "desc": "缓存结果的最大数量。",
+      "label": "最大缓存大小"
+    },
+    "max_memory": {
+      "desc": "缓存的最大内存使用量。",
+      "label": "最大内存使用"
+    },
+    "stat_update_interval": {
+      "desc": "更新缓存统计信息的时间间隔。",
+      "label": "统计更新间隔"
     }
   },
   "emqx_auth_ext_schema": {
@@ -11302,6 +11712,10 @@
     "container_csv_column_order": {
       "desc": "事件字段将在生成的 CSV 文件中按此顺序排列为列。<br/>\n无论此设置如何，生成的 CSV 都将包含所有聚合事件的字段，但所有未在此明确提及的列将在此处列出的列之后按字典顺序排列。",
       "label": "CSV 列顺序"
+    },
+     "container_json_lines": {
+      "desc": "记录（事件）将被聚合并且作为 [JSON Lines](https://jsonlines.org/) 文件上传。",
+      "label": "JSON Lines 容器"
     }
   },
   "emqx_dashboard_sso_oidc": {
@@ -11383,37 +11797,33 @@
       "desc": "启用共享订阅功能。",
       "label": "启用共享订阅"
     },
-    "leader_drop_timeout_interval_ms": {
-      "desc": "丢弃无响应会话的时间间隔（毫秒）。",
-      "label": "Leader 丢弃超时时间间隔"
+    "leader_periodical_actions_interval": {
+      "desc": "Leader 执行周期性操作的时间间隔（毫秒）。",
+      "label": "Leader 周期性操作间隔"
     },
-    "leader_renew_lease_interval_ms": {
-      "desc": "Leader 刷新租约的时间间隔（毫秒）。",
-      "label": "Leader 租约刷新时间间隔"
-    },
-    "leader_renew_streams_interval_ms": {
+    "leader_renew_streams_interval": {
       "desc": "Leader 刷新流的时间间隔（毫秒）。",
       "label": "Leader 刷新数据流时间间隔"
     },
-    "leader_session_not_replaying_timeout_ms": {
-      "desc": "Leader 等待会话离开中间状态的超时时间（毫秒）。",
-      "label": "Leader 会话非重放超时时间"
+    "leader_subscriber_timeout": {
+      "desc": "Leader 等待共享订阅者（Shared Subscriber）心跳 ping 的最长时间（毫秒）。\n如果共享订阅者在该时间内未发送 ping，Leader 将认为其已丢失，并回收其流（streams）。",
+      "label": "Leader 订阅者超时"
     },
-    "leader_session_update_timeout_ms": {
-      "desc": "Leader 等待会话更新流状态的超时时间（毫秒）。\n如果会话在此时间内未更新流状态，Leader 将丢弃该会话。",
-      "label": "Leader 会话更新超时时间"
-    },
-    "session_find_leader_timeout_ms": {
+    "session_find_leader_timeout": {
       "desc": "会话查找 Leader 的超时时间（毫秒）。\n如果会话在此时间内无法找到 Leader，会话将重试。",
       "label": "会话查找 Leader 超时时间"
     },
-    "session_min_update_stream_state_interval_ms": {
-      "desc": "会话更新流状态的最小时间间隔（毫秒）。\n如果会话在此时间内没有更新流状态，会话将发送空更新。",
-      "label": "会话更新流状态最小时间间隔"
+    "session_ping_leader_interval": {
+      "desc": "会话（Session）向 Leader 发送 ping 的时间间隔（毫秒）。",
+      "label": "会话 Ping Leader 间隔"
     },
-    "session_renew_lease_timeout_ms": {
-      "desc": "会话等待 leader 刷新租约的超时时间（毫秒）。\n如果 leader 在此时间内没有刷新租约，会话将认为 leader 丢失，并尝试寻找新的 leader。",
-      "label": "会话租约刷新超时时间"
+    "session_ping_leader_timeout": {
+      "desc": "会话等待主节点响应 ping 的超时时间（单位：毫秒）。\n如果主节点在此时间内未响应 ping，\n会话将认为主节点已丢失，并尝试寻找新的主节点。",
+      "label": "会话 Ping 主节点超时"
+    },
+    "session_unsubscribe_timeout": {
+    "desc": "会话等待数据流达到一致状态并报告给主节点的超时时间（单位：毫秒）。\n如果超时时间到达，会话将向主节点发送最新已知的一致状态。",
+    "label": "会话取消订阅超时"
     }
   },
   "emqx_authn_cinfo_schema": {
