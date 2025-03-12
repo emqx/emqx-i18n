@@ -3389,7 +3389,7 @@
       "label": "Authentication"
     },
     "buffer_memory_overload_protection": {
-      "desc": "Applicable when buffer mode is set to <code>memory</code>\nEMQX will drop old buffered messages under high memory pressure.\n NOTE: This config only works on Linux.",
+      "desc": "Applicable when buffer mode is set to <code>memory</code>\nEMQX will drop old buffered messages under high memory pressure.\nThe high memory threshold is defined in config <code>sysmon.os.sysmem_high_watermark</code>.\n NOTE: This config only works on Linux.",
       "label": "Memory Overload Protection"
     },
     "buffer_mode": {
@@ -3481,6 +3481,10 @@
     "producer_key_template": {
       "desc": "Template to render Pulsar message key.",
       "label": "Message Key"
+    },
+    "producer_max_inflight": {
+      "desc": "The maximum number of message batches that the producer can send to each partition before it must wait for a receipt.\nSetting a higher number can enhance throughput.",
+      "label": "Max Inflight"
     },
     "producer_message_opts": {
       "desc": "Template to render a Pulsar message.",
