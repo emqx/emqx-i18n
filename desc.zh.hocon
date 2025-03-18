@@ -10101,6 +10101,9 @@
     }
   },
   "emqx_jt808_schema": {
+    "ignore_unsupported_frames": {
+      "desc": "是否忽略不支持的 JT/T 808 数据帧。<br/>\n- <code>true</code>，网关会记录不支持的帧并忽略。 <br/>\n- <code>false</code>，网关在收到不支持的帧时将断开客户端连接。<br/>\n默认值为 true。"
+    },
     "jt808_allow_anonymous": {
       "desc": "允许匿名访问 JT/T 808 网关。registry_url.descJT/T 808 设备注册中心 URL。authentication_url.descJT/T 808 设备身份验证中心 URL。jt808_up_topic.descJT/T 808 协议上行消息的主题。jt808_dn_topic.descJT/T 808 协议下行消息的主题。"
     },
