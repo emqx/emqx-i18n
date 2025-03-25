@@ -3389,7 +3389,7 @@
       "label": "Authentication"
     },
     "buffer_memory_overload_protection": {
-      "desc": "Applicable when buffer mode is set to <code>memory</code>\nEMQX will drop old buffered messages under high memory pressure.\n NOTE: This config only works on Linux.",
+      "desc": "Applicable when buffer mode is set to <code>memory</code>\nEMQX will drop old buffered messages under high memory pressure.\nThe high memory threshold is defined in config <code>sysmon.os.sysmem_high_watermark</code>.\n NOTE: This config only works on Linux.",
       "label": "Memory Overload Protection"
     },
     "buffer_mode": {
@@ -3481,6 +3481,10 @@
     "producer_key_template": {
       "desc": "Template to render Pulsar message key.",
       "label": "Message Key"
+    },
+    "producer_max_inflight": {
+      "desc": "The maximum number of message batches that the producer can send to each partition before it must wait for a receipt.\nSetting a higher number can enhance throughput.",
+      "label": "Max Inflight"
     },
     "producer_message_opts": {
       "desc": "Template to render a Pulsar message.",
@@ -4302,8 +4306,11 @@
       "label": "TDengine Connector Configuration"
     },
     "server": {
-      "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe TDengine default port 6041 is used if `[:Port]` is not specified.",
+      "desc": "The IPv4 or IPv6 address or the hostname to connect to.<br/>\nA host entry has the following form: `Host[:Port]`.<br/>\nThe TDengine default port 6041 is used if `[:Port]` is not specified.<br/>\nThis field also supports an HTTPS URLs to connect to the TDengine Cloud. For example: `https://gw.us-west-2.aws.cloud.tdengine.com `",
       "label": "Server Host"
+    },
+    "token": {
+      "desc": "The token used when connecting to TDengine Cloud. <br/>\nIf this value is provided, it will override the authentication method of Username and Password.<br/>\nDefault is empty."
     }
   },
   "emqx_bridge_v2_api": {
@@ -6916,6 +6923,9 @@
   "emqx_jt808_schema": {
     "authentication_url": {
       "desc": "The JT/T 808 device authentication central URL."
+    },
+    "ignore_unsupported_frames": {
+      "desc": "Whether to ignore unsupported frames. <br/>\n- <code>true</code>, unsupported frames will be logged and ignored. <br/>\n- <code>false</code>, the gateway will disconnect the client when receiving an unsupported frame.<br/>\nThe default value is true."
     },
     "jt808_allow_anonymous": {
       "desc": "Allow anonymous access to the JT/T 808 Gateway."
