@@ -2174,6 +2174,10 @@
       "desc": "最大消息批量字节数。大多数 Pulsar 环境的默认最低值是 5 MB，EMQX 的默认值比 5 MB 更小是因为需要补偿 Pulsar 消息编码所需要的额外字节（尤其是当每条消息都很小的情况下）。当单个消息的大小超过该限制时，它仍然会被发送，（相当于该批量中只有单个消息）。",
       "label": "最大批量字节数"
     },
+    "producer_max_inflight": {
+      "desc": "生产者在等待接收回执前可以发送给每个分区的最大消息批次数量。\n设置更高的值可以提高吞吐量。",
+      "label": "飞行窗口"
+    },
     "producer_message_opts": {
       "desc": "用于生成 Pulsar 消息的模版。",
       "label": "Pulsar 消息模版"
@@ -2662,8 +2666,11 @@
   },
   "emqx_bridge_tdengine_connector": {
     "server": {
-      "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>\n主机名具有以下形式：`Host[:Port]`。<br/>\n如果未指定 `[:Port]`，则使用 TDengine 默认端口 6041。",
+      "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>\n主机名具有以下形式：`Host[:Port]`。<br/>\n如果未指定 `[:Port]`，则使用 TDengine 默认端口 6041。<br/>\n该字段也支持设置一个连接到 TDengine Cloud 的 HTTPS URLs。例如：`https://gw.us-west-2.aws.cloud.tdengine.com `",
       "label": "服务器地址"
+    },
+    "token": {
+      "desc": "连接 TDengine Cloud 时使用的 Token。<br/>\n如果设置了该值，将会覆盖用户名和密码的认证方式。<br/>\n默认值为空。"
     },
     "desc_config": {
       "desc": "TDengine 连接器的配置。",
@@ -10097,6 +10104,9 @@
     }
   },
   "emqx_jt808_schema": {
+    "ignore_unsupported_frames": {
+      "desc": "是否忽略不支持的 JT/T 808 数据帧。<br/>\n- <code>true</code>，网关会记录不支持的帧并忽略。 <br/>\n- <code>false</code>，网关在收到不支持的帧时将断开客户端连接。<br/>\n默认值为 true。"
+    },
     "jt808_allow_anonymous": {
       "desc": "允许匿名访问 JT/T 808 网关。registry_url.descJT/T 808 设备注册中心 URL。authentication_url.descJT/T 808 设备身份验证中心 URL。jt808_up_topic.descJT/T 808 协议上行消息的主题。jt808_dn_topic.descJT/T 808 协议下行消息的主题。"
     },
