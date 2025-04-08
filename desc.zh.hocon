@@ -295,9 +295,6 @@
     "hash_method": {
       "desc": "通过将本地密码与经过由`密码属性`指定的算法加密的密码进行比对来进行认证。"
     },
-    "ldap_deprecated": {
-      "desc": "这是一种已弃用的形式，应避免使用。"
-    },
     "method": {
       "desc": "认证方式。"
     },
@@ -1177,7 +1174,7 @@
       "label": "动作类型"
     },
     "buffer_memory_overload_protection": {
-      "desc": "当缓冲模式设置为<code>memory</code>时适用。在高内存压力下，EMQX 将丢弃旧的缓冲消息。注意：此设置仅在 Linux 上有效。",
+      "desc": "当缓冲模式设置为<code>memory</code>时适用。\n在内存压力较高时，EMQX 会丢弃旧的缓冲消息。\n高内存阈值由配置项 <code>sysmon.os.sysmem_high_watermark</code> 定义。\n注意：此设置仅在 Linux 上有效。",
       "label": "内存过载保护"
     },
     "buffer_per_partition_limit": {
@@ -2304,6 +2301,10 @@
       "desc": "最大消息批量字节数。大多数 Pulsar 环境的默认最低值是 5 MB，EMQX 的默认值比 5 MB 更小是因为需要补偿 Pulsar 消息编码所需要的额外字节（尤其是当每条消息都很小的情况下）。当单个消息的大小超过该限制时，它仍然会被发送，（相当于该批量中只有单个消息）。",
       "label": "最大批量字节数"
     },
+    "producer_max_inflight": {
+      "desc": "生产者在每个分区上可发送的最大消息批次数，在收到响应之前必须等待。\n设置更大的数值可以提高吞吐量。",
+      "label": "飞行窗口"
+    },
     "producer_message_opts": {
       "desc": "用于生成 Pulsar 消息的模版。",
       "label": "Pulsar 消息模版"
@@ -2792,8 +2793,11 @@
   },
   "emqx_bridge_tdengine_connector": {
     "server": {
-      "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>\n主机名具有以下形式：`Host[:Port]`。<br/>\n如果未指定 `[:Port]`，则使用 TDengine 默认端口 6041。",
+      "desc": "将要连接的 IPv4 或 IPv6 地址，或者主机名。<br/>\n主机名具有以下形式：`Host[:Port]`。<br/>\n如果未指定 `[:Port]`，则使用 TDengine 默认端口 6041。<br/>\n<br/>\n该字段也支持设置一个连接到 TDengine Cloud 的 HTTPS URLs。例如：`https://gw.us-west-2.aws.cloud.tdengine.com `。",
       "label": "服务器地址"
+    },
+    "token": {
+      "desc": "连接 TDengine Cloud 时使用的 Token。<br/>\n如果设置了该值，将会覆盖用户名和密码的认证方式。<br/>\n默认值为空。"
     },
     "desc_config": {
       "desc": "TDengine 连接器的配置。",
@@ -4237,7 +4241,7 @@
       "desc": "HTTP 监听器的设置。",
       "label": "HTTP 监听器设置"
     },
-"https_listener_settings": {
+    "https_listener_settings": {
       "desc": "HTTPS 监听器的设置。",
       "label": "HTTPS 监听器设置"
     },
@@ -4269,7 +4273,7 @@
       "desc": "多重身份认证（MFA）机制。",
       "label": "MFA 机制"
     },
-"mfa_settings": {
+    "mfa_settings": {
       "desc": "多重身份认证（MFA）设置。",
       "label": "MFA 设置"
     },
@@ -5605,11 +5609,11 @@
       "label": "已弃用，请使用 /license/setting 代替"
     },
     "key_field": {
-      "desc": "申请或购买 License 时获得的密钥字符串",
+      "desc": "该配置项用于设置 License 密钥，支持以下输入格式：\n\n- **直接密钥**：直接以字符串形式输入密钥内容；\n- **文件路径**：指定包含密钥的文件路径，路径需以 file:// 开头；\n- **\"default\"**：使用字符串值 default，应用默认的单节点社区 License；\n- **\"evaluation\"**：使用字符串值 evaluation，应用限制为 25 个连接的评估 License。\n\n注意：无效的 License 密钥或错误的文件路径可能会导致 EMQX 启动失败。\n如果使用文件路径，EMQX 将每隔 2 分钟尝试重新加载该文件中的 License 密钥。\n如果重新加载失败，EMQX 会记录一条错误级别日志，并继续使用之前成功加载的 License。",
       "label": "License 密钥"
     },
     "license_root": {
-      "desc": "EMQX 企业版 License 。\nEMQX 自带一个默认的试用 License，允许最多接入 100 个连接，签发时间是 2023 年 1 月 9 日，有效期是 5 年（1825 天）。若需要在生产环境部署，\n请购买 License 或访问 https://www.emqx.com/apply-licenses/emqx 申请。",
+      "desc": "用于配置 EMQX Enterprise 的 License。\n\nEMQX 默认提供一个单节点社区 License。\n该默认 License 不允许用于商业用途。\n\n您可以在此申请正式 License：https://www.emqx.com/apply-licenses/emqx?version=5。",
       "label": "License"
     },
     "dynamic_max_connections": {
@@ -6245,7 +6249,7 @@
       "label": "邮箱长度"
     },
     "max_payload_bytes": {
-      "desc": "客户端的未确认消息（inflight）/ 消息队列（mqueue）消息负载限制。\n返回的所有消息总负载大小不会超过此值。\n超出限制的消息将在响应中被静默省略。\n唯一的例外是当第一条消息的负载已超过限制时，在这种情况下，该消息仍会被返回。",
+      "desc": "客户端的未确认消息（inflight）/ 消息队列（mqueue）消息 payload 限制。\n返回的所有消息总负载大小不会超过此值。\n超出限制的消息将在响应中被静默省略。\n唯一的例外是当第一条消息的负载已超过限制时，在这种情况下，该消息仍会被返回。",
       "label": "最大负载字节数"
     },
     "mountpoint": {
@@ -6338,11 +6342,11 @@
       "label": "异步邀请"
     },
     "node_invitation_failed": {
-      "desc": "失败的节点邀请信息列表。",
+      "desc": "无法被邀请的节点的信息列表。",
       "label": "节点邀请失败"
     },
     "node_invitation_failed_reason": {
-      "desc": "失败原因",
+      "desc": "节点邀请失败的原因。",
       "label": "失败原因"
     },
     "node_invitation_in_progress": {
@@ -6350,7 +6354,7 @@
       "label": "节点邀请进行中"
     },
     "node_invitation_in_progress_started_at": {
-      "desc": "邀请开始的时间。",
+      "desc": "节点邀请开始的时间。",
       "label": "开始时间"
     },
     "node_invitation_succeed": {
@@ -6850,6 +6854,10 @@
     }
   },
   "emqx_mt_api": {
+    "bulk_import_configs": {
+      "desc": "批量更新或插入命名空间的配置。",
+      "label": "批量导入命名空间配置"
+    },
     "client_count": {
       "desc": "统计命名空间中的所有客户端数量。",
       "label": "客户端数量统计"
@@ -6857,6 +6865,22 @@
     "client_list": {
       "desc": "列出命名空间中的所有客户端。",
       "label": "客户端列表"
+    },
+    "create_managed_ns": {
+      "desc": "创建托管命名空间",
+      "label": "创建托管命名空间"
+    },
+    "delete_managed_ns": {
+      "desc": "删除托管命名空间",
+      "label": "删除托管命名空间"
+    },
+    "get_managed_ns_config": {
+      "desc": "获取托管命名空间配置",
+      "label": "获取托管命名空间配置"
+    },
+    "kick_all_clients": {
+      "desc": "踢出命名空间中的所有客户端（异步）",
+      "label": "踢出命名空间中的所有客户端（异步）"
     },
     "last_client_in_query": {
       "desc": "上一页的最后一个客户端。\n对于第一页，请使用空字符串。",
@@ -6870,12 +6894,24 @@
       "desc": "要返回的项目数量。",
       "label": "返回限制"
     },
+    "managed_ns_list": {
+      "desc": "列出所有托管命名空间。\n命名空间按字典序排序，因此该 API 可用于基于前缀的模糊搜索。",
+      "label": "列出托管命名空间"
+    },
     "ns_list": {
-      "desc": "列出所有命名空间。\n命名空间按字典序排序，\n因此此 API 可用于基于前缀的模糊搜索。",
-      "label": "命名空间列表"
+      "desc": "列出所有命名空间。\n命名空间按字典序排序，\n因此该 API 可用于基于前缀的模糊搜索。",
+      "label": "列出命名空间"
+    },
+     "update_managed_ns_config": {
+      "desc": "更新托管的命名空间配置",
+      "label": "更新托管命名空间配置"
     }
   },
   "emqx_mt_schema": {
+    "allow_only_managed_namespaces": {
+      "desc": "如果启用该选项，来自非托管命名空间的客户端将被拒绝连接。\n无法解析命名空间的客户端也将被拒绝连接。",
+      "label": "仅允许托管命名空间"
+    },
     "config": {
       "desc": "多租户（Multi-Tenancy）配置。",
       "label": "多租户"
@@ -7239,6 +7275,10 @@
     "trace_mode": {
       "desc": "OpenTelemetry 追踪模式。\n- legacy: 使用旧的追踪方法，只追踪消息发布和传递。\n Span 名称将与 5.9 之前的版本兼容。\n- e2e: 端到端追踪模式。所有客户端行为都将被追踪：\n - 连接和断开连接\n - 订阅和取消订阅\n - 消息事件，如 PUBLISH、PUBACK、PUBREL 等。\n 启用后（对于每种事件类型），将对所有客户端进行后台追踪，按配置的采样比例进行。\n 更多详情见 Dashboard 或 API 文档。\n 从 Dashboard 中，您还可以为一组客户端或主题在后台追踪的基础上添加额外的追踪白名单。",
       "label": "追踪模式"
+    },
+    "trace_rule_engine": {
+      "desc": "按配置的采样比例，为所有客户端启用或禁用规则引擎执行的后台追踪。",
+      "label": "规则引擎追踪"
     }
   },
   "emqx_plugins_schema": {
@@ -8600,7 +8640,7 @@
       "label": "TCP 高水位线"
     },
     "fields_tcp_opts_keepalive": {
-      "desc": "为 MQTT 连接在 TCP 或 SSL 上启用 TCP 保活。\n值是以逗号分隔的三个数字，格式为 'Idle,Interval,Probes'\n - Idle: 在服务器开始发送保活探测之前，连接需要处于空闲状态的秒数（Linux 默认为 7200）。\n - Interval: TCP 保活探测间隔的秒数（Linux 默认值为 75）。\n - Probes: 在放弃并终止连接之前，从另一端未获得响应时要发送的 TCP 保活探测的最大数量（Linux 默认值为 9 次）。\n例如 \"240,30,5\" 表示：在连接空闲 240 秒后发送 TCP 保活探测，每隔 30 秒发送一次，直到收到响应，如果连续丢失 5 个响应，连接应该被关闭。\n默认值为 'none'",
+      "desc": "为通过 TCP 或 SSL 建立的 MQTT 连接启用 TCP keepalive。\n使用三个逗号分隔的数字（单位：秒）进行配置： 'Idle,Interval,Probes'\n - Idle: 在服务器开始发送 keepalive 探测包之前，连接需要处于空闲状态的秒数（Linux 默认为 7200 秒）。\n - Interval: 每次发送 TCP keepalive 探测包之间的间隔时间（Linux 默认 75 秒）。\n - Probes: 在未收到响应的情况下，最多发送多少次探测包后放弃并关闭连接（Linux 默认 9 次）。\n例如 \"240,30,5\" 表示：在连接空闲 240 秒后发送 TCP keepalive 探测，每隔 30 秒发送一次，直到收到响应，如果连续丢失 5 个响应，连接应该被关闭。\n默认值为：'none'，设置为 'none' 时将使用操作系统的默认 keepalive 设置（仍然启用，并非禁用）。",
       "label": "TCP keepalive 选项"
     },
     "fields_tcp_opts_nodelay": {
@@ -8722,6 +8762,10 @@
     "force_shutdown_max_mailbox_size": {
       "desc": "每个在线客户端在 EMQX 服务器中都是独立的一个进程。该配置可以设为单个进程的邮箱消息队列设置最大长度，当超过该上限时，客户端会被强制下线。",
       "label": "进程邮箱消息数上限"
+    },
+    "listeners_root_doc": {
+      "desc": "监听器配置按传输类型进行定义。\n每种传输类型都包含一个将监听器名称与其配置关联的映射。\n默认情况下，每种传输类型都包含一个名为 `default` 的监听器，该监听器不会在配置文件中显式声明。\n若要移除 `default` 监听器，可显式设置其配置为：`listeners.ws.default = marked_for_deletion`。\n\n另外，若希望禁用某个监听器但保留其配置内容，可将隐藏字段 `enable` 设置为 `false`，例如：`listeners.tcp.my_listener.enable = false`。",
+      "label": "配置 MQTT 监听器"
     },
     "global_authentication": {
       "desc": "全局 MQTT 监听器的默认认证配置。 为每个监听器配置认证参考监听器器配置中的<code>authentication</code> 配置。\n\n该配置可以被配置为：\n<ul>\n  <li><code>[]</code>: 默认值，允许所有的登录请求\n  <li>配置为单认证器，例如 <code>{enable:true,backend:\"built_in_database\",mechanism=\"password_based\"}</code></li>\n  <li>配置为认证器数组</li>\n</ul>\n\n当配置为认证链后，登录凭证会按照配置的顺序进行检查，直到做出<code>allow</code> 或 <code>deny</code>的结果。\n\n如果在所有的认证器都执行完后，还是没有结果，登录将被拒绝。"
@@ -9166,7 +9210,7 @@
       "label": "会话持久化"
     },
     "durable_sessions_enable": {
-      "desc": "使用持久存储来持久化客户端会话。\n如果启用，会话和相应的消息将被持久存储，并在服务器停机时保留。\n\n:::warning\n发送到持久会话的消息会被存储在磁盘上。\n这不可避免地限制了系统的总体吞吐量。\n:::",
+      "desc": "使用持久存储来持久化客户端会话。\n如果启用，会话和相应的消息将被持久存储，并在服务器停机时保留。\n\n::: warning\n发送到持久会话的消息会被存储在磁盘上。\n这不可避免地限制了系统的总体吞吐量。\n:::",
       "label": "启用会话持久化"
     },
     "durable_storage": {
@@ -9345,7 +9389,7 @@
       "desc": "设置为 `false` 可以关闭数据发送。"
     },
     "telemetry_root_doc": {
-      "desc": "配置 EMQX 节点向 EMQ 的遥测服务器发送遥测数据。\n详情请参考 https://www.emqx.io/docs/zh/v5.1/telemetry/telemetry.html。"
+      "desc": "是否启用遥测功能，以允许 EMQX 收集相关的使用信息，并将其共享给 EMQ，用于提升您的产品体验。\nEMQX 在任何情况下都不会收集您的个人信息，例如 MAC 地址、IP 地址或发送的消息内容。\n\n详情请参阅：https://docs.emqx.com/zh/emqx/latest/telemetry/telemetry.html。"
     }
   },
   "emqx_topic_metrics_api": {
@@ -9719,10 +9763,6 @@
     "socket_send_buffer": {
       "desc": "微调套接字发送缓冲区。为实现高吞吐量，默认值已调整。",
       "label": "套接字发送缓冲区大小"
-    },
-    "socket_tcp_keepalive": {
-      "desc": "为 Confluent 动作连接启用 TCP 保活。\n值为三个逗号分隔的数字，格式为'Idle,Interval,Probes'\n - Idle：连接空闲多少秒后服务器开始发送保活探针（Linux 默认7200秒）。\n - Interval：TCP 保活探针之间的秒数（Linux默认75秒）。\n - Probes：在放弃并关闭连接之前发送的 TCP 保活探针的最大数量，如果从另一端没有获得响应（Linux默认9次）。\n例如\"240,30,5\"意味着：连接空闲240秒后发送 TCP 保活探针，每30秒发送一次，直到收到响应，如果连续错过5次响应，则应关闭连接。\n默认值：'none'",
-      "label": "TCP 保活选项"
     },
     "ssl_client_opts": {
       "desc": "Confluent 客户端的 TLS/SSL 选项。",
@@ -10483,6 +10523,9 @@
     }
   },
   "emqx_jt808_schema": {
+    "ignore_unsupported_frames": {
+      "desc": "是否忽略不支持的 JT/T 808 数据帧。<br/>\n- <code>true</code>，网关会记录不支持的帧并忽略。 <br/>\n- <code>false</code>，网关在收到不支持的帧时将断开客户端连接。<br/>\n默认值为 true。"
+    },
     "jt808_allow_anonymous": {
       "desc": "允许匿名访问 JT/T 808 网关。registry_url.descJT/T 808 设备注册中心 URL。authentication_url.descJT/T 808 设备身份验证中心 URL。jt808_up_topic.descJT/T 808 协议上行消息的主题。jt808_dn_topic.descJT/T 808 协议下行消息的主题。"
     },
@@ -10698,6 +10741,10 @@
       "desc": "对于 Avro schema，必须是 avro。",
       "label": "Avro Schema"
     },
+    "schema_type_external_http": {
+      "desc": "对于外部 HTTP，必须设置为 `external_http`。",
+      "label": "外部 HTTP Schema"
+    },
     "schema_type_json": {
       "desc": "对于 JSON schema，必须是 json。",
       "label": "JSON Schema"
@@ -10733,7 +10780,27 @@
     "schema_registry_external_type": {
       "desc": "外部 Schema Registry 类型",
       "label": "外部 Schema Registry 类型"
-    }
+    },
+    "external_http_external_params": {
+      "desc": "将在每次请求中发送给外部 HTTP Schema 服务器的字符串内容。",
+      "label": "外部参数"
+    },
+    "external_http_headers": {
+      "desc": "发送到外部 HTTP Schema 服务器的请求头。",
+      "label": "请求头"
+    },
+    "external_http_params": {
+      "desc": "配置外部 HTTP schema 服务器参数。",
+      "label": "外部 HTTP 服务器参数"
+    },
+    "external_http_type": {
+      "desc": "外部 HTTP 服务器。",
+      "label": "外部 HTTP"
+    },
+    "external_http_url": {
+      "desc": "外部 HTTP schema 服务器的 URL。",
+      "label": "URL"
+    },
   },
   "emqx_bridge_es": {
     "action_config": {
@@ -11840,7 +11907,7 @@
       "label": "客户端信息认证"
     },
     "is_match": {
-      "desc": "一个 Variform 表达式或表达式数组，用于评估一组从客户端信息派生的预绑定变量。\n支持的变量：\n- `username`: 客户端的用户名。\n- `clientid`: 客户端的 id。\n- `client_attrs.*`: 客户端的客户端属性。\n- `peerhost`: 客户端的 IP 地址。\n- `cert_subject`: TLS 证书的主体\n- `cert_common_name`: TLS 证书通用名称。\n如果所有表达式的结果都是字符串值 'true'，则从此认证器返回关联的 result。\n如果任何表达式的结果不是 'true'，则跳过当前检查。",
+      "desc": "一个 Variform 表达式或表达式数组，用于评估一组从客户端信息派生的预绑定变量。\n支持的变量：\n- `username`: 客户端的用户名。\n- `password`：客户端的密码。\n- `clientid`: 客户端的 ID。\n- `client_attrs.*`: 客户端的属性。\n- `peerhost`: 客户端的 IP 地址。\n- `cert_subject`: TLS 证书的主题。\n- `cert_common_name`: TLS 证书通用名称。\n- `zone`：客户端连接所使用监听器所属的配置区域。\n\n如果所有表达式的结果都是字符串值 `'true'`，则从此认证器返回对应的 `result`。\n如果任一表达式的结果不是 `'true'`，则跳过当前检查。\n例如：若希望确保客户端 ID 与其 TLS 证书的通用名称始终一致，可使用表达式 `str_eq(clientid, cert_common_name)`。",
       "label": "匹配条件"
     },
     "result": {
