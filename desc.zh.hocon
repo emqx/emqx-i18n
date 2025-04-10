@@ -543,9 +543,8 @@
     "param_clientid": {
       "desc": "客户端 ID",
       "label": "客户端 ID"
-    }
-  },
-  "emqx_authz_api_mnesia": {
+    },
+    "emqx_authz_api_mnesia": {
      "ALREADY_EXISTS": {
       "desc": "授权已存在。",
       "label": "已存在"
