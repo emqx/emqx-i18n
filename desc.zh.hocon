@@ -522,9 +522,8 @@
     "authorization_cache_delete": {
       "desc": "清除集群中所有授权结果缓存。",
       "label": "清除授权结果缓存"
-    }
-  },
-  "authorization_node_cache_get": {
+    },
+    "authorization_node_cache_get": {
       "desc": "获取节点级别授权缓存的设置。",
       "label": "获取节点级别授权缓存设置"
     },
@@ -543,8 +542,9 @@
     "param_clientid": {
       "desc": "客户端 ID",
       "label": "客户端 ID"
-    },
-    "emqx_authz_api_mnesia": {
+    }
+  },
+  "emqx_authz_api_mnesia": {
      "ALREADY_EXISTS": {
       "desc": "授权已存在。",
       "label": "已存在"
@@ -1777,7 +1777,7 @@
     "creation_opts": {
       "desc": "创建选项",
       "label": "创建选项"
-    },
+    }
   },
   "emqx_bridge_kafka": {
     "auth_gssapi_kerberos": {
@@ -4026,7 +4026,7 @@
     },
     "change_mfa": {
       "desc": "为 Dashboard 用户设置多重身份认证（MFA）。"
-    }
+    },
     "change_pwd_api": {
       "desc": "更改 Dashboard 用户密码",
       "label": "更改 Dashboard 用户密码"
@@ -4045,7 +4045,7 @@
     },
     "delete_mfa": {
       "desc": "删除 Dashboard 用户的多重身份认证（MFA）状态。\n删除后，该用户的 MFA 将被显式禁用。如需重新启用 MFA，请调用 `POST` 方法。"
-    }
+    },
     "delete_user_api": {
       "desc": "删除 Dashboard 用户",
       "label": "删除 Dashboard 用户"
@@ -4099,7 +4099,7 @@
     },
     "mfa_token": {
       "desc": "多重身份认证（MFA）token。"
-    }
+    },
     "new_pwd": {
       "desc": "新密码"
     },
@@ -5630,7 +5630,7 @@
     "bytes_burst": {
       "desc": "可以突发发送的字节数。\n\n例如：`100MB/60m`：在 60 分钟内，可以在短时间内发送最多 100MB 的数据。",
       "label": "数据发布突发量"
-    }
+    },
     "bytes_rate": {
       "desc": "用于限制单个客户端每秒钟可以向 EMQX 发送的字节数。\n\n一旦达到限制，EMQX 将暂停从接收缓冲区读取数据，从而减慢甚至暂时挂起发送方。\n\n字节的单位可以是：B、KB、MB、GB。\n\n例如：\n\n- 500KB/s：每秒钟只接收 500 千字节，剩余字节将被延迟。\n- 500MB/10s：每 10 秒只接收 500 兆字节，剩余字节将被延迟。",
       "label": "数据发布速率"
@@ -6198,7 +6198,7 @@
     "username": {
       "desc": "客户端连接时使用的用户名称。",
       "label": "用户名"
-    }
+    },
     "get_client_inflight_msgs": {
       "desc": "获取客户端未确认消息。",
       "label": "获取客户端未确认消息"
@@ -10799,7 +10799,7 @@
     "external_http_url": {
       "desc": "外部 HTTP schema 服务器的 URL。",
       "label": "URL"
-    },
+    }
   },
   "emqx_bridge_es": {
     "action_config": {
@@ -11047,7 +11047,7 @@
     "max_wait_time": {
       "desc": "等待 Kafka broker 发送拉取响应的最长时间。",
       "label": "最大等待时间"
-    },
+    }
   },
   "emqx_bridge_pulsar_pubsub_schema": {
     "action_parameters": {
