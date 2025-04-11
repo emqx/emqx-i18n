@@ -74,16 +74,6 @@
       "label": "Stat Update Interval"
     }
   },
-  "emqx_auth_ext_schema": {
-    "common_ssl_opts_schema_partial_chain": {
-      "desc": "Enable or disable peer verification with partial_chain.\nWhen local verifies a peer certificate during the x509 path validation\nprocess, it constructs a certificate chain that starts with the peer\ncertificate and ends with a trust anchor.\nBy default, if it is set to `false`, the trust anchor is the\nRoot CA, and the certificate chain must be complete.\nHowever, if the setting is set to `true` or `cacert_from_cacertfile`,\nthe last certificate in `cacertfile` will be used as the trust anchor\ncertificate (intermediate CA). This creates a partial chain\nin the path validation.\nAlternatively, if it is configured with `two_cacerts_from_cacertfile`,\none of the last two certificates in `cacertfile` will be used as the\ntrust anchor certificate, forming a partial chain. This option is\nparticularly useful for intermediate CA certificate rotation.\nHowever, please note that it incurs some additional overhead, so it\nshould only be used for certificate rotation purposes.",
-      "label": "Partial chain"
-    },
-    "common_ssl_opts_verify_peer_ext_key_usage": {
-      "desc": "Verify extended key usage in peer's certificate\nFor additional peer certificate validation, the value defined here must present in the\n'Extended Key Usage' of peer certificate defined in\n[rfc5280](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.12).\n\nAllowed values are\n- `clientAuth`\n- `serverAuth`\n- `codeSigning`\n- `emailProtection`\n- `timeStamping`\n- `ocspSigning`\n- raw OID, for example: \"OID:1.3.6.1.5.5.7.3.2\" means `id-pk 2` which is equivalent to `clientAuth`\n\nComma-separated string is also supported for validating more than one key usages.\n\nFor example, `\"serverAuth,OID:1.3.6.1.5.5.7.3.2\"`",
-      "label": "Verify KeyUsage in cert"
-    }
-  },
   "emqx_authn_api": {
     "authentication_get": {
       "desc": "List authenticators for global authentication.",
@@ -567,6 +557,10 @@
       "desc": "The status of the resource for each node.",
       "label": "Resource Status in Node"
     },
+    "precondition": {
+      "desc": "A Variform expression to evaluate with a set of pre-bound variables derived from the client information.\n\nSupported variables:\n- `username`: The username of the client\n- `password`: The password of the client\n- `clientid`: The client ID of the client\n- `client_attrs.*`: The client attributes of the client\n- `cert_common_name`: The subject field from the client's TLS certificate\n- `cert_subject`: The common name (CN) from the client's TLS certificate\n- `peersni`: The SNI (Server Name Indication) sent by TLS client\n- `listener`: The listener ID (e.g. `tcp:default`)\n- `zone`: The associated config zone.\n\nThe expression must evaluate to a string value of 'true' for this authenticator to be invoked.\nIf the expression evaluates to any other value, this authenticator will be skipped.\n\nExamples:\n- Only invoke if the client is connected from listener `ssl:letsencryt`:\n  `str_eq(listener, 'ssl:letsencryt')`\n- Skip if username is empty:\n  `not(is_empty_val(username))`\n- Only invoke if password exists and zone is 'zone1':\n  `iif(is_empty_val(password), false, str_eq(zone, 'zone1'))`\n\nFind more information about Variform expressions in EMQX doc.",
+      "label": "Precondition"
+    },
     "rate": {
       "desc": "The rate of matched, times/second.",
       "label": "Rate"
@@ -693,6 +687,14 @@
       "desc": "IP address/mask for filtering applied rules",
       "label": "IP address/mask"
     },
+    "listener": {
+      "desc": "Listener name for filtering applied rules. For example: 'tcp:default', 'ws:default'",
+      "label": "Listener"
+    },
+    "listener_re": {
+      "desc": "Listener regex for filtering applied rules. For example: '^tcp:.*$', '^ws:.*$'",
+      "label": "Listener regex"
+    },
     "permission": {
       "desc": "Permission",
       "label": "permission"
@@ -772,6 +774,14 @@
     "users_username_post": {
       "desc": "Add new rule for 'username'",
       "label": "Add rule for 'username'"
+    },
+    "zone": {
+      "desc": "Zone name for filtering applied rules. For example: 'zone1', 'zone2', 'default'",
+      "label": "Zone"
+    },
+    "zone_re": {
+      "desc": "Zone regex for filtering applied rules. For example: 'zone[0-9]+', '^zone-.*$'",
+      "label": "Zone regex"
     }
   },
   "emqx_authz_api_settings": {
@@ -3703,7 +3713,7 @@
       "label": "Message Delivery Mode"
     },
     "exchange": {
-      "desc": "The name of the RabbitMQ exchange where the messages will be sent. Supports templates (e.g.: `e-${payload.e}`).",
+      "desc": "The name of the RabbitMQ exchange where the messages will be sent. Supports templates (e.g.: `e-${payload.e}`). Leave blank and configure `routing_key` to the specified Queue to use RabbitMQ's default Exchange.",
       "label": "Exchange"
     },
     "exchange_type": {
@@ -5627,6 +5637,18 @@
     "token_expired_time": {
       "desc": "JWT token expiration time. Default is 60 minutes",
       "label": "Token expired time"
+    },
+    "unsuccessful_login_interval": {
+      "desc": "The time interval for accumulating the number of unsuccessful login attempts.",
+      "label": "Unsuccessful login accumulation time interval"
+    },
+    "unsuccessful_login_lock_duration": {
+      "desc": "The duration of the lock period for a user after reaching the maximum number of unsuccessful login attempts.",
+      "label": "Login lock duration"
+    },
+    "unsuccessful_login_max_attempts": {
+      "desc": "The maximum number of unsuccessful login attempts allowed for a user.\nAfter this number is reached within the configured time interval\nthe user will be forbidden to login for a period of time",
+      "label": "Unsuccessful login max attempts"
     }
   },
   "emqx_dashboard_sso_ldap": {
@@ -5969,10 +5991,6 @@
     "leader_renew_streams_interval": {
       "desc": "The interval in milliseconds for the leader to renew the streams.",
       "label": "Leader Renew Streams Interval"
-    },
-    "leader_ssubscriber_timeout": {
-      "desc": "The maximum time in milliseconds for the leader to wait for the ping from a shared subscriber.\nIf the shared subscriber does not ping the leader within this time, the leader will consider\nthe shared subscriber as lost and will reclaim its streams.",
-      "label": "Leader Subscriber Timeout"
     },
     "session_find_leader_timeout": {
       "desc": "The timeout in milliseconds for the session to find a leader.\nIf the session cannot find a leader within this time, the session will retry.",
@@ -9724,7 +9742,7 @@
       "label": "Client Attributes Initialization"
     },
     "client_attrs_init_expression": {
-      "desc": "A one line expression to evaluate a set of predefined string functions (like in the rule engine SQL statements).\nThe expression can be a function call with nested calls as its arguments, or direct variable reference.\nSo far, it does not provide user-defined variable binding (like `var a=1`) or user-defined functions.\nAs an example, to extract the prefix of client ID delimited by a dot: `nth(1, tokens(clientid, '.'))`.\n\nThe variables pre-bound variables are:\n- `clientid`: MQTT Client ID.\n- `username`: MQTT Client's username.\n- `user_property.{NAME}`: User properties in the CONNECT packet.\nFor TLS clients, connected directly or via proxy-protocol (v2) enabled load balancer,\nsome extra variables can be used:\n- `cn`: Client's TLS certificate common name.\n- `dn`: Client's TLS certificate distinguished name (the subject).\n- `peersni`: TLS server name indication sent by the client.\n\nYou can read more about variform expressions in EMQX docs.",
+      "desc": "A one line expression to evaluate a set of predefined string functions (like in the rule engine SQL statements).\nThe expression can be a function call with nested calls as its arguments, or direct variable reference.\nSo far, it does not provide user-defined variable binding (like `var a=1`) or user-defined functions.\nAs an example, to extract the prefix of client ID delimited by a dot: `nth(1, tokens(clientid, '.'))`.\n\nThe variables pre-bound variables are:\n- `clientid`: MQTT Client ID.\n- `username`: MQTT Client's username.\n- `user_property.{NAME}`: User properties in the CONNECT packet.\n- `zone`: Listener's config zone.\n- `listener`: The ID (like `tcp:default`) of the listener from which the client is connected.\nFor TLS clients, connected directly or via proxy-protocol (v2) enabled load balancer,\nsome extra variables can be used:\n- `cn`: Client's TLS certificate common name.\n- `dn`: Client's TLS certificate distinguished name (the subject).\n- `peersni`: TLS server name indication sent by the client.\n\nYou can read more about variform expressions in EMQX docs.",
       "label": "Client Attribute Extraction Regular Expression"
     },
     "client_attrs_init_set_as_attr": {
@@ -9767,6 +9785,10 @@
       "desc": "The minimum level of logging allowed for SSL output.\n\nThe default is `notice`, set to a lower `debug` level for more detailed logging that can be used to investigate SSL handshake issues.",
       "label": "SSL Log Level"
     },
+    "common_ssl_opts_schema_partial_chain": {
+      "desc": "Enable or disable peer verification with partial_chain.\nWhen local verifies a peer certificate during the x509 path validation\nprocess, it constructs a certificate chain that starts with the peer\ncertificate and ends with a trust anchor.\nBy default, if it is set to `false`, the trust anchor is the\nRoot CA, and the certificate chain must be complete.\nHowever, if the setting is set to `true` or `cacert_from_cacertfile`,\nthe last certificate in `cacertfile` will be used as the trust anchor\ncertificate (intermediate CA). This creates a partial chain\nin the path validation.\nAlternatively, if it is configured with `two_cacerts_from_cacertfile`,\none of the last two certificates in `cacertfile` will be used as the\ntrust anchor certificate, forming a partial chain. This option is\nparticularly useful for intermediate CA certificate rotation.\nHowever, please note that it incurs some additional overhead, so it\nshould only be used for certificate rotation purposes.",
+      "label": "Partial chain"
+    },
     "common_ssl_opts_schema_password": {
       "desc": "String containing the user's password. Only used if the private key file is password-protected.",
       "label": "Keyfile Passphrase"
@@ -9790,6 +9812,10 @@
     "common_ssl_opts_schema_versions": {
       "desc": "All TLS/DTLS versions to be supported.<br/>\nNOTE: PSK ciphers are suppressed by 'tlsv1.3' version config.<br/>\nIn case PSK cipher suites are intended, make sure to configure\n<code>['tlsv1.2', 'tlsv1.1']</code> here.",
       "label": "SSL versions"
+    },
+    "common_ssl_opts_verify_peer_ext_key_usage": {
+      "desc": "Verify extended key usage in peer's certificate\nFor additional peer certificate validation, the value defined here must present in the\n'Extended Key Usage' of peer certificate defined in\n[rfc5280](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.12).\n\nAllowed values are\n- `clientAuth`\n- `serverAuth`\n- `codeSigning`\n- `emailProtection`\n- `timeStamping`\n- `ocspSigning`\n- raw OID, for example: \"OID:1.3.6.1.5.5.7.3.2\" means `id-pk 2` which is equivalent to `clientAuth`\n\nComma-separated string is also supported for validating more than one key usages.\n\nFor example, `\"serverAuth,OID:1.3.6.1.5.5.7.3.2\"`",
+      "label": "Verify KeyUsage in cert"
     },
     "config_backup_interval": {
       "desc": "Interval at which backups to `cluster.hocon` are made.  Even if multiple configuration updates are made withing this interval, only one backup will be made with the current configuration.",
