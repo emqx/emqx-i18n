@@ -1,0 +1,49 @@
+# Translate EMQX configuration document from English (en) to Chinese (zh).
+#
+# The format of the content is as follows:
+#
+# DOC_ID.desc.en = "English doc text"
+# DOC_ID.desc.zh = "NEED_TRANSLATION"
+#
+# DOC_ID.label.en = "English label text"
+# DOC_ID.label.zh = "NEED_TRANSLATION"
+#
+# #NEED_TRANSLATION: CHANGED_SINCE git-reference
+# #DOC_ID.desc.en = "English doc text from the git reference, this line is a comment, for your information"
+# DOC_ID.desc.en = "English doc text from the current commit, the source text to be translated"
+# DOC_ID.desc.zh = "当前的中文翻译文本，可能需要根据最新的英文文本进行更新"
+#
+# Translation Guidelines:
+#
+# 1. Keep the following English terms in their original form:
+#    - Technical terms widely used in Chinese tech community (e.g., MQTT, WebSocket, TLS)
+#    - Protocol names (e.g., HTTP, TCP, UDP)
+#    - File formats (e.g., JSON, YAML, PEM)
+#    - Common tech abbreviations (e.g., API, SDK, CLI)
+#    - Product names and trademarks
+#
+# 2. Maintain consistency:
+#    - Use the same Chinese translation for the same English term throughout
+#    - Keep technical terminology consistent with EMQX's existing documentation
+#    - Follow Chinese technical writing conventions
+#
+# 3. Style and Format:
+#    - Use proper Chinese punctuation (，。；：！？)
+#    - Keep the translation concise and clear
+#    - Use active voice where appropriate
+#    - When certain words are kept in English causing the translation to be mixed with English and Chinese, you should insert a space between the English and Chinese words
+#    - Maintain the same level of technical detail as the original
+#
+# 4. Special Cases:
+#    - For configuration values, keep them in English if they are technical terms
+#    - For error messages, translate them naturally while keeping technical terms
+#    - For code examples, keep the code unchanged, translate only the comments
+#
+# 5. Some EMQX terminology:
+#    - AuthN: Authentication (认证)
+#    - AuthZ: Authorization (授权)
+#
+# You should translate the text inline with the original text,
+# keep the doc ID (the key before the equal sign) unchanged,
+# and translated text should be properly escaped as the original text,
+# but there is no need to echo back the comment lines.

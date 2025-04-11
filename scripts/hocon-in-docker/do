@@ -8,7 +8,7 @@ usage() ->
 
 main(["help"]) ->
     usage();
-main([Command, "http" ++ _ = URL]) ->
+main([Command, "http" ++ _ = URL | Args]) ->
     {ok, _} = application:ensure_all_started(inets),
     {ok, _} = application:ensure_all_started(crypto),
     {ok, _} = application:ensure_all_started(ssl),
@@ -16,29 +16,32 @@ main([Command, "http" ++ _ = URL]) ->
         {ok, {{_Version, 200, _ReasonPhrase}, _Headers, Body}} ->
             case hocon:binary(Body, #{format => map}) of
                 {ok, Map} ->
-                    exec(Command, Map);
+                    exec(Command, Map, Args);
                 {error, Reason} ->
                     logerr("Failed to parse ~s~nreason:~p~n", [Body, Reason])
             end;
         Ohter ->
             logerr("Filed to fetch from ~s~nresult=~p~n", [URL, Ohter])
     end;
-main([Command, File]) ->
+main([Command, File | Args]) ->
     case hocon:load(File) of
         {ok, Map} ->
-            exec(Command, Map);
+            exec(Command, Map, Args);
         {error, Reason} ->
             logerr("Failed to read ~p~nreason:~p~n", [File, Reason]),
-            init:stop(1)
+            stop(1)
     end;
 main(_Args) ->
     usage(),
-    init:stop(1).
+    stop(1).
 
-exec("to-json", Map) ->
+exec("to-json", Map, _Args) ->
     pp_json(Map);
-exec("flatten", Map) ->
+exec("flatten", Map, _Args) ->
     flatten(Map).
+
+stop(ExitCode) ->
+    erlang:halt(ExitCode).
 
 pp_json(Map) ->
     IoData = json:format(Map, #{indent => 2}),
@@ -50,7 +53,7 @@ logerr(Fmt, Args) ->
 flatten(Map) ->
     All = walk(Map),
     lists:foreach(fun({Path, Value}) ->
-         io:format("~s = ~p~n", [Path, unicode:characters_to_list(Value)])
+         io:format("~s = ~s", [Path, json:format(Value)])
     end, All).
 
 walk(Map) ->
