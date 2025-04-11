@@ -1,0 +1,78 @@
+#!/usr/bin/env escript
+
+usage() ->
+    io:format("Usage: do to-json /path/to/file~n", []),
+    io:format("       do to-json https://url.to.file~n", []),
+    io:format("       do flatten /path/to/file~n", []),
+    io:format("       do flatten https://url.to.file~n", []).
+
+main(["help"]) ->
+    usage();
+main([Command, "http" ++ _ = URL]) ->
+    {ok, _} = application:ensure_all_started(inets),
+    {ok, _} = application:ensure_all_started(crypto),
+    {ok, _} = application:ensure_all_started(ssl),
+    case httpc:request(get, {URL, []}, [{ssl, [{verify, verify_none}]}], [{body_format, binary}]) of
+        {ok, {{_Version, 200, _ReasonPhrase}, _Headers, Body}} ->
+            case hocon:binary(Body, #{format => map}) of
+                {ok, Map} ->
+                    exec(Command, Map);
+                {error, Reason} ->
+                    logerr("Failed to parse ~s~nreason:~p~n", [Body, Reason])
+            end;
+        Ohter ->
+            logerr("Filed to fetch from ~s~nresult=~p~n", [URL, Ohter])
+    end;
+main([Command, File]) ->
+    case hocon:load(File) of
+        {ok, Map} ->
+            exec(Command, Map);
+        {error, Reason} ->
+            logerr("Failed to read ~p~nreason:~p~n", [File, Reason]),
+            init:stop(1)
+    end;
+main(_Args) ->
+    usage(),
+    init:stop(1).
+
+exec("to-json", Map) ->
+    pp_json(Map);
+exec("flatten", Map) ->
+    flatten(Map).
+
+pp_json(Map) ->
+    IoData = json:format(Map, #{indent => 2}),
+    io:format("~s", [IoData]).
+
+logerr(Fmt, Args) ->
+    io:format(standard_error, Fmt, Args).
+
+flatten(Map) ->
+    All = walk(Map),
+    lists:foreach(fun({Path, Value}) ->
+         io:format("~s = ~p~n", [Path, unicode:characters_to_list(Value)])
+    end, All).
+
+walk(Map) ->
+    Ets = ets:new(walk, [ordered_set]),
+    try
+        ok = walk(Map, Ets, []),
+        ets:tab2list(Ets)
+    after
+        ets:delete(Ets)
+    end.
+
+walk(Map, Ets, Path) when is_map(Map) ->
+    walk(maps:to_list(Map), Ets, Path);
+walk([], _Ets, _Path) ->
+    ok;
+walk([{Key, Value} | Rest], Ets, Path) ->
+    DeeperPath = Path ++ [Key],
+    case is_map(Value) of
+        true ->
+            walk(Value, Ets, DeeperPath);
+        false ->
+            FinalPath = list_to_binary(lists:join(".", DeeperPath)),
+            ets:insert(Ets, {FinalPath, Value})
+    end,
+    walk(Rest, Ets, Path).
