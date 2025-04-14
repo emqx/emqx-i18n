@@ -54,11 +54,11 @@ def filter_zh_file(en_keys: Set[str], zh_file: str) -> None:
 
     # Report deleted keys
     if deleted_keys:
-        print(yellow(f"\nDeleted {len(deleted_keys)} keys not found in English file:"), file=sys.stderr)
+        print(yellow(f"Deleted {len(deleted_keys)} translations which are not found in English file:"), file=sys.stderr)
         for key in sorted(deleted_keys):
             print(yellow(f"  - {key}"), file=sys.stderr)
     else:
-        print(green("\nNo keys were deleted"), file=sys.stderr)
+        print(green("No translations were deleted from desc.zh.hocon"), file=sys.stderr)
 
 def main():
     if len(sys.argv) != 3:
@@ -70,7 +70,7 @@ def main():
 
     # Extract keys from English file
     en_keys = extract_keys(en_file)
-    print(green(f"Found {len(en_keys)} keys in English file"), file=sys.stderr)
+    print(green(f"Found {len(en_keys)} docs IDs in docs.en.hocon"), file=sys.stderr)
 
     # Filter Chinese file
     filter_zh_file(en_keys, zh_file)

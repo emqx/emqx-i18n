@@ -50,11 +50,15 @@ def translate_content(content: str) -> str:
         return ""
 
 def main():
+    content = read_diff_file()
+    if not content:
+        return
+
     # Check for API key
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         print(yellow("Error: OPENAI_API_KEY environment variable is not set"), file=sys.stderr)
-        return
+        sys.exit(1)
 
     openai.api_key = api_key
 
@@ -62,11 +66,7 @@ def main():
     diff_path = diff_file_path()
     if not diff_path.exists():
         print(yellow(f"Error: {diff_path} does not exist"), file=sys.stderr)
-        return
-
-    content = read_diff_file()
-    if not content:
-        return
+        sys.exit(1)
 
     # Translate the content
     print(f"Translating content from {diff_path} ...")
@@ -82,6 +82,7 @@ def main():
         print(green(f"Translation written to {tr_path}"))
     except Exception as e:
         print(yellow(f"Error writing translation: {e}"), file=sys.stderr)
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

@@ -79,7 +79,7 @@ def main():
 
     # Check if any lines were collected
     if not output_lines:
-        print(yellow("No lines were collected for translation"), file=sys.stderr)
+        print(yellow("No changed doc IDs from desc.en.hocon were collected for translation"), file=sys.stderr)
         # do not fail, just return
         return
 

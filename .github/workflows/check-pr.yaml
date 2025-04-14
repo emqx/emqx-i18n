@@ -1,0 +1,40 @@
+name: Check Translation
+
+on:
+  pull_request:
+    branches:
+      - 'v*'
+
+jobs:
+  check-translation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openai
+
+      - name: Run translation check
+        env:
+          DEBUG: true
+        run: |
+          # Extract version from target branch (e.g., v59 -> release-59)
+          TARGET_BRANCH="${{ github.base_ref }}"
+          RELEASE_REF="release-${TARGET_BRANCH#v}"
+          echo "Running translation check for release reference: $RELEASE_REF"
+
+          # Run the translation check script, dryrun means no git commit
+          ./tr/run.sh --emqx-ref "$RELEASE_REF" --compare-base none --dryrun
+
+          # Ensure there is no git diff
+          if ! git diff --exit-code; then
+            echo "Error: There are uncommitted changes in the translation files"
+            exit 1
+          fi
