@@ -2072,7 +2072,7 @@
       "label": "_require_alias"
     },
     "config_require_alias": {
-      "desc": "If true, the requestâs actions must target an index alias. Defaults to false",
+      "desc": "If true, the request's actions must target an index alias. Defaults to false",
       "label": "Require Alias"
     },
     "config_routing": {
@@ -6963,18 +6963,12 @@
     }
   },
   "emqx_limiter_schema": {
-    "alloc_interval": {
-      "desc": "Token allocation interval for shared limiter."
-    },
-    "burst": {
-      "desc": "How many tokens are allowed when the rate is exceeded."
-    },
     "bytes_burst": {
-      "desc": "Number of bytes that can be sent in a burst.\n\nFor example: `100MB/60m`: Once in 60 minutes, up to 100 megabytes can be sent in a short period of time.",
+      "desc": "Additional number of bytes that can be sent in a burst.\n\nFor example: `100MB/60m`: Once in 60 minutes, up to 100 megabytes can be sent in a short period of time.",
       "label": "Data Publish Burst"
     },
     "bytes_rate": {
-      "desc": "Used to limit the number of bytes a single client can send to EMQX per second.\n\nOnce the limit is reached, EMQX will pause reading data from the receive-buffer, thus slowing down or even temporarily hanging the sender.\n\nThe unit of the bytes could be: B, KB, MB, GB.\n\nFor example:\n\n- `500KB/s`: Only 500 kilobytes per second will be received, and the remaining bytes will be delayed.\n- `500MB/10s`: Only 500 megabytes will be received every 10 seconds, and the remaining bytes will be delayed.",
+      "desc": "Used to limit the number of bytes a single client can send to EMQX per second.\n\nOnce the limit is reached, EMQX will drop QoS 0 messages and reject QoS 1 and QoS 2 messages\nwith \"Quota Exceeded\" error code (0x97).\n\nThe unit of the bytes could be: B, KB, MB, GB.\n\nFor example:\n\n- `500KB/s`: Only 500 kilobytes per second will be received, and the remaining bytes will be dropped/rejected.\n- `500MB/10s`: Only 500 megabytes will be received every 10 seconds, and the remaining bytes will be dropped/rejected.",
       "label": "Data Publish Rate"
     },
     "max_conn_burst": {
@@ -6986,11 +6980,11 @@
       "label": "Maximum Connection Rate"
     },
     "messages_burst": {
-      "desc": "Number of messages that can be sent in a burst.\n\nFor example: `10000/60m`: Once in 60 minutes, up to 10000 messages can be sent in a short period of time.",
+      "desc": "Additional number of messages that can be sent in a burst.\n\nFor example: `10000/60m`: Once in 60 minutes, up to 10000 messages can be sent in a short period of time.",
       "label": "Messages Publish Burst"
     },
     "messages_rate": {
-      "desc": "Used to limit the number of messages a single client can send to EMQX per second.\n\nOnce the limit is reached, EMQX will pause reading data from the receive-buffer, thus slowing down or even temporarily hanging the sender.\n\nFor example:\n\n- `500/s`: Only 500 messages will be received per second, and the remaining messages will be delayed.\n- `500/10s`: Only 500 messages will be received every 10 seconds and the remaining messages will be delayed.",
+      "desc": "Used to limit the number of messages a single client can send to EMQX per second.\n\nOnce the limit is reached, EMQX will drop QoS 0 messages and reject QoS 1 and QoS 2 messages\nwith \"Quota Exceeded\" error code (0x97).\n\nFor example:\n\n- `500/s`: Only 500 messages will be received per second, and the remaining messages will be dropped/rejected.\n- `500/10s`: Only 500 messages will be received every 10 seconds and the remaining messages will be dropped/rejected.",
       "label": "Messages Publish Rate"
     },
     "mqtt": {
@@ -8233,9 +8227,9 @@
       "desc": "Create managed namespace",
       "label": "Create managed namespace"
     },
-    "delete_managed_ns": {
-      "desc": "Delete managed namespace",
-      "label": "Delete managed namespace"
+    "delete_ns": {
+      "desc": "Delete namespace. This will cause all the clients under this namespace to be kicked out asynchronously.",
+      "label": "Delete namespace"
     },
     "get_managed_ns_config": {
       "desc": "Get managed namespace configuration",
@@ -9320,7 +9314,7 @@
     },
     "metrics_sql_matched_rate": {
       "desc": "The rate of matched, times/second",
-      "label": "å½ä¸­éç"
+      "label": "Matched Rate"
     },
     "metrics_sql_matched_rate_last5m": {
       "desc": "The average rate of matched in last 5 minutes, times/second",
@@ -9337,6 +9331,22 @@
     "node_node": {
       "desc": "The node name",
       "label": "Node Name"
+    },
+    "ri_action_details": {
+      "desc": "Details about the referenced Actions.",
+      "label": "Action Details"
+    },
+    "ri_action_details_name": {
+      "desc": "Name of the referenced Action.",
+      "label": "Name"
+    },
+    "ri_action_details_status": {
+      "desc": "Status of the referenced Action.",
+      "label": "Status"
+    },
+    "ri_action_details_type": {
+      "desc": "Type of the referenced Action.",
+      "label": "Type"
     },
     "ri_created_at": {
       "desc": "The created time of the rule",
@@ -10815,6 +10825,14 @@
     "check_avro_type": {
       "desc": "Avro schema check",
       "label": "Avro schema check"
+    },
+    "check_external_http_schema": {
+      "desc": "Schema name to use during check.",
+      "label": "Schema name"
+    },
+    "check_external_http_type": {
+      "desc": "External HTTP schema check",
+      "label": "External HTTP schema check"
     },
     "check_json_schema": {
       "desc": "Schema name to use during check.",
