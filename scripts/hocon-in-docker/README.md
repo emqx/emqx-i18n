@@ -10,14 +10,20 @@ make
 
 ## Run
 
-So far there is only one feature for this script: print HOCON as JSON.
+### Print HOCON as JSON
 
 ```
-docker run --rm -it -v (pwd)/my.hocon:/tmp/input hocon:0.39.2 hocon /tmp/input
+docker run --rm -it -v $(pwd)/my.hocon:/tmp/input hocon do to-json /tmp/input
 ```
 
 Or fetch hocon from a URL:
 
 ```
-docker run --rm -it hocon:0.39.2 hocon "https://raw.githubusercontent.com/emqx/emqx-i18n/main/desc.zh.hocon"
+docker run --rm -it hocon do to-json "https://raw.githubusercontent.com/emqx/emqx-i18n/main/desc.zh.hocon"
+```
+
+### Flatten a HOCON file
+
+```
+docker run --rm -it hocon do flatten "https://raw.githubusercontent.com/emqx/emqx-i18n/main/desc.zh.hocon"
 ```
