@@ -42,6 +42,7 @@
 # 5. Some EMQX terminology:
 #    - AuthN: Authentication (认证)
 #    - AuthZ: Authorization (授权)
+#    - Action: In the context of data integration (connector), it shoule be translated as 动作。
 #
 # You should translate the text inline with the original text,
 # keep the doc ID (the key before the equal sign) unchanged,
