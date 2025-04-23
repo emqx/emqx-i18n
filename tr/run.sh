@@ -37,7 +37,7 @@ if [ -z "$EMQX_REPO_BRANCH_OR_TAG" ] || [ -z "$THIS_REPO_TRANSLATION_COMPARE_BAS
     exit 1
 fi
 
-./tr/0-sync-en.sh "$EMQX_REPO_BRANCH_OR_TAG"
-./tr/1-compare.sh "$THIS_REPO_TRANSLATION_COMPARE_BASE"
+./tr/0-sync-en.sh "${EMQX_REPO_BRANCH_OR_TAG}"
+./tr/1-compare.sh "${THIS_REPO_TRANSLATION_COMPARE_BASE}"
 ./tr/2-translate.py
-./tr/3-commit.sh --ref "$THIS_REPO_TRANSLATION_COMPARE_BASE" ${DRYRUN_OPT}
+./tr/3-commit.sh --compare-base "${THIS_REPO_TRANSLATION_COMPARE_BASE}" ${DRYRUN_OPT}
