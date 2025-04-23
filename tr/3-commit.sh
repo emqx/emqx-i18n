@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 DRYRUN="false"
-REF=""
+COMPARE_BASE=""
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -13,8 +13,8 @@ while [[ $# -gt 0 ]]; do
             DRYRUN="true"
             shift
             ;;
-        --ref)
-            REF="$2"
+        --compare-base)
+            COMPARE_BASE="$2"
             shift 2
             ;;
         *)
@@ -63,9 +63,8 @@ else
         loginfo "No changes to commit"
         exit 0
     fi
-    compare_base_msg=""
-    if [ -n "$REF" ]; then
-        compare_base_msg=", translation compare base: ${REF}"
+    if [ "$COMPARE_BASE" = 'none' ] || [ "$COMPARE_BASE" = 'HEAD' ]; then
+        COMPARE_BASE="$(git rev-parse --short=7 HEAD)"
     fi
-    git commit -m "docs: sync and update translations${compare_base_msg}"
+    git commit -m "docs: sync and update translations, compare base: ${COMPARE_BASE}"
 fi
