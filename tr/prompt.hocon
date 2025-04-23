@@ -43,6 +43,7 @@
 #    - AuthN: Authentication (认证)
 #    - AuthZ: Authorization (授权)
 #    - Action: In the context of data integration (connector), it shoule be translated as 动作。
+#    - Schema: No need for translation, keep the term in English.
 #
 # You should translate the text inline with the original text,
 # keep the doc ID (the key before the equal sign) unchanged,
