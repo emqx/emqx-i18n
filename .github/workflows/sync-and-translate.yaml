@@ -63,13 +63,19 @@ jobs:
           fi
           git checkout -b ${NEW_BRANCH} --track origin/${BASE_BRANCH}
           BASE_REF=$(git rev-parse origin/${BASE_BRANCH})
+          BEFORE_TR=$(git rev-parse HEAD)
           ./tr/run.sh --emqx-ref ${EMQX_REPO_CHECKOUT_REF} --compare-base ${BASE_REF}
-          git push origin ${NEW_BRANCH}:${NEW_BRANCH}
-          REL_VERSION=$(echo "${EMQX_VERSION##[e|v]}" | cut -d '-' -f 1)
-          TITLE="sync and translate for ${REL_VERSION}"
-          # close all open PRs with the same title
-          for pr in $(gh pr list --state open --base ${BASE_BRANCH} --label sync-and-translate --search "${TITLE} in:title" --repo ${{ github.repository }} --json number --jq '.[] | .number'); do
-            gh pr close $pr --repo ${{ github.repository }} --delete-branch || true
-          done
-          # create a new PR
-          gh pr create --title "${TITLE}" --base ${BASE_BRANCH} --head ${NEW_BRANCH} --body '' --label sync-and-translate --repo ${{ github.repository }}
+          AFTER_TR=$(git rev-parse HEAD)
+          if [ "${BEFORE_TR}" = "${AFTER_TR}" ]; then
+            echo "No new transaction, not creating a new PR"
+          else
+            git push origin ${NEW_BRANCH}:${NEW_BRANCH}
+            REL_VERSION=$(echo "${EMQX_VERSION##[e|v]}" | cut -d '-' -f 1)
+            TITLE="sync and translate for ${REL_VERSION}"
+            # close all open PRs with the same title
+            for pr in $(gh pr list --state open --base ${BASE_BRANCH} --label sync-and-translate --search "${TITLE} in:title" --repo ${{ github.repository }} --json number --jq '.[] | .number'); do
+              gh pr close $pr --repo ${{ github.repository }} --delete-branch || true
+            done
+            # create a new PR
+            gh pr create --title "${TITLE}" --base ${BASE_BRANCH} --head ${NEW_BRANCH} --body '' --label sync-and-translate --repo ${{ github.repository }}
+          fi
