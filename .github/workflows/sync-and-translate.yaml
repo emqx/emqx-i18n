@@ -63,6 +63,8 @@ jobs:
           fi
           git checkout -b ${NEW_BRANCH} --track origin/${BASE_BRANCH}
           BASE_REF=$(git rev-parse origin/${BASE_BRANCH})
+          # Capture the current commit hash before running tr/run.sh.
+          # This is used to detect if the script introduces any changes.
           COMMIT_BEFORE_TR=$(git rev-parse HEAD)
           ./tr/run.sh --emqx-ref ${EMQX_REPO_CHECKOUT_REF} --compare-base ${BASE_REF}
           COMMIT_AFTER_TR=$(git rev-parse HEAD)
