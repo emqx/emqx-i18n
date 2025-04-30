@@ -68,6 +68,7 @@ jobs:
           COMMIT_AFTER_TR=$(git rev-parse HEAD)
           if [ "${COMMIT_BEFORE_TR}" = "${COMMIT_AFTER_TR}" ]; then
             echo "No new transaction, not creating a new PR"
+            exit 0
           else
             git push origin ${NEW_BRANCH}:${NEW_BRANCH}
             REL_VERSION=$(echo "${EMQX_VERSION##[e|v]}" | cut -d '-' -f 1)
