@@ -11,12 +11,14 @@ on:
   workflow_dispatch:
     inputs:
       version:
+        description: 'EMQX release version, e.g. e5.9.0 with optional suffix e.g. e5.9.0-alpha.1'
         type: string
         required: true
       branch:
+        description: 'Release branch name of emqx.git repo. Default is "release-59". If set to "none", translation will be done based on the current diff against v59 (derived from e5.9.0).'
         type: string
         required: false
-        default: "none"
+        default: "release-59"
 
 permissions:
   contents: read
