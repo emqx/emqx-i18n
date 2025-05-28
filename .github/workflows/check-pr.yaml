@@ -24,6 +24,8 @@ jobs:
       - name: Run translation check
         env:
           DEBUG: true
+          GH_TOKEN: ${{ github.token }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           # Extract version from target branch (e.g., v59 -> release-59)
           TARGET_BRANCH="${{ github.base_ref }}"
