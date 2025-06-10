@@ -4822,6 +4822,8 @@ emqx_schema.client_attrs_init_set_as_attr.desc = "从客户端数据中提取的
 emqx_schema.client_attrs_init_set_as_attr.label = "命名提取的属性"
 emqx_schema.client_ssl_opts_schema_enable.desc = "启用 TLS。"
 emqx_schema.client_ssl_opts_schema_enable.label = "启用 TLS"
+emqx_schema.client_ssl_opts_schema_middlebox_comp_mode.desc = "配置 TLS-1.3 连接的中间盒兼容模式。\n\n大量中间盒在协商 TLS-1.3 连接时表现不佳。通过将 TLS-1.3 握手调整为类似于 TLS-1.2 握手的方式，可以增加通过这些中间盒建立连接的机会。"
+emqx_schema.client_ssl_opts_schema_middlebox_comp_mode.label = "中间盒兼容模式"
 emqx_schema.client_ssl_opts_schema_server_name_indication.desc = "指定要在 TLS 服务器名称指示扩展中使用的主机名。<br/>\n例如，当连接到 \"server.example.net\" 时，接受连接并执行 TLS 握手的真正服务器可能与 TLS 客户端最初连接到的主机不同，\n例如，当连接到 IP 地址时，或者当主机具有多个可解析的 DNS 记录时<br/>\n如果未指定，它将默认为使用的主机名字符串\n建立连接，除非使用 IP 地址<br/>\n然后，主机名也用于对等机的主机名验证证书<br/>\n特殊值 <code>disable</code> 阻止发送服务器名称指示扩展，并禁用主机名验证检查。"
 emqx_schema.client_ssl_opts_schema_server_name_indication.label = "服务器名称指示"
 emqx_schema.clientid_override.desc = "单行表达式，用于解析一组预定义的字符串函数（类似于规则引擎 SQL 语句）。\n该表达式可以是一个函数调用，并且可以使用嵌套调用作为其参数，或者是直接的变量引用。\n目前，它不支持用户自定义变量绑定（如 var a=1）或用户自定义函数。\n\n例如，提取以点（.）分隔的用户名前缀的表达式：nth(1, tokens(username, '.'))。\n\n预绑定的变量包括：\n- `clientid`：原始 MQTT 客户端 ID。\n- `username`：MQTT 客户端的用户名。\n- `client_attrs.{NAME}`：通过 client_attrs_init 配置初始化的客户端属性。\n\n对于通过 TLS 直接连接或通过启用了 proxy-protocol (v2) 的负载均衡器连接的客户端，还可以使用以下额外变量：\n- `cn`：客户端 TLS 证书的通用名称（Common Name）。\n- `dn`：客户端 TLS 证书的可分辨名称（Distinguished Name，即主题）。\n- `peersni`：客户端发送的 TLS 服务器名称指示（Server Name Indication, SNI）。\n\n您可以在 EMQX 文档中阅读更多关于 variform 表达式的内容。"
