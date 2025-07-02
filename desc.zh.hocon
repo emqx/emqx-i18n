@@ -6823,6 +6823,10 @@
       "desc": "导出器将要发送 Open Telemetry 信号数据的目标 URL。",
       "label": "导出器端点"
     },
+    "exporter_headers": {
+      "desc": "随 OpenTelemetry 信号数据一同发送的 HTTP 标头。\n标头是以标头名称为键的映射。",
+      "label": "导出器标头"
+    },
     "exporter_protocol": {
       "desc": "Open Telemetry 导出器的传输协议",
       "label": "导出器协议"
