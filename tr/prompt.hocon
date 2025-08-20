@@ -44,9 +44,14 @@
 #    - AuthZ: Authorization (授权)
 #    - Action: In the context of data integration (connector), it shoule be translated as 动作。
 #    - Watermark: 水位线
+#
 # 6. Terminologies without translation:
 #    - Schema
 #    - License
+#
+# 7. Preferred Translations:
+#    - Alert -> 告警
+#    - Alarm -> 告警
 #
 # You should translate the text inline with the original text,
 # keep the doc ID (the key before the equal sign) unchanged,
