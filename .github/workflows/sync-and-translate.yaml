@@ -15,10 +15,10 @@ on:
         type: string
         required: true
       branch:
-        description: 'Release branch name of emqx.git repo. Default is "release-59". If set to "none", translation be done only for missing ones on branch v59 (derived from e5.9.0).'
+        description: 'Release branch name of emqx.git repo to chekcout for the English docs. If set to "none", the version tag is used.'
         type: string
         required: false
-        default: "release-59"
+        default: "none"
 
 permissions:
   contents: read
