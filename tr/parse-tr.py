@@ -28,7 +28,7 @@ with open(tr_file, 'r') as f:
             print("Error: {} is not a valid line".format(line), file=sys.stderr)
             sys.exit(1)
         key, value = [x.strip() for x in line.split('=', 1)]
-        if '.en' in key:
+        if key.endswith('.en'):
             continue
         if 'NEED_TRANSLATION' in value:
             untranslated_keys.append(key)
