@@ -13,7 +13,7 @@ This dir is a collection of scripts to help translate `desc.en.hocon` to `desc.z
   - If a doc is missing in `desc.zh.hocon`, a the doc content is added as `DOC_ID = NEED_TRANSLATION`.
 - Run `2-translate.py` to translate the diff file.
 
-- `2-translate.py` uses OpenAI Responses API and defaults to model `gpt-5.3-codex`. Model precedence is: `--model` > `OPENAI_MODEL` > default.
+- `2-translate.py` uses OpenAI Responses API and defaults to model `gpt-5.2-codex`. Model precedence is: `--model` > `OPENAI_MODEL` > default.
 - Run `3-commit.sh` to concatenate the translated diff into `desc.zh.hocon`, then re-format the file and commit it into git.
 
 ## Automation
@@ -27,5 +27,5 @@ The steps can be run in one go in CI.
 Example:
 
 ```
-./tr/run.sh --emqx-ref master --compare-base v5.9.0 --model gpt-5.3-codex
+./tr/run.sh --emqx-ref master --compare-base v5.9.0 --model gpt-5.2-codex
 ```

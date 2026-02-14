@@ -44,6 +44,8 @@ fi
 
 ./tr/0-sync-en.sh "${EMQX_REPO_BRANCH_OR_TAG}"
 ./tr/1-compare.sh "${THIS_REPO_TRANSLATION_COMPARE_BASE}"
+# Avoid reusing stale outputs from earlier runs.
+rm -f tmp/desc.tr.hocon tmp/desc.tr.hocon.parsed tmp/desc.tr.hocon.all
 if [ -n "${MODEL_OPT}" ]; then
     ./tr/2-translate.py --model "${MODEL_OPT}"
 else

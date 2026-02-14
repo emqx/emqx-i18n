@@ -33,10 +33,16 @@ logerr() {
 }
 
 TR_FILE="tmp/desc.tr.hocon"
+DIFF_FILE="tmp/desc.diff.hocon"
 
 if [ ! -s "$TR_FILE" ]; then
     loginfo "Nothing to commit"
     exit 0
+fi
+
+if [ -f "$DIFF_FILE" ] && [ "$TR_FILE" -ot "$DIFF_FILE" ]; then
+    logerr "Error: $TR_FILE is older than $DIFF_FILE, translation output is stale"
+    exit 1
 fi
 
 # check if the new file is the same as the original file
