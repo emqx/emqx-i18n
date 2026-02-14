@@ -7,7 +7,7 @@ import openai
 from pathlib import Path
 from typing import Optional
 
-DEFAULT_MODEL = "gpt-5.3-codex"
+DEFAULT_MODEL = "gpt-5.2-codex"
 
 
 def yellow(text: str) -> str:
@@ -59,7 +59,6 @@ def translate_content(content: str, api_key: str, model: str) -> str:
                 "Do not add explanations or markdown code fences."
             ),
             input=content,
-            temperature=0.3,
         )
         translated = (response.output_text or "").strip()
         if not translated:
@@ -77,7 +76,7 @@ def parse_args() -> argparse.Namespace:
         "--model",
         help=(
             "OpenAI model to use. "
-            "Precedence: --model > OPENAI_MODEL > default gpt-5.3-codex"
+            "Precedence: --model > OPENAI_MODEL > default gpt-5.2-codex"
         ),
     )
     return parser.parse_args()
@@ -107,7 +106,8 @@ def main():
     print(f"Translating content from {diff_path} with model {model} ...")
     translated_content = translate_content(content, api_key, model)
     if not translated_content:
-        return
+        print(yellow("Error: translation output is empty"), file=sys.stderr)
+        sys.exit(1)
 
     # Write the translation to desc.tr.hocon
     tr_path = diff_path.with_name("desc.tr.hocon")
