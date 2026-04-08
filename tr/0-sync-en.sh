@@ -11,8 +11,6 @@ if [ -z "$BRANCH" ]; then
     exit 1
 fi
 
-BUILDER='ghcr.io/emqx/emqx-builder/5.5-1:1.17.3-27.2-2-ubuntu24.04'
-
 WORKDIR="tmp/emqx-$BRANCH"
 trap 'rm -rf "$WORKDIR"' EXIT
 mkdir -p "$WORKDIR"
