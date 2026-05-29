@@ -52,6 +52,7 @@
 # 7. Preferred Translations:
 #    - Alert -> 告警
 #    - Alarm -> 告警
+#    - Dashboard -> 控制台
 #
 # You should translate the text inline with the original text,
 # keep the doc ID (the key before the equal sign) unchanged,
