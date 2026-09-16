@@ -53,7 +53,7 @@
 #    - Alert -> 告警
 #    - Alarm -> 告警
 #    - Dashboard -> 控制台
-#    - Scope (access scope of API keys, Dashboard users, and OIDC) -> 作用域. Do not use 范围, which means range.
+#    - Scope (access scope of API keys and Dashboard users, and OAuth/OIDC scope) -> 作用域. Do not use 范围, which means range.
 #
 # You should translate the text inline with the original text,
 # keep the doc ID (the key before the equal sign) unchanged,
