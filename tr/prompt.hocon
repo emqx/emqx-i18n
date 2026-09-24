@@ -52,7 +52,7 @@
 # 7. Preferred Translations:
 #    - Alert -> 告警
 #    - Alarm -> 告警
-#    - Dashboard -> 控制台
+#    - Dashboard -> Dashboard (keep untranslated)
 #    - Scope (access scope of API keys and Dashboard users, and OAuth/OIDC scope) -> 作用域. Do not use 范围, which means range.
 #
 # You should translate the text inline with the original text,
