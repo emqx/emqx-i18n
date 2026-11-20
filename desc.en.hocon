@@ -323,7 +323,7 @@
   },
   "emqx_authn_kerberos_schema": {
     "principal": {
-      "desc": "Server Kerberos principal.\nFor example <code>mqtt/emqx-cluster-1.example.com@MY_REALM.EXAMPLE.COM</code>.\nNOTE: The realm in use has to be configured in /etc/krb5.conf in EMQX nodes.",
+      "desc": "Server Kerberos principal.\nFor example <code>mqtt/emqx-cluster-1.example.com@MY_REALM.EXAMPLE.COM</code>.\nNOTE: The realm in use has to be configured in the default config file krb5.conf, usually located in `/etc`, on EMQX nodes.",
       "label": "Kerberos Principal"
     }
   },
@@ -1250,11 +1250,11 @@
       "label": "Max Inflight"
     },
     "max_linger_bytes": {
-      "desc": "Maximum number of bytes for a per-partition producer to wait for messages in order to collect a batch to buffer.",
+      "desc": "Maximum number of bytes a per-partition producer accumulates while waiting before it stops waiting and sends the batch.",
       "label": "Max Linger Bytes"
     },
     "max_linger_time": {
-      "desc": "Maximum duration for a per-partition producer to wait for messages in order to collect a batch to buffer.\nThe default value `0` means no wait. For non-memory buffer mode, it's advised to configure at least `5ms` for less IOPS.",
+      "desc": "Maximum duration a per-partition producer waits to accumulate more messages into a larger batch.\nThe default value `0` means no wait (messages are sent as soon as they arrive).\nThe wait ends early as soon as a full batch's worth of data has accumulated, so a busy producer is never delayed.\nWhen buffering to disk, the wait happens before writing to the buffer; configuring at least `5ms` is advised there to reduce disk IOPS.",
       "label": "Max Linger Time"
     },
     "metadata_request_timeout": {
@@ -1404,7 +1404,7 @@
       "label": "Action"
     },
     "batch_value_separator": {
-      "desc": "The default value ',' works for the VALUES format. You can also use other separator if other format is specified. See [INSERT INTO Statement](https://clickhouse.com/docs/en/sql-reference/statements/insert-into).",
+      "desc": "This argument is ignored and retained for compatibility. The action derives the batch separator from the SQL format.",
       "label": "Batch Value Separator"
     },
     "clickhouse_action": {
@@ -1432,7 +1432,7 @@
       "label": "Local Topic"
     },
     "sql_template": {
-      "desc": "The template string can contain ${field} placeholders for message metadata and payload field. Make sure that the inserted values are formatted and escaped correctly. [Prepared Statement](https://docs.emqx.com/en/enterprise/v5.0/data-integration/data-bridges.html#Prepared-Statement) is not supported.",
+      "desc": "A restricted ClickHouse `INSERT` template. It supports `VALUES`, `FORMAT Values`, and `JSONCompactEachRow`. Placeholders are allowed only in value positions and string values. Comments, extra statements, and dynamic identifiers are not allowed.",
       "label": "SQL Template"
     }
   },
@@ -1564,11 +1564,11 @@
       "label": "Max Inflight"
     },
     "max_linger_bytes": {
-      "desc": "Maximum number of bytes for a per-partition producer to wait for messages in order to collect a batch to buffer.",
+      "desc": "Maximum number of bytes a per-partition producer accumulates while waiting before it stops waiting and sends the batch.",
       "label": "Max Linger Bytes"
     },
     "max_linger_time": {
-      "desc": "Maximum duration for a per-partition producer to wait for messages in order to collect a batch to buffer.\nThe default value `0` means no wait. For non-memory buffer mode, it's advised to configure at least `5ms` for less IOPS.",
+      "desc": "Maximum duration a per-partition producer waits to accumulate more messages into a larger batch.\nThe default value `0` means no wait (messages are sent as soon as they arrive).\nThe wait ends early as soon as a full batch's worth of data has accumulated, so a busy producer is never delayed.\nWhen buffering to disk, the wait happens before writing to the buffer; configuring at least `5ms` is advised there to reduce disk IOPS.",
       "label": "Max Linger Time"
     },
     "metadata_request_timeout": {
@@ -2605,7 +2605,7 @@
       "label": "Kerberos keytab file"
     },
     "auth_kerberos_principal": {
-      "desc": "SASL GSSAPI authentication Kerberos principal. For example <code>kafka/node1.example.com@EXAMPLE.COM</code>, NOTE: The realm in use has to be configured in /etc/krb5.conf in EMQX nodes.",
+      "desc": "SASL GSSAPI authentication Kerberos principal. For example <code>kafka/node1.example.com@EXAMPLE.COM</code>, NOTE: The realm in use has to be configured in the default config file krb5.conf, usually located in `/etc`, on EMQX nodes.",
       "label": "Kerberos Principal"
     },
     "auth_sasl_mechanism": {
@@ -2777,11 +2777,11 @@
       "label": "Max Inflight"
     },
     "max_linger_bytes": {
-      "desc": "Maximum number of bytes for a per-partition producer to wait for messages in order to collect a batch to buffer.",
+      "desc": "Maximum number of bytes a per-partition producer accumulates while waiting before it stops waiting and sends the batch.",
       "label": "Max Linger Bytes"
     },
     "max_linger_time": {
-      "desc": "Maximum duration for a per-partition producer to wait for messages in order to collect a batch to buffer.\nThe default value `0` means no wait. For non-memory buffer mode, it's advised to configure at least `5ms` for less IOPS.",
+      "desc": "Maximum duration a per-partition producer waits to accumulate more messages into a larger batch.\nThe default value `0` means no wait (messages are sent as soon as they arrive).\nThe wait ends early as soon as a full batch's worth of data has accumulated, so a busy producer is never delayed.\nWhen buffering to disk, the wait happens before writing to the buffer; configuring at least `5ms` is advised there to reduce disk IOPS.",
       "label": "Max Linger Time"
     },
     "metadata_request_timeout": {
@@ -3109,7 +3109,7 @@
       "label": "MQTT Bridge Mode"
     },
     "password": {
-      "desc": "The password of the MQTT protocol",
+      "desc": "The password of the MQTT protocol.  Note that if static clientids are used, this option is ignored.",
       "label": "Password"
     },
     "payload": {
@@ -3136,16 +3136,28 @@
       "desc": "Entries mapping EMQX node names to static client IDs.\n\nIf any entries are defined, then only EMQX nodes matching those entries will start MQTT clients with the corresponding clientids.",
       "label": "Static ClientId Entries"
     },
+    "static_clientid_entry_clientid": {
+      "desc": "Static client ID assigned to this node.",
+      "label": "Static clientid"
+    },
     "static_clientid_entry_ids": {
-      "desc": "Array of static client IDs assigned to this node.",
+      "desc": "Array of static client IDs (and usernames/passwords) assigned to this node.",
       "label": "Static clientids"
     },
     "static_clientid_entry_node": {
       "desc": "Node name (e.g.: `emqx@10.0.0.1`).",
       "label": "Node name"
     },
+    "static_clientid_entry_password": {
+      "desc": "Password associated with the static clientid.",
+      "label": "Password"
+    },
+    "static_clientid_entry_username": {
+      "desc": "Username associated with the static clientid.",
+      "label": "Username"
+    },
     "username": {
-      "desc": "The username of the MQTT protocol",
+      "desc": "The username of the MQTT protocol.  Note that if static clientids are used, this option is ignored.",
       "label": "Username"
     }
   },
@@ -4076,7 +4088,7 @@
       "label": "Local Topic"
     },
     "sql_template": {
-      "desc": "SQL Template",
+      "desc": "A restricted SQL Server INSERT INTO VALUES template. Placeholders are allowed only in value positions and string values. Comments, extra statements, multiple configured rows, and dynamic identifiers are not allowed.",
       "label": "SQL Template"
     },
     "sqlserver_action": {
@@ -4296,7 +4308,7 @@
       "label": "Local Topic"
     },
     "sql_template": {
-      "desc": "SQL Template",
+      "desc": "A restricted TDengine INSERT template. It supports multi-table VALUES inserts and USING stable TAGS clauses. A bare or backtick-quoted target table may contain placeholders, for example, `test_${clientid}`. EMQX renders the complete target as one quoted identifier. Comments, FILE input, and extra statements are not allowed.",
       "label": "SQL Template"
     }
   },
@@ -4605,7 +4617,7 @@
       "label": "K8s Suffix"
     },
     "cluster_name": {
-      "desc": "Human-friendly name of the EMQX cluster.",
+      "desc": "Human-friendly name of the EMQX cluster.\nNote: Cluster name should only contain characters in `a-z`, `A-Z`, `0-9`, `_`, `-`, and the first character must be `a-z` or `A-Z`,\notherwise you will not be able to configure it as a peer cluster for Cluster Link.",
       "label": "Cluster Name"
     },
     "cluster_proto_dist": {
@@ -4837,8 +4849,8 @@
       "label": "Max number of ETS tables"
     },
     "max_ports": {
-      "desc": "Maximum number of simultaneously open files and sockets for this Erlang system.\nFor more information, see: https://www.erlang.org/doc/man/erl.html",
-      "label": "Erlang Port Limit"
+      "desc": "Translated to the `+Q` flag of the Erlang VM.\nSpecifies the maximum number of simultaneously open ports (files, sockets, etc.) allowed by this Erlang system.  \n\nNote: The actual limit chosen by the runtime may be larger than the number configured here.\nIn most cases, the VM rounds the value up to the next power of two for internal efficiency.\n\nEMQX automatically sets the Erlang process limit (`+P` flag) to twice this value, so users only need to configure `max_ports`.\nThe corresponding `+P` flag controls the maximum number of Erlang processes.\n\nThe effective values can be observed from the dashboard node monitoring tab.",
+      "label": "Erlang Port and Process Limit"
     },
     "node_applications": {
       "desc": "List of Erlang applications that shall be rebooted when the EMQX broker joins the cluster.",
@@ -4889,16 +4901,12 @@
       "label": "Node Generic Pool Size"
     },
     "node_global_gc_interval": {
-      "desc": "Periodic garbage collection interval. Set to <code>disabled</code> to have it disabled.",
+      "desc": "Periodic garbage collection interval. Set to <code>disabled</code> to have it disabled.<br/>\nOnly use this feature as a workaround if EMQX memory usage keeps growing and significantly exceeds normal levels, and manual garbage collection can indeed release a large amount of memory.",
       "label": "Global GC Interval"
     },
     "node_name": {
       "desc": "Unique name of the EMQX node. It must follow <code>%name%@FQDN</code> or\n<code>%name%@IPv4</code> format.",
       "label": "Node Name"
-    },
-    "process_limit": {
-      "desc": "Maximum number of simultaneously existing processes for this Erlang system.\nFor more information, see: https://www.erlang.org/doc/man/erl.html",
-      "label": "Erlang Process Limit"
     },
     "rpc_async_batch_size": {
       "desc": "The maximum number of batch messages sent in asynchronous mode.\n      Note that this configuration does not work in synchronous mode.",
@@ -4933,7 +4941,7 @@
       "label": "RPC dirver"
     },
     "rpc_insecure_fallback": {
-      "desc": "Enable compatibility with old RPC authentication.",
+      "desc": "Allow a cluster node to authenticate a backplane (RPC) connection with the old\nhandshake, which sends the Erlang cookie to the peer, when the challenge-response\nhandshake fails.\n\nSet this to <code>true</code> only to cluster with EMQX releases older than 5.3.0,\nwhich do not speak the challenge-response handshake. A cluster whose nodes all run\n5.3.0 or later does not need it.",
       "label": "RPC insecure fallback"
     },
     "rpc_ipv6_only": {
@@ -5167,24 +5175,24 @@
       "desc": "Operate failed. Backend not exists"
     },
     "change_pwd_api": {
-      "desc": "Change dashboard user password",
-      "label": "Change dashboard user password"
+      "desc": "Change Dashboard user password",
+      "label": "Change Dashboard user password"
     },
     "create_user_api": {
-      "desc": "Create dashboard user",
-      "label": "Create dashboard user"
+      "desc": "Create Dashboard user",
+      "label": "Create Dashboard user"
     },
     "create_user_api_success": {
-      "desc": "Create dashboard user success",
-      "label": "Create dashboard user success"
+      "desc": "Create Dashboard user success",
+      "label": "Create Dashboard user success"
     },
     "delete_backend": {
       "desc": "Delete a backend",
       "label": "Delete Backend"
     },
     "delete_user_api": {
-      "desc": "Delete dashboard user",
-      "label": "Delete dashboard user"
+      "desc": "Delete Dashboard user",
+      "label": "Delete Dashboard user"
     },
     "get_backend": {
       "desc": "Get details of a backend",
@@ -5263,11 +5271,11 @@
       "label": "Update Backend"
     },
     "update_user_api": {
-      "desc": "Update dashboard user description",
-      "label": "Update dashboard user description"
+      "desc": "Update Dashboard user description",
+      "label": "Update Dashboard user description"
     },
     "update_user_api200": {
-      "desc": "Update dashboard user success"
+      "desc": "Update Dashboard user success"
     },
     "user_description": {
       "desc": "Dashboard User Description"
@@ -5601,12 +5609,6 @@
       "label": "Get delayed status"
     }
   },
-  "emqx_ds_fdb_backend_schema": {
-    "backend": {
-      "desc": "A simpler backend that uses FDB. Serves for storing MQTT messages and optimized for low latency.",
-      "label": "A simpler DS FDB backend"
-    }
-  },
   "emqx_ds_schema": {
     "backend_type": {
       "desc": "Backend type.",
@@ -5735,176 +5737,6 @@
     "session_renew_lease_timeout_ms": {
       "desc": "The timeout in milliseconds for the session to wait for the leader to renew the lease.\nIf the leader does not renew the lease within this time, the session will consider\nthe leader as lost and try to find a new leader.",
       "label": "Session Renew Lease Timeout"
-    }
-  },
-  "emqx_event_history_api": {
-    "authz_action_type": {
-      "desc": "The type of the authorize action"
-    },
-    "authz_from": {
-      "desc": "The type name of authorizer"
-    },
-    "clean_start": {
-      "desc": "Whether the client has a clean start.",
-      "label": "Clean Start"
-    },
-    "client_id": {
-      "desc": "The client ID.",
-      "label": "Client ID"
-    },
-    "dropped_msg_num": {
-      "desc": "The number of messages that have been dropped.",
-      "label": "Dropped Message Number"
-    },
-    "eh_clear": {
-      "desc": "clear all event history data\nNote: This is a dangerous operation.\nWhen only deleting data,\nthe manager and gc will try to reacquire the lock due to the loss of lock information,\nand the cached size of valid space only can be updated at the next refresh.\nWhen include the FDB's tenant, the GC will be shutdown forever."
-    },
-    "eh_client_list": {
-      "desc": "The list of clients that have connected to the broker.",
-      "label": "Event History Client List"
-    },
-    "eh_metrics": {
-      "desc": "Get the metrics of the internal resource"
-    },
-    "eh_msg_list": {
-      "desc": "The list of messages that have been published to the broker.",
-      "label": "Event History Message List"
-    },
-    "eh_stats": {
-      "desc": "event history tenant stats"
-    },
-    "event_history_get_config": {
-      "desc": "Show current Event History configuration."
-    },
-    "event_history_update_config": {
-      "desc": "Update Event History configuration."
-    },
-    "expiry_interval": {
-      "desc": "The expiry interval of the session.",
-      "label": "Session Expiry Interval"
-    },
-    "force_delete": {
-      "desc": "Whether to delete the corresponding tenant in FDB"
-    },
-    "gte_time": {
-      "desc": "The start time of the event(use unix millisecond or rfc3339).",
-      "label": "Start Time"
-    },
-    "guid": {
-      "desc": "GUID of the session or message"
-    },
-    "has_next": {
-      "desc": "Indicate whether there is a next page"
-    },
-    "ip": {
-      "desc": "The IP address of the client.",
-      "label": "IP"
-    },
-    "is_anonymous": {
-      "desc": "True if this user is anonymous."
-    },
-    "is_persistent": {
-      "desc": "Indicates whether this is a persistent session"
-    },
-    "is_superuser": {
-      "desc": "True if this is a super user."
-    },
-    "keepalive": {
-      "desc": "The keepalive interval of the client.",
-      "label": "Keepalive"
-    },
-    "lte_time": {
-      "desc": "The end time of the event(use unix millisecond or rfc3339).",
-      "label": "End Time"
-    },
-    "message_id": {
-      "desc": "The message ID.",
-      "label": "Message ID"
-    },
-    "qos": {
-      "desc": "The QoS level of the message.",
-      "label": "QoS"
-    },
-    "reason": {
-      "desc": "The reason for this event.",
-      "label": "Reason"
-    },
-    "result": {
-      "desc": "The result for this event"
-    },
-    "retain": {
-      "desc": "The retain flag"
-    },
-    "reverse": {
-      "desc": "If true, events will be returned in reverse time series order beginning at the end of the range"
-    },
-    "stats_count": {
-      "desc": "stats count"
-    },
-    "stats_size": {
-      "desc": "stats size"
-    },
-    "tenant": {
-      "desc": "the tenant name"
-    },
-    "time": {
-      "desc": "The millisecond that the event was triggered",
-      "label": "Time"
-    },
-    "topic": {
-      "desc": "The topic that the message was published to.",
-      "label": "Topic"
-    },
-    "type": {
-      "desc": "Event History Client Type",
-      "label": "Type"
-    },
-    "username": {
-      "desc": "the username which is used for this event."
-    }
-  },
-  "emqx_event_history_schema": {
-    "alarm_percent": {
-      "desc": "The percentage of maximum storage size to alarm"
-    },
-    "buffer": {
-      "desc": "Configuration for write workers"
-    },
-    "enable": {
-      "desc": "Enable this feature"
-    },
-    "event_history": {
-      "desc": "A feature to record events from clients or messages."
-    },
-    "events": {
-      "desc": "Events to be recorded"
-    },
-    "expiry_time": {
-      "desc": "The expiration time for each data"
-    },
-    "gc": {
-      "desc": "GC configuration"
-    },
-    "gc_interval": {
-      "desc": "The interval time between two GC checking"
-    },
-    "gc_percent": {
-      "desc": "The percentage of storage data to be deleted when the storage size exceeds the maximum size"
-    },
-    "max_size": {
-      "desc": "The maximum storage size of events in bytes for this tenant"
-    },
-    "query_quantity_limit": {
-      "desc": "Maximum number of reads for a query"
-    },
-    "query_time_limit": {
-      "desc": "Time limit for a query"
-    },
-    "storage": {
-      "desc": "Storage configuration"
-    },
-    "tenant": {
-      "desc": "If the value is not empty, all data will be stored in a tenant whose name is created by this value with a prefix.\nTenant config is Read Only, update at runtime will fail."
     }
   },
   "emqx_eviction_agent_api": {
@@ -6072,159 +5904,6 @@
     },
     "exproto_server": {
       "desc": "Configurations for starting the <code>ConnectionAdapter</code> service"
-    }
-  },
-  "emqx_fdb_ds_prometheus_api": {
-    "get_fdb_prom_data": {
-      "desc": "Get FoundationDB Prometheus Metrics",
-      "label": "FoundationDB Prometheus Metrics"
-    }
-  },
-  "emqx_fdb_ds_schema": {
-    "batch_delete_size": {
-      "desc": "Batch size for deleting the oldest data in the `compacted` storage."
-    },
-    "expiry_gc_interval": {
-      "desc": "GC interval for the expired generation."
-    },
-    "gc": {
-      "desc": "GC Configuration"
-    },
-    "gc_max_gen_size": {
-      "desc": "The maximum available size of a generation for the persistent storage.\nIf the size of the current generation exceeds it, a new generation will be created."
-    },
-    "gc_max_size": {
-      "desc": "The maximum available size for the persistent storage."
-    },
-    "retainer_backend_fdb": {
-      "desc": "FoundationDB Durable Storage Retainer.",
-      "label": "FoundationDB Durable Storage Retainer."
-    },
-    "retainer_enable": {
-      "desc": "Enable FoundationDB Retainer backend",
-      "label": "Enable"
-    },
-    "session_storage_backend_fdb": {
-      "desc": "FoundationDB Durable Storage.",
-      "label": "FoundationDB Durable Storage."
-    },
-    "session_storage_backend_fdb_enable": {
-      "desc": "Enable FoundationDB Durable Storage backend.",
-      "label": "Enable FoundationDB Durable Storage backend."
-    },
-    "session_storage_backend_fdb_prefix": {
-      "desc": "Key prefix to use by FoundationDB Durable Storage backend for storing data.",
-      "label": "FoundationDB key prefix."
-    },
-    "session_storage_backend_fdb_storage_mod": {
-      "desc": "Low-level backend module for storing message data in FoundationDB.",
-      "label": "FoundationDB DS storage module."
-    },
-    "session_storage_backend_fdb_storage_options": {
-      "desc": "Options for low-level backend module storing message data in FoundationDB.",
-      "label": "FoundationDB DS storage options."
-    },
-    "session_storage_backend_fdb_storage_write_buffer": {
-      "desc": "Write buffer size for FoundationDB Durable Storage backend.",
-      "label": "Write buffer size."
-    },
-    "session_storage_backend_fdb_tenant": {
-      "desc": "FoundationDB tenant to use by FoundationDB Durable Storage backend.",
-      "label": "FoundationDB tenant."
-    },
-    "session_storage_backend_fdb_write_shard_number": {
-      "desc": "FoundationDB DS write shard number.",
-      "label": "FoundationDB DS write shard number."
-    },
-    "size_gc_interval": {
-      "desc": "The interval for GC to check whether the used size exceeds the maximum available size."
-    },
-    "size_gc_percent": {
-      "desc": "Determine the amount of data that needs to be deleted as a percentage of the maximum size."
-    },
-    "write_buffer_flush_interval": {
-      "desc": "The interval for flushing the write buffer.",
-      "label": "Flush interval."
-    },
-    "write_buffer_max_items": {
-      "desc": "The maximum number of items that can be stored in the write buffer.",
-      "label": "Maximum number of items."
-    }
-  },
-  "emqx_fdb_mgmt_cli_api": {
-    "cluster_file": {
-      "desc": "The content of the cluster file"
-    },
-    "delete_fdb_cli": {
-      "desc": "Disable and Stop\nNOTE:\n1. Currently, a process may have a worker cached in its process dictionary or gen_server state, which cannot be cleared\n2. Tenants are the same as above\n3. The driver cannot be shut down or restarted manually"
-    },
-    "get_cluster_file": {
-      "desc": "Get content of the current cluster file"
-    },
-    "get_fdb_cli": {
-      "desc": "Get Configuration"
-    },
-    "post_cluster_file": {
-      "desc": "Update the content of the cluster file"
-    },
-    "post_fdb_cli": {
-      "desc": "Enable and Start"
-    }
-  },
-  "emqx_fdb_mgmt_cli_schema": {
-    "available_check_interval": {
-      "desc": "FDB health check interval when the last status is `available`"
-    },
-    "callbacks_on_external_threads": {
-      "desc": "If set, callbacks from external client libraries can be called from threads created by the FoundationDB client library. Otherwise, callbacks will be called from either the thread used to add the callback or the network thread. Setting this option can improve performance when connected using an external client, but may not be safe to use in all environments. Must be set before setting up the network. WARNING: This feature is considered experimental at this time."
-    },
-    "circuit_breaker": {
-      "desc": "A background server used to monitor the status of the FoundationDB cluster."
-    },
-    "client_threads_per_version": {
-      "desc": "Spawns multiple worker threads for each version of the client that is loaded.  Setting this to a number greater than one implies disable_local_client."
-    },
-    "cluster_file": {
-      "desc": "Path to cluster file"
-    },
-    "enable": {
-      "desc": "Enable this feature"
-    },
-    "external_client_library": {
-      "desc": "Adds an external client library for use by the multi-version client API. Must be set before setting up the network."
-    },
-    "max_watches": {
-      "desc": "Set the maximum number of watches allowed to be outstanding on a database connection. Increasing this number could result in increased resource usage. Reducing this number will not cancel any outstanding watches. Defaults to 10000 and cannot be larger than 1000000."
-    },
-    "tls_ca_path": {
-      "desc": "Set the file from which to load the certificate authority bundle"
-    },
-    "tls_cert_path": {
-      "desc": "Set the file from which to load the certificate chain"
-    },
-    "tls_key_path": {
-      "desc": "Set the file from which to load the private key corresponding to your own certificate"
-    },
-    "tls_verify_peers": {
-      "desc": "Set the peer certificate field verification criteria"
-    },
-    "transaction_max_retry_delay": {
-      "desc": "Set the maximum amount of backoff delay incurred in the call to `onError` if the error is retriable. This sets the `max_retry_delay` option of each transaction created by this database."
-    },
-    "transaction_retry_limit": {
-      "desc": "Set a maximum number of retries after which additional calls to `onError` will throw the most recently seen error code. This sets the `retry_limit` option of each transaction created by this database."
-    },
-    "transaction_timeout": {
-      "desc": "Set a timeout in milliseconds which, when elapsed, will cause each transaction automatically to be cancelled. This sets the `timeout` option of each transaction created by this database."
-    },
-    "unavailable_check_interval": {
-      "desc": "After the maximum number of attempts, we assume the cluster is unavailable, and may use a smaller interval for checking."
-    },
-    "waiting_check_interval": {
-      "desc": "FDB health check interval when the last status is `unavailable`, we assume this status was caused by network or cluster jitter and attempt to wait for it to be healed"
-    },
-    "waiting_check_times": {
-      "desc": "The maximum number of times we wait for the status to become healthy"
     }
   },
   "emqx_ft_api": {
@@ -7160,6 +6839,15 @@
     },
     "duration": {
       "desc": "Indicates how long the alarm has been active in milliseconds."
+    },
+    "force_deactivate_alarm_api": {
+      "desc": "Force deactivate an alarm. This operation will forcefully deactivate an active alarm."
+    },
+    "force_deactivate_alarm_api_response204": {
+      "desc": "The alarm has been successfully deactivated."
+    },
+    "force_deactivate_alarm_api_response400": {
+      "desc": "The alarm does not exist or has already been deactivated."
     },
     "get_alarms_qs_activated": {
       "desc": "It is used to specify the alarm type of the query.\nWhen true, it returns the currently activated alarm,\nand when it is false, it returns the historical alarm.\nThe default is false."
@@ -9120,6 +8808,9 @@
       "desc": "Republish the message as a new MQTT message",
       "label": "Republish Function"
     },
+    "republish_mqtt_properties_prop": {
+      "desc": "An MQTT property that can be set while republishing."
+    },
     "rule_engine_ignore_sys_message": {
       "desc": "When set to 'true' (default), rule-engine will ignore messages published to $SYS topics.",
       "label": "Ignore Sys Message"
@@ -9729,11 +9420,11 @@
       "label": "MQTT Piggyback"
     },
     "fields_ws_opts_proxy_address_header": {
-      "desc": "The HTTP request header that carries the original client's IP address, EMQX will take the leftmost IP in the header as the original client's IP.\n\nThis option is typically used when EMQX is deployed behind a WebSocket proxy.",
+      "desc": "The HTTP request header that carries the original client's IP address, EMQX will take the leftmost IP in the header as the original client's IP.\n\nThis option is typically used when EMQX is deployed behind a WebSocket proxy.\n\nSet it to an empty string (<code>\"\"</code>) to disable the header lookup, in which case the source IP address of the TCP connection is always used.",
       "label": "Proxy address header"
     },
     "fields_ws_opts_proxy_port_header": {
-      "desc": "The HTTP request header that carries the original client's source port, EMQX will take the leftmost port in the header as the original client's source port.\n\nThis option is typically used when EMQX is deployed behind a WebSocket proxy.",
+      "desc": "The HTTP request header that carries the original client's source port, EMQX will take the leftmost port in the header as the original client's source port.\n\nThis option is typically used when EMQX is deployed behind a WebSocket proxy.\n\nSet it to an empty string (<code>\"\"</code>) to disable the header lookup, in which case the source port of the TCP connection is always used.",
       "label": "Proxy port header"
     },
     "fields_ws_opts_supported_subprotocols": {
@@ -9831,6 +9522,10 @@
       "desc": "Maximum allowed length of MQTT Client ID.",
       "label": "Max Client ID Length"
     },
+    "mqtt_max_connect_user_properties": {
+      "desc": "Maximum number of 'User-Property' pairs accepted in a CONNECT packet.\nThe limit applies separately to the CONNECT properties and to the will properties.\nEMQX rejects a CONNECT carrying more pairs than this and closes the connection.\nSet to `infinity` to accept any number.\nNote: changing this config at runtime may only take effect for newly established connections after the change.",
+      "label": "Max CONNECT User Properties"
+    },
     "mqtt_max_inflight": {
       "desc": "Maximum number of QoS 1 and QoS 2 messages that are allowed to be delivered simultaneously before completing the acknowledgment.",
       "label": "Max Inflight"
@@ -9872,8 +9567,8 @@
       "label": "Topic Priorities"
     },
     "mqtt_mqueue_store_qos0": {
-      "desc": "Specifies whether to store QoS 0 messages in the message queue while the connection is down but the session remains.",
-      "label": "Store QoS 0 Message"
+      "desc": "Controls how QoS 0 messages are handled when the client connection is down or the inflight window (used for QoS 1 and 2) is full.\n- When set to `true`, QoS 0 messages are buffered in the sessionâs message queue.\n- When set to `false`, QoS 0 messages are dropped immediately.\nThis setting applies only to non-durable sessions.",
+      "label": "Buffer QoS 0 Messages"
     },
     "mqtt_peer_cert_as_clientid": {
       "desc": "Use the CN, DN field in the peer certificate or the entire certificate content as Client ID. Only works for the TLS connection.\nSupported configurations are the following:\n- <code>cn</code>: CN field of the certificate\n- <code>dn</code>: DN field of the certificate\n- <code>crt</code>: <code>DER</code> or <code>PEM</code> certificate\n- <code>pem</code>: Convert <code>DER</code> certificate content to <code>PEM</code> format and use as Client ID\n- <code>md5</code>: MD5 value of the <code>DER</code> or <code>PEM</code> certificate",
@@ -9884,7 +9579,7 @@
       "label": "Use Peer Certificate as Username"
     },
     "mqtt_response_information": {
-      "desc": "UTF-8 string, for creating the response topic, for example, if set to <code>reqrsp/</code>, the publisher/subscriber will communicate using the topic prefix <code>reqrsp/</code>.\nTo disable this feature, input <code>\"\"</code> in the text box below. Only applicable to MQTT 5.0 clients.",
+      "desc": "MQTT v5 Response Information (Optional).\nSpecifies a string returned to clients in the `CONNACK` packet if requested.\nThe server passes this value as-is and does not automatically add it to Access Control (ACL) rules.\nIt is intended solely to help publishers and subscribers establish their own topic contract\n (e.g., a topic prefix). Leave blank to disable.",
       "label": "Response Information"
     },
     "mqtt_retain_available": {
@@ -9911,7 +9606,7 @@
       "desc": "The strategy to use for the initial subscriber pick when shared_subscription_strategy is `sticky`.\n - `random`: Randomly select the subscriber;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "mqtt_shared_subscription_strategy": {
-      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n - `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends. The initial selection is made based on `mqtt_shared_subscription_initial_sticky_pick`;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
+      "desc": "Dispatch strategy for shared subscription.\nEMQX keeps **dispatch state** (such as random seeds, round-robin position, and sticky subscriber choice) as part of the **publishing clientâs connection state**.  \nIf the publishing client disconnects and reconnects, this state is lost and must be re-initialized\n\n- `random`: Randomly select a subscriber for dispatch;\n- `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n- `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n- `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n- `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends. The initial selection is made based on `mqtt_shared_subscription_initial_sticky_pick`;\n- `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n- `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "mqtt_strict_mode": {
       "desc": "Whether to parse MQTT messages in strict mode.\nIn strict mode, invalid utf8 strings in for example client ID, topic name, etc. will cause the client to be disconnected.",
@@ -10032,7 +9727,7 @@
       "desc": "The strategy to use for the initial subscriber pick when the shared subscription strategy is `sticky`.\n - `random`: Randomly select the subscriber;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "shared_subscription_strategy_enum": {
-      "desc": "Dispatch strategy for shared subscription.\n - `random`: Randomly select a subscriber for dispatch;\n - `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n - `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n - `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n - `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends. The initial selection is made based on the value of `initial_sticky_pick`;\n - `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n - `hash_topic`: Hash the publishing topic to select a subscriber."
+      "desc": "Dispatch strategy for shared subscription.\nEMQX keeps **dispatch state** (such as random seeds, round-robin position, and sticky subscriber choice) as part of the **publishing clientâs connection state**.  \nIf the publishing client disconnects and reconnects, this state is lost and must be re-initialized\n\n- `random`: Randomly select a subscriber for dispatch;\n- `round_robin`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each publisher, so two adjacent messages from **different publishers** may be consumed by the same client in the subscription group;\n- `round_robin_per_group`: Clients in a shared subscription group will consume messages in turn, and the progress of the loop is recorded independently in each node, so two adjacent messages from **different nodes** may be consumed by the same client in the subscription group;\n- `local`: Randomly select a subscriber on the current node, if there are no subscribers on the current node, then randomly select within the cluster;\n- `sticky`: Continuously dispatch messages to the initially selected subscriber until their session ends. The initial selection is made based on the value of `initial_sticky_pick`;\n- `hash_clientid`: Hash the publisher's client ID to select a subscriber;\n- `hash_topic`: Hash the publishing topic to select a subscriber."
     },
     "stats_enable": {
       "desc": "Enable/disable statistic data collection.",
