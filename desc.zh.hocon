@@ -2638,7 +2638,7 @@
       "label": "Kerberos keytab 文件"
     },
     "auth_kerberos_principal": {
-      "desc": "SASL GSSAPI 认证方法的 Kerberos 主体，例如 <code>kafka/node1.example.com@EXAMPLE.COM</code>，注意：这里使用的 realm 需要配置在 EMQX 服务器的默认配置文件 krb5.conf 中（通常位于 `/etc`）。",
+      "desc": "SASL GSSAPI 认证方法的 Kerberos 主体，例如 <code>kafka/node1.example.com@EXAMPLE.COM</code>，注意：这里使用的 Kerberos 领域（realm）需要在 EMQX 节点的默认配置文件 `krb5.conf` 中配置（该文件通常位于 `/etc`）。",
       "label": "Kerberos 主体"
     },
     "auth_sasl_mechanism": {
@@ -3150,7 +3150,7 @@
       "label": "MQTT 动作模式"
     },
     "password": {
-      "desc": "MQTT 协议的密码。请注意，如果使用静态 clientid，则此选项将被忽略。",
+      "desc": "MQTT 协议的密码。请注意，如果使用静态客户端 ID，则此选项将被忽略。",
       "label": "密码"
     },
     "payload": {
@@ -3174,31 +3174,31 @@
       "label": "服务器配置。"
     },
     "static_clientid_entry": {
-      "desc": "将 EMQX 节点名称映射到静态客户端 ID 的条目。\n\n如果定义了任何条目，则只有与这些条目匹配的 EMQX 节点才会启动具有相应 clientid 的 MQTT 客户端。",
-      "label": "静态 ClientId 条目"
+      "desc": "将 EMQX 节点名称映射到静态客户端 ID 的条目。\n\n如果定义了任何条目，则只有与这些条目匹配的 EMQX 节点才会启动具有相应客户端 ID 的 MQTT 客户端。",
+      "label": "静态客户端 ID 条目"
     },
     "static_clientid_entry_clientid": {
       "desc": "分配给此节点的静态客户端 ID。",
-      "label": "静态 clientid"
+      "label": "静态客户端 ID"
     },
     "static_clientid_entry_ids": {
       "desc": "分配给此节点的静态客户端 ID（和用户名/密码）数组。",
-      "label": "静态 clientids"
+      "label": "静态客户端 ID 列表"
     },
     "static_clientid_entry_node": {
       "desc": "节点名称（例如：`emqx@10.0.0.1`）。",
       "label": "节点名称"
     },
     "static_clientid_entry_password": {
-      "desc": "与静态 clientid 关联的密码。",
+      "desc": "与静态客户端 ID 关联的密码。",
       "label": "密码"
     },
     "static_clientid_entry_username": {
-      "desc": "与静态 clientid 关联的用户名。",
+      "desc": "与静态客户端 ID 关联的用户名。",
       "label": "用户名"
     },
     "username": {
-      "desc": "MQTT 协议的用户名。请注意，如果使用静态 clientid，则此选项将被忽略。",
+      "desc": "MQTT 协议的用户名。请注意，如果使用静态客户端 ID，则此选项将被忽略。",
       "label": "用户名"
     }
   },
@@ -3561,7 +3561,7 @@
     },
     "producer_max_inflight": {
       "desc": "生产者在必须等待回执之前可以发送到每个分区的最大消息批次数。\n设置更高的数字可以提高吞吐量。",
-      "label": "最大 Inflight"
+      "label": "最大飞行窗口"
     },
     "producer_message_opts": {
       "desc": "渲染 Pulsar 消息的模版。",
@@ -5082,7 +5082,7 @@
       "label": "Erlang 表的最大数量"
     },
     "max_ports": {
-      "desc": "转换为 Erlang VM 的 `+Q` 标志。\n指定此 Erlang 系统允许的最大同时打开端口数（文件、套接字等）。\n\n注意：运行时选择的实际限制可能比此处配置的数字大。\n在大多数情况下，VM 会将值向上舍入到下一个二次幂以提高内部效率。\n\nEMQX 自动将 Erlang 进程限制（`+P` 标志）设置为此值的两倍，因此用户只需配置 `max_ports`。\n相应的 `+P` 标志控制 Erlang 进程的最大数量。\n\n可以从 Dashboard 节点监控选项卡中观察到有效值。",
+      "desc": "转换为 Erlang VM 的 `+Q` 标志。\n指定此 Erlang 系统允许的最大同时打开端口数（文件、套接字等）。\n\n注意：运行时选择的实际限制可能比此处配置的数字大。\n在大多数情况下，VM 会将该值向上取整为下一个 2 的幂以提高内部效率。\n\nEMQX 自动将 Erlang 进程限制（`+P` 标志）设置为此值的两倍，因此用户只需配置 `max_ports`。\n相应的 `+P` 标志控制 Erlang 进程的最大数量。\n\n可以从 Dashboard 节点监控选项卡中观察到有效值。",
       "label": "Erlang 端口和进程限制"
     },
     "node_applications": {
@@ -5836,8 +5836,8 @@
       "label": "更新后端"
     },
     "update_user_api": {
-      "desc": "更新 Dashboard 用户描述",
-      "label": "更新 Dashboard 用户描述"
+      "desc": "更新 Dashboard 用户备注",
+      "label": "更新 Dashboard 用户备注"
     },
     "update_user_api200": {
       "desc": "更新 Dashboard 用户成功"
@@ -7989,7 +7989,7 @@
       "desc": "表明告警已经持续了多久，单位：毫秒。"
     },
     "force_deactivate_alarm_api": {
-      "desc": "强制停用告警。此操作将强制关闭一个告警。"
+      "desc": "强制停用告警。此操作将强制停用一个处于激活状态的告警。"
     },
     "force_deactivate_alarm_api_response204": {
       "desc": "告警已成功停用。"
@@ -9047,7 +9047,7 @@
       "label": "导出超时"
     },
     "follow_traceparent": {
-      "desc": "启用/禁用，是否通过 User-Property 跟随客户端传递的 traceparent。",
+      "desc": "是否从客户端发送的 MQTT 报文中读取 `traceparent` 用户属性，并将 EMQX 的端到端追踪关联到客户端已有的追踪链路。",
       "label": "跟随 Traceparent"
     },
     "interval": {
@@ -10732,7 +10732,7 @@
     },
     "mqtt_max_connect_user_properties": {
       "desc": "CONNECT 报文中允许的 User-Property 键值对的最大数量。\n该限制分别作用于 CONNECT 属性和遗嘱属性。\n当 CONNECT 报文携带的键值对数量超过此值时，EMQX 会拒绝该报文并关闭连接。\n设置为 `infinity` 表示不限制数量。\n注意：在运行时修改此配置，可能仅对修改之后新建立的连接生效。",
-      "label": "CONNECT 最大 User-Property 数量"
+      "label": "CONNECT 报文 User-Property 数量上限"
     },
     "mqtt_max_inflight": {
       "desc": "允许在完成应答前同时投递的 QoS 1 和 QoS 2 消息的最大数量。",
@@ -10787,7 +10787,7 @@
       "label": "对端证书作为用户名"
     },
     "mqtt_response_information": {
-      "desc": "MQTT v5 响应信息（可选）。\n指定在 `CONNACK` 报文中返回给客户端的字符串（如果请求）。\n服务器按原样传递此值，并不会自动将其添加到访问控制（ACL）规则中。\n此功能仅用于帮助发布者和订阅者建立自己的主题约定（例如，主题前缀）。留空以禁用。",
+      "desc": "MQTT v5 响应信息（可选）。\n如果客户端请求响应信息，EMQX 会在 `CONNACK` 报文中向其返回此字符串。\n服务器按原样传递此值，并不会自动将其添加到访问控制（ACL）规则中。\n此功能仅用于帮助发布者和订阅者建立自己的主题约定（例如，主题前缀）。留空以禁用。",
       "label": "响应信息"
     },
     "mqtt_retain_available": {
@@ -10814,7 +10814,7 @@
       "desc": "当 shared_subscription_strategy 为 `sticky` 时，初始订阅者选择的策略。\n - `random`: 随机选择订阅者；\n - `local`: 随机选择当前节点上的订阅者，如果当前节点上没有订阅者，则在集群中随机选择；\n - `hash_clientid`: 根据发布者的客户端 ID 进行哈希，选择订阅者；\n - `hash_topic`: 根据发布的主题进行哈希，选择订阅者。"
     },
     "mqtt_shared_subscription_strategy": {
-      "desc": "共享订阅的分发策略。\nEMQX 将 **分发状态**（如随机种子、轮询位置和粘性订阅者选择）作为 **发布客户端连接状态** 的一部分进行维护。\n如果发布客户端断开连接并重新连接，则此状态会丢失，必须重新初始化。\n\n- `random`：随机选择一个订阅者进行分发；\n- `round_robin`：共享订阅组中的客户端将依次消费消息，每个发布者独立记录循环进度，因此来自**不同发布者**的两个相邻消息可能会被订阅组中的同一客户端消费；\n- `round_robin_per_group`：共享订阅组中的客户端将依次消费消息，每个节点独立记录循环进度，因此来自**不同节点**的两个相邻消息可能会被订阅组中的同一客户端消费；\n- `local`：随机选择当前节点上的一个订阅者，如果当前节点没有订阅者，则在集群内随机选择；\n- `sticky`：持续将消息分发给最初选择的订阅者，直到他们的会话结束。初始选择基于 `mqtt_shared_subscription_initial_sticky_pick`；\n- `hash_clientid`：哈希发布者的客户端 ID 以选择订阅者；\n- `hash_topic`：哈希发布主题以选择订阅者。"
+      "desc": "共享订阅的分发策略。\nEMQX 将 **分发状态**（如随机种子、轮询位置和粘性订阅者选择）作为 **发布客户端的连接状态** 的一部分进行维护。\n如果发布客户端断开连接并重新连接，则此状态会丢失，必须重新初始化。\n\n- `random`：随机选择一个订阅者进行分发；\n- `round_robin`：共享订阅组中的客户端将依次消费消息，每个发布者独立记录循环进度，因此来自**不同发布者**的两个相邻消息可能会被订阅组中的同一客户端消费；\n- `round_robin_per_group`：共享订阅组中的客户端将依次消费消息，每个节点独立记录循环进度，因此来自**不同节点**的两个相邻消息可能会被订阅组中的同一客户端消费；\n- `local`：随机选择当前节点上的一个订阅者，如果当前节点没有订阅者，则在集群内随机选择；\n- `sticky`：持续将消息分发给最初选择的订阅者，直到该订阅者的会话结束。初始选择基于 `mqtt_shared_subscription_initial_sticky_pick`；\n- `hash_clientid`：哈希发布者的客户端 ID 以选择订阅者；\n- `hash_topic`：哈希发布主题以选择订阅者。"
     },
     "mqtt_strict_mode": {
       "desc": "是否以严格模式解析 MQTT 消息。\n严格模式下，如客户端 ID、主题名称等中包含无效 utf8 字符串，连接将被断开。",
@@ -10993,7 +10993,7 @@
       "desc": "当共享订阅策略为 sticky 时，初始订阅者选择的策略。\n - `random`: 随机选择订阅者；\n - `local`: 随机选择当前节点上的订阅者，如果当前节点上没有订阅者，则在集群中随机选择；\n - `hash_clientid`: 根据发布者的客户端 ID 进行哈希，选择订阅者；\n - `hash_topic`: 根据发布的主题进行哈希，选择订阅者。"
     },
     "shared_subscription_strategy_enum": {
-      "desc": "共享订阅的分发策略。\nEMQX 将 **分发状态**（如随机种子、轮询位置和粘性订阅者选择）作为 **发布客户端连接状态** 的一部分进行维护。\n如果发布客户端断开连接并重新连接，则此状态会丢失，必须重新初始化。\n\n- `random`：随机选择一个订阅者进行分发；\n- `round_robin`：共享订阅组中的客户端将依次消费消息，每个发布者独立记录循环进度，因此来自**不同发布者**的两个相邻消息可能会被订阅组中的同一客户端消费；\n- `round_robin_per_group`：共享订阅组中的客户端将依次消费消息，每个节点独立记录循环进度，因此来自**不同节点**的两个相邻消息可能会被订阅组中的同一客户端消费；\n- `local`：随机选择当前节点上的一个订阅者，如果当前节点没有订阅者，则在集群内随机选择；\n- `sticky`：持续将消息分发给最初选择的订阅者，直到他们的会话结束。初始选择基于 `initial_sticky_pick` 的值；\n- `hash_clientid`：哈希发布者的客户端 ID 以选择订阅者；\n- `hash_topic`：哈希发布主题以选择订阅者。"
+      "desc": "共享订阅的分发策略。\nEMQX 将 **分发状态**（如随机种子、轮询位置和粘性订阅者选择）作为 **发布客户端的连接状态** 的一部分进行维护。\n如果发布客户端断开连接并重新连接，则此状态会丢失，必须重新初始化。\n\n- `random`：随机选择一个订阅者进行分发；\n- `round_robin`：共享订阅组中的客户端将依次消费消息，每个发布者独立记录循环进度，因此来自**不同发布者**的两个相邻消息可能会被订阅组中的同一客户端消费；\n- `round_robin_per_group`：共享订阅组中的客户端将依次消费消息，每个节点独立记录循环进度，因此来自**不同节点**的两个相邻消息可能会被订阅组中的同一客户端消费；\n- `local`：随机选择当前节点上的一个订阅者，如果当前节点没有订阅者，则在集群内随机选择；\n- `sticky`：持续将消息分发给最初选择的订阅者，直到该订阅者的会话结束。初始选择基于 `initial_sticky_pick` 的值；\n- `hash_clientid`：哈希发布者的客户端 ID 以选择订阅者；\n- `hash_topic`：哈希发布主题以选择订阅者。"
     },
     "stats_enable": {
       "desc": "启用/禁用统计数据收集功能。",
